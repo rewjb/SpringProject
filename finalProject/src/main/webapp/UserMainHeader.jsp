@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<!--메인 상단 페이지-->
-<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
@@ -27,11 +23,7 @@
 <!--Custom styles-->
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/blog.css" />
 
-</head>
-
-
-<body>
-    <div class="container">
+  <div class="container">
   <header class="blog-header py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
@@ -41,72 +33,60 @@
         <a class="blog-header-logo text-dark" href="#">IT Tour</a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center">
-        <a class="text-muted" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3" focusable="false" role="img"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
-        </a>
         <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
       </div>
     </div>
   </header>
 
+  <div class="btn-group" role="group" aria-label="Basic example" style="width: 100% ;">
   
-  
-    
-  <div class="btn-group" role="group" aria-label="Basic example">
-  
-  
-  <div class="btn-group" role="group">
+  <!--여행정보 버튼-->
+  <div class="btn-group" role="group" style="width: 25%">
     <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown
+         여행정보
     </button>  
-    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
       <a class="dropdown-item" href="#">Dropdown link</a>
       <a class="dropdown-item" href="#">Dropdown link</a>
     </div>
   </div>
   
-  
-  <div class="btn-group" role="group">
+  <!--여행계획 버튼-->
+  <div class="btn-group" role="group" style="width: 25%">
     <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown
+         여행계획
     </button>  
-    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="width: 100%">
+      <a class="dropdown-item" href="#">여행계획 세우기</a>
+      <a class="dropdown-item" href="#">Dropdown link</a>
+    </div>
+  </div>
+  
+  <!--관광명소 신청 버튼-->
+  <div class="btn-group" role="group" style="width: 25%">
+    <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         관광명소 신청
+    </button>  
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
       <a class="dropdown-item" href="#">Dropdown link</a>
       <a class="dropdown-item" href="#">Dropdown link</a>
     </div>
   </div>
   
+  <!--고객센터 버튼-->
+  <div class="btn-group" role="group" style="width: 25%">
+    <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         고객센터
+    </button>  
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
+      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="#">Dropdown link</a>
+    </div>
+  </div>
+</div>
 
-
-
-
-
-
-
-
-
-   
-   
-  </div> <!-- 네이브 -->
-  
-   
-  
-
-
-
-
-<!--하단 아직 분리 작업 전 -->
-<footer class="blog-footer">
-  <p>Blog template built for <a href="#">Bootstrap</a> by <a href="#">@mdo</a>.</p>
-  <p>
-    <a href="#">Back to top</a>
-  </p>
-</footer>
+</div>
       
-      
-      
-      </body>
-</html>
 
 
 

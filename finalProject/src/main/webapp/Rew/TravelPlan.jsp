@@ -6,6 +6,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
+
+<style type="text/css">
+.R_button_insert {
+    background-image: url('/springProject/resources/IMAGE/cart-insert.jpg');
+	background-size: 100% 100%;
+	width: 35px;
+	height: 35px;
+	margin: 0px;
+	border-color: gray;
+}
+
+.R_button_delete {
+    background-image: url('/springProject/resources/IMAGE/cart-delete.jpg');
+	background-size: 100% 100%;
+	width: 35px;
+	height: 35px;
+	margin: 0px;
+	border-color: gray;
+}
+</style>
+
 </head>
 <body>
  <%@ include file="/UserMainHeader.jsp" %>
@@ -80,26 +101,34 @@
 							</tr>
 						</thead>
 						<tbody>
+							<tr style="padding: 0px">
+								<form>
+								<th>사진</th>
+								<td alt="Cart-Content">조광재</td>
+								
+								<input type="hidden" name="id">
+								
+								<td style="width:80px;padding: 0px;vertical-align : middle;" >
+								
+								<input type="button" class="R_button_insert">
+								<input type="button" class="R_button_delete">
+								
+								</td>
+								
+								</form>
+							</tr>
 							<tr>
 								<form>
 								<th>1</th>
-								<td alt="Cart-Content">Markdddddddddddddd</td>
-								<input type="hidden" name="id">
+								<td alt="Cart-Content">원한나</td>
+								<input type="hidden" name="id" >
 								<td>Otto</td>
 								</form>
 							</tr>
 							<tr>
 								<form>
 								<th>1</th>
-								<td alt="Cart-Content">Markdddddddddddddd</td>
-								<input type="hidden" name="id">
-								<td>Otto</td>
-								</form>
-							</tr>
-							<tr>
-								<form>
-								<th>1</th>
-								<td alt="Cart-Content">Markdddddddddddddd</td>
+								<td alt="Cart-Content">김대호</td>
 								<input type="hidden" name="id">
 								<td>Otto</td>
 								</form>
@@ -112,6 +141,8 @@
 			</div>
     <!-- /.프로젝트 목록 + 관광명소 장바구니 -->
     
+   
+    
 
   </div>
   <!-- /.계획 툴 -->
@@ -123,7 +154,7 @@
 
     <div class="col-md-3 col-sm-6 mb-4">
       <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            <img class="img-fluid" src="/springProject/resources/IMAGE/cart-insert.jpg" alt="">
           </a>
     </div>
 
@@ -150,7 +181,6 @@
 
 </div>
 <!-- /.최상위 컨테이너 -->
- 
  
  
  

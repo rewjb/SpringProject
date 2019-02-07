@@ -5,10 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
  <%@ include file="/UserMainHeader.jsp" %>
+
+
  
+
  
  <!-- 최상위 컨테이너 -->
 <div class="container">
@@ -32,41 +36,73 @@
 
 				<!-- 프로젝트 목록 -->
 				<div
-					style="background: blue; height: 50%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
+					style="height: 40%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
+					
+					<table class="table table-striped" style="width: 100%;word-break:break-word;">
+						<thead>
+							<tr>
+								<th style="vertical-align : middle;">검색</th>
+								<th colspan="2"><input class="form-control" id="Project-Search"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>1</th>
+								<td>Markdddddddddddddd</td>
+								<td >Otto</td>
+							</tr>
+							<tr>
+								<th>2</th>
+								<td>Jacob</td>
+								<td>Thornton</td>
+							</tr>
+							<tr>
+								<th>3</th>
+								<td>Larry</td>
+								<td>the Bird</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					
 				</div>
 				<!-- /.프로젝트 목록 -->
 
 				<!-- 관광명소 장바구니 -->
 				<div
-					style="background: yellow; height: 50%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
+					style="height: 60%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
 
-					<table class="table table-striped">
+					<table class="table table-striped" style="width: 100%;word-break:break-word;">
 						<thead>
 							<tr>
-								<th scope="col">#</th>
-								<th scope="col">First</th>
-								<th scope="col">Last</th>
-								<th scope="col">Handle</th>
+								<th style="vertical-align : middle;">검색</th>
+								<th colspan="2"><input class="form-control" id="Cart-Search"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<th scope="row">1</th>
-								<td>Mark</td>
+								<form>
+								<th>1</th>
+								<td alt="Cart-Content">Markdddddddddddddd</td>
+								<input type="hidden" name="id">
 								<td>Otto</td>
-								<td>@mdo</td>
+								</form>
 							</tr>
 							<tr>
-								<th scope="row">2</th>
-								<td>Jacob</td>
-								<td>Thornton</td>
-								<td>@fat</td>
+								<form>
+								<th>1</th>
+								<td alt="Cart-Content">Markdddddddddddddd</td>
+								<input type="hidden" name="id">
+								<td>Otto</td>
+								</form>
 							</tr>
 							<tr>
-								<th scope="row">3</th>
-								<td>Larry</td>
-								<td>the Bird</td>
-								<td>@twitter</td>
+								<form>
+								<th>1</th>
+								<td alt="Cart-Content">Markdddddddddddddd</td>
+								<input type="hidden" name="id">
+								<td>Otto</td>
+								</form>
 							</tr>
 						</tbody>
 					</table>

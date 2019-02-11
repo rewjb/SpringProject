@@ -102,10 +102,10 @@
 						
 						    <!-- 회원의 장바구니 정보를 get! -->
 							<c:forEach items="${cart_list}" var="cart_list">
-							<form alt="나는 form!" onsubmit="return cart_form();">
-							<tr alt="나  tr이다!">
+							<form alt="나는 form!" onsubmit="return cart_form();" style="background: red">
+							<tr name="id">
 								<th style="padding: 2px;width:50px">
-								<img  style="width:50px;height:50px;vertical-align: middle;"  class="img-fluid" src="http://placehold.it/500x300" alt="${cart_list.mainImg}">
+								 <img  style="width:50px;height:50px;vertical-align: middle;"  class="img-fluid" src="http://placehold.it/500x300" alt="${cart_list.mainImg}">
 								</th>
 								<td alt="Cart-Content" style="vertical-align: middle;">${cart_list.title}	</td>
 								
@@ -114,6 +114,7 @@
 								<input type="hidden" name="title" value="${cart_list.title}">
 								<input type="hidden" name="longitude" value="${cart_list.longitude}"><!-- 경도 -->
 								<input type="hidden" name="latitude" value="${cart_list.latitude}"><!-- 위도 -->
+								<input type="hidden" name="mainImg" value="${cart_list.mainImg}"><!-- 이미지 -->
 								
 								<td style="width:80px;padding: 0px;vertical-align :middle;" alt="asd" >
 								<input type="submit" class="R_button_insert" alt="in" onclick="cart_button();">
@@ -129,36 +130,65 @@
 				<!-- /.관광명소 장바구니 -->
 			</div>
     <!-- /.프로젝트 목록 + 관광명소 장바구니 -->
-    
-    <script type="text/javascript">
-    
-    var inNde;
-    
-    function cart_form() {
-    	if (inNde == 'in') {
 
-    		var asd = {aa:'aa' , bb:'bb' };
-    		//alert(decodeURI($(event.target).serializeObject());
-    		alert($(event.target).get('longitude'));
-			alert('삽입='+$(event.target).serialize());
-		}else{
-			alert('삭제');
-		}
-    	
-    	return false;
-	}
-    
-    function cart_button() {
-    	
-    	inNde = $(event.target).attr('alt');
-    	console.log('inNde 값 = '+inNde);
-    	
-	}
-    
-    
-    
-    </script>
+			<script type="text/javascript">
+			
+			
+				
+			
+			
+			var inNde;
+				
+				function cart_form() {
 
+					if (inNde == 'in') {
+						
+						//var form = $(event.target);
+						//var data = JSON.stringify(decodeURI(form.serialize(true)));
+						//console.log(data);
+						//var data_json = JSON.parse(data);
+						//console.log(data_json.pid);
+						//alert(form.serialize(true));
+						//alert(form.serialize(false));
+						//위 주석은 개발 과정
+						
+						
+						var arr =  $(event.target).serializeArray();
+						var len = arr.length;
+						var dataObj = {};//자바스크립트 객체
+						
+						for (i=0; i<len; i++) {
+						dataObj[arr[i].name] = arr[i].value;
+						}
+						
+						console.log(dataObj['pid']); 
+						console.log(dataObj['title']);
+						console.log(dataObj['longitude']); 
+						console.log(dataObj['latitude']); 
+						console.log(dataObj['mainImg']); 
+						
+
+					} else {
+						alert('삭제');
+					}
+
+					return false;
+				}
+				
+				//위에는 메서드 1
+				
+				
+				
+				//아래는 메서드 2
+
+				function cart_button() {
+
+					inNde = $(event.target).attr('alt');
+					console.log('inNde 값 = ' + inNde);
+
+				}
+				
+			</script>
 
 
 

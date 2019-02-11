@@ -15,7 +15,7 @@ public class TravelPlanController {
 	@Qualifier("PlaceCartDAO")
 	private PlaceCartDAO placeCartDAO;
 	
-	@RequestMapping("PlaceCartSelectAll")
+	@RequestMapping("rew/PlaceCartSelectAll")
 	public void placeCartSelectAll(@RequestParam("mid") String mid){
 		System.out.println(mid);
 	}

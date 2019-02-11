@@ -11,8 +11,12 @@
 일단 이동<br>
 
 <c:forEach items="${list}" var="list">
-${list.mid} / ${list.pid} <br/>
+PID = ${list.pid} <br/>
+PID = ${list.title} <br/>
+PID = ${list.latitude} <br/>
+PID = ${list.longitude} <br/>
+PID = ${list.mainImg} <br/>
+------------------------------------------<br>
 </c:forEach>
-
 </body>
 </html>

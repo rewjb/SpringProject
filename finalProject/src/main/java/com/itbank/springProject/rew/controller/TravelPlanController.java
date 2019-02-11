@@ -16,13 +16,12 @@ public class TravelPlanController {
 	@Qualifier("PlaceCartDAO")
 	private PlaceCartDAO placeCartDAO;
 	
-	@RequestMapping("rew/PlaceCartSelectAll")
+	
+	
+	@RequestMapping("rew/TravelPlan")
 	public void placeCartSelectAll(@RequestParam("mid") String mid , Model model){
 		System.out.println(mid);
-		model.addAttribute("list", placeCartDAO.selectAll(mid));
+		model.addAttribute("cart_list", placeCartDAO.selectAll(mid));
 	}
-	
-	
-	
 
 }

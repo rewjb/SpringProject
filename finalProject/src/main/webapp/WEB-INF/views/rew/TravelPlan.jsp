@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -101,38 +102,30 @@
 							</tr>
 						</thead>
 						<tbody>
+						
+						    <!-- 회원의 장바구니 정보를 get! -->
+							<c:forEach items="${cart_list}" var="cart_list">
 							<tr style="padding: 0px">
-								<form>
-								<th>사진</th>
-								<td alt="Cart-Content">조광재</td>
+								<form id="">
+								<th>
+								<img alt="${cart_list.mainImg}" src="${cart_list.mainImg}">
+								</th>
+								<td alt="Cart-Content"> ${cart_list.title}</td>
 								
-								<input type="hidden" name="id">
+								<!-- 관광명소 id,경도,위도를 숨기기 -->
+								<input type="hidden" name="id" value="${cart_list.pid}">
+								<input type="hidden" name="longitude" value="${cart_list.longitude}"><!-- 경도 -->
+								<input type="hidden" name="latitude" value="${cart_list.latitude}"><!-- 위도 -->
 								
-								<td style="width:80px;padding: 0px;vertical-align : middle;" >
-								
-								<input type="button" class="R_button_insert">
-								<input type="button" class="R_button_delete">
-								
+								<td style="width:80px;padding: 0px;vertical-align :middle;" >
+								<input type="submit" class="R_button_insert">
+								<input type="submit" class="R_button_delete">
 								</td>
 								
 								</form>
 							</tr>
-							<tr>
-								<form>
-								<th>1</th>
-								<td alt="Cart-Content">원한나</td>
-								<input type="hidden" name="id" >
-								<td>Otto</td>
-								</form>
-							</tr>
-							<tr>
-								<form>
-								<th>1</th>
-								<td alt="Cart-Content">김대호</td>
-								<input type="hidden" name="id">
-								<td>Otto</td>
-								</form>
-							</tr>
+							</c:forEach>
+							<!-- /.회원의 장바구니 정보를 get! -->
 						</tbody>
 					</table>
 				</div>
@@ -140,6 +133,10 @@
 
 			</div>
     <!-- /.프로젝트 목록 + 관광명소 장바구니 -->
+    
+   
+PID =  <br/>
+
     
    
     

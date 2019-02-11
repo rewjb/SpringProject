@@ -7,7 +7,9 @@
 	</insert>
 	
 	<select id="selectAll" parameterType="String" resultType="PlaceCartDTO">
-	select * from PLACECART where mid=#{value}
-	</select>
+	select ATTRACTIONS.PID,TITLE,LATITUDE,LONGITUDE,MAINIMG 
+	from PLACECART,ATTRACTIONS 
+	where PLACECART.MID=#{value} AND PLACECART.PID = ATTRACTIONS.PID
+	</select><!-- PID/TITLE/LATITUDE/LONGITUDE/MAINIMG -->
 </mapper>
 

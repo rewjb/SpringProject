@@ -9,7 +9,7 @@
 <body>
 
 
-<form action="PlaceCartSelectAll">
+<form action="TravelPlan">
 <input type="hidden" name="mid" value="temp">
 <input type="submit" value="여행계확짜기로 이동!"> 
 </form>

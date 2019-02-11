@@ -9,7 +9,7 @@
 
 <style type="text/css">
 .R_button_insert {
-    background-image: url('/springProject/resources/IMAGE/cart-insert.jpg');
+    background-image: url('/springProject/resources/IMAGE/PlaceCartImg/cart-insert.jpg');
 	background-size: 100% 100%;
 	width: 35px;
 	height: 35px;
@@ -18,7 +18,7 @@
 }
 
 .R_button_delete {
-    background-image: url('/springProject/resources/IMAGE/cart-delete.jpg');
+    background-image: url('/springProject/resources/IMAGE/PlaceCartImg/cart-delete.jpg');
 	background-size: 100% 100%;
 	width: 35px;
 	height: 35px;

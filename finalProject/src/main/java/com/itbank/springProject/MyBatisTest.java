@@ -17,7 +17,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 public class MyBatisTest {
 	
 	MyBatisTest() throws SQLException{
-		ApplicationContext context = new GenericXmlApplicationContext("dataBase_ORACLE_Config.xml");
+		ApplicationContext context = new GenericXmlApplicationContext("contextConfigLocation.xml");
 		
 		//1번 실험
 		//BasicDataSource basicDataSource = (BasicDataSource)context.getBean("dataSource");

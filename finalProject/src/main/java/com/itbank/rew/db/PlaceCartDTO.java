@@ -1,4 +1,4 @@
-package com.itbank.rew;
+package com.itbank.rew.db;
 
 public class PlaceCartDTO {
 

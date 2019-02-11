@@ -5,7 +5,9 @@
 	<insert id="insert" parameterType="PlaceCartDTO">
 	insert into PLACECART values(#{mid},#{pid})
 	</insert>
-	<select id="">
+	
+	<select id="selectAll" parameterType="String" resultType="PlaceCartDTO">
+	select * from PLACECART where mid=#{value}
 	</select>
 </mapper>
 

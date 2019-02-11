@@ -1,11 +1,12 @@
-package com.itbank.rew.controller;
+package com.itbank.springProject.rew.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.itbank.rew.db.PlaceCartDAO;
+import com.itbank.springProject.rew.db.PlaceCartDAO;
 
 @Controller
 public class TravelPlanController {
@@ -14,9 +15,9 @@ public class TravelPlanController {
 	@Qualifier("PlaceCartDAO")
 	private PlaceCartDAO placeCartDAO;
 	
-	@RequestMapping
-	public void aa(){
-		
+	@RequestMapping("PlaceCartSelectAll")
+	public void placeCartSelectAll(@RequestParam("mid") String mid){
+		System.out.println(mid);
 	}
 	
 	

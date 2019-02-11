@@ -1,4 +1,6 @@
-package com.itbank.rew.db;
+package com.itbank.springProject.rew.db;
+
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,10 @@ public class PlaceCartDAO {
 	@Autowired
 	private SqlSession session;
 	
-//	public void insert(MemberDTO memberDTO){
-//	session.insert("member.insertMember", memberDTO);
-//}
+	public List<PlaceCartDTO> selectAll(String mid){
+		return session.selectList("PlaceCart.selectAll");
+	}
+	
 	
 
 }

@@ -15,7 +15,7 @@ public class PlaceCartDAO {
 	private SqlSession session;
 	
 	public List<PlaceCartDTO> selectAll(String mid){
-		return session.selectList("PlaceCart.selectAll");
+		return session.selectList("PlaceCart.selectAll",mid);
 	}
 	
 	

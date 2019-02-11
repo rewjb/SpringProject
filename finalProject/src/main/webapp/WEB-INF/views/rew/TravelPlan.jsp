@@ -32,9 +32,6 @@
 <body>
  <%@ include file="/UserMainHeader.jsp" %>
 
-
- 
-
  
  <!-- 최상위 컨테이너 -->
 <div class="container">
@@ -94,7 +91,7 @@
 				<div
 					style="height: 60%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
 
-					<table class="table table-striped" style="width: 100%;word-break:break-word;">
+					<table class="table table-striped" style="width: 100%;word-break:break-word;border: 1px">
 						<thead>
 							<tr>
 								<th style="vertical-align : middle;">검색</th>
@@ -105,43 +102,68 @@
 						
 						    <!-- 회원의 장바구니 정보를 get! -->
 							<c:forEach items="${cart_list}" var="cart_list">
-							<tr style="padding: 0px">
-								<form id="">
-								<th>
-								<img alt="${cart_list.mainImg}" src="${cart_list.mainImg}">
+							<form alt="나는 form!" onsubmit="return cart_form();">
+							<tr alt="나  tr이다!">
+								<th style="padding: 2px;width:50px">
+								<img  style="width:50px;height:50px;vertical-align: middle;"  class="img-fluid" src="http://placehold.it/500x300" alt="${cart_list.mainImg}">
 								</th>
-								<td alt="Cart-Content"> ${cart_list.title}</td>
+								<td alt="Cart-Content" style="vertical-align: middle;">${cart_list.title}	</td>
 								
 								<!-- 관광명소 id,경도,위도를 숨기기 -->
-								<input type="hidden" name="id" value="${cart_list.pid}">
+								<input type="hidden" name="pid" value="${cart_list.pid}">
+								<input type="hidden" name="title" value="${cart_list.title}">
 								<input type="hidden" name="longitude" value="${cart_list.longitude}"><!-- 경도 -->
 								<input type="hidden" name="latitude" value="${cart_list.latitude}"><!-- 위도 -->
 								
-								<td style="width:80px;padding: 0px;vertical-align :middle;" >
-								<input type="submit" class="R_button_insert">
-								<input type="submit" class="R_button_delete">
+								<td style="width:80px;padding: 0px;vertical-align :middle;" alt="asd" >
+								<input type="submit" class="R_button_insert" alt="in" onclick="cart_button();">
+								<input type="submit" class="R_button_delete" alt="de" onclick="cart_button();">
 								</td>
-								
-								</form>
 							</tr>
+							</form>
 							</c:forEach>
-							<!-- /.회원의 장바구니 정보를 get! -->
+							<!-- /.회원의 장바구니 정보를 get! --> 
 						</tbody>
 					</table>
 				</div>
 				<!-- /.관광명소 장바구니 -->
-
 			</div>
     <!-- /.프로젝트 목록 + 관광명소 장바구니 -->
     
-   
-PID =  <br/>
-
+    <script type="text/javascript">
     
-   
+    var inNde;
     
+    function cart_form() {
+    	if (inNde == 'in') {
 
-  </div>
+    		var asd = {aa:'aa' , bb:'bb' };
+    		//alert(decodeURI($(event.target).serializeObject());
+    		alert($(event.target).get('longitude'));
+			alert('삽입='+$(event.target).serialize());
+		}else{
+			alert('삭제');
+		}
+    	
+    	return false;
+	}
+    
+    function cart_button() {
+    	
+    	inNde = $(event.target).attr('alt');
+    	console.log('inNde 값 = '+inNde);
+    	
+	}
+    
+    
+    
+    </script>
+
+
+
+
+
+		</div>
   <!-- /.계획 툴 -->
 
   <!-- Related Projects Row -->
@@ -151,7 +173,7 @@ PID =  <br/>
 
     <div class="col-md-3 col-sm-6 mb-4">
       <a href="#">
-            <img class="img-fluid" src="/springProject/resources/IMAGE/cart-insert.jpg" alt="">
+             <img class="img-fluid" src="http://placehold.it/500x300" alt="">
           </a>
     </div>
 

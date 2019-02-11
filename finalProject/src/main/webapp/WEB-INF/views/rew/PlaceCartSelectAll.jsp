@@ -10,12 +10,12 @@
 <body>
 일단 이동<br>
 
-<c:forEach items="${list}" var="list">
-PID = ${list.pid} <br/>
-PID = ${list.title} <br/>
-PID = ${list.latitude} <br/>
-PID = ${list.longitude} <br/>
-PID = ${list.mainImg} <br/>
+<c:forEach items="${cart_list}" var="cart_list">
+PID = ${cart_list.pid} <br/>
+PID = ${cart_list.title} <br/>
+PID = ${cart_list.latitude} <br/>
+PID = ${cart_list.longitude} <br/>
+PID = ${cart_list.mainImg} <br/>
 ------------------------------------------<br>
 </c:forEach>
 </body>

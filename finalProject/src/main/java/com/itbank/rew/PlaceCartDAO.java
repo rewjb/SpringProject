@@ -1,4 +1,4 @@
-package rew;
+package com.itbank.rew;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;

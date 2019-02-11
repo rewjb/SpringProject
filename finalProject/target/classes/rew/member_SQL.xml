@@ -4,6 +4,6 @@
 
 <mapper namespace="member">
 	<insert id="insertMember" parameterType="memberVO">
-		insert into MEMBER values(#{name},#{gender})
+		insert into MEMBER values(#{mid},#{pid})
 	</insert>
 </mapper>

@@ -2,9 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="member">
+<mapper namespace="PlaceCart">
+	<insert id="" parameterType="PlaceCartDTO">
+	insert into MEMBER values(#{name},#{gender})
+	</insert>
 	<select id="">
 	    select * 
 		insert into MEMBER values(#{name},#{gender})
 	</select>
 </mapper>
+

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestController {
 	
 	@Autowired
-	@Qualifier("test.hn")
-	private TestController test;
 
 	@RequestMapping("won/TravelPlan")
 	public void imtest() {

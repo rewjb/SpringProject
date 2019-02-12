@@ -74,13 +74,13 @@
 						</thead>
 						<tbody id="Project-Container">
 							<tr>
-								<td alt="Project-Content" colspan="3">제목1</td>
+								<td alt="Project-Content" colspan="3" onclick="alert('1');">제목1</td>
 							</tr>
 							<tr>
-								<td alt="Project-Content" colspan="3">제목2</td>
+								<td alt="Project-Content" colspan="3" onclick="alert('2');">제목2</td>
 							</tr>
 							<tr>
-								<td alt="Project-Content" colspan="3">제목3</td>
+								<td alt="Project-Content" colspan="3" onclick="alert('3');">제목3</td>
 							</tr>
 						</tbody>
 					</table>
@@ -197,13 +197,13 @@
 				//하위 for 문을 통해 보여줄 th를 정한다.
 				for (var i = 0; i < Cart_Content.length; i++) {
 					if (Cart_Content[i].innerHTML==inputValue) {
-						Cart_Content[i].parentNode.style.display =  'table-row';
+						Cart_Content[i].style.display =  'table-cell';
 						//Cart_Content[i].style.display = 'table-row';
 					}else {
-						Cart_Content[i].parentNode.style.display =  'none';
+						Cart_Content[i].style.display =  'none';
 						//Cart_Content[i].style.display = 'none';
 						if (inputValue=='') {
-						Cart_Content[i].parentNode.style.display =  'table-row';
+						Cart_Content[i].style.display =  'table-cell';
 						}
 					}
 				}

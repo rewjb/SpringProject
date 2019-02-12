@@ -8,6 +8,8 @@ public class PlaceCartDTO {
 	//관광명소 아이디
 	private String title;
 	// 명소이름
+	private String content;
+	// 명소의 간략한 설명
 	private String latitude;
 	// 위도
 	private String longitude;

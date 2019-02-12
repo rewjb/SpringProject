@@ -3,32 +3,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="member">
-
-	<!-- SELECT == parameterType : 입력값 / resultType : 출력값 -->
-	<!-- id에 해당하는 정보를 가져오는 select문 -->
-	<select id="select" parameterType="memDTO" resultMap="rs">
-		SELECT * FROM member
-		WHERE mid = #{mid}
-	</select>
-	
-	<!-- ResultSet == property : 변수명 / column : 테이블 컬럼명 -->
-	<resultMap type="memDTO" id="rs">
-		<result property="mid" column="mid" />
-		<result property="mpw" column="mpw" />
-		<result property="mname" column="mname" />
-		<result property="mprofile" column="mprofile" />
-		<result property="mtel" column="mtel" />
-		<result property="maddr1" column="maddr1" />
-		<result property="maddr2" column="maddr2" />
-		<result property="gender" column="gender" />
-		<result property="agegroup" column="agegroup" />
-		<result property="rdate" column="rdate" />
-	</resultMap>
-	
-	<!-- SELECT ALL -->
-	<select id="selectAll" resultMap="rs">
-		SELECT * FROM member
-	</select>
 	
 	<!-- INSERT -->
 	<insert id="insert" parameterType="memDTO">
@@ -52,5 +26,32 @@
 		DELETE FROM member WHERE
 		mid = #{mid}
 	</delete>
-
+ 
+	<!-- SELECT == parameterType : 입력값 / resultType : 출력값 -->
+	<!-- id에 해당하는 정보를 가져오는 select문 -->
+	<!-- member삭제하기 전에 mId와 mPw일치여부 확인을 위한 select문 -->
+	<select id="select" parameterType="memDTO" resultMap="rs">
+		SELECT * FROM member
+		WHERE mid = #{mid}
+	</select>
+	
+	<!-- ResultSet == property : 변수명 / column : 테이블 컬럼명 -->
+	<resultMap type="memDTO" id="rs">
+		<result property="mid" column="mid" />
+		<result property="mpw" column="mpw" />
+		<result property="mname" column="mname" />
+		<result property="mprofile" column="mprofile" />
+		<result property="mtel" column="mtel" />
+		<result property="maddr1" column="maddr1" />
+		<result property="maddr2" column="maddr2" />
+		<result property="gender" column="gender" />
+		<result property="agegroup" column="agegroup" />
+		<result property="rdate" column="rdate" />
+	</resultMap>
+	
+	<!-- SELECT ALL -->
+	<!-- 회원정보 전체 가져오는 select문 -->
+	<select id="selectAll" resultMap="rs">
+		SELECT * FROM member
+	</select>
 </mapper>

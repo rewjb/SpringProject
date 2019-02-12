@@ -9,9 +9,17 @@ public class PlanDTO {
 	private String latitude;
 	private String longitude;
 	private String way;
-	private String mainimg;
+	private String mainImg;
 	private int num;
 	
+	public String getMainImg() {
+		return mainImg;
+	}
+
+	public void setMainImg(String mainImg) {
+		this.mainImg = mainImg;
+	}
+
 	public String getMid() {
 		return mid;
 	}
@@ -55,12 +63,6 @@ public class PlanDTO {
 	public void setWay(String way) {
 		this.way = way;
 	}
-	public String getMainimg() {
-		return mainimg;
-	}
-	public void setMainimg(String mainimg) {
-		this.mainimg = mainimg;
-	}
 	public int getNum() {
 		return num;
 	}
@@ -69,7 +71,7 @@ public class PlanDTO {
 	}
 	
 	public PlanDTO(String mid, String ptitle, String title, String content, String latitude, String longitude,
-			String way, String mainimg, int num) {
+			String way, String mainImg, int num) {
 		super();
 		this.mid = mid;
 		this.ptitle = ptitle;
@@ -78,7 +80,7 @@ public class PlanDTO {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.way = way;
-		this.mainimg = mainimg;
+		this.mainImg = mainImg;
 		this.num = num;
 	}
 	

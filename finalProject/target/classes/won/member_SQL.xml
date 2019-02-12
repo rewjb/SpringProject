@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<!-- SELECT == parameterType : 입력값 / resultType : 출력값 -->
+	<select id="select" parameterType="memDTO" resultMap="rs">
+		SELECT * FROM member
+		WHERE mid = #{mid}
+	</select>
+	
+	<!-- ResultSet == property : 변수명 / column : 테이블 컬럼명 -->
+	<resultMap type="memDTO" id="rs">
+		<result property="mid" column="mid" />
+		<result property="mpw" column="mpw" />
+		<result property="mname" column="mname" />
+		<result property="mprofile" column="mprofile" />
+		<result property="maddr1" column="maddr1" />
+		<result property="maddr2" column="maddr2" />
+		<result property="gender" column="gender" />
+		<result property="agegroup" column="agegroup" />
+		<result property="rdate" column="rdate" />
+	</resultMap>
+	
+	<!-- SELECT ALL -->
+	<select id="selectAll" resultMap="rs">
+		SELECT * FROM member
+	</select>
+	
+	<!-- INSERT -->
+	<insert id="insert" parameterType="memDTO">
+		INSERT INTO member
+		VALUES(#{mid},#{mpw},#{mname},#{mprofile},
+			#{maddr1},#{maddr2},#{gender},#{agegroup},${"SYSDATE"})
+	</insert>
+
+	<!-- UPDATE -->
+	<update id="update" parameterType="memDTO">
+		UPDATE member SET
+		mpw = #{mpw}, mprofile = #{mprofile}, maddr1 = #{maddr1}
+		maddr2 = #{maddr2}, gender = #{gender}, agegroup = #{agegroup} 
+		WHERE mid = #{mid}
+	</update>
+	
+	<!-- DELETE -->
+	<delete id="delete" parameterType="memDTO">
+		DELETE FROM member WHERE
+		mid = #{mid}
+	</delete>
+
+</mapper>

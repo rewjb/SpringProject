@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-@Repository("test.hn")
+/*@Repository("test.hn")*/
 public class TestDAO {
 	
-	@Autowired
+	/*@Autowired*/
 	private SqlSession session;
 	
 	public void insert(){

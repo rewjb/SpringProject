@@ -27,6 +27,7 @@
 			<list>
 				<value>classpath:rew/placeCart_SQL.xml</value>
 				<value>classpath:kim/member_SQL.xml</value>
+				<value>classpath:won/member_SQL.xml</value>
 			</list>
 			<!-- 상위는 SQL를 설정한 xml을 등록하는 과정 -->
 		</property>

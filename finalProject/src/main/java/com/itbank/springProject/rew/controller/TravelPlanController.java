@@ -2,6 +2,7 @@ package com.itbank.springProject.rew.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ public class TravelPlanController {
 	private PlaceCartDAO placeCartDAO;
 
 	@RequestMapping("rew/TravelPlan")
-	public void placeCartSelectAll(@RequestParam("mid") String mid, Model model) {
+	public void placeCartSelectAll(@RequestParam("mid") String mid, Model model ) {
 		model.addAttribute("cart_list", placeCartDAO.selectAll(mid));
 	}
 

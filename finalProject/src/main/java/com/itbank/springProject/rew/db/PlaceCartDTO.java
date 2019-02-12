@@ -17,8 +17,18 @@ public class PlaceCartDTO {
 	private String mainImg;
 	// 메인이미지
 
+	
+	
 	public String getMid() {
 		return mid;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public void setMid(String mid) {
@@ -65,7 +75,7 @@ public class PlaceCartDTO {
 		this.mainImg = mainImg;
 	}
 
-	public PlaceCartDTO(String mid, String pid, String title, String latitude, String longitude, String mainImg) {
+	public PlaceCartDTO(String mid, String pid, String title, String latitude, String longitude, String mainImg , String content) {
 		super();
 		this.mid = mid;
 		this.pid = pid;
@@ -73,6 +83,7 @@ public class PlaceCartDTO {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.mainImg = mainImg;
+		this.content = content;
 	}
 	
 	public PlaceCartDTO() {

@@ -16,6 +16,7 @@
 		<result property="mpw" column="mpw" />
 		<result property="mname" column="mname" />
 		<result property="mprofile" column="mprofile" />
+		<result property="mtel" column="mtel" />
 		<result property="maddr1" column="maddr1" />
 		<result property="maddr2" column="maddr2" />
 		<result property="gender" column="gender" />

@@ -23,18 +23,20 @@
 	<!-- header -->
 	<%@ include file="/UserMainHeader.jsp"%>
 	
-	<!-- 위쪽 공간 만들기 위한 div -->
-	<div style="height: 60px;"></div>
 	<div class="container">
 		<!-- 전체 div -->
 		<div class="container" style="display: inline-block;">
 			<!-- 폼 전체 담아놓는 div -->
 			<div style="padding-left: 15%; padding-right: 15%">
-				<h4 class="mb-3">기본정보</h4>
+				<!-- 위쪽 공간 만들기 위한 div -->
+				<div style="height: 60px;"></div>
+				<h4 class="mb-3" style="vertical-align:text-bottom;">Sign-up</h4>
+				<!-- 공간 만들기 위한 div -->
+				<div style="height: 40px;"></div>
 				<form class="needs-validation" novalidate action="insertMember.do">
 					<!-- mid 부분 div -->
 					<div class="mb-3">
-						<label for="email">Email(id) <span class="text-muted"></span></label>
+						<label for="email">ID <span class="text-muted"></span></label>
 						<input type="email" class="form-control" name="mid"	placeholder="you@example.com" required="required">
 						<div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
 					</div>
@@ -59,13 +61,13 @@
 
 					<!-- mname -->
 					<div class="mb-3">
-						<label for="username">userName</label>
+						<label for="username">user-name</label>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text">＠</span>
 							</div>
 							<input type="text" class="form-control" name="mname" placeholder="Username" required="required">
-							<div class="invalid-feedback" style="width: 100%;">Your username is required.</div>
+							<div class="invalid-feedback" style="width: 100%;">Your user-name is required.</div>
 						</div>
 					</div>
 					
@@ -79,12 +81,10 @@
 					<!-- 기본정보 : 필수입력 / 추가정보 : 선택입력 구분해주는 선-->
 					<br><hr class="mb-4" style=""><br>
 					
-					<h4 class="mb-3">추가정보</h4>
-					
 					<!-- 전화번호 입력부분 -->
 					<div class="mb-3">
 					<label for="tel">phone <span class="text-muted"></span></label> 
-					<input type="number" class="form-control" id="tel" placeholder="01012345678">
+					<input type="number" class="form-control" name="mtel" placeholder="01012345678">
 					<div class="invalid-feedback"></div>
 					</div><br>
 					
@@ -94,13 +94,13 @@
 						<input type="text" class="form-control" name="maddr1" placeholder="서울시 금천구 벚꽃로 244">
 					</div>
 					<div class="mb-3">
-						<label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+						<label for="address2">Address<span class="text-muted">(Optional)</span></label>
 						<input type="text" class="form-control" name="maddr2" placeholder="벽산디지털밸리 5차">
 					</div><br>
 
 					<!-- 성별선택 -->
 					<div class="d-block my-3">
-						<label for="ageGroup">gender</label> 
+						<label for="gender">gender</label> 
 						<select class="custom-select d-block w-100" name="gender">
 							<option value="other" selected="selected">other</option>
 							<option value="male">Male</option>
@@ -118,8 +118,7 @@
 							<option value="6070">60~70대</option>
 							<option value="80">80대~</option>
 						</select>
-					</div>
-					<br> <br>
+					</div><br><br>
 
 					<hr class="mb-4">
 					
@@ -128,13 +127,13 @@
 
 					<!-- 회원가입 버튼 -->
 					<button class="btn btn-primary btn-lg btn-block" type="submit">
-					Continue to Sign-In</button>
+					Sign-up</button>
 				</form>
+				<!-- 아래쪽 공간 만들기 위한 div -->
+				<div style="height: 80px;"></div>
 			</div>
 		</div>
-		<div style="height: 60px;"></div>
 	</div>
-	<!-- 아래쪽 공간 만들기 위한 div -->
 	<%@ include file="/UserMainFooter.jsp"%>
 	
 </body>

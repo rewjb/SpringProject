@@ -5,6 +5,7 @@
 <mapper namespace="member">
 
 	<!-- SELECT == parameterType : 입력값 / resultType : 출력값 -->
+	<!-- id에 해당하는 정보를 가져오는 select문 -->
 	<select id="select" parameterType="memDTO" resultMap="rs">
 		SELECT * FROM member
 		WHERE mid = #{mid}
@@ -32,15 +33,17 @@
 	<!-- INSERT -->
 	<insert id="insert" parameterType="memDTO">
 		INSERT INTO member
-		VALUES(#{mid},#{mpw},#{mname},#{mprofile},
+		VALUES(#{mid},#{mpw},#{mname},#{mprofile},#{mtel}
 			#{maddr1},#{maddr2},#{gender},#{agegroup},${"SYSDATE"})
 	</insert>
 
 	<!-- UPDATE -->
+	<!-- mId와 mName은 수정 안됨 -->
 	<update id="update" parameterType="memDTO">
 		UPDATE member SET
-		mpw = #{mpw}, mprofile = #{mprofile}, maddr1 = #{maddr1}
-		maddr2 = #{maddr2}, gender = #{gender}, agegroup = #{agegroup} 
+		mpw = #{mpw}, mprofile = #{mprofile}, mtel = #{mtel} 
+		maddr1 = #{maddr1}, maddr2 = #{maddr2}, 
+		gender = #{gender}, agegroup = #{agegroup} 
 		WHERE mid = #{mid}
 	</update>
 	

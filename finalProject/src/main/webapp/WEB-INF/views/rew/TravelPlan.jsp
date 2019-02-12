@@ -74,13 +74,13 @@
 						</thead>
 						<tbody id="Project-Container">
 							<tr>
-								<td alt="Project-Content" colspan="3" onclick="alert('1');">제목1</td>
+								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project01</td>
 							</tr>
 							<tr>
-								<td alt="Project-Content" colspan="3" onclick="alert('2');">제목2</td>
+								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project02</td>
 							</tr>
 							<tr>
-								<td alt="Project-Content" colspan="3" onclick="alert('3');">제목3</td>
+								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project03</td>
 							</tr>
 						</tbody>
 					</table>
@@ -162,68 +162,96 @@
 			<script type="text/javascript">
 			
 			
-			// 장바구니 검색어 (input 아이디 : Cart-Search)
-			function Cart_Search() {
 
-				var inputValue = $('#Cart-Search').val();
-				//입력값
-				
-				var Cart_Content = $('td[alt=Cart-Content]');
-				
-				//하위 for 문을 통해 보여줄 th를 정한다.
-				for (var i = 0; i < Cart_Content.length; i++) {
-					if (Cart_Content[i].innerHTML==inputValue) {
-						Cart_Content[i].parentNode.style.display =  'table-row';
-						//Cart_Content[i].style.display = 'table-row';
-					}else {
-						Cart_Content[i].parentNode.style.display =  'none';
-						//Cart_Content[i].style.display = 'none';
-						if (inputValue=='') {
-						Cart_Content[i].parentNode.style.display =  'table-row';
+				// 프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
+				function Move_Project_Data(data) {
+
+					//alert($(data).text());
+					//검사용
+
+					$.ajax({
+						url : "GetProjectData?mid=temp&title="+$(data).text(),//요청을 보낼 url
+						dataType : "json",//반환받을 데이터 타입 선택
+						error : function(result , confirm , aa) {
+							//var list = result.result;
+							alert(aa);
+							alert(confirm);
+							//$(list).each(function(index, person) {
+							//})//each 끝
+						},//success끝
+						success : function(result , confirm) {
+							//var list = result.result;
+							alert('dd');
+							alert(confirm.value);
+							//$(list).each(function(index, person) {
+							//})//each 끝
+						}//success끝
+					})//ajax끝
+
+				}
+				// ...프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
+
+				// 장바구니 검색어 (input 아이디 : Cart-Search)
+				function Cart_Search() {
+
+					var inputValue = $('#Cart-Search').val();
+					//입력값
+
+					var Cart_Content = $('td[alt=Cart-Content]');
+
+					//하위 for 문을 통해 보여줄 th를 정한다.
+					for (var i = 0; i < Cart_Content.length; i++) {
+						if (Cart_Content[i].innerHTML == inputValue) {
+							Cart_Content[i].parentNode.style.display = 'table-row';
+							//Cart_Content[i].style.display = 'table-row';
+						} else {
+							Cart_Content[i].parentNode.style.display = 'none';
+							//Cart_Content[i].style.display = 'none';
+							if (inputValue == '') {
+								Cart_Content[i].parentNode.style.display = 'table-row';
+							}
 						}
 					}
 				}
-			}
-			// ...장바구니 검색어
-			
-			// 프로젝트 검색어
-			function Project_Search() {
-				
-				var inputValue = $('#Project-Search').val();
-				//입력값
-				
-				var Cart_Content = $('td[alt=Project-Content]');
-				
-				//하위 for 문을 통해 보여줄 th를 정한다.
-				for (var i = 0; i < Cart_Content.length; i++) {
-					if (Cart_Content[i].innerHTML==inputValue) {
-						Cart_Content[i].style.display =  'table-cell';
-						//Cart_Content[i].style.display = 'table-row';
-					}else {
-						Cart_Content[i].style.display =  'none';
-						//Cart_Content[i].style.display = 'none';
-						if (inputValue=='') {
-						Cart_Content[i].style.display =  'table-cell';
+				// ...장바구니 검색어
+
+				// 프로젝트 검색어
+				function Project_Search() {
+
+					var inputValue = $('#Project-Search').val();
+					//입력값
+
+					var Cart_Content = $('td[alt=Project-Content]');
+
+					//하위 for 문을 통해 보여줄 th를 정한다.
+					for (var i = 0; i < Cart_Content.length; i++) {
+						if (Cart_Content[i].innerHTML == inputValue) {
+							Cart_Content[i].style.display = 'table-cell';
+							//Cart_Content[i].style.display = 'table-row';
+						} else {
+							Cart_Content[i].style.display = 'none';
+							//Cart_Content[i].style.display = 'none';
+							if (inputValue == '') {
+								Cart_Content[i].style.display = 'table-cell';
+							}
 						}
 					}
+
 				}
-				
-			}
-			// ...프로젝트 검색어
-			
-	
+				// ...프로젝트 검색어
+
 				// 프로젝트 생성 자바스크립트
 				function validity_MakePlan() {
-					
+
 					var inputValue = $('#MakePlan').val();
-					
-					var PlanName =  $('td[alt=Project-Content]');
-					
+
+					var PlanName = $('td[alt=Project-Content]');
+
 					for (var i = 0; i < PlanName.length; i++) {
-						
+
 						//console.log(PlanName[i].innerHTML+'는'+(PlanName[i].innerHTML==inputValue));
 						//확인용
-						if (PlanName[i].innerHTML==inputValue) {
+						if (PlanName[i].innerHTML == inputValue) {
 							$('#PlanName').css('color', 'red');
 							$('#PlanName').text('이미 존재하는 이름입니다.');
 							break;
@@ -234,32 +262,29 @@
 					}
 				}
 				// ...프로젝트 생성 자바스크립트
-				
+
 				// 프로젝트 생성  확인 및 취소 자바스크립트
 				function finish_MakePlan(button) {
 
-				if (button.getAttribute('alt') == 'save') {
+					if (button.getAttribute('alt') == 'save') {
 
-						if ($('#PlanName').text()=='사용이 가능한 이름입니다.') {
+						if ($('#PlanName').text() == '사용이 가능한 이름입니다.') {
 							// 설명 : 저장을 할 수 있는 if문 내부!
 
-							var component_text = '<tr>'+
-							                '<td alt="Project-Content" colspan="3">'+
-							            	$('#MakePlan').val()+
-							                '</td>'+
-							                '</tr>';
+							var component_text = '<tr>'
+									+ '<td alt="Project-Content" colspan="3">'
+									+ $('#MakePlan').val() + '</td>' + '</tr>';
 							//생설될 태그 컴포넌트 미리 제작
-							
-							
+
 							$('#MakePlan').val('');
 							$('#cancel_button').click();
 							$('#PlanName').text('');
 							// 모달을 취소하며 input의 value를 ''로 대체
-							
+
 							var component = $(component_text);
-							
+
 							$('#Project-Container').prepend(component);
-							
+
 						} else {
 
 							$('#MakePlan').val('');

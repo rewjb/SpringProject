@@ -20,9 +20,15 @@ public class TravelPlanController {
 	@Qualifier("PlaceCartDAO")
 	private PlaceCartDAO placeCartDAO;
 
-	@RequestMapping("rew/TravelPlan")
-	public void placeCartSelectAll(@RequestParam("mid") String mid, Model model ) {
+	@RequestMapping("rew/TravelPlan") // 폼 
+	public void cartSelectAll(@RequestParam("mid") String mid, Model model ) {
 		model.addAttribute("cart_list", placeCartDAO.selectAll(mid));
+	}
+	
+	@RequestMapping("rew/GetProjectData") //ajax
+	public void projectDataMove( String mid ,  String title) {
+		System.out.println(mid);
+		System.out.println(title);
 	}
 
 }

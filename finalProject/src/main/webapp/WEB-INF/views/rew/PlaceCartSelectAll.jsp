@@ -10,6 +10,7 @@
 <body>
 일단 이동<br>
 
+<!-- 장바구니 불러오기
 <c:forEach items="${cart_list}" var="cart_list">
 PID = ${cart_list.pid} <br/>
 PID = ${cart_list.title} <br/>
@@ -19,5 +20,20 @@ PID = ${cart_list.longitude} <br/>
 PID = ${cart_list.mainImg} <br/>
 ------------------------------------------<br>
 </c:forEach>
+ -->
+ 
+ <!-- 장바구니 불러오기
+<c:forEach items="${cart_list}" var="cart_list">
+PID = ${cart_list.pid} <br/>
+PID = ${cart_list.title} <br/>
+PID = ${cart_list.content} <br/>
+PID = ${cart_list.latitude} <br/>
+PID = ${cart_list.longitude} <br/>
+PID = ${cart_list.mainImg} <br/>
+------------------------------------------<br>
+</c:forEach>
+ -->
+ 
+ 
 </body>
 </html>

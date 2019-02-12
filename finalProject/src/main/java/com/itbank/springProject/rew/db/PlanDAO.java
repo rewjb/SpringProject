@@ -11,7 +11,7 @@ public class PlanDAO {
 	private SqlSession session;
 	
 	public List<PlaceCartDTO> selectAll(String mid){
-		return session.selectList("PlaceCart.selectAll",mid);
+		return session.selectList("Plan.selectAllById",mid);
 	}
 	
 

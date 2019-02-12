@@ -110,8 +110,8 @@
 								<td alt="Cart-Content" style="vertical-align: middle;">${cart_list.title}	</td>
 								
 								<!-- 관광명소 id,경도,위도를 숨기기 -->
-								<input type="hidden" name="pid" value="${cart_list.pid}">
-								<input type="hidden" name="title" value="${cart_list.title}">
+								<input type="hidden" name="pid" value="${cart_list.pid}"><!-- 관광명소 아이디 -->
+								<input type="hidden" name="title" value="${cart_list.title}"><!-- 대제목  -->
 								<input type="hidden" name="longitude" value="${cart_list.longitude}"><!-- 경도 -->
 								<input type="hidden" name="latitude" value="${cart_list.latitude}"><!-- 위도 -->
 								<input type="hidden" name="mainImg" value="${cart_list.mainImg}"><!-- 이미지 -->
@@ -166,6 +166,7 @@
 						console.log(dataObj['longitude']); 
 						console.log(dataObj['latitude']); 
 						console.log(dataObj['mainImg']); 
+						//확인용!
 						
 
 					} else {

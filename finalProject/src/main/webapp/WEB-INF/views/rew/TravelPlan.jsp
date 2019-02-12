@@ -61,7 +61,7 @@
 						<thead>
 							<tr>
 								<th colspan="2" style="vertical-align : middle;">
-								<input class="form-control" id="Project-Search" placeholder="계획서명을 입력" onkeyup="Project_Search();">
+								<input class="form-control" id="Project-Search" placeholder="계획서명을 입력" onkeyup="Project_Search(this);">
 								</th>
 								<th style="text-align: right;">
 									<!-- 여행계획 프로젝트 생성 버튼 -->
@@ -148,7 +148,7 @@
       <td>계획서명</td>
       <td id="PlanName" style="color: green;"></td>
       </table>
-          <input class="form-control" id="MakePlan" onkeyup="validity_MakePlan();">
+          <input class="form-control" id="MakePlan" onkeyup="validity_MakePlan(this);">
        </div>
       <div class="modal-footer">
         <button type="button" id="cancel_button" class="btn btn-secondary" alt="cancel" data-dismiss="modal" onclick="finish_MakePlan(this);">취소</button>
@@ -216,16 +216,14 @@
 				// ...장바구니 검색어
 
 				// 프로젝트 검색어
-				function Project_Search() {
-
-					var inputValue = $('#Project-Search').val();
-					//입력값
+				function Project_Search(inputValue) {
 
 					var Cart_Content = $('td[alt=Project-Content]');
 
 					//하위 for 문을 통해 보여줄 th를 정한다.
 					for (var i = 0; i < Cart_Content.length; i++) {
-						if (Cart_Content[i].innerHTML == inputValue) {
+						
+						if (Cart_Content[i].innerHTML.test('/'+inputValue.value+'/')) {
 							Cart_Content[i].style.display = 'table-cell';
 							//Cart_Content[i].style.display = 'table-row';
 						} else {
@@ -241,9 +239,7 @@
 				// ...프로젝트 검색어
 
 				// 프로젝트 생성 자바스크립트
-				function validity_MakePlan() {
-
-					var inputValue = $('#MakePlan').val();
+				function validity_MakePlan(inputValue) {
 
 					var PlanName = $('td[alt=Project-Content]');
 
@@ -251,7 +247,7 @@
 
 						//console.log(PlanName[i].innerHTML+'는'+(PlanName[i].innerHTML==inputValue));
 						//확인용
-						if (PlanName[i].innerHTML == inputValue) {
+						if (PlanName[i].innerHTML.test('/'+inputValue.value+'/')) {
 							$('#PlanName').css('color', 'red');
 							$('#PlanName').text('이미 존재하는 이름입니다.');
 							break;

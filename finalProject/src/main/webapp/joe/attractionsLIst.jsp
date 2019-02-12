@@ -3,9 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 </head>
-
+<%@ include file="/UserMainHeader.jsp" %>
 <body>
 <!--해더랑 리스트랑 공간  어차피  jstl for문을 통해서 구현할곳  -->
  <div style="width: 100%; height:100px; "></div> 

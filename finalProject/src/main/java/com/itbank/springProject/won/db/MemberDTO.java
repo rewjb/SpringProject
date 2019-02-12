@@ -1,8 +1,8 @@
 package com.itbank.springProject.won.db;
 
 public class MemberDTO {
-	private String mid;			//1.email : primary notnull
-	private String mpw;			//2.	:  notnull
+	private String mid;			//1.email 		: primary notnull
+	private String mpw;			//2.			:  notnull
 	private String mname;		//3.user's name : unique notnull
 	private String mprofile;	//4.profile picture
 	private String mtel;		//5.tel

@@ -14,20 +14,11 @@ import com.itbank.springProject.rew.db.PlanDAO;
 import com.itbank.springProject.rew.db.PlanDTO;
 
 @Controller
-public class TravelPlanController {
-
-	@Autowired
-	@Qualifier("PlaceCartDAO")
-	private PlaceCartDAO placeCartDAO;
+public class PlanController {
 	
 	@Autowired
 	@Qualifier("PlanDAO")
 	private PlanDAO planDAO;
-
-	@RequestMapping("rew/TravelPlan")
-	public void cartSelectAll(@RequestParam("mid") String mid, Model model ) {
-		model.addAttribute("cart_list", placeCartDAO.selectAll(mid));
-	}
 	
 	@RequestMapping("rew/GetProjectData")
 	public void projectDataMove(String mid ,  String title) {

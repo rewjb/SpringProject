@@ -15,7 +15,6 @@ public class MemberDAO{
 
 	public void insert(MemberDTO memberDTO) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 }

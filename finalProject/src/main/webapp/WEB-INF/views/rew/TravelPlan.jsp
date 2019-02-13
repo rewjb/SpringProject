@@ -60,30 +60,30 @@
 					<table class="table table-striped" style="width: 100%;word-break:break-word;">
 						<thead>
 							<tr>
-								<th style="vertical-align : middle;">검색</th>
-								<th colspan="2"><input class="form-control" id="Project-Search"></th>
+								<th colspan="2" style="vertical-align : middle;">
+								<input class="form-control" id="Project-Search" placeholder="계획서명을 입력" onkeyup="Project_Search(this);">
+								</th>
+								<th style="text-align: right;">
+									<!-- 여행계획 프로젝트 생성 버튼 -->
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 60px">
+									생성
+									</button>
+									<!-- /.여행계획 프로젝트 생성 버튼 -->
+								</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="Project-Container">
 							<tr>
-								<th>1</th>
-								<td>Markdddddddddddddd</td>
-								<td >Otto</td>
+								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project01</td>
 							</tr>
 							<tr>
-								<th>2</th>
-								<td>Jacob</td>
-								<td>Thornton</td>
+								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project02</td>
 							</tr>
 							<tr>
-								<th>3</th>
-								<td>Larry</td>
-								<td>the Bird</td>
+								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project03</td>
 							</tr>
 						</tbody>
 					</table>
-					
-					
 				</div>
 				<!-- /.프로젝트 목록 -->
 
@@ -94,8 +94,7 @@
 					<table class="table table-striped" style="width: 100%;word-break:break-word;border: 1px">
 						<thead>
 							<tr>
-								<th style="vertical-align : middle;">검색</th>
-								<th colspan="2"><input class="form-control" id="Cart-Search"></th>
+								<th colspan="3"><input class="form-control" id="Cart-Search" type="text" placeholder="관광명소명을 입력" onkeyup="Cart_Search();"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -103,15 +102,16 @@
 						    <!-- 회원의 장바구니 정보를 get! -->
 							<c:forEach items="${cart_list}" var="cart_list">
 							<form alt="나는 form!" onsubmit="return cart_form();" style="background: red">
-							<tr name="id">
-								<th style="padding: 2px;width:50px">
-								 <img  style="width:50px;height:50px;vertical-align: middle;"  class="img-fluid" src="http://placehold.it/500x300" alt="${cart_list.mainImg}">
+							<tr>
+								<th style="padding: 2px;width:66px">
+								 <img  style="width:66px;height:50px;vertical-align: middle;"  class="img-fluid" src="http://placehold.it/500x300" alt="${cart_list.mainImg}">
 								</th>
-								<td alt="Cart-Content" style="vertical-align: middle;">${cart_list.title}	</td>
+								<td alt="Cart-Content" style="vertical-align: middle;">${cart_list.title}</td>
 								
 								<!-- 관광명소 id,경도,위도를 숨기기 -->
 								<input type="hidden" name="pid" value="${cart_list.pid}"><!-- 관광명소 아이디 -->
 								<input type="hidden" name="title" value="${cart_list.title}"><!-- 대제목  -->
+								<input type="hidden" name="content" value="${cart_list.content}"><!-- 소제목  -->
 								<input type="hidden" name="longitude" value="${cart_list.longitude}"><!-- 경도 -->
 								<input type="hidden" name="latitude" value="${cart_list.latitude}"><!-- 위도 -->
 								<input type="hidden" name="mainImg" value="${cart_list.mainImg}"><!-- 이미지 -->
@@ -130,19 +130,174 @@
 				<!-- /.관광명소 장바구니 -->
 			</div>
     <!-- /.프로젝트 목록 + 관광명소 장바구니 -->
-
+    
+    
+    
+ <!-- 여행계획 프로젝트  생성 버튼 클릭시 생성되는 모달  -->
+ <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">당신의 여행계획을 만드세요.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <table>
+      <td>계획서명</td>
+      <td id="PlanName" style="color: green;"></td>
+      </table>
+          <input class="form-control" id="MakePlan" onkeyup="validity_MakePlan(this);">
+       </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel_button" class="btn btn-secondary" alt="cancel" data-dismiss="modal" onclick="finish_MakePlan(this);">취소</button>
+        <button type="button" id="save_button" class="btn btn-primary" alt="save" onclick="finish_MakePlan(this);">생성</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ <!-- /.여행계획 프로젝트  생성 버튼 클릭시 생성되는 모달  -->
+    
 			<script type="text/javascript">
 			
 			
-				
-			
-			
-			var inNde;
-				
+
+				// 프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
+				function Move_Project_Data(data) {
+
+					//alert($(data).text());
+					//검사용
+
+					$.ajax({
+						url : "GetProjectData?mid=temp&title="+$(data).text(),//요청을 보낼 url
+						dataType : "json",//반환받을 데이터 타입 선택
+						error : function(result , confirm , aa) {
+							//var list = result.result;
+							alert(aa);
+							alert(confirm);
+							//$(list).each(function(index, person) {
+							//})//each 끝
+						},//success끝
+						success : function(result , confirm) {
+							//var list = result.result;
+							alert('dd');
+							alert(confirm.value);
+							//$(list).each(function(index, person) {
+							//})//each 끝
+						}//success끝
+					})//ajax끝
+
+				}
+				// ...프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
+
+				// 장바구니 검색어 (input 아이디 : Cart-Search)
+				function Cart_Search() {
+
+					var inputValue = $('#Cart-Search').val();
+					//입력값
+
+					var Cart_Content = $('td[alt=Cart-Content]');
+
+					//하위 for 문을 통해 보여줄 th를 정한다.
+					for (var i = 0; i < Cart_Content.length; i++) {
+						if (Cart_Content[i].innerHTML == inputValue) {
+							Cart_Content[i].parentNode.style.display = 'table-row';
+							//Cart_Content[i].style.display = 'table-row';
+						} else {
+							Cart_Content[i].parentNode.style.display = 'none';
+							//Cart_Content[i].style.display = 'none';
+							if (inputValue == '') {
+								Cart_Content[i].parentNode.style.display = 'table-row';
+							}
+						}
+					}
+				}
+				// ...장바구니 검색어
+
+				// 프로젝트 검색어
+				function Project_Search(inputValue) {
+
+					var Cart_Content = $('td[alt=Project-Content]');
+
+					//하위 for 문을 통해 보여줄 th를 정한다.
+					for (var i = 0; i < Cart_Content.length; i++) {
+						
+						if (Cart_Content[i].innerHTML.test('/'+inputValue.value+'/')) {
+							Cart_Content[i].style.display = 'table-cell';
+							//Cart_Content[i].style.display = 'table-row';
+						} else {
+							Cart_Content[i].style.display = 'none';
+							//Cart_Content[i].style.display = 'none';
+							if (inputValue == '') {
+								Cart_Content[i].style.display = 'table-cell';
+							}
+						}
+					}
+
+				}
+				// ...프로젝트 검색어
+
+				// 프로젝트 생성 자바스크립트
+				function validity_MakePlan(inputValue) {
+
+					var PlanName = $('td[alt=Project-Content]');
+
+					for (var i = 0; i < PlanName.length; i++) {
+
+						//console.log(PlanName[i].innerHTML+'는'+(PlanName[i].innerHTML==inputValue));
+						//확인용
+						if (PlanName[i].innerHTML.test('/'+inputValue.value+'/')) {
+							$('#PlanName').css('color', 'red');
+							$('#PlanName').text('이미 존재하는 이름입니다.');
+							break;
+						} else {
+							$('#PlanName').css('color', 'green');
+							$('#PlanName').text('사용이 가능한 이름입니다.');
+						}
+					}
+				}
+				// ...프로젝트 생성 자바스크립트
+
+				// 프로젝트 생성  확인 및 취소 자바스크립트
+				function finish_MakePlan(button) {
+
+					if (button.getAttribute('alt') == 'save') {
+
+						if ($('#PlanName').text() == '사용이 가능한 이름입니다.') {
+							// 설명 : 저장을 할 수 있는 if문 내부!
+
+							var component_text = '<tr>'
+									+ '<td alt="Project-Content" colspan="3">'
+									+ $('#MakePlan').val() + '</td>' + '</tr>';
+							//생설될 태그 컴포넌트 미리 제작
+
+							$('#MakePlan').val('');
+							$('#cancel_button').click();
+							$('#PlanName').text('');
+							// 모달을 취소하며 input의 value를 ''로 대체
+
+							var component = $(component_text);
+
+							$('#Project-Container').prepend(component);
+
+						} else {
+
+							$('#MakePlan').val('');
+						}
+					} else {
+						$('#MakePlan').val('');
+						$('#PlanName').text('');
+					}
+				}
+				// ...프로젝트 생성  확인 및 취소 자바스크립트
+
+				// 장바구니에 있는 버튼 자바스크립트
+				var inNde;
+
 				function cart_form() {
 
 					if (inNde == 'in') {
-						
 						//var form = $(event.target);
 						//var data = JSON.stringify(decodeURI(form.serialize(true)));
 						//console.log(data);
@@ -151,48 +306,35 @@
 						//alert(form.serialize(true));
 						//alert(form.serialize(false));
 						//위 주석은 개발 과정
-						
-						
-						var arr =  $(event.target).serializeArray();
+
+						var arr = $(event.target).serializeArray();
 						var len = arr.length;
 						var dataObj = {};//자바스크립트 객체
-						
-						for (i=0; i<len; i++) {
-						dataObj[arr[i].name] = arr[i].value;
-						}
-						
-						console.log(dataObj['pid']); 
-						console.log(dataObj['title']);
-						console.log(dataObj['longitude']); 
-						console.log(dataObj['latitude']); 
-						console.log(dataObj['mainImg']); 
-						//확인용!
-						
 
+						for (i = 0; i < len; i++) {
+							dataObj[arr[i].name] = arr[i].value;
+						}
+
+						//console.log(dataObj['pid']);
+						//console.log(dataObj['title']);
+						//console.log(dataObj['content']);
+						//console.log(dataObj['longitude']);
+						//console.log(dataObj['latitude']);
+						//console.log(dataObj['mainImg']);
+						//확인용!
 					} else {
 						alert('삭제');
 					}
 
 					return false;
 				}
-				
-				//위에는 메서드 1
-				
-				
-				
-				//아래는 메서드 2
 
 				function cart_button() {
-
 					inNde = $(event.target).attr('alt');
-					console.log('inNde 값 = ' + inNde);
-
+					//console.log('inNde 값 = ' + inNde);
 				}
-				
+				// ...장바구니에 있는 버튼 자바스크립트
 			</script>
-
-
-
 
 		</div>
   <!-- /.계획 툴 -->

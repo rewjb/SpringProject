@@ -8,16 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import com.itbank.springProject.MemberDTO;
 
-@Repository("PlaceCartDAO")
-public class PlaceCartDAO {
+@Repository("R_PlaceCartDAO")
+public class R_PlaceCartDAO {
 	
 	@Autowired
 	private SqlSession session;
 	
-	public List<PlaceCartDTO> selectAll(String mid){
-		return session.selectList("PlaceCart.selectAll",mid);
+	public List<R_PlaceCartDTO> selectAll(String mid){
+		return session.selectList("R_PlaceCart.selectAll",mid);
 	}
-	
 	
 
 }

@@ -1,15 +1,16 @@
 package com.itbank.springProject.won.db;
 
 public class MemberDTO {
-	private String mid;			//1.email : primary notnull
-	private String mpw;			//2.	:  notnull
+	private String mid;			//1.email 		: primary notnull
+	private String mpw;			//2.			:  notnull
 	private String mname;		//3.user's name : unique notnull
 	private String mprofile;	//4.profile picture
-	private String maddr1;		//5.by api	
-	private String maddr2;		//6.by user
-	private String gender;		//7.Male,Female,Others
-	private String agegroup;	//8.age group	
-	private String rdate;		//9.Recent sign-in
+	private String mtel;		//5.tel
+	private String maddr1;		//6.by api	
+	private String maddr2;		//7.by user
+	private String gender;		//8.Male,Female,Others
+	private String agegroup;	//9.age group	
+	private String rdate;		//10.Recent sign-in
 	
 	public String getMid() {
 		return mid;
@@ -34,6 +35,12 @@ public class MemberDTO {
 	}
 	public void setMprofile(String mprofile) {
 		this.mprofile = mprofile;
+	}
+	public String getMtel() {
+		return mtel;
+	}
+	public void setMtel(String mtel) {
+		this.mtel = mtel;
 	}
 	public String getMaddr1() {
 		return maddr1;
@@ -66,4 +73,6 @@ public class MemberDTO {
 		this.rdate = rdate;
 	}
 	
-}
+	
+	
+	}

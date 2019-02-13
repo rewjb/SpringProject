@@ -26,10 +26,13 @@ public class R_PlanController {
 		planDTO.setMid(mid);
 		planDTO.setTitle(title);
 		
+		System.out.println(planDTO.getMid());
+		System.out.println(planDTO.getTitle());
+		
 		List<PlanDTO> list =  planDAO.selectAllById(planDTO);
 		
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getMid());
+			System.out.println(list.get(i).getTitle());
 		}
 		
 	}

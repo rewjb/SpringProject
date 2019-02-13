@@ -5,7 +5,7 @@
 	
 	<select id="selectAllById" parameterType="PlanDTO" resultType="PlanDTO">
 	SELECT * FROM PLAN 
-	WHERE MID=#{mid} and PTITLE=#{pid}
+	WHERE MID=#{mid} and PTITLE=#{title}
 	order by NUM;
 	</select>
 	

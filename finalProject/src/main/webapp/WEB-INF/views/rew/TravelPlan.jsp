@@ -94,7 +94,7 @@
 					<table class="table table-striped" style="width: 100%;word-break:break-word;border: 1px">
 						<thead>
 							<tr>
-								<th colspan="3"><input class="form-control" id="Cart-Search" type="text" placeholder="관광명소명을 입력" onkeyup="Cart_Search();"></th>
+								<th colspan="3"><input class="form-control" id="Cart-Search" type="text" placeholder="관광명소명을 입력" onkeyup="Cart_Search(this);"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -192,22 +192,19 @@
 				// ...프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
 
 				// 장바구니 검색어 (input 아이디 : Cart-Search)
-				function Cart_Search() {
-
-					var inputValue = $('#Cart-Search').val();
-					//입력값
+				function Cart_Search(inputValue) {
 
 					var Cart_Content = $('td[alt=Cart-Content]');
 
 					//하위 for 문을 통해 보여줄 th를 정한다.
 					for (var i = 0; i < Cart_Content.length; i++) {
-						if (Cart_Content[i].innerHTML == inputValue) {
+						if (Cart_Content[i].innerHTML.indexOf(inputValue.value)!=-1) {
 							Cart_Content[i].parentNode.style.display = 'table-row';
 							//Cart_Content[i].style.display = 'table-row';
 						} else {
 							Cart_Content[i].parentNode.style.display = 'none';
 							//Cart_Content[i].style.display = 'none';
-							if (inputValue == '') {
+							if (inputValue.value == '') {
 								Cart_Content[i].parentNode.style.display = 'table-row';
 							}
 						}
@@ -223,13 +220,13 @@
 					//하위 for 문을 통해 보여줄 th를 정한다.
 					for (var i = 0; i < Cart_Content.length; i++) {
 						
-						if (Cart_Content[i].innerHTML.test('/'+inputValue.value+'/')) {
+						if (Cart_Content[i].innerHTML.indexOf(inputValue.value)!=-1) {
 							Cart_Content[i].style.display = 'table-cell';
 							//Cart_Content[i].style.display = 'table-row';
 						} else {
 							Cart_Content[i].style.display = 'none';
 							//Cart_Content[i].style.display = 'none';
-							if (inputValue == '') {
+							if (inputValue.vlaue == '') {
 								Cart_Content[i].style.display = 'table-cell';
 							}
 						}
@@ -242,12 +239,12 @@
 				function validity_MakePlan(inputValue) {
 
 					var PlanName = $('td[alt=Project-Content]');
-
+					
 					for (var i = 0; i < PlanName.length; i++) {
-
+						
 						//console.log(PlanName[i].innerHTML+'는'+(PlanName[i].innerHTML==inputValue));
 						//확인용
-						if (PlanName[i].innerHTML.test('/'+inputValue.value+'/')) {
+						if (PlanName[i].innerHTML.indexOf(inputValue.value)!=-1) {
 							$('#PlanName').css('color', 'red');
 							$('#PlanName').text('이미 존재하는 이름입니다.');
 							break;

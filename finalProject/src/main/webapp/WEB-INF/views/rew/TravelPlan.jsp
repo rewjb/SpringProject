@@ -55,6 +55,8 @@
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active"><a class="nav-link" href="#"
 							onclick="alert('저장');">저장</a></li>
+						<li class="nav-item active"><a class="nav-link" href="#">
+							생성</a></li>
 						<li class="nav-item active"><a class="nav-link" href="#"
 							onclick="alert('삭제');">삭제</a></li>
 						<li class="nav-item active"><a class="nav-link" href="#"
@@ -95,7 +97,7 @@
 				<input name="num" type="hidden" value="">
 				<!-- /.세부 관광항목 -->
 
-				<div class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;"  >
+				<div class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;"  >
 					A simple secondary alert with
 				</div>
 				

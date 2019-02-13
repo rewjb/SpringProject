@@ -179,8 +179,6 @@
 			</div>
     <!-- /.프로젝트 목록 + 관광명소 장바구니 -->
     
-    
-    
  <!-- 여행계획 프로젝트  생성 버튼 클릭시 생성되는 모달  -->
  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

@@ -22,8 +22,8 @@
 
 <!--Custom styles-->
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/blog.css" />
-
-  <div class="container">
+<br>
+  <div class="container pb-3" style="background: white; border-radius: 1.0rem;">
   <header class="blog-header py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">

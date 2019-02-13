@@ -3,10 +3,9 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.itbank.springProject.rew.db.R_PlaceCartDTO" alias="R_PlaceCartDTO" />
-		<typeAlias type="com.itbank.springProject.rew.db.R_PlanDTO" alias="R_PlanDTO" />
+		<typeAlias type="com.itbank.springProject.rew.db.R_PlaceCartDTO" alias="PlaceCartDTO" />
+		<typeAlias type="com.itbank.springProject.rew.db.R_PlanDTO" alias="PlanDTO" />
 		<typeAlias type="com.itbank.springProject.kim.db.MemberDTO" alias="MemberDTO" />
-		<typeAlias type="com.itbank.springProject.won.db.MemberDTO" alias="MemDTO" />
 	</typeAliases>
 	<!-- <mappers>
 		<mapper resource="rew/Member_SQL.xml" />

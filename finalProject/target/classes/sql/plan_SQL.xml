@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="R_Plan">
+<mapper namespace="Plan">
 	
-	<select id="selectAllById" parameterType="R_PlanDTO" resultType="R_PlanDTO">
+	<select id="selectAllById" parameterType="PlanDTO" resultType="PlanDTO">
 	SELECT * FROM PLAN 
 	WHERE MID=#{mid} and PTITLE=#{pid}
 	order by NUM;

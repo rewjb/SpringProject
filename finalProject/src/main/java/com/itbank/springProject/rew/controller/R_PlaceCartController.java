@@ -9,16 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.itbank.springProject.rew.db.R_PlaceCartDAO;
-import com.itbank.springProject.rew.db.R_PlanDAO;
-import com.itbank.springProject.rew.db.R_PlanDTO;
+import com.itbank.springProject.db.PlaceCartDAO;
+import com.itbank.springProject.db.PlanDAO;
+import com.itbank.springProject.db.PlanDTO;
 
 @Controller
 public class R_PlaceCartController {
 
 	@Autowired
-	@Qualifier("R_PlaceCartDAO")
-	private R_PlaceCartDAO placeCartDAO;
+	@Qualifier("PlaceCartDAO")
+	private PlaceCartDAO placeCartDAO;
 	
 	@RequestMapping("rew/TravelPlan")
 	public void cartSelectAll(@RequestParam("mid") String mid, Model model ) {

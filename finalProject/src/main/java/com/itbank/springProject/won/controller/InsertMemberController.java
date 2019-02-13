@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.itbank.springProject.won.db.MemberDAO;
-import com.itbank.springProject.won.db.MemberDTO;
+import com.itbank.springProject.db.MemberDAO;
+import com.itbank.springProject.db.MemberDTO;
 
 @Controller
 public class InsertMemberController {

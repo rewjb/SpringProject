@@ -1,6 +1,6 @@
-package com.itbank.springProject.rew.db;
+package com.itbank.springProject.db;
 
-public class R_PlanDTO {
+public class PlanDTO {
 	
 	private String mid;
 	private String ptitle;
@@ -70,7 +70,7 @@ public class R_PlanDTO {
 		this.num = num;
 	}
 	
-	public R_PlanDTO(String mid, String ptitle, String title, String content, String latitude, String longitude,
+	public PlanDTO(String mid, String ptitle, String title, String content, String latitude, String longitude,
 			String way, String mainImg, int num) {
 		super();
 		this.mid = mid;
@@ -84,7 +84,7 @@ public class R_PlanDTO {
 		this.num = num;
 	}
 	
-	public R_PlanDTO() {
+	public PlanDTO() {
 		// TODO Auto-generated constructor stub
 	}
 

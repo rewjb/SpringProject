@@ -16,38 +16,5 @@ import org.springframework.context.support.GenericXmlApplicationContext;
  */
 public class MyBatisTest {
 	
-	MyBatisTest() throws SQLException{
-		ApplicationContext context = new GenericXmlApplicationContext("contextConfigLocation.xml");
-		
-		//1번 실험
-		//BasicDataSource basicDataSource = (BasicDataSource)context.getBean("dataSource");
-		
-		//String sql = "insert into member values('김아무개2','남')";
-		
-		//Connection con = basicDataSource.getConnection();
-		//PreparedStatement ps = con.prepareStatement(sql);
-		//ps.executeUpdate();
-		
-		
-		
-		MemberDTO memberDTO = new MemberDTO();
-		memberDTO.setName("김아무개22");
-		memberDTO.setGender("남22");
-		
-		MemberDAO memberDAO  = (MemberDAO)context.getBean("memberDAO");
-		memberDAO.insert(memberDTO);
-		
-		
-	}
-	
-	public static void main(String[] args) {
-	  try {
-		new MyBatisTest();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}	
-	}
-	
 	
 }

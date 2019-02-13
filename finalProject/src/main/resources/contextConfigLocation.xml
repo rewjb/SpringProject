@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+	<context:component-scan base-package="com.itbank.springProject.db" />
 	<context:component-scan base-package="com.itbank.springProject.rew.controller" />
-	<context:component-scan base-package="com.itbank.springProject.rew.db" />
 	<context:component-scan base-package="com.itbank.springProject.won.controller" />
 	<context:component-scan base-package="com.itbank.springProject.won.db" />
 
@@ -27,10 +27,9 @@
 		<!-- 상위는 DTO를 설정한 xml을 등록하는 과정 -->
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:rew/r_placeCart_SQL.xml</value>
-				<value>classpath:rew/r_plan_SQL.xml</value>
-				<value>classpath:kim/member_SQL.xml</value>
-				<value>classpath:won/member_SQL.xml</value>
+				<value>classpath:sql/placeCart_SQL.xml</value>
+				<value>classpath:sql/plan_SQL.xml</value>
+				<value>classpath:sql/member_SQL.xml</value>
 			</list>
 			<!-- 상위는 SQL를 설정한 xml을 등록하는 과정 -->
 		</property>

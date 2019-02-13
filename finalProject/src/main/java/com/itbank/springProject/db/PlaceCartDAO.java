@@ -1,4 +1,4 @@
-package com.itbank.springProject.kim.db;
+package com.itbank.springProject.db;
 
 import java.util.List;
 
@@ -7,16 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-@Repository("MemberDAO")
-public class MemberDAO {
+@Repository("PlaceCartDAO")
+public class PlaceCartDAO {
 	
 	@Autowired
 	private SqlSession session;
 	
-	public List<MemberDTO> selectAll(){
-		return session.selectList("Member.selectAll");
+	public List<PlaceCartDTO> selectAll(String mid){
+		return session.selectList("PlaceCart.selectAll",mid);
 	}
-	
 	
 
 }

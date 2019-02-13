@@ -1,6 +1,6 @@
-package com.itbank.springProject.rew.db;
+package com.itbank.springProject.db;
 
-public class R_PlaceCartDTO {
+public class PlaceCartDTO {
 
 	private String mid;
 	//회원 아이디;
@@ -75,7 +75,7 @@ public class R_PlaceCartDTO {
 		this.mainImg = mainImg;
 	}
 
-	public R_PlaceCartDTO(String mid, String pid, String title, String latitude, String longitude, String mainImg , String content) {
+	public PlaceCartDTO(String mid, String pid, String title, String latitude, String longitude, String mainImg , String content) {
 		super();
 		this.mid = mid;
 		this.pid = pid;
@@ -86,7 +86,7 @@ public class R_PlaceCartDTO {
 		this.content = content;
 	}
 	
-	public R_PlaceCartDTO() {
+	public PlaceCartDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -13,7 +13,7 @@ public class R_PlanDAO {
 	private SqlSession session;
 	
 	public List<R_PlanDTO> selectAllById(R_PlanDTO planDTO){
-		return session.selectList("Plan.selectAllById",planDTO);
+		return session.selectList("R_Plan.selectAllById",planDTO);
 	}
 	
 

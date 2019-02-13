@@ -13,7 +13,15 @@ public class PlanDAO {
 	private SqlSession session;
 	
 	public List<PlanDTO> selectAllById(PlanDTO planDTO){
-		return session.selectList("Plan.selectAllById",planDTO);
+		
+		System.out.println("dao에서 받는 값"+planDTO.getMid());
+		System.out.println("dao에서 받는 값"+planDTO.getPtitle());
+		
+		session.selectList("Plan.selectAllById",planDTO);
+		
+		System.out.println("이거 실헹더;ㅣㄴ; /");
+		
+		return null;
 	}
 	
 }

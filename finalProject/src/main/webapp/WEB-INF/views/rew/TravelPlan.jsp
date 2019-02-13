@@ -170,7 +170,7 @@
 					//검사용
 
 					$.ajax({
-						url : "GetProjectData?mid=temp&title="+$(data).text(),//요청을 보낼 url
+						url : "GetProjectData?mid=temp&ptitle="+$(data).text(),//요청을 보낼 url
 						dataType : "json",//반환받을 데이터 타입 선택
 						error : function(result , confirm , aa) {
 							//var list = result.result;

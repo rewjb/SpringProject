@@ -21,19 +21,19 @@ public class R_PlanController {
 	private PlanDAO planDAO;
 	
 	@RequestMapping("rew/GetProjectData")
-	public void projectDataMove(String mid ,  String title) {
+	public void projectDataMove(String mid , String ptitle) {
 		PlanDTO planDTO = new PlanDTO();
 		planDTO.setMid(mid);
-		planDTO.setTitle(title);
+		planDTO.setPtitle(ptitle);
 		
 		System.out.println(planDTO.getMid());
-		System.out.println(planDTO.getTitle());
+		System.out.println(planDTO.getPtitle());
 		
 		List<PlanDTO> list =  planDAO.selectAllById(planDTO);
 		
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getTitle());
-		}
+		//for (int i = 0; i < list.size(); i++) {
+			//System.out.println(list.get(i).getTitle());
+		//}
 		
 	}
 

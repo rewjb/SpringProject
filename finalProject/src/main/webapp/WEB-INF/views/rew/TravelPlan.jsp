@@ -46,49 +46,60 @@
   <div class="row" style="height:600px">
 
     <!-- 프로젝트 상세 기록 -->
-    <div class="col-md-8" style="width: 750px;overflow:scroll;overflow-x:hidden;border: 5px ridge;padding:0px">
+			<div class="col-md-8"
+				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px">
 
 				<nav class="navbar navbar-expand navbar-dark bg-dark">
 				<div class="collapse navbar-collapse" id="navbarsExample02">
 					<button class="btn btn-secondary" id="">프로젝트 제목</button>
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item active">
-						<a class="nav-link" href="#" onclick="alert('저장');">저장</a>
-						</li>
-						<li class="nav-item active">
-						<a class="nav-link" href="#" onclick="alert('삭제');">삭제</a>
-						</li>
-						<li class="nav-item active">
-						<a class="nav-link" href="#" onclick="alert('공유');">공유</a>
-						</li>
+						<li class="nav-item active"><a class="nav-link" href="#"
+							onclick="alert('저장');">저장</a></li>
+						<li class="nav-item active"><a class="nav-link" href="#"
+							onclick="alert('삭제');">삭제</a></li>
+						<li class="nav-item active"><a class="nav-link" href="#"
+							onclick="alert('공유');">공유</a></li>
 					</ul>
 					<form>
 						<input class="form-control" type="text" placeholder="내용을 입력">
 					</form>
 				</div>
 				</nav>
-				
-				<!-- 세부 관광항목 -->
-				<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;">
-				<table style="word-break:break-word;">
-				<tr he>
-				<td alt="Project_detail_num" class="btn-dark"><h3>1</h3></td>
-				<td alt="Project_detail_img"><img alt="img" style="width:140px;height:105px" src="http://placehold.it/500x300"></td>
-				<td alt="Project_detail_content" style="vertical-align: top;width: 100%;">
-				<div alt="Project_detail_content_head" style="border-bottom: 1px solid;"><h4>sad</h4></div>
-				<div alt="Project_detail_content_body" style="overflow:scroll; overflow-x: hidden;height:70px">
-				<h5>saddddasdasdasd</h5>
-				</div>
-				</td>
-				</tr>
-				</table>
-				</div>
-				<!-- /.세부 관광항목 -->
-				
-				
 
+				<!-- 세부 관광항목 -->
+				<div class="shadow p-1 mb-1 bg-white rounded"
+					style="border: 1px solid;">
+					<table style="word-break: break-word;">
+						<tr he>
+							<td alt="Project_detail_num" class="btn-dark"><h3>1</h3></td>
+							<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>
+							<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">
+								<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">
+									<h4>sad</h4>
+								</div>
+								<div alt="Project_detail_content_body" style="overflow: scroll; overflow-x: hidden; height: 70px">
+									<h5>saddddasdasdasd</h5>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<input name="mid" type="hidden" value="">
+				<input name="ptitle" type="hidden" value="">
+				<input name="title"	type="hidden" value="">
+				<input name="content" type="hidden"	value="">
+				<input name="latitude" type="hidden" value="">
+				<input name="longitude" type="hidden" value="">
+				<input name="way" type="hidden" value="">
+				<input name="mainImg" type="hidden" value="">
+				<input name="num" type="hidden" value="">
+				<!-- /.세부 관광항목 -->
 			</div>
-    <!-- /.프로젝트 상세 기록 -->
+			<!-- /.프로젝트 상세 기록 -->
+			
+			
+			
+			
 
     <!-- 프로젝트 목록 + 관광명소 장바구니 -->
     <div class="col-md-4" style="padding: 0px">

@@ -4,15 +4,18 @@
 
 <mapper namespace="member">
 	
-	<!-- INSERT -->
+	<!-- INSERT (wonHN) -->
 	<insert id="insert" parameterType="MemberDTO">
 		INSERT INTO member
-		VALUES(#{mid},#{mpw},#{mname},#{mprofile},#{mtel}
-			#{maddr1},#{maddr2},#{gender},#{agegroup},${"SYSDATE"})
+		VALUES(
+		#{mid},#{mpw},#{mname},#{mprofile},#{mtel},
+		#{maddr1},#{maddr2},#{gender},#{agegroup},
+		#{rdate}
+		)
 	</insert>
 
-	<!-- UPDATE -->
-	<!-- mId와 mName은 수정 안됨 -->
+	<!-- UPDATE (wonHN) -->
+	<!-- 로그인 성공시 최근 접속일 수정 -->
 	<update id="update" parameterType="MemberDTO">
 		UPDATE member SET
 		mpw = #{mpw}, mprofile = #{mprofile}, mtel = #{mtel} 
@@ -20,14 +23,20 @@
 		gender = #{gender}, agegroup = #{agegroup} 
 		WHERE mid = #{mid}
 	</update>
+	<!-- UPDATE (wonHN) -->
+	<update id="updateDate" parameterType="MemberDTO">
+		UPDATE member SET
+		rdate = #{rdate}
+		WHERE mid = #{mid} and mpw=#{mpw}
+	</update>
 	
-	<!-- DELETE -->
+	<!-- DELETE (wonHN) -->
 	<delete id="delete" parameterType="MemberDTO">
 		DELETE FROM member WHERE
 		mid = #{mid}
 	</delete>
  
-	<!-- SELECT == parameterType : 입력값 / resultType : 출력값 -->
+	<!-- SELECT (wonHN) == parameterType : 입력값 / resultType : 출력값 -->
 	<!-- id에 해당하는 정보를 가져오는 select문 -->
 	<!-- member삭제하기 전에 mId와 mPw일치여부 확인을 위한 select문 -->
 	<select id="select" parameterType="MemberDTO" resultMap="rs">
@@ -35,7 +44,7 @@
 		WHERE mid = #{mid}
 	</select>
 	
-	<!-- ResultSet == property : 변수명 / column : 테이블 컬럼명 -->
+	<!-- ResultSet (wonHN) == property : 변수명 / column : 테이블 컬럼명 -->
 	<resultMap type="MemberDTO" id="rs">
 		<result property="mid" column="mid" />
 		<result property="mpw" column="mpw" />
@@ -49,7 +58,7 @@
 		<result property="rdate" column="rdate" />
 	</resultMap>
 	
-	<!-- SELECT ALL -->
+	<!-- SELECT ALL (wonHN) -->
 	<!-- 회원정보 전체 가져오는 select문 -->
 	<select id="selectAll" resultMap="rs">
 		SELECT * FROM member

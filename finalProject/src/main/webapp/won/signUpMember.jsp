@@ -34,14 +34,14 @@
 				<!-- 공간 만들기 위한 div -->
 				<div style="height: 40px;"></div>
 				<form class="needs-validation" novalidate action="insertMember.do">
-					<!-- mid 부분 div -->
+					<!-- column1. mid 부분 div -->
 					<div class="mb-3">
 						<label for="email">ID <span class="text-muted"></span></label>
 						<input type="email" class="form-control" name="mid"	placeholder="you@example.com" required="required">
 						<div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
 					</div>
 					
-					<!-- pw부분   -->
+					<!-- column2. mpw부분   -->
 					<div class="row">
 						<div class="col-md-6 mb-3">
 							<label for="password">PASSWORD</label> 
@@ -59,7 +59,7 @@
 						</div>
 					</div>
 
-					<!-- mname -->
+					<!-- column3. mname -->
 					<div class="mb-3">
 						<label for="username">user-name</label>
 						<div class="input-group">
@@ -71,7 +71,7 @@
 						</div>
 					</div>
 					
-					<!-- 프로필 사진 입력부분 -->
+					<!-- column4. 프로필 사진 입력부분 -->
 					<div class="mb-3">
 						<label for="pPicture">profile picture<span class="text-muted"></span></label> 
 						<input type="text" class="form-control" name="mprofile" placeholder="your profile picture" style="height: 45px">
@@ -81,14 +81,14 @@
 					<!-- 기본정보 : 필수입력 / 추가정보 : 선택입력 구분해주는 선-->
 					<br><hr class="mb-4" style=""><br>
 					
-					<!-- 전화번호 입력부분 -->
+					<!-- column5.전화번호 입력부분 -->
 					<div class="mb-3">
 					<label for="tel">phone <span class="text-muted"></span></label> 
 					<input type="number" class="form-control" name="mtel" placeholder="01012345678">
 					<div class="invalid-feedback"></div>
 					</div><br>
 					
-					<!-- 주소 입력부분 1,2 -->
+					<!-- column6,column7. 주소 입력부분 1,2 -->
 					<div class="mb-3">
 						<label for="address">Address</label> 
 						<input type="text" class="form-control" name="maddr1" placeholder="서울시 금천구 벚꽃로 244">
@@ -98,7 +98,7 @@
 						<input type="text" class="form-control" name="maddr2" placeholder="벽산디지털밸리 5차">
 					</div><br>
 
-					<!-- 성별선택 -->
+					<!-- column8. 성별선택 -->
 					<div class="d-block my-3">
 						<label for="gender">gender</label> 
 						<select class="custom-select d-block w-100" name="gender">
@@ -108,7 +108,7 @@
 						</select>
 					</div><br>
 					
-					<!-- 연령대 -->
+					<!-- column9. 연령대 -->
 					<div class="d-block my-3">
 						<label for="ageGroup">ageGroup</label>
 						<select class="custom-select d-block w-100" name="agegroup">
@@ -122,8 +122,8 @@
 
 					<hr class="mb-4">
 					
-					<!-- 날자 -->
-					<input type="hidden" name="rdate" value="">
+					<!-- column10. 날자 -->
+					<input type="hidden" name="rdate" value="SYSDATE">
 
 					<!-- 회원가입 버튼 -->
 					<button class="btn btn-primary btn-lg btn-block" type="submit">

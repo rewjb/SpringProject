@@ -7,28 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-</style>
 
 </head>
 <body>
  <%@ include file="/UserMainHeader.jsp" %>
- 
- <!-- 여행계획 프로젝트 생성 버튼 -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Launch demo modal
-</button>
- <!-- /.여행계획 프로젝트 생성 버튼 -->
-
-<!-- 여행계획 프로젝트 속성 정하기 -->
-
-<!-- /.여행계획 프로젝트 속성 정하기 -->
-
-
-<script type="text/javascript">
-
-</script>
-
- 
- 
+<div class="shadow-none p-3 mb-5 bg-light rounded">No shadow</div>
+<div class="shadow-sm p-3 mb-5 bg-white rounded">Small shadow</div>
+<div class="shadow p-3 mb-5 bg-white rounded" style="border: 1px solid;">Regular shadow</div>
 </body>
 </html>

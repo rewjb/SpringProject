@@ -14,14 +14,10 @@ public class PlanDAO {
 	
 	public List<PlanDTO> selectAllById(PlanDTO planDTO){
 		
-		System.out.println("dao에서 받는 값"+planDTO.getMid());
-		System.out.println("dao에서 받는 값"+planDTO.getPtitle());
-		
-		session.selectList("Plan.selectAllById",planDTO);
-		
-		System.out.println("이거 실헹더;ㅣㄴ; /");
-		
-		return null;
+		//System.out.println("dao에서 받는 값="+planDTO.getMid());
+		//System.out.println("dao에서 받는 값="+planDTO.getPtitle());
+	    //ajax로 넘어오는 값 확인용..	
+		return session.selectList("Plan.selectAllById", planDTO);
 	}
 	
 }

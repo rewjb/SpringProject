@@ -25,4 +25,5 @@ public class R_PlaceCartController {
 		model.addAttribute("cart_list", placeCartDAO.selectAll(mid));
 	}
 	
+	
 }

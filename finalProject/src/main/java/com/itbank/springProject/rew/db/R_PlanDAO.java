@@ -16,5 +16,4 @@ public class R_PlanDAO {
 		return session.selectList("R_Plan.selectAllById",planDTO);
 	}
 	
-
 }

@@ -6,18 +6,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.itbank.springProject.MemberDTO;
-
-@Repository("PlaceCartDAO")
-public class PlaceCartDAO {
+@Repository("R_PlanDAO")
+public class R_PlanDAO {
 	
 	@Autowired
 	private SqlSession session;
 	
-	public List<PlaceCartDTO> selectAll(String mid){
-		return session.selectList("PlaceCart.selectAll",mid);
+	public List<R_PlanDTO> selectAllById(R_PlanDTO planDTO){
+		return session.selectList("Plan.selectAllById",planDTO);
 	}
-	
 	
 
 }

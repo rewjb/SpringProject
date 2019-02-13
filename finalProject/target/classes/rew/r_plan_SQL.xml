@@ -3,7 +3,7 @@
 
 <mapper namespace="Plan">
 	
-	<select id="selectAllById" parameterType="PlanDTO" resultType="PlanDTO">
+	<select id="selectAllById" parameterType="R_PlanDTO" resultType="R_PlanDTO">
 	SELECT * FROM PLAN 
 	WHERE MID=#{mid} and PTITLE=#{pid}
 	order by NUM;

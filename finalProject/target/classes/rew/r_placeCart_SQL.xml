@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="PlaceCart">
-	<insert id="insert" parameterType="PlaceCartDTO">
+	<insert id="insert" parameterType="R_PlaceCartDTO">
 	insert into PLACECART values(#{mid},#{pid})
 	</insert>
 	
-	<select id="selectAll" parameterType="String" resultType="PlaceCartDTO">
+	<select id="selectAll" parameterType="String" resultType="R_PlaceCartDTO">
 	select ATTRACTIONS.PID,TITLE,CONTENT,LATITUDE,LONGITUDE,MAINIMG 
 	from PLACECART,ATTRACTIONS 
 	where PLACECART.MID=#{value} AND PLACECART.PID = ATTRACTIONS.PID

@@ -25,8 +25,8 @@
 		<!-- 상위는 DTO를 설정한 xml을 등록하는 과정 -->
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:rew/placeCart_SQL.xml</value>
-				<value>classpath:rew/plan_SQL.xml</value>
+				<value>classpath:rew/r_placeCart_SQL.xml</value>
+				<value>classpath:rew/r_plan_SQL.xml</value>
 				<value>classpath:kim/member_SQL.xml</value>
 				<value>classpath:won/member_SQL.xml</value>
 			</list>

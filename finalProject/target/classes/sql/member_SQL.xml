@@ -5,7 +5,7 @@
 <mapper namespace="member">
 	
 	<!-- INSERT -->
-	<insert id="insert" parameterType="memDTO">
+	<insert id="insert" parameterType="MemberDTO">
 		INSERT INTO member
 		VALUES(#{mid},#{mpw},#{mname},#{mprofile},#{mtel}
 			#{maddr1},#{maddr2},#{gender},#{agegroup},${"SYSDATE"})
@@ -13,7 +13,7 @@
 
 	<!-- UPDATE -->
 	<!-- mId와 mName은 수정 안됨 -->
-	<update id="update" parameterType="memDTO">
+	<update id="update" parameterType="MemberDTO">
 		UPDATE member SET
 		mpw = #{mpw}, mprofile = #{mprofile}, mtel = #{mtel} 
 		maddr1 = #{maddr1}, maddr2 = #{maddr2}, 
@@ -22,7 +22,7 @@
 	</update>
 	
 	<!-- DELETE -->
-	<delete id="delete" parameterType="memDTO">
+	<delete id="delete" parameterType="MemberDTO">
 		DELETE FROM member WHERE
 		mid = #{mid}
 	</delete>
@@ -30,13 +30,13 @@
 	<!-- SELECT == parameterType : 입력값 / resultType : 출력값 -->
 	<!-- id에 해당하는 정보를 가져오는 select문 -->
 	<!-- member삭제하기 전에 mId와 mPw일치여부 확인을 위한 select문 -->
-	<select id="select" parameterType="memDTO" resultMap="rs">
+	<select id="select" parameterType="MemberDTO" resultMap="rs">
 		SELECT * FROM member
 		WHERE mid = #{mid}
 	</select>
 	
 	<!-- ResultSet == property : 변수명 / column : 테이블 컬럼명 -->
-	<resultMap type="memDTO" id="rs">
+	<resultMap type="MemberDTO" id="rs">
 		<result property="mid" column="mid" />
 		<result property="mpw" column="mpw" />
 		<result property="mname" column="mname" />

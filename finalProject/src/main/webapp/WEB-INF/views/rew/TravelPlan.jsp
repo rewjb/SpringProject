@@ -94,6 +94,50 @@
 				<input name="mainImg" type="hidden" value="">
 				<input name="num" type="hidden" value="">
 				<!-- /.세부 관광항목 -->
+
+				<div class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;"  >
+					A simple secondary alert with
+				</div>
+				
+				
+				<!-- 세부 관광항목 -->
+				<div class="shadow p-1 mb-1 bg-white rounded"
+					style="border: 1px solid;">
+					<table style="word-break: break-word;">
+						<tr he>
+							<td alt="Project_detail_num" class="btn-dark"><h3>1</h3></td>
+							<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>
+							<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">
+								<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">
+									<h4>sad</h4>
+								</div>
+								<div alt="Project_detail_content_body" style="overflow: scroll; overflow-x: hidden; height: 70px">
+									<h5>saddddasdasdasd</h5>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<input name="mid" type="hidden" value="">
+				<input name="ptitle" type="hidden" value="">
+				<input name="title"	type="hidden" value="">
+				<input name="content" type="hidden"	value="">
+				<input name="latitude" type="hidden" value="">
+				<input name="longitude" type="hidden" value="">
+				<input name="way" type="hidden" value="">
+				<input name="mainImg" type="hidden" value="">
+				<input name="num" type="hidden" value="">
+				<!-- /.세부 관광항목 -->
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			</div>
 			<!-- /.프로젝트 상세 기록 -->
 			

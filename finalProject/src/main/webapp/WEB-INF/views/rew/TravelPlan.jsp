@@ -47,15 +47,15 @@
 
     <!-- 프로젝트 상세 기록 -->
 			<div class="col-md-8"
-				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px">
+				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px;" id="Project_container">
 
-				<nav class="navbar navbar-expand navbar-dark bg-dark">
+				<nav class="navbar navbar-expand navbar-dark bg-dark"  style="margin-bottom: 7px;">
 				<div class="collapse navbar-collapse" id="navbarsExample02">
-					<button class="btn btn-secondary" id="">프로젝트 제목</button>
+					<button class="btn btn-secondary" id="Project_ptitle">프로젝트 제목</button>
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active"><a class="nav-link" href="#"
 							onclick="alert('저장');">저장</a></li>
-						<li class="nav-item active"><a class="nav-link" href="#">
+						<li class="nav-item active"><a class="nav-link" onclick="Project_create_step();">
 							생성</a></li>
 						<li class="nav-item active"><a class="nav-link" href="#"
 							onclick="alert('삭제');">삭제</a></li>
@@ -67,78 +67,6 @@
 					</form>
 				</div>
 				</nav>
-
-				<!-- 세부 관광항목 -->
-				<div class="shadow p-1 mb-1 bg-white rounded"
-					style="border: 1px solid;">
-					<table style="word-break: break-word;">
-						<tr he>
-							<td alt="Project_detail_num" class="btn-dark"><h3>1</h3></td>
-							<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>
-							<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">
-								<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">
-									<h4>sad</h4>
-								</div>
-								<div alt="Project_detail_content_body" style="overflow: scroll; overflow-x: hidden; height: 70px">
-									<h5>saddddasdasdasd</h5>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<input name="mid" type="hidden" value="">
-				<input name="ptitle" type="hidden" value="">
-				<input name="title"	type="hidden" value="">
-				<input name="content" type="hidden"	value="">
-				<input name="latitude" type="hidden" value="">
-				<input name="longitude" type="hidden" value="">
-				<input name="way" type="hidden" value="">
-				<input name="mainImg" type="hidden" value="">
-				<input name="num" type="hidden" value="">
-				<!-- /.세부 관광항목 -->
-
-				<div class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;"  >
-					A simple secondary alert with
-				</div>
-				
-				
-				<!-- 세부 관광항목 -->
-				<div class="shadow p-1 mb-1 bg-white rounded"
-					style="border: 1px solid;">
-					<table style="word-break: break-word;">
-						<tr he>
-							<td alt="Project_detail_num" class="btn-dark"><h3>1</h3></td>
-							<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>
-							<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">
-								<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">
-									<h4>sad</h4>
-								</div>
-								<div alt="Project_detail_content_body" style="overflow: scroll; overflow-x: hidden; height: 70px">
-									<h5>saddddasdasdasd</h5>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<input name="mid" type="hidden" value="">
-				<input name="ptitle" type="hidden" value="">
-				<input name="title"	type="hidden" value="">
-				<input name="content" type="hidden"	value="">
-				<input name="latitude" type="hidden" value="">
-				<input name="longitude" type="hidden" value="">
-				<input name="way" type="hidden" value="">
-				<input name="mainImg" type="hidden" value="">
-				<input name="num" type="hidden" value="">
-				<!-- /.세부 관광항목 -->
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 			</div>
 			<!-- /.프로젝트 상세 기록 -->
@@ -250,8 +178,89 @@
   </div>
  </div>
  <!-- /.여행계획 프로젝트  생성 버튼 클릭시 생성되는 모달  -->
-    
+ 
+ 
 			<script type="text/javascript">
+			
+			function Project_step_onclick(step_div) {
+				
+				var steps = $('#Project_container').children('div[alt=Project_div_step]');
+				
+				for (var i = 0; i < steps.length; i++) {
+					$(steps[i]).css('outline','');
+				}
+				
+				$(step_div).css('outline','blue 6px solid');
+				
+			}
+			
+			
+			
+			
+			
+			// Project_create_step
+			function Project_create_step() {
+				
+				//console.log($('#Project_container').children('div:last').last().children('td[alt=Project_detail_num] h3').text());
+				var steps = $('#Project_container').children('div[alt=Project_div_step]');
+				
+				Project_insert_element(steps.length+1,'이미지 경로','장바구니 혹은 경로설정을 통해 장소를 결정','','');
+				
+			}
+			// ...Project_create_step
+			
+			// 여행계획 공정 생성
+			function Project_insert_element(num,src,title,content,detail_content,latitude,longitude) {
+				//아직 src는 설정이 안되어 있다.
+				
+				//생성시 나오는 폼
+				var component_move_text =
+					                      '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'+
+					                      '이동 : <a href="#">'+'경로를 설정해 주세요.'+'</a>'+
+					                      '</div>'
+				                         ;
+					
+				var component_step_text =
+					           '<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;" alt="Project_div_step" onclick="Project_step_onclick(this);">'+
+				               '<table style="word-break: break-word;">'+
+				               '<tr he>'+
+				               '<td alt="Project_detail_num" class="btn-dark"><h3>'+num+'</h3></td>'+
+				               '<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>'+
+				               '<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">'+
+				               '<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">'+
+				               '<h5 style="margin: 0px;">'+title+'</h5>'+
+				               '<span style="color: gray;font-size: 11px;">'+content+'</span>'+
+				               '</div>'+
+				               '<textarea alt="Project_detail_content_body" style="width: 100%;height: 64px;resize: none;border: 0px;" placeholder="상세계획을 작성해 봅시다!">'+detail_content+'</textarea>'+
+				               '</td>'+
+				               '</tr>'+
+				               '</table>'+
+				               '</div>'+
+				               '<form>'+
+				               '<input name="num" type="hidden" value="">'+
+				               '<input name="mainimg" type="hidden" value="">'+
+				               '<input name="title" type="hidden" value="">'+
+				               '<input name="content" type="hidden" value="">'+
+				               '<input name="detail_content" type="hidden" value="">'+
+				               '<input name="latitude" type="hidden" value="">'+
+				               '<input name="longitude" type="hidden" value="">'+
+				               '</form>'
+				               ;
+				               
+				var component_step = $(component_step_text);
+				var component_move = $(component_move_text);
+				
+				if (num!=1) {
+					
+					$('#Project_container').append(component_move);
+					$('#Project_container').append(component_step);
+				}else {
+					$('#Project_container').append(component_step);
+				}
+				
+			}
+			
+			// ...여행계획 공정 생성
 			
 				// 프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
 				function Move_Project_Data(data) {
@@ -265,7 +274,7 @@
 						$(dataArray[i]).css('outline','');
 					}
 					
-					$(data).css('outline','skyblue 6px solid');
+					$(data).css('outline','blue 6px solid');
 					
 					$.ajax({
 						url : "GetProjectData?mid=temp&ptitle="+$(data).text(),//요청을 보낼 url
@@ -278,8 +287,7 @@
 							for (var i = 0; i < result.length; i++) {
 							console.log( i+'번째 : '+ result[i].mid);
 							}
-							
-							
+							//
 							//var list = result.result;
 							//$(list).each(function(index, person) {
 							//})//each 끝

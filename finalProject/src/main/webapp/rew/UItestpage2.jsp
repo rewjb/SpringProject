@@ -10,9 +10,23 @@
 
 </head>
 <body>
- <%@ include file="/UserMainHeader.jsp" %>
-<div class="shadow-none p-3 mb-5 bg-light rounded">No shadow</div>
-<div class="shadow-sm p-3 mb-5 bg-white rounded">Small shadow</div>
-<div class="shadow p-3 mb-5 bg-white rounded" style="border: 1px solid;">Regular shadow</div>
+ <%@ include file="/UserMainHeader.jsp" %>\
+ 
+ <button onclick="temp();">sad</button>
+ 
+ <div id="temp">asdsad</div>
+ 
+ <div style="background: red">asd</div>
+ 
+ <script type="text/javascript">
+ 
+ function temp() {
+	
+ $('temp').append();
+}
+ 
+ 
+ </script>
+ 
 </body>
 </html>

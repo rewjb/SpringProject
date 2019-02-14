@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlanDAO;
@@ -21,17 +22,13 @@ public class R_PlanController {
 	private PlanDAO planDAO;
 	
 	@RequestMapping("rew/GetProjectData")
-	public void projectDataMove(String mid ,  String title) {
+	@ResponseBody
+	public List<PlanDTO> projectDataMove(String mid , String ptitle) {
 		PlanDTO planDTO = new PlanDTO();
 		planDTO.setMid(mid);
-		planDTO.setTitle(title);
+		planDTO.setPtitle(ptitle);
 		
-		List<PlanDTO> list =  planDAO.selectAllById(planDTO);
-		
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getMid());
-		}
-		
+		return planDAO.selectAllById(planDTO);
 	}
 
 }

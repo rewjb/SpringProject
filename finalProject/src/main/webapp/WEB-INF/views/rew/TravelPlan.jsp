@@ -46,9 +46,103 @@
   <div class="row" style="height:600px">
 
     <!-- 프로젝트 상세 기록 -->
-    <div class="col-md-8" style="width: 750px;background: red;overflow:scroll;overflow-x:hidden; ">
-    </div>
-    <!-- /.프로젝트 상세 기록 -->
+			<div class="col-md-8"
+				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px">
+
+				<nav class="navbar navbar-expand navbar-dark bg-dark">
+				<div class="collapse navbar-collapse" id="navbarsExample02">
+					<button class="btn btn-secondary" id="">프로젝트 제목</button>
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active"><a class="nav-link" href="#"
+							onclick="alert('저장');">저장</a></li>
+						<li class="nav-item active"><a class="nav-link" href="#">
+							생성</a></li>
+						<li class="nav-item active"><a class="nav-link" href="#"
+							onclick="alert('삭제');">삭제</a></li>
+						<li class="nav-item active"><a class="nav-link" href="#"
+							onclick="alert('공유');">공유</a></li>
+					</ul>
+					<form>
+						<input class="form-control" type="text" placeholder="내용을 입력">
+					</form>
+				</div>
+				</nav>
+
+				<!-- 세부 관광항목 -->
+				<div class="shadow p-1 mb-1 bg-white rounded"
+					style="border: 1px solid;">
+					<table style="word-break: break-word;">
+						<tr he>
+							<td alt="Project_detail_num" class="btn-dark"><h3>1</h3></td>
+							<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>
+							<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">
+								<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">
+									<h4>sad</h4>
+								</div>
+								<div alt="Project_detail_content_body" style="overflow: scroll; overflow-x: hidden; height: 70px">
+									<h5>saddddasdasdasd</h5>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<input name="mid" type="hidden" value="">
+				<input name="ptitle" type="hidden" value="">
+				<input name="title"	type="hidden" value="">
+				<input name="content" type="hidden"	value="">
+				<input name="latitude" type="hidden" value="">
+				<input name="longitude" type="hidden" value="">
+				<input name="way" type="hidden" value="">
+				<input name="mainImg" type="hidden" value="">
+				<input name="num" type="hidden" value="">
+				<!-- /.세부 관광항목 -->
+
+				<div class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;"  >
+					A simple secondary alert with
+				</div>
+				
+				
+				<!-- 세부 관광항목 -->
+				<div class="shadow p-1 mb-1 bg-white rounded"
+					style="border: 1px solid;">
+					<table style="word-break: break-word;">
+						<tr he>
+							<td alt="Project_detail_num" class="btn-dark"><h3>1</h3></td>
+							<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>
+							<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">
+								<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">
+									<h4>sad</h4>
+								</div>
+								<div alt="Project_detail_content_body" style="overflow: scroll; overflow-x: hidden; height: 70px">
+									<h5>saddddasdasdasd</h5>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<input name="mid" type="hidden" value="">
+				<input name="ptitle" type="hidden" value="">
+				<input name="title"	type="hidden" value="">
+				<input name="content" type="hidden"	value="">
+				<input name="latitude" type="hidden" value="">
+				<input name="longitude" type="hidden" value="">
+				<input name="way" type="hidden" value="">
+				<input name="mainImg" type="hidden" value="">
+				<input name="num" type="hidden" value="">
+				<!-- /.세부 관광항목 -->
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			</div>
+			<!-- /.프로젝트 상세 기록 -->
+			
 
     <!-- 프로젝트 목록 + 관광명소 장바구니 -->
     <div class="col-md-4" style="padding: 0px">
@@ -94,14 +188,14 @@
 					<table class="table table-striped" style="width: 100%;word-break:break-word;border: 1px">
 						<thead>
 							<tr>
-								<th colspan="3"><input class="form-control" id="Cart-Search" type="text" placeholder="관광명소명을 입력" onkeyup="Cart_Search();"></th>
+								<th colspan="3"><input class="form-control" id="Cart-Search" type="text" placeholder="관광명소명을 입력" onkeyup="Cart_Search(this);"></th>
 							</tr>
 						</thead>
 						<tbody>
 						
 						    <!-- 회원의 장바구니 정보를 get! -->
 							<c:forEach items="${cart_list}" var="cart_list">
-							<form alt="나는 form!" onsubmit="return cart_form();" style="background: red">
+							<form alt="나는 form!" onsubmit="return cart_form();" >
 							<tr>
 								<th style="padding: 2px;width:66px">
 								 <img  style="width:66px;height:50px;vertical-align: middle;"  class="img-fluid" src="http://placehold.it/500x300" alt="${cart_list.mainImg}">
@@ -131,8 +225,6 @@
 			</div>
     <!-- /.프로젝트 목록 + 관광명소 장바구니 -->
     
-    
-    
  <!-- 여행계획 프로젝트  생성 버튼 클릭시 생성되는 모달  -->
  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -161,28 +253,34 @@
     
 			<script type="text/javascript">
 			
-			
-
 				// 프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
 				function Move_Project_Data(data) {
 
 					//alert($(data).text());
 					//검사용
-
+					
+					var dataArray = $('td[alt=Project-Content]');
+					
+					for (var i = 0; i < dataArray.length; i++) {
+						$(dataArray[i]).css('outline','');
+					}
+					
+					$(data).css('outline','skyblue 6px solid');
+					
 					$.ajax({
-						url : "GetProjectData?mid=temp&title="+$(data).text(),//요청을 보낼 url
+						url : "GetProjectData?mid=temp&ptitle="+$(data).text(),//요청을 보낼 url
 						dataType : "json",//반환받을 데이터 타입 선택
-						error : function(result , confirm , aa) {
-							//var list = result.result;
-							alert(aa);
-							alert(confirm);
-							//$(list).each(function(index, person) {
-							//})//each 끝
-						},//success끝
 						success : function(result , confirm) {
+							
+							console.log('ajax Json length ='+result.length);
+							console.log('confirm='+confirm);
+							
+							for (var i = 0; i < result.length; i++) {
+							console.log( i+'번째 : '+ result[i].mid);
+							}
+							
+							
 							//var list = result.result;
-							alert('dd');
-							alert(confirm.value);
 							//$(list).each(function(index, person) {
 							//})//each 끝
 						}//success끝
@@ -192,22 +290,19 @@
 				// ...프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
 
 				// 장바구니 검색어 (input 아이디 : Cart-Search)
-				function Cart_Search() {
-
-					var inputValue = $('#Cart-Search').val();
-					//입력값
+				function Cart_Search(inputValue) {
 
 					var Cart_Content = $('td[alt=Cart-Content]');
 
 					//하위 for 문을 통해 보여줄 th를 정한다.
 					for (var i = 0; i < Cart_Content.length; i++) {
-						if (Cart_Content[i].innerHTML == inputValue) {
+						if (Cart_Content[i].innerHTML.indexOf(inputValue.value)!=-1) {
 							Cart_Content[i].parentNode.style.display = 'table-row';
 							//Cart_Content[i].style.display = 'table-row';
 						} else {
 							Cart_Content[i].parentNode.style.display = 'none';
 							//Cart_Content[i].style.display = 'none';
-							if (inputValue == '') {
+							if (inputValue.value == '') {
 								Cart_Content[i].parentNode.style.display = 'table-row';
 							}
 						}
@@ -223,13 +318,13 @@
 					//하위 for 문을 통해 보여줄 th를 정한다.
 					for (var i = 0; i < Cart_Content.length; i++) {
 						
-						if (Cart_Content[i].innerHTML.test('/'+inputValue.value+'/')) {
+						if (Cart_Content[i].innerHTML.indexOf(inputValue.value)!=-1) {
 							Cart_Content[i].style.display = 'table-cell';
 							//Cart_Content[i].style.display = 'table-row';
 						} else {
 							Cart_Content[i].style.display = 'none';
 							//Cart_Content[i].style.display = 'none';
-							if (inputValue == '') {
+							if (inputValue.vlaue == '') {
 								Cart_Content[i].style.display = 'table-cell';
 							}
 						}
@@ -242,12 +337,12 @@
 				function validity_MakePlan(inputValue) {
 
 					var PlanName = $('td[alt=Project-Content]');
-
+					
 					for (var i = 0; i < PlanName.length; i++) {
-
+						
 						//console.log(PlanName[i].innerHTML+'는'+(PlanName[i].innerHTML==inputValue));
 						//확인용
-						if (PlanName[i].innerHTML.test('/'+inputValue.value+'/')) {
+						if (PlanName[i].innerHTML.indexOf(inputValue.value)!=-1) {
 							$('#PlanName').css('color', 'red');
 							$('#PlanName').text('이미 존재하는 이름입니다.');
 							break;

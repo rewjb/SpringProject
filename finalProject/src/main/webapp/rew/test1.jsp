@@ -7,11 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
- 
-<form action="TravelPlan">
-<input type="hidden" name="mid" value="temp">
-<input type="submit" value="여행계확짜기로 이동!"> 
+
+<form action="test2.jsp">
+<div name="temp2" value="2323">asdasd</div>
+<button value="55" name="temp">dd</button>
 </form>
 
-</body> 
+</body>
 </html>

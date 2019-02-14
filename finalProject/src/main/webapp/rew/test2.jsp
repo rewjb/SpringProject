@@ -6,12 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
- 
-<form action="TravelPlan">
-<input type="hidden" name="mid" value="temp">
-<input type="submit" value="여행계확짜기로 이동!"> 
-</form>
+<%
+String temp =  request.getParameter("temp"); 
+String temp2 =  request.getParameter("temp2"); 
+%>
 
-</body> 
+<%= temp %>
+<%= temp2 %>
+<body>
+
+</body>
 </html>

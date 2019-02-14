@@ -2,18 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Plan">
-
-	<resultMap type="PlanDTO" id="PlanDTO2">
-		<result property="mid" column="MID" />
-		<result property="ptitle" column="PTITLE" />
-		<result property="title" column="TITLE" />
-		<result property="content" column="CONTENT" />
-		<result property="latitude" column="LATITUDE" />
-		<result property="longitude" column="LONGITUDE" />
-		<result property="way" column="WAY" />
-		<result property="mainImg" column="MAINIMG" />
-		<result property="num" column="NUM" />
-	</resultMap>
 	
 	<select id="selectAllById" parameterType="PlanDTO" resultType="PlanDTO">
 	select * from PLAN 

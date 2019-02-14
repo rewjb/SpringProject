@@ -10,8 +10,27 @@ public class PlanDTO {
 	private String longitude;
 	private String way;
 	private String mainImg;
+	private String detail;
 	private int num;
+	private int distance;
 	
+	
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
 	public String getMid() {
 		return mid;
 	}

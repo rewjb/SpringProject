@@ -14,11 +14,11 @@ pageEncoding="UTF-8"%>
 	vertical-align: middle;
 	overflow: hidden;
 	width: 100px;
-	height: 30px;
+	height: 100px;
 	background: #777;
 	color: #fff;
 	text-align: center;
-	line-height: 30px;
+	line-height: 100px;
 }
 
 .file_input label input {
@@ -32,8 +32,8 @@ pageEncoding="UTF-8"%>
 	vertical-align: middle;
 	display: inline-block;
 	width: 200px;
-	height: 28px;
-	line-height: 28px;
+	height: 100px;
+	line-height: 100px;
 	font-size: 11px;
 	padding: 0;
 	border: 0;
@@ -41,8 +41,38 @@ pageEncoding="UTF-8"%>
 }
 </style>
 
+<script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		
+		//$("#form").on("submit", function() {
+		$("#submit").click(function(){ 
+			
+			//var d = $(this).serialize();
+			var form = document.getElementById("form");
+			
+			form.method = "POST";
+			form.enctype = "multipart/form-data"
+			var formData = new FormData(form);
+			
+			$.ajax({
+				url: "imgTest.jsp",
+				type: "post",
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function(result){
+					$("#div1").prepend(result);
+				}
+			})
+			return false;
+		})
+	})
+</script>
+
 </head>
-<form method="post" enctype="multipart/form-data" action="imgTest.jsp">
+<form method="post" enctype="multipart/form-data" action="imgTest.jsp" id="form">
 
 	<div class="file_input">
 		<label> 제품사진1 <input
@@ -53,8 +83,10 @@ pageEncoding="UTF-8"%>
 			readonly="readonly">
 	</div>
 
-<input type="submit" value="업로드"><br><br>
+<button id="submit" value="업로드">업로드</button><br><br>
 </form>
+<div id="div1">
+</div>
 
 <body>
 

@@ -56,13 +56,17 @@
 <script type="text/javascript">
 		
 		$(function() {
+			
+			//이미지 업로드 했을 때의 액션처리
 			$("#filename1").change(function(){ 
-				var form = document.getElementById("form");
 				
+				//파일업로드 form의 데이타방식 세팅
+				var form = document.getElementById("form");				
 				form.method = "POST";
 				form.enctype = "multipart/form-data"
 				var formData = new FormData(form);
 				
+				//이미지 업로드 페이지로 ajax전송
 				$.ajax({
 					url: "imgForm.jsp",
 					type: "post",
@@ -72,15 +76,20 @@
 					processData: false,
 					success: function(result){
 						
+						//업로드 완료 전까지 로딩이미지를 띄워줌
 					 	$("#picture").attr("src", "/springProject/resources/IMAGE/placeAdd/loading.gif");
+					 	$("#picture").attr("width", "100");
+					 	$("#picture").attr("height", "100");
 						
+					 	//이미지 업로드 4초 후(업로드 시간 대기) 업로드된 이미지로 교체
 				 		setTimeout(function() {	
 							$("#picture").attr("width", "700");
 							$("#picture").attr("height", "500"); 
 				 			$("#picture").attr("src", result);
-						}, 3500);
+							$("#mainImg").attr("value", result);
+						}, 4000);
 					}
-				})
+				})				
 				return false;
 			})			
 		})
@@ -98,36 +107,36 @@
 
   <fieldset>
     <legend class="display-4" style="text-align: center;">여행지 등록 신청</legend>
-<form method="post" enctype="multipart/form-data" action="imgTest.jsp" id="form">
-    <hr>
-    <div class="card border-secondary mb-3 margin-auto" style="max-width: 50rem;">
-	  <div class="card-header">이미지 등록</div>
-	  <div class="card-body margin-auto">
-	    <p class="card-text">
-	    <div class="file_input">
-	   		<label>
-	    	<img src="/springProject/resources/IMAGE/placeAdd/imgAdd.png" width="100" height="100" id="picture">	   		
-	   		<input onchange="javascript:document.getElementById('file_route1').value=this.value"
-				type="file" name="filename1" id="filename1">
-			</label> 
-			<input title="File Route" id="file_route1" type="hidden" 
-				readonly="readonly" onchange="img()">				
-	    </div>
-	    </p>
-	  </div>
-	</div>
-	<hr>
-</form>
+	<form method="post" enctype="multipart/form-data" action="imgTest.jsp" id="form">
+	    <hr>
+	    <div class="card border-secondary mb-3 margin-auto" style="max-width: 50rem;">
+		  <div class="card-header">이미지 등록</div>
+		  <div class="card-body margin-auto">
+		    <p class="card-text">
+		    <div class="file_input">
+		   		<label>
+		    	<img src="/springProject/resources/IMAGE/placeAdd/imgAdd.png" width="100" height="100" id="picture">	   		
+		   		<input onchange="javascript:document.getElementById('file_route1').value=this.value"
+					type="file" name="filename1" id="filename1">
+				</label> 
+				<input title="File Route" id="file_route1" type="hidden" 
+					readonly="readonly" onchange="img()">				
+		    </div>
+		    </p>
+		  </div>
+		</div>
+		<hr>
+	</form>
     
 <form action="placeReq">
     <div class="form-group">
       <label for="exampleSelect1">대륙</label>
-      <select class="form-control" id="exampleSelect1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+      <select class="form-control" id="continent" name="continent">
+        <option>아시아</option>
+        <option>유럽</option>
+        <option>북아메리카</option>
+        <option>남아메리카</option>
+        <option>동남아시아</option>
       </select>
     </div>
     <div class="form-group">
@@ -140,7 +149,7 @@
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">주소</label>
-      <input type="text" class="form-control" id="addr" name="addr" placeholder="Enter address">
+      <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
     </div>
     <div class="form-group">
       <label for="exampleTextarea">소개</label>
@@ -150,7 +159,10 @@
       <label for="exampleTextarea">설명</label>
       <textarea class="form-control" id="contentElements" name="contentElements" rows="5" placeholder="Enter explaination"></textarea>
     </div>
-       
+    
+    <input type="hidden" id="mainImg" name="mainImg" value="123">
+    <input type="hidden" id="userId" name="userId" value="유저아이디">
+    
     <input type="submit" class="btn btn-primary">
     </form>
     <p class="pb-1">

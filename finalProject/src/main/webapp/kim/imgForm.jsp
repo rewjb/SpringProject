@@ -1,8 +1,6 @@
-
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import="com.oreilly.servlet.MultipartRequest,com.oreilly.servlet.multipart.DefaultFileRenamePolicy,java.util.*,java.io.*" %>
 <%@ page import="java.sql.*" %>
-
 <%
 	 request.setCharacterEncoding("UTF-8");
 	 String realFolder = "";
@@ -25,7 +23,5 @@
 	 } catch(Exception e) {
 	  	e.printStackTrace();
 	 }
-	 
 %>
-
 /springProject/resources/IMAGE/placeAdd/<%=filename %>

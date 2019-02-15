@@ -1097,7 +1097,7 @@
 			// 검색시 발생하는 액션리스너
 			autocomplete
 					.addListener(
-							'place_changed',
+							'place_changed',  
 							function() {  
 								
 								$('#Miss_Path').next().remove();

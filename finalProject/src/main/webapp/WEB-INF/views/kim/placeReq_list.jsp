@@ -18,16 +18,20 @@
 </style>
 
 </head>
-<body style="background-image: url('/springProject/resources/IMAGE/placeAdd/bg2.jpg');">
+<body style="background-image: url('/springProject/resources/IMAGE/placeAdd/bg2.jpg1');">
 <%@ include file="/UserMainHeader.jsp" %>
 <div class="container marketing" style="background-color: rgba(255,255,255,0.8); border-radius: 1.0rem;">
 <div class="col-12 pt-3 margin-auto">
+	<!-- 
 	<fieldset>
 	<div class="pt-3 pb-3 margin-auto" style="background: #f0f7ed; border-radius: 1.0rem;">
 	<legend class="display-4" style="text-align: center; ">여행지 신청 리스트</legend>
+	 -->
+	<ol class="breadcrumb">
+	  <li class="breadcrumb-item active margin-auto h3">여행지 신청 리스트</li>
+	</ol>
 	</div>
 		<hr>
-		</div>
 		<div class="margin-auto" style="background-color: rgba(255,255,255,0.9); width: 1050px;">
 		<table class="table table-hover">
 		  <thead>
@@ -40,13 +44,17 @@
 		  </thead>
 		  <tbody>
 		  <%-- 리스트 출력 반복문 --%>
-		  <c:forEach var="list" items="${list }">
-		  	<tr>
-		  		<th>${list.no }</th>
-		  		<th>${list.title }</th>
-		  		<th>${list.userId }</th>
-		  		<th>${list.time }</th>
-		  	</tr>
+		  <c:forEach var="list" items="${sessionScope.req_list }" varStatus="i">
+		  	<c:choose>
+		  		<c:when test="${i.count < page*10 && i.count > (page-1)*10}">		  		
+				  	<tr>
+				  		<th>${list.no }</th>
+				  		<th><a href="placeReq_content?no=${list.no }">${list.title }</a></th>
+				  		<th>${list.userId }</th>
+				  		<th>${list.time }</th>
+				  	</tr>		  	
+		  		</c:when>
+		  	</c:choose>		  			  	
 		  </c:forEach>
 		  
 		  </tbody>		  
@@ -60,16 +68,16 @@
 	      <a class="page-link" href="#">&laquo;</a>
 	    </li>
 	    <%-- 페이지 번호 출력 반복문 --%>
-	    <c:forEach var="page" items="${sessionScope.req_page}" varStatus="i">
+	    <c:forEach var="num" items="${sessionScope.req_page}" varStatus="i">
 		    <c:choose>
-			    <c:when test="${i.first }">
+			    <c:when test="${i.count == page}">
 				    <li class="page-item active">
-				      <a class="page-link" href="#">${page}</a>
+				      <a class="page-link" href="placeReq_page?page=${num }">${num}</a>
 				    </li>
 			    </c:when>
 		    	<c:otherwise>
 				    <li class="page-item">
-				      <a class="page-link" href="#">${page}</a>
+				      <a class="page-link" href="placeReq_page?page=${num }">${num}</a>
 				    </li>
 		    	</c:otherwise>
 		    </c:choose>
@@ -82,7 +90,6 @@
 	</div>
 	
 	<p class="pt-1">
-</div>
 </div>
 <%@ include file="/UserMainFooter.jsp" %>
 </body>

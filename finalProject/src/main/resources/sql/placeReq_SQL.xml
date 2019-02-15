@@ -25,5 +25,9 @@
 	select * from PLACE_REQ
 	</select>
 	
+	<select id="select" parameterType="String" resultType="PlaceReqDTO">
+	select * from place_req where no=#{value}
+	</select>
+	
 </mapper>
 

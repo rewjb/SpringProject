@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,79 +14,26 @@
 	<fieldset>
 	<legend class="display-4" style="text-align: center;">여행지 신청 리스트</legend>
 		<hr>
-		
+		</div>
+		<div style="background: white;">
 		<table class="table table-hover">
 		  <thead>
 		    <tr>
-		      <th scope="col">Type</th>
-		      <th scope="col">Column heading</th>
-		      <th scope="col">Column heading</th>
-		      <th scope="col">Column heading</th>
+		      <th scope="col" width="10%">No</th>
+		      <th scope="col" width="50%">Title</th>
+		      <th scope="col" width="20%">User</th>
+		      <th scope="col" width="20%">Time</th>
 		    </tr>
 		  </thead>
+		  <c:forEach var="list" items="">
 		  <tbody>
-		    <tr class="table-active">
-		      <th scope="row">Active</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">Default</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-primary">
-		      <th scope="row">Primary</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-secondary">
-		      <th scope="row">Secondary</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-success">
-		      <th scope="row">Success</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-danger">
-		      <th scope="row">Danger</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-warning">
-		      <th scope="row">Warning</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-info">
-		      <th scope="row">Info</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-light">
-		      <th scope="row">Light</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		    <tr class="table-dark">
-		      <th scope="row">Dark</th>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		      <td>Column content</td>
-		    </tr>
-		  </tbody>
+		  	<tr>
+		  		<th></th>
+		  	</tr>
+		  </tbody>		  
+		  </c:forEach>
 		</table> 
+		</div>
 	
 	</fieldset>
 </div>

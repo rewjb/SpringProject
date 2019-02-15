@@ -10,7 +10,7 @@
 
 </head>
 <body>
- <%@ include file="/UserMainHeader.jsp" %>\
+ <%@ include file="/UserMainHeader.jsp" %>
  
  <button onclick="temp();">sad</button>
  

@@ -6,6 +6,117 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+	height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+#description {
+	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 300;
+}
+
+#infowindow-content .title {
+	font-weight: bold;
+}
+
+#infowindow-content {
+	display: none;
+}
+
+#map #infowindow-content {
+	display: inline;
+}
+
+.pac-card {
+	margin: 10px 10px 0 0;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	background-color: #fff;
+	font-family: Roboto;
+}
+
+#pac-container {
+	padding-bottom: 12px;
+	margin-right: 12px;
+}
+
+.pac-controls {
+	display: inline-block;
+	padding: 5px 11px;
+}
+
+.pac-controls label {
+	font-family: Roboto;
+	font-size: 13px;
+	font-weight: 300;
+}
+
+#pac-input {
+	background-color: #fff;
+	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 300;
+	margin-left: 12px;
+	padding: 0 11px 0 13px;
+}
+
+#pac-input:focus {
+	border-color: #4d90fe;
+}
+
+#title {
+	color: #fff;
+	background-color: gray;
+	font-size: 25px;
+	font-weight: 500;
+	padding: 6px 12px;
+}
+</style>
+
+
+<style>
+#right-panel {
+	font-family: 'Roboto', 'sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+}
+
+#right-panel select, #right-panel input {
+	font-size: 15px;
+}
+
+#right-panel select {
+	width: 100%;
+}
+
+#right-panel i {
+	font-size: 12px;
+}
+
+#right-panel {
+	float: right;
+	width: 34%;
+	height: 100%;
+}
+
+.panel {
+	height: 100%;
+	overflow: auto;
+}
+
+.pac-container {
+   z-index: 10000;
+}
+</style>
+
+
 
 
 <style type="text/css">
@@ -57,8 +168,8 @@
 							onclick="alert('저장');">저장</a></li>
 						<li class="nav-item active"><a class="nav-link" onclick="Project_create_step();">
 							생성</a></li>
-						<li class="nav-item active"><a class="nav-link" href="#"
-							onclick="alert('삭제');">삭제</a></li>
+						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_delete">
+						삭제</a></li>
 						<li class="nav-item active"><a class="nav-link" href="#"
 							onclick="alert('공유');">공유</a></li>
 					</ul>
@@ -179,120 +290,263 @@
  </div>
  <!-- /.여행계획 프로젝트  생성 버튼 클릭시 생성되는 모달  -->
  
+ <!-- 프로젝트 step 컴포넌트 삭제시 모달  -->
+ <div class="modal fade" id="Project_place_delete" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+    선택하신 여행장소를 삭제하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" id="Project_delete_button" onclick="Project_delete(this)">삭제</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ <!-- /.프로젝트 step 컴포넌트 삭제시 모달 -->
+ 
+ 
  
 			<script type="text/javascript">
 			
-			function Project_step_onclick(step_div) {
+			function Project_delete(button) {
+				
+				
+				$(button).prev().click();
+				
 				
 				var steps = $('#Project_container').children('div[alt=Project_div_step]');
+				
+					//step이 1개 초과일때
+					for (var i = 0; i < steps.length; i++) {
+						
+						if (steps.length==1 && steps[i].style.outline != '') {
+							$(steps[i]).prev().children('a').text('이동경로를 설정하세요.');
+							$(steps[i]).next().next().remove();
+							$(steps[i]).next().remove();
+							$(steps[i]).remove();
+						}else {
+						
+						 if (steps[i].style.outline != '') {
+							
+							if (i+1==steps.length) {
+								//선택 step이 마지막
+								$(steps[i]).prev().remove();
+								$(steps[i]).next().remove();
+								$(steps[i]).remove();
+							}else {
+								//선택 step이 마지막 x
+								$(steps[i]).prev().children('a').text('이동경로를 설정하세요.');
+								$(steps[i]).next().next().remove();
+								$(steps[i]).next().remove();
+								$(steps[i]).remove();
+							}
+						 }
+						}
+					}
+				
+				steps =  $('#Project_container').find('h3');
 				
 				for (var i = 0; i < steps.length; i++) {
-					$(steps[i]).css('outline','');
-				}
-				
-				$(step_div).css('outline','blue 6px solid');
-				
-			}
-			
-			
-			
-			
-			
-			// Project_create_step
-			function Project_create_step() {
-				
-				//console.log($('#Project_container').children('div:last').last().children('td[alt=Project_detail_num] h3').text());
-				var steps = $('#Project_container').children('div[alt=Project_div_step]');
-				
-				Project_insert_element(steps.length+1,'이미지 경로','장바구니 혹은 경로설정을 통해 장소를 결정','','');
-				
-			}
-			// ...Project_create_step
-			
-			// 여행계획 공정 생성
-			function Project_insert_element(num,src,title,content,detail_content,latitude,longitude) {
-				//아직 src는 설정이 안되어 있다.
-				
-				//생성시 나오는 폼
-				var component_move_text =
-					                      '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'+
-					                      '이동 : <a href="#">'+'경로를 설정해 주세요.'+'</a>'+
-					                      '</div>'
-				                         ;
+
+					steps[i].innerHTML = i+1;
+					//번호 새로 부여
 					
-				var component_step_text =
-					           '<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;" alt="Project_div_step" onclick="Project_step_onclick(this);">'+
-				               '<table style="word-break: break-word;">'+
-				               '<tr he>'+
-				               '<td alt="Project_detail_num" class="btn-dark"><h3>'+num+'</h3></td>'+
-				               '<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>'+
-				               '<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">'+
-				               '<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">'+
-				               '<h5 style="margin: 0px;">'+title+'</h5>'+
-				               '<span style="color: gray;font-size: 11px;">'+content+'</span>'+
-				               '</div>'+
-				               '<textarea alt="Project_detail_content_body" style="width: 100%;height: 64px;resize: none;border: 0px;" placeholder="상세계획을 작성해 봅시다!">'+detail_content+'</textarea>'+
-				               '</td>'+
-				               '</tr>'+
-				               '</table>'+
-				               '</div>'+
-				               '<form>'+
-				               '<input name="num" type="hidden" value="">'+
-				               '<input name="mainimg" type="hidden" value="">'+
-				               '<input name="title" type="hidden" value="">'+
-				               '<input name="content" type="hidden" value="">'+
-				               '<input name="detail_content" type="hidden" value="">'+
-				               '<input name="latitude" type="hidden" value="">'+
-				               '<input name="longitude" type="hidden" value="">'+
-				               '</form>'
-				               ;
-				               
-				var component_step = $(component_step_text);
-				var component_move = $(component_move_text);
-				
-				if (num!=1) {
-					
-					$('#Project_container').append(component_move);
-					$('#Project_container').append(component_step);
-				}else {
-					$('#Project_container').append(component_step);
+					}
 				}
-				
-			}
-			
-			// ...여행계획 공정 생성
-			
+
+				function Project_step_onclick(step_div) {
+
+					var steps = $('#Project_container').children(
+							'div[alt=Project_div_step]');
+
+					for (var i = 0; i < steps.length; i++) {
+						$(steps[i]).css('outline', '');
+					}
+
+					$(step_div).css('outline', 'blue 6px solid');
+
+				}
+
+				// Project_create_step
+				function Project_create_step() {
+					
+					var dataArray = $('td[alt=Project-Content]');
+					
+					var validity = false;
+					
+					for (var i = 0; i < dataArray.length; i++) {
+						
+						//프로젝트를 선택하지 않고 생성을 눌렀을 시!
+						if (dataArray[i].style.outline!='') {
+							validity =true;
+							break;
+						}
+					}
+					
+					if (validity==false) {
+						alert('계획서를 선택하세요.');
+						return null;
+					}
+					
+
+					//console.log($('#Project_container').children('div:last').last().children('td[alt=Project_detail_num] h3').text());
+					var steps = $('#Project_container').children(
+							'div[alt=Project_div_step]');
+
+					var component = Project_insert_element(steps.length + 1,
+							'http://placehold.it/500x300',
+							'장바구니 혹은 경로설정을 통해 장소를 결정', '', '', '', '',
+							'이동경로를 설정하세요.', '');
+					if (steps.length + 1 != 1) {
+						$('#Project_container')
+								.append(component.component_move);
+						$('#Project_container')
+								.append(component.component_step);
+					} else {
+						$('#Project_container')
+								.append(component.component_step);
+					}
+
+				}
+				// ...Project_create_step
+
+				// 여행계획 공정 생성
+				function Project_insert_element(num, src, title, content,
+						detail_content, latitude, longitude, distance, way) {
+					//아직 src는 설정이 안되어 있다.
+
+					//생성시 나오는 폼
+					var component_move_text = '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'
+							+ '이동 : <a data-toggle="modal" data-target="#GoogleMap" onclick="temp(this);">'
+							+ way 
+							+ distance
+							+ '</a>'
+							+ '</div>';
+
+					var component_step_text = '<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;" alt="Project_div_step" onclick="Project_step_onclick(this);">'
+							+ '<table style="word-break: break-word;">'
+							+ '<tr he>'
+							+ '<td alt="Project_detail_num" class="btn-dark"><h3>'
+							+ num
+							+ '</h3></td>'
+							+ '<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="'+src+'"></td>'
+							+ '<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">'
+							+ '<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">'
+							+ '<h5 style="margin: 0px;">'
+							+ title
+							+ '</h5>'
+							+ '<span style="color: gray;font-size: 11px;">'
+							+ content
+							+ '</span>'
+							+ '</div>'
+							+ '<textarea alt="Project_detail_content_body" style="width: 100%;height: 64px;resize: none;border: 0px;" placeholder="상세계획을 작성해 봅시다!">'
+							+ detail_content
+							+ '</textarea>'
+							+ '</td>'
+							+ '</tr>'
+							+ '</table>'
+							+ '</div>'
+							+ '<form>'
+							+ '<input name="num" type="hidden" value="">'
+							+ '<input name="mainimg" type="hidden" value="">'
+							+ '<input name="title" type="hidden" value="">'
+							+ '<input name="content" type="hidden" value="">'
+							+ '<input name="detail" type="hidden" value="">'
+							+ '<input name="latitude" type="hidden" value="'+latitude+'">'
+							+ '<input name="longitude" type="hidden" value="'+longitude+'">'
+							+ '<input name="distance" type="hidden" value="">'
+							+ '<input name="way" type="hidden" value="">'
+							+ '</form>';
+					var component_step = $(component_step_text);
+					var component_move = $(component_move_text);
+
+					var component = {
+						component_step : component_step,
+						component_move : component_move
+					};
+
+					return component;
+
+				}
+				// ...여행계획 공정 생성
+
 				// 프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
 				function Move_Project_Data(data) {
 
 					//alert($(data).text());
 					//검사용
-					
+
 					var dataArray = $('td[alt=Project-Content]');
-					
+
 					for (var i = 0; i < dataArray.length; i++) {
-						$(dataArray[i]).css('outline','');
+						$(dataArray[i]).css('outline', '');
 					}
-					
-					$(data).css('outline','blue 6px solid');
-					
-					$.ajax({
-						url : "GetProjectData?mid=temp&ptitle="+$(data).text(),//요청을 보낼 url
-						dataType : "json",//반환받을 데이터 타입 선택
-						success : function(result , confirm) {
-							
-							console.log('ajax Json length ='+result.length);
-							console.log('confirm='+confirm);
-							
-							for (var i = 0; i < result.length; i++) {
-							console.log( i+'번째 : '+ result[i].mid);
-							}
-							//
-							//var list = result.result;
-							//$(list).each(function(index, person) {
-							//})//each 끝
-						}//success끝
-					})//ajax끝
+
+					$(data).css('outline', 'blue 6px solid');
+
+					$('#Project_ptitle').text($(data).text());
+
+					$
+							.ajax({
+								url : "GetProjectData?mid=temp&ptitle="
+										+ $(data).text(),//요청을 보낼 url
+								dataType : "json",//반환받을 데이터 타입 선택
+								success : function(result, confirm) {
+
+									var Project_children = $(
+											'#Project_container').children();
+									// step 모든 객체 얻어오기
+
+									for (var i = 1; i < Project_children.length; i++) {
+										$(Project_children[i]).remove();
+									}
+									//기존에 화면에 있던 상세 step 삭제!
+
+									console.log('ajax Json length ='
+											+ result.length);
+
+									var steps = $('#Project_container')
+											.children(
+													'div[alt=Project_div_step]');
+
+									var component;
+
+									for (var i = 0; i < result.length; i++) {
+										//console.log( i+'번째 : '+ result[i].latitude);
+
+										component = Project_insert_element(
+										//step과 move 갖고오기
+										result[i].num,
+												'http://placehold.it/500x300',
+												result[i].title,
+												result[i].content,
+												result[i].detail,
+												result[i].latitude,
+												result[i].longitude, '이동방법 : '
+														+ result[i].way,
+												'거리 : ' + result[i].distance
+														+ 'km / ');
+
+										if (result[i].num != 1) {
+											$('#Project_container').append(
+													component.component_move);
+											$('#Project_container').append(
+													component.component_step);
+										} else {
+											$('#Project_container').append(
+													component.component_step);
+										}
+
+									}
+
+									//mid,ptitle,title,content,latitude,longitude,way,mainImg,num;
+									//var list = result.result;
+									//$(list).each(function(index, person) {
+									//})//each 끝
+								}//success끝
+							})//ajax끝
 
 				}
 				// ...프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
@@ -304,7 +558,7 @@
 
 					//하위 for 문을 통해 보여줄 th를 정한다.
 					for (var i = 0; i < Cart_Content.length; i++) {
-						if (Cart_Content[i].innerHTML.indexOf(inputValue.value)!=-1) {
+						if (Cart_Content[i].innerHTML.indexOf(inputValue.value) != -1) {
 							Cart_Content[i].parentNode.style.display = 'table-row';
 							//Cart_Content[i].style.display = 'table-row';
 						} else {
@@ -325,8 +579,8 @@
 
 					//하위 for 문을 통해 보여줄 th를 정한다.
 					for (var i = 0; i < Cart_Content.length; i++) {
-						
-						if (Cart_Content[i].innerHTML.indexOf(inputValue.value)!=-1) {
+
+						if (Cart_Content[i].innerHTML.indexOf(inputValue.value) != -1) {
 							Cart_Content[i].style.display = 'table-cell';
 							//Cart_Content[i].style.display = 'table-row';
 						} else {
@@ -345,12 +599,12 @@
 				function validity_MakePlan(inputValue) {
 
 					var PlanName = $('td[alt=Project-Content]');
-					
+
 					for (var i = 0; i < PlanName.length; i++) {
-						
+
 						//console.log(PlanName[i].innerHTML+'는'+(PlanName[i].innerHTML==inputValue));
 						//확인용
-						if (PlanName[i].innerHTML.indexOf(inputValue.value)!=-1) {
+						if (PlanName[i].innerHTML.indexOf(inputValue.value) != -1) {
 							$('#PlanName').css('color', 'red');
 							$('#PlanName').text('이미 존재하는 이름입니다.');
 							break;
@@ -371,7 +625,7 @@
 							// 설명 : 저장을 할 수 있는 if문 내부!
 
 							var component_text = '<tr>'
-									+ '<td alt="Project-Content" colspan="3">'
+									+ '<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">'
 									+ $('#MakePlan').val() + '</td>' + '</tr>';
 							//생설될 태그 컴포넌트 미리 제작
 
@@ -425,6 +679,30 @@
 						//console.log(dataObj['latitude']);
 						//console.log(dataObj['mainImg']);
 						//확인용!
+
+						var steps = $('#Project_container').children(
+								'div[alt=Project_div_step]');
+						//'<td alt="Project_detail_num" class="btn-dark"><h3>'+num+'</h3></td>'+
+						var step_num;
+
+						for (var i = 0; i < steps.length; i++) {
+							if (steps[i].style.outline != '') {
+								step_num = i + 1;
+							}
+						}
+						
+						$(steps[step_num - 1]).next().remove();
+
+						$(steps[step_num - 1])
+								.replaceWith(
+										Project_insert_element(step_num,
+												'http://placehold.it/500x300',
+												dataObj['title'],
+												dataObj['content'], '',
+												dataObj['latitude'],
+												dataObj['longitude'], '미정',
+												'미정').component_step);
+
 					} else {
 						alert('삭제');
 					}
@@ -476,7 +754,222 @@
 
 </div>
 <!-- /.최상위 컨테이너 -->
- 
+
+<!-- 구글 맵이 들어있는 모달 -->
+<div class="modal fade" id="GoogleMap" role="dialog" aria-hidden="true" style="z-index: 9000">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="z-index: 1">
+    <div class="modal-content">
+      <div class="modal-body ">
+      
+      
+        <div style="display: inline-block;float: left;">
+		<div class="pac-card" id="pac-card" style="widows: 300px">
+			<div>
+				<div id="title" style="text-align: center;">검색</div>
+			</div>
+			<div id="pac-container" style="z-index: 10000">
+				<input id="pac-input" type="text" style="width: 270px;"Enteralocation">
+			</div>
+		</div>
+		<div id="map" style="width: 500px; height: 500px;border: 1px"></div>
+		<div id="infowindow-content">
+			<img src="" width="16" height="16" id="place-icon"> <span
+				id="place-name" class="title"></span><br> <span
+				id="place-address"></span>
+		</div>
+	</div>
+
+
+	<div id="right-panel"
+		style="float: left; overflow: scroll; width: 265px; height: 500px">
+		<p>대중교통</p>
+		<p>	거리 : <span id="total"></span></p>
+		<p id="Miss_Path" style="background: yellow;display: none;">해당하는 경로가 없습니다.</p>
+	</div>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.구글 맵이 들어있는 모달 -->
+
+
+	<script type="text/javascript">
+	
+	function temp(move) {
+		
+		var move_parent =  $(move).parent('div');
+		//작업중
+		
+		var move_parent_back = $(move_parent).prev().prev();
+		var move_parent_front = $(move_parent).next();
+		
+		
+	}
+	
+	    // 초기에 출발지에 뜨는 메세지
+		function attachSecretMessage(marker, secretMessage) {
+			var infowindow = new google.maps.InfoWindow({
+				content : secretMessage
+			});
+
+			infowindow.open(marker.get('map'), marker);
+			
+			marker.addListener('click', function() {
+				infowindow.open(marker.get('map'), marker);
+			});
+		}
+
+		// This example requires the Places library. Include the libraries=places
+		// parameter when you first load the API. For example:
+		// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+		function initMap() {
+			var center = {
+				lat : 37.598472,
+				lng : 126.9134033
+			};
+
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center : center,
+				zoom : 17
+			});
+			var marker = new google.maps.Marker({
+				position : center,
+				map : map
+			});
+
+			attachSecretMessage(marker, '테스트 메세지');
+
+			var card = document.getElementById('pac-card');
+			var input = document.getElementById('pac-input');
+			var types = document.getElementById('type-selector');
+			var strictBounds = document
+					.getElementById('strict-bounds-selector');
+
+			map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+
+			var autocomplete = new google.maps.places.Autocomplete(input);
+			autocomplete.setTypes([]);
+
+			// Bind the map's bounds (view
+			// Set the data fields to return when the user selects a place.
+			autocomplete.setFields([ 'address_components', 'geometry', 'icon',
+					'name' ]);
+
+			var infowindow = new google.maps.InfoWindow();
+			var infowindowContent = document
+					.getElementById('infowindow-content');
+			infowindow.setContent(infowindowContent);
+
+			var marker = new google.maps.Marker({
+				map : map,
+				anchorPoint : new google.maps.Point(0, -29)
+			});
+
+			// 검색시 발생하는 액션리스너
+			autocomplete
+					.addListener(
+							'place_changed',
+							function() {
+								
+								$('#Miss_Path').next().remove();
+								//기존에 있던 경로 삭제
+								
+								infowindow.close();
+								marker.setVisible(false);
+								var place = autocomplete.getPlace();
+								if (!place.geometry) {
+									// User entered the name of a Place that was not suggested and
+									// pressed the Enter key, or the Place Details request failed.
+									window.alert("정확한 명칭을 적어주세요. '"+ place.name + "'");
+									return;
+								}
+
+								// If the place has a geometry, then present it on a map.
+
+								marker.setPosition(place.geometry.location);
+								marker.setVisible(true);
+
+								var address = '';
+								if (place.address_components) {
+									address = [
+											(place.address_components[0]
+													&& place.address_components[0].short_name || ''),
+											(place.address_components[1]
+													&& place.address_components[1].short_name || ''),
+											(place.address_components[2]
+													&& place.address_components[2].short_name || '') ]
+											.join(' ');
+								}
+
+								infowindowContent.children['place-icon'].src = place.icon;
+								infowindowContent.children['place-name'].textContent = '타이틀ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅁㄴㅇㄴㅁㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ';
+								infowindowContent.children['place-address'].textContent = '컨텐츠';
+								infowindow.open(map, marker);
+
+								var end = {
+									lat : place.geometry.location.lat(),
+									lng : place.geometry.location.lng()
+								};
+								
+								$('#Miss_Path').css('display','none');
+								
+								displayRoute(center, end, directionsService,
+										directionsDisplay);
+								
+								
+							});
+			// Sets a listener on a radio button to change the filter type on Places
+			// Autocomplete.
+
+			var directionsService = new google.maps.DirectionsService;
+			var directionsDisplay = new google.maps.DirectionsRenderer({
+				draggable : false,
+				map : map,
+				panel : document.getElementById('right-panel')
+			});
+
+				  directionsDisplay.addListener('directions_changed', function() {
+				    computeTotalDistance(directionsDisplay.getDirections());
+				  });
+
+		}
+
+		function displayRoute(origin, destination, service, display) {
+			service.route({
+				origin : origin,
+				destination : destination,
+				//  waypoints: [{location: 'Adelaide, SA'}, {location: 'Broken Hill, NSW'}],
+				travelMode : 'TRANSIT',
+				avoidTolls : true
+			}, function(response, status) {
+				if (status === 'OK') {
+					display.setDirections(response);
+				} else {
+					$('#Miss_Path').css('display','block');
+					//alert('Could not display directions due to: ' + status);
+				}
+			});
+		}
+
+		function computeTotalDistance(result) {
+			var total = 0;
+			var myroute = result.routes[0];
+			for (var i = 0; i < myroute.legs.length; i++) {
+				total += myroute.legs[i].distance.value;
+			}
+			total = total / 1000;
+			document.getElementById('total').innerHTML = total + ' km';
+		}
+	</script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-jWynFZkmm5Ewdpk0b7ubq0zExpO0gpw&libraries=places&callback=initMap"
+		async defer></script>
  
  
 </body>

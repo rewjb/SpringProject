@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- 테스트 하는 페이지 -->
 <%
 /* 	System.out.println("test.jsp");
 	String mid = request.getParameter("mid");
@@ -20,17 +21,17 @@
 <a href="springProject/WEB-INF/views/won/insertMember.jsp"> springProject/WEB-INF/views/won/insertMember.jsp </a><br>
 <a href="/springProject/WEB-INF/views/won/insertMember.jsp"> /springProject/WEB-INF/views/won/insertMember.jsp </a><br> 
 -->
-<a href="/won/test2"> /won/test2 </a><br>
-<a href="springProject/won/test2"> springProject/won/test2 </a><br>
-<a href="/springProject/won/test2"> /springProject/won/test2 </a><br>
+<!-- <a href="/won/test2.jsp"> /won/test2 </a><br>
+<a href="springProject/won/test2.jsp"> springProject/won/test2 </a><br>
+<a href="/springProject/won/test2.jsp"> /springProject/won/test2 </a><br>
 
-<a href="/testest"> /testest </a><br>
-<a href="springProject/testest"> springProject/testest </a><br>
-<a href="/springProject/testest"> /springProject/testest </a><br>
+<a href="/testest.jsp"> /testest </a><br>
+<a href="springProject/testest.jsp"> springProject/testest </a><br>
+<a href="/springProject/testest.jsp"> /springProject/testest </a><br>
 
 
+<a href="/springProject/WEB-INF/views/home.jsp"> views/home.jsp </a><br> -->
 <!-- 
-<a href="/WEB-INF/views/home.jsp"> views/home.jsp </a><br>
 <a href="/WEB-INF/views/won/won.jsp"> views/won/won.jsp </a><br>
 <a href="/WEB-INF/views/won/insertMember.jsp"> views/won/insertMember.jsp </a><br>
  -->

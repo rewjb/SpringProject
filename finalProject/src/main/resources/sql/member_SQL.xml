@@ -10,7 +10,7 @@
 		VALUES(
 		#{mid},#{mpw},#{mname},#{mprofile},#{mtel},
 		#{maddr1},#{maddr2},#{gender},#{agegroup},
-		#{rdate}
+		#{"SYSDATE"}
 		)
 	</insert>
 

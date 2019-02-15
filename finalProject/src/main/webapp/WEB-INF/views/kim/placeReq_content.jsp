@@ -106,16 +106,16 @@
 <div class="col-12 pt-3">
 
   <fieldset>
-    <legend class="display-4" style="text-align: center;">여행지 등록 신청</legend>
+    <legend class="display-4" style="text-align: center;">승인대기중인 여행지</legend>
 	<form method="post" enctype="multipart/form-data" action="imgTest.jsp" id="form">
 	    <hr>
 	    <div class="card border-secondary mb-3 margin-auto" style="max-width: 50rem;">
-		  <div class="card-header">이미지 등록</div>
+		  <div class="card-header">이미지</div>
 		  <div class="card-body margin-auto">
 		    <p class="card-text">
 		    <div class="file_input">
 		   		<label>
-		    	<img src="/springProject/resources/IMAGE/placeAdd/imgAdd.png" width="100" height="100" id="picture">	   		
+		    	<img src="${dto.mainImg}" width="700" height="500" id="picture">	   		
 		   		<input onchange="javascript:document.getElementById('file_route1').value=this.value"
 					type="file" name="filename1" id="filename1">
 				</label> 
@@ -128,7 +128,7 @@
 		<hr>
 	</form>
     
-<form action="placeReq">
+<form action="">
     <div class="form-group">
       <label for="exampleSelect1">대륙</label>
       <select class="form-control" id="continent" name="continent">
@@ -141,29 +141,30 @@
     </div>
     <div class="form-group">
       <label for="exampleSelect2">도시</label>
-		<input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+		<input type="text" class="form-control" id="city" name="city" value="${dto.city}">
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">여행지 명</label>
-      <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+      <input type="text" class="form-control" id="title" name="title" value="${dto.title }">
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">주소</label>
-      <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+      <input type="text" class="form-control" id="address" name="address" value="${dto.address }">
     </div>
     <div class="form-group">
       <label for="exampleTextarea">소개</label>
-      <textarea class="form-control" id="content" name="content" rows="2" placeholder="Enter intro"></textarea>
+      <textarea class="form-control" id="content" name="content" rows="2">${dto.content }</textarea>
     </div>
     <div class="form-group">
       <label for="exampleTextarea">설명</label>
-      <textarea class="form-control" id="contentElements" name="contentElements" rows="5" placeholder="Enter explaination"></textarea>
+      <textarea class="form-control" id="contentElements" name="contentElements" rows="5">${dto.contentElements }</textarea>
     </div>
     
     <input type="hidden" id="mainImg" name="mainImg" value="123">
     <input type="hidden" id="userId" name="userId" value="유저아이디">
     
-    <input type="submit" class="btn btn-primary">
+    <input type="submit" class="btn btn-primary" value="승인">
+    <button class="btn btn-danger">꺼절</button>
     </form>
     <p class="pb-1">
   </fieldset>

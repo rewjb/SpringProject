@@ -3715,5 +3715,14 @@ html {
   .mx-xl-auto {
     margin-left: auto !important;
   }
+  
+  
+  .margin-auto {
+  	margin-left: auto; 
+  	margin-right: auto;
+  	margin-top: auto;
+  	margin-bottom: auto;
+}
+  
 }
 /*# sourceMappingURL=bootstrap-grid.css.map */

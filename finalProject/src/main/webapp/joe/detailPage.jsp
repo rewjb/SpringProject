@@ -9,10 +9,6 @@
 <body>
 	<%@ include file="/UserMainHeader.jsp"%>
 
-
-	
-	
-
 	<div class="row featurette">
 		<textarea style="width: 200px; height: 500px; margin-left: 0; position: fixed;"></textarea>
 		<div class="col-md-5" style="margin-left: auto; margin-right: auto;">

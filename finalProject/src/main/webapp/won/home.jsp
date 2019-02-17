@@ -9,7 +9,7 @@
 <body>
 테스트 메인 페이지
 <a href="/springProject/won/signin.jsp">로그인 페이지</a>
-<a href="/springProject/won/signupMember.jsp">회원가입 페이지</a>
+<a href="/springProject/won/signupChooes.jsp">회원가입 페이지</a>
 <a href="#">작성중</a>
 </body>
 </html>

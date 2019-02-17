@@ -158,7 +158,7 @@
 
     <!-- 프로젝트 상세 기록 -->
 			<div class="col-md-8"
-				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px;" id="Project_container">
+				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px;height: 600px" id="Project_container">
 
 				<nav class="navbar navbar-expand navbar-dark bg-dark"  style="margin-bottom: 7px;">
 				<div class="collapse navbar-collapse" id="navbarsExample02">
@@ -314,7 +314,7 @@
 				
 				
 				$(button).prev().click();
-				
+			
 				
 				var steps = $('#Project_container').children('div[alt=Project_div_step]');
 				
@@ -419,7 +419,7 @@
 
 					//생성시 나오는 폼
 					var component_move_text = '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'
-							+ '이동 : <a data-toggle="modal" data-target="#GoogleMap" onclick="temp(this);">'
+							+ '이동 : <a data-toggle="modal" data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
 							+ way 
 							+ distance
 							+ '</a>'
@@ -451,8 +451,8 @@
 							+ '<form>'
 							+ '<input name="num" type="hidden" value="">'
 							+ '<input name="mainimg" type="hidden" value="">'
-							+ '<input name="title" type="hidden" value="">'
-							+ '<input name="content" type="hidden" value="">'
+							+ '<input name="title" type="hidden" value="'+title+'">'
+							+ '<input name="content" type="hidden" value="'+content+'">'
 							+ '<input name="detail" type="hidden" value="">'
 							+ '<input name="latitude" type="hidden" value="'+latitude+'">'
 							+ '<input name="longitude" type="hidden" value="'+longitude+'">'
@@ -756,14 +756,15 @@
 <!-- /.최상위 컨테이너 -->
 
 <!-- 구글 맵이 들어있는 모달 -->
-<div class="modal fade" id="GoogleMap" role="dialog" aria-hidden="true" style="z-index: 9000">
+<div class="modal fade" id="GoogleMap" role="dialog" aria-hidden="true" style="z-index: 9000" >
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="z-index: 1">
     <div class="modal-content">
       <div class="modal-body ">
       
       
+      <!-- 구글 지도  -->
         <div style="display: inline-block;float: left;">
-		<div class="pac-card" id="pac-card" style="widows: 300px">
+		<div class="pac-card" id="pac-card" style="widows: 300px" >
 			<div>
 				<div id="title" style="text-align: center;">검색</div>
 			</div>
@@ -778,18 +779,28 @@
 				id="place-address"></span>
 		</div>
 	</div>
+      <!-- /.구글 지도  -->
 
 
+    <!-- 구글 경로 -->
+    <nav>
+  <div class="nav nav-tabs" id="travel_method" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#" role="tab" alt="WALKING" aria-selected="true" style="padding-left: 5px;padding-right: 5px;"  onclick="Mode_select(this);">걷기</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#" role="tab" alt="BICYCLING" aria-selected="false" style="padding-left: 5px;padding-right: 5px;" onclick="Mode_select(this);">자전거</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#" role="tab" alt="TRANSIT" aria-selected="false" style="padding-left: 5px;padding-right: 5px;" onclick="Mode_select(this);">대중교통</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#t" role="tab" alt="DRIVING" aria-selected="false" style="padding-left: 5px;padding-right: 5px;" onclick="Mode_select(this);">자동차</a>
+  </div>
+</nav>
 	<div id="right-panel"
-		style="float: left; overflow: scroll; width: 265px; height: 500px">
-		<p>대중교통</p>
+		style="float: left; overflow: scroll; width: 265px; height: 460px;overflow-x: hidden">
 		<p>	거리 : <span id="total"></span></p>
 		<p id="Miss_Path" style="background: yellow;display: none;">해당하는 경로가 없습니다.</p>
 	</div>
+    <!-- /.구글 경로 -->
     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-secondary" id="GoogleMap_exit" data-dismiss="modal">취소</button>
         <button type="button" class="btn btn-primary">저장</button>
       </div>
     </div>
@@ -800,50 +811,262 @@
 
 	<script type="text/javascript">
 	
-	function temp(move) {
+	var directionsService ;
+	var directionsDisplay ;
+	var map;
+	var infowindow;
+	var marker;
+	var infowindowContent;
+	var start_marker;
+	var start;
+	var end;
+	var infowindow_start;
+	var move_parent;
+	var move;
+	var g_travel_method;
+	var end_mode;
+	
+	// 이동 방법을 선택!
+	function Mode_select(me) {
 		
-		var move_parent =  $(move).parent('div');
-		//작업중
+		var panel_children =   $('#right-panel').children();	
 		
-		var move_parent_back = $(move_parent).prev().prev();
-		var move_parent_front = $(move_parent).next();
-		
+		   for (var i = 2; i < panel_children.length; i++) {
+	        	
+				$(panel_children[i]).remove();
+	        	
+			}// 기존에 기록된 경로를 전부 삭제!
+			
+		GoogleMap_open(move , $(me).attr('alt'));
 		
 	}
+	// ...이동 방법을 선택!
+	
+	// GoogleMap_open
+	function GoogleMap_open(move_in,travel_method) {
+		
+		if (travel_method==null) {
+			
+			end_mode=0;
+			
+			var methods =  $('#travel_method').children();
+			
+			for (var i = 0; i < methods.length; i++) {
+				
+				if ($(methods[i]).attr('aria-selected')=='true') {
+					travel_method = $(methods[i]).attr('alt');
+				}
+			}
+		}
+		
+		g_travel_method = travel_method;
+		
+		
+		$('#total').text('');
+		
+		move = move_in;
+		
+        var panel_children =   $('#right-panel').children();	
+        //경로 div의 자식을 얻기!
+        
+        for (var i = 2; i < panel_children.length; i++) {
+        	
+			$(panel_children[i]).remove();
+        	
+		}// 기존에 기록된 경로를 전부 삭제!
+        
+    	$('#Miss_Path').css('display','none');
+		// 경로가 없는 메세지도 삭제!
+		
+		if (start_marker!=null) {
+			
+		start_marker.setMap(null);
+		
+		}// 전에 기록으로 남은 marker 삭제!
+		
+		directionsDisplay.setMap(null);
+		directionsService = null;
+		//전에 기록을 남은 경로 전부 삭제!
+		
+		directionsService = new google.maps.DirectionsService;
+		directionsDisplay = new google.maps.DirectionsRenderer({
+			draggable : false,
+			map : map,
+			panel : document.getElementById('right-panel')
+		});
+		
+		directionsDisplay.addListener('directions_changed', function() {
+			computeTotalDistance(directionsDisplay.getDirections());
+			//거리 총 계산해주는 메서드
+			}); 
+		
+	    move_parent =  $(move).parent('div');
+	    
+		var move_parent_back = $(move_parent).prev();
+		var move_parent_front = $(move_parent).next().next();
+		// 앞,뒤에 있는 form 얻기!
+		
+	   var back_latitude = $(move_parent_back).children('input[name=latitude]').val();
+	   var back_longitude = $(move_parent_back).children('input[name=longitude]').val();
+	   var front_latitude =  $(move_parent_front).children('input[name=latitude]').val();
+	   var front_longitude = $(move_parent_front).children('input[name=longitude]').val();
+	   // 앞,뒤에 있는 form으로부터 경도 위도 얻기
+	   
+	   var back_title = $(move_parent_back).children('input[name=title]').val();
+	   var back_content  = $(move_parent_back).children('input[name=content]').val();
+	   var front_title =  $(move_parent_front).children('input[name=title]').val();
+	   var front_content = $(move_parent_front).children('input[name=content]').val();
+	   
+	   if (end_mode==0) {
+	   start = {lat : Number(back_latitude) ,	lng :  Number(back_longitude) };
+	   end = {lat: Number(front_latitude) , lng : Number(front_longitude)};
+	   }else {
+		   
+       }
+	
+	  
+	   
+	   
+	   
+	   if (back_latitude=='' && back_longitude=='') {
+		   
+		   alert('해당 경로의 이전과 다음 장소를 지정해주세요.');
+		   event.stopPropagation();
+		   //이벤트 상위로 전달 금지
+		   
+       }else if (front_latitude==''){
+    	   
+    	   alert('다음 장소를 결정해 주세요!');
+    	   
+   		if (start_marker!=null) {
+			
+   			start_marker.setMap(null);
+   			
+   			}// 전에 기록으로 남은 marker 삭제!
+    	   
+    	   map.setCenter(start);
+   			// 맵을 시작위치로 중앙배치
+   			
+    		start_marker = new google.maps.Marker({
+    			position : start,
+    			map : map
+    		});
+   			
+   			if (infowindow_start != null) {
+				
+   				infowindow_start.close();
+    		  
+   				infowindow_start = null;
+    		
+			}
+   			
+   			
+    		attachSecretMessage( start_marker  , '<p style="font-weight : bold;margin:5px;">'+back_title+'</p>'+back_content);
+       
+    		infowindow_start.close();
+    		
+       }else {
+		
+	    console.log('뒤 좌표 : 경도='+back_latitude + '/위도='+back_longitude);
+	    console.log('앞 좌표 : 경도='+front_latitude + '/위도='+front_longitude);
+	    //콘솔 확인용
+	    
+		marker.setVisible(false);
+		
+		// If the place has a geometry, then present it on a map.
+
+		marker.setPosition(end);
+		marker.setVisible(true);
+		
+
+		infowindowContent.children['place-name'].textContent = front_title;
+		infowindowContent.children['place-address'].textContent = front_content;
+		infowindow.open(map, marker);
+		
+		start_marker = new google.maps.Marker({
+			position : start,
+			map : map
+		});
+		
+		if (infowindow_start != null) {
+			
+			infowindow_start.close();
+    		  
+			infowindow_start = null;
+    		
+			}
+		
+		attachSecretMessage( start_marker  , '<p style="font-weight : bold;margin:5px;">'+back_title+'</p>'+back_content);
+		
+		displayRoute(start, end, directionsService,
+				directionsDisplay ,travel_method); 
+	        }
+		
+	    }
+	// ...GoogleMap_open
 	
 	    // 초기에 출발지에 뜨는 메세지
 		function attachSecretMessage(marker, secretMessage) {
-			var infowindow = new google.maps.InfoWindow({
+		
+		    infowindow_start = new google.maps.InfoWindow({
 				content : secretMessage
 			});
 
-			infowindow.open(marker.get('map'), marker);
+			infowindow_start.open(marker.get('map'), marker);
 			
 			marker.addListener('click', function() {
-				infowindow.open(marker.get('map'), marker);
+				infowindow_start.open(marker.get('map'), marker);
+			});
+		}
+	    
+
+		function displayRoute(origin, destination, service, display , travel_method) {
+			service.route({
+				origin : origin,
+				destination : destination,
+				//  waypoints: [{location: 'Adelaide, SA'}, {location: 'Broken Hill, NSW'}],
+				travelMode : travel_method,
+				avoidTolls : true
+			}, function(response, status) {
+				if (status === 'OK') {
+					display.setDirections(response);
+				} else {
+					
+					$('#Miss_Path').css('display','block');
+					
+					var panel_children =   $('#right-panel').children();	
+					
+					   for (var i = 2; i < panel_children.length; i++) {
+				        	
+							$(panel_children[i]).remove();
+				        	
+						}// 기존에 기록된 경로를 전부 삭제!
+					//alert('Could not display directions due to: ' + status);
+				}
 			});
 		}
 
-		// This example requires the Places library. Include the libraries=places
-		// parameter when you first load the API. For example:
-		// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+		//여러개의 경로를 설정할 경우 총 거리를 얻어내는 메서드
+		//여기서 사용할지느
+		function computeTotalDistance(result) {
+			var total = 0;
+			var myroute = result.routes[0];
+			for (var i = 0; i < myroute.legs.length; i++) {
+				total += myroute.legs[i].distance.value;
+			}
+			total = total / 1000;
+			document.getElementById('total').innerHTML = total + ' km';
+		}
 
+		
 		function initMap() {
-			var center = {
-				lat : 37.598472,
-				lng : 126.9134033
-			};
+			//지도의 시작! 어디선가 initMap 을 호출하는 듯..
 
-			var map = new google.maps.Map(document.getElementById('map'), {
-				center : center,
+			map = new google.maps.Map(document.getElementById('map'), {
+				center : {lat : 37.598472, lng : 126.9134033},
 				zoom : 17
 			});
-			var marker = new google.maps.Marker({
-				position : center,
-				map : map
-			});
-
-			attachSecretMessage(marker, '테스트 메세지');
+			
 
 			var card = document.getElementById('pac-card');
 			var input = document.getElementById('pac-input');
@@ -861,12 +1084,12 @@
 			autocomplete.setFields([ 'address_components', 'geometry', 'icon',
 					'name' ]);
 
-			var infowindow = new google.maps.InfoWindow();
-			var infowindowContent = document
+			infowindow = new google.maps.InfoWindow();
+			infowindowContent = document
 					.getElementById('infowindow-content');
 			infowindow.setContent(infowindowContent);
 
-			var marker = new google.maps.Marker({
+			marker = new google.maps.Marker({
 				map : map,
 				anchorPoint : new google.maps.Point(0, -29)
 			});
@@ -874,8 +1097,8 @@
 			// 검색시 발생하는 액션리스너
 			autocomplete
 					.addListener(
-							'place_changed',
-							function() {
+							'place_changed',  
+							function() {  
 								
 								$('#Miss_Path').next().remove();
 								//기존에 있던 경로 삭제
@@ -894,7 +1117,7 @@
 
 								marker.setPosition(place.geometry.location);
 								marker.setVisible(true);
-
+								
 								var address = '';
 								if (place.address_components) {
 									address = [
@@ -908,64 +1131,40 @@
 								}
 
 								infowindowContent.children['place-icon'].src = place.icon;
-								infowindowContent.children['place-name'].textContent = '타이틀ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅁㄴㅇㄴㅁㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ';
-								infowindowContent.children['place-address'].textContent = '컨텐츠';
+								infowindowContent.children['place-name'].textContent = place.name;
+								infowindowContent.children['place-address'].textContent = address;
 								infowindow.open(map, marker);
 
-								var end = {
+								end = {
 									lat : place.geometry.location.lat(),
 									lng : place.geometry.location.lng()
 								};
 								
 								$('#Miss_Path').css('display','none');
 								
-								displayRoute(center, end, directionsService,
-										directionsDisplay);
+								displayRoute(start, end, directionsService,
+										directionsDisplay , g_travel_method);
 								
+								end_mode=1;
 								
 							});
 			// Sets a listener on a radio button to change the filter type on Places
 			// Autocomplete.
 
-			var directionsService = new google.maps.DirectionsService;
-			var directionsDisplay = new google.maps.DirectionsRenderer({
+			directionsService = new google.maps.DirectionsService;
+			directionsDisplay = new google.maps.DirectionsRenderer({
 				draggable : false,
 				map : map,
 				panel : document.getElementById('right-panel')
 			});
 
-				  directionsDisplay.addListener('directions_changed', function() {
-				    computeTotalDistance(directionsDisplay.getDirections());
-				  });
-
-		}
-
-		function displayRoute(origin, destination, service, display) {
-			service.route({
-				origin : origin,
-				destination : destination,
-				//  waypoints: [{location: 'Adelaide, SA'}, {location: 'Broken Hill, NSW'}],
-				travelMode : 'TRANSIT',
-				avoidTolls : true
-			}, function(response, status) {
-				if (status === 'OK') {
-					display.setDirections(response);
-				} else {
-					$('#Miss_Path').css('display','block');
-					//alert('Could not display directions due to: ' + status);
-				}
-			});
-		}
-
-		function computeTotalDistance(result) {
-			var total = 0;
-			var myroute = result.routes[0];
-			for (var i = 0; i < myroute.legs.length; i++) {
-				total += myroute.legs[i].distance.value;
-			}
-			total = total / 1000;
-			document.getElementById('total').innerHTML = total + ' km';
-		}
+			directionsDisplay.addListener('directions_changed', function() {
+			computeTotalDistance(directionsDisplay.getDirections());
+			//거리 총 계산해주는 메서드
+			}); 
+				  
+		}// initMap 끝
+		
 	</script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-jWynFZkmm5Ewdpk0b7ubq0zExpO0gpw&libraries=places&callback=initMap"

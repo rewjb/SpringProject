@@ -20,4 +20,8 @@ public class PlaceReqDAO {
 	public List<PlaceReqDTO> selectAll() throws Exception{		
 		return session.selectList("PlaceReq.selectAll");
 	}
+	
+	public PlaceReqDTO select(String no) throws Exception{		
+		return session.selectOne("PlaceReq.select", no);
+	}
 }

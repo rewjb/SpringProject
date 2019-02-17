@@ -10,13 +10,33 @@
 	<%@ include file="/UserMainHeader.jsp"%>
 
 	<div class="row featurette">
-		<textarea style="width: 200px; height: 500px; margin-left: 0; position: fixed;"></textarea>
+		<div style="width: 200px; height: 500px; margin-left: 40px; position: fixed;">
+			<table border="2">
+				<tr>
+					<td><h2 class = "mb-0">장바구니</h2></td>
+				</tr>
+				<tr>
+					<td style="height: 100px; width: 100px;">1</td>
+				</tr>
+				<tr> 
+					<td style="height: 100px; width: 100px;">2</td>				
+				</tr>			
+				<tr> 
+					<td style="height: 100px; width: 100px;">3</td>				
+				</tr>			
+				<tr> 
+					<td style="height: 100px; width: 100px;">4</td>				
+				</tr>			
+				<tr> 
+					<td style="height: 100px; width: 100px;">5</td>				
+				</tr>			
+			</table>
+		</div>
 		<div class="col-md-5" style="margin-left: auto; margin-right: auto;">
 			<svg
 				class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-				width="1200" height="800" xmlns="http://www.w3.org/2000/svg"
-				preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
-				aria-label="Placeholder: 500x500">
+				width="1500" height="1000" xmlns="http://www.w3.org/2000/svg"
+				preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
 			<title>Placeholder</title>
 			<rect width="100%" height="100%" fill="#eee" /></svg>
 		</div>
@@ -36,52 +56,6 @@
 		<br>
 		<p class="lead">관광명소 설명3</p>
 	</div>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-
-
-
-
 
 
 

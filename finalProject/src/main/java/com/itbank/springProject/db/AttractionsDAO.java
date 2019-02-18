@@ -16,4 +16,8 @@ public class AttractionsDAO {
 		return session.selectOne("attractions.select", id);
 	}
 	
+	public void insert(AttractionsDTO dto) {
+		session.insert("attractions.insert", dto);
+	}
+	
 }

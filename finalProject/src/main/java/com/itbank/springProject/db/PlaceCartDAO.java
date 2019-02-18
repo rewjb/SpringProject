@@ -19,7 +19,6 @@ public class PlaceCartDAO {
 	
 	public void cartInsert(String pid, String mid) {
 		
-		session.
 		
 	}
 	

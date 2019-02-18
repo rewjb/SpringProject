@@ -19,7 +19,7 @@ public class J_CartController {
 	@RequestMapping("cartInsert")
 	public String cartInsert(PlaceCartDTO placeCartDTO) {
 		placeCartDAO.cartInsert(placeCartDTO);
-		return null;
+		return "j_cart";
 	}
 	
 	

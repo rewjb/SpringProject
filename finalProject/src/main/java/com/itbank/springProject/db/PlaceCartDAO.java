@@ -17,5 +17,11 @@ public class PlaceCartDAO {
 		return session.selectList("PlaceCart.selectAll",mid);
 	}
 	
-
+	public void cartInsert(String pid, String mid) {
+		
+		session.
+		
+	}
+	
+	
 }

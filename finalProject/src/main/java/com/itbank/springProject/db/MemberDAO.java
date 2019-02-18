@@ -13,7 +13,7 @@ public class MemberDAO{
 	//DAO == Member테이블 DB를 처리할 수 있는 클래스
 	
 	@Autowired
-	private SqlSession session;
+	private SqlSession session; 
 
 	public void insert(MemberDTO dto) {
 		try {

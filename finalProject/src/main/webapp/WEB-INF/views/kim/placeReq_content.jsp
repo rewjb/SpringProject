@@ -100,7 +100,7 @@
 <%@ include file="/UserMainHeader.jsp" %>
 </head>
 <!-- <body style="background: #e5ffeb;"> -->
-<body style="background-image: url('/springProject/resources/IMAGE/placeAdd/bg.jpg2');">
+<body>
 
 <div class="container marketing" style="background-color: rgba(255,255,255,0.8); border-radius: 1.0rem;">
 <div class="col-12 pt-3">

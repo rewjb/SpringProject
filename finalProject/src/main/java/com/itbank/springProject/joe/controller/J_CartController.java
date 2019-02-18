@@ -18,12 +18,14 @@ public class J_CartController {
 	private PlaceCartDAO placeCartDAO;
 	
 	@Autowired
+	@Qualifier("attractionsDAO")
 	private AttractionsDAO attractionsDAO;
 	
 	
 	@RequestMapping("cartInsert")
 	public String cartInsert(PlaceCartDTO placeCartDTO) {
 		placeCartDAO.cartInsert(placeCartDTO);
+		
 		return "j_cart";
 	}
 	

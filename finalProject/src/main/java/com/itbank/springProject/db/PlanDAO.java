@@ -22,7 +22,13 @@ public class PlanDAO {
 	
 	// 계획서 저장하기
 	public int insertProjectData(PlanDTO planDTO){
+		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		return session.insert("Plan.insertProjectData", planDTO);
+	}
+	
+	//계획서 삭제
+	public int deleteProjectData(PlanDTO planDTO){
+		return session.insert("Plan.deleteAllById", planDTO);
 	}
 	
 }

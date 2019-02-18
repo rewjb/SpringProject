@@ -30,6 +30,8 @@ function cart() {
 		
 		
 		
+		
+		
 	}else if ($("#cart").attr("class") == "btn btn-primary my-2") {
 		$("#cart").attr("class","btn btn-secondary my-2");
 	}

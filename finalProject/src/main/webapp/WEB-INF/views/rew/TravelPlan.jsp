@@ -165,7 +165,7 @@
 					<button class="btn btn-secondary" id="Project_ptitle">프로젝트 제목</button>
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active"><a class="nav-link" href="#"
-							onclick="alert('저장');">저장</a></li>
+							onclick="save_project();">저장</a></li> <!-- 작업중 -->
 						<li class="nav-item active"><a class="nav-link" onclick="Project_create_step();">
 							생성</a></li>
 						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_delete">
@@ -206,15 +206,11 @@
 							</tr>
 						</thead>
 						<tbody id="Project-Container">
+						<c:forEach items="${project_list}" var="project_list">
 							<tr>
-								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project01</td>
+								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">${project_list}</td>
 							</tr>
-							<tr>
-								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project02</td>
-							</tr>
-							<tr>
-								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">project03</td>
-							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -310,49 +306,164 @@
  
 			<script type="text/javascript">
 			
-			function Project_delete(button) {
+			// 프로젝트 "저장"
+			function save_project() {
 				
+				var validity = save_project_validity();
+				// save_project_validity 라는 메서드를 통해 유효성 검사
 				
-				$(button).prev().click();
-			
+			    //alert(validity);
+				//확인용
 				
 				var steps = $('#Project_container').children('div[alt=Project_div_step]');
+				// 공정들
+				var move ;
+				// 각 공정별 이동
+				var form ;
+				// 각 공정별 db에 넘길 데이터
+				var move_component;
+				// 각 공정별 이동 데이터를 분류해주고 그것을 받는 변수
+				var forms = $('#Project_container').children('form');
+				// 각 공정별 넘길 form
+				var ptitle = $('#Project_ptitle').text();
+				//프로젝트 이름
 				
+
+				if (validity == true) {
+
+					
+				for (var i = 0; i < steps.length; i++) {
+
+							move = $(steps[i]).prev();
+							form = $(steps[i]).next();
+
+							if (i == 0
+									|| move.find('a').text() == '이동경로를 설정하세요.') {
+								//첫번째 div에서는 경로가 없다!
+								form.find('input[name=distance]').val(0);
+								form.find('input[name=way]').val('unset');
+
+							} else {
+								move_component = return_move_component(move);
+								form.find('input[name=distance]').val(move_component.distance);
+								form.find('input[name=way]').val(move_component.method);
+
+							}
+					        	//ptitle
+						        form.find('input[name=num]').val ($(steps[i]).find('td[alt=Project_detail_num] h3').text());
+					        	form.find('input[name=mainimg]').val($(steps[i]).find('img').attr('src'));
+					        	form.find('input[name=title]').val($(steps[i]).find('h3').text());
+					        	form.find('input[name=content]').val($(steps[i]).find('span').text());
+					        	form.find('input[name=detail]').val($(steps[i]).find('textarea').val());
+						        //latitude
+						        //longitude
+						}
+
+					} else {
+						alert('프로젝트 항목별 내용을 채워주세요.');
+					}
+				
+			
+				for (var i = 0; i < forms.length; i++) {
+					
+					var data = $(forms[i]).serialize();
+				$.ajax({
+							url : "projcetDataSave?ptitle="+ptitle,
+							type : "post",
+							data : data,
+							dataType : "text",//반환받을 데이터 타입 선택
+							success : function(result, confirm) {
+								alert(result);
+								alert(confirm);
+								
+							}//success끝
+						})//ajax끝
+					}// for문 종료
+
+				}
+				// ...save_project()
+
+				function save_project_validity() {
+					//프로젝트를 저장하기 위한 유효성 검사
+					// 1. 공정별 장소가 정해져 있는지
+
+					var steps = $('#Project_container').children(
+							'div[alt=Project_div_step]');
+
+					var validity = true;
+
+					for (var i = 0; i < steps.length; i++) {
+						if ($(steps[i]).find('h5').text() == '장바구니 혹은 경로설정을 통해 장소를 결정') {
+							validity = false;
+						}
+					}
+					return validity;
+				}
+				// ...save_project_validity()
+
+				function return_move_component(move) {
+
+					//거리 : 1000 km / 이동방법 : WAY2
+					//위에는 형식
+					var total_text = move.find('a').text()
+					var distance = total_text.split('/')[0].split(':')[1]
+							.replace('km', '').trim();
+					var method = total_text.split('/')[1].split(':')[1].trim();
+
+					var move_component = {
+						distance : distance,
+						method : method
+					};
+
+					return move_component;
+				}
+				// ...return_move_component
+				// ...프로젝트 "저장"
+
+				function Project_delete(button) {
+
+					$(button).prev().click();
+
+					var steps = $('#Project_container').children(
+							'div[alt=Project_div_step]');
+
 					//step이 1개 초과일때
 					for (var i = 0; i < steps.length; i++) {
-						
-						if (steps.length==1 && steps[i].style.outline != '') {
-							$(steps[i]).prev().children('a').text('이동경로를 설정하세요.');
+
+						if (steps.length == 1 && steps[i].style.outline != '') {
+							$(steps[i]).prev().children('a').text(
+									'이동경로를 설정하세요.');
 							$(steps[i]).next().next().remove();
 							$(steps[i]).next().remove();
 							$(steps[i]).remove();
-						}else {
-						
-						 if (steps[i].style.outline != '') {
-							
-							if (i+1==steps.length) {
-								//선택 step이 마지막
-								$(steps[i]).prev().remove();
-								$(steps[i]).next().remove();
-								$(steps[i]).remove();
-							}else {
-								//선택 step이 마지막 x
-								$(steps[i]).prev().children('a').text('이동경로를 설정하세요.');
-								$(steps[i]).next().next().remove();
-								$(steps[i]).next().remove();
-								$(steps[i]).remove();
+						} else {
+
+							if (steps[i].style.outline != '') {
+
+								if (i + 1 == steps.length) {
+									//선택 step이 마지막
+									$(steps[i]).prev().remove();
+									$(steps[i]).next().remove();
+									$(steps[i]).remove();
+								} else {
+									//선택 step이 마지막 x
+									$(steps[i]).prev().children('a').text(
+											'이동경로를 설정하세요.');
+									$(steps[i]).next().next().remove();
+									$(steps[i]).next().remove();
+									$(steps[i]).remove();
+								}
 							}
-						 }
 						}
 					}
-				
-				steps =  $('#Project_container').find('h3');
-				
-				for (var i = 0; i < steps.length; i++) {
 
-					steps[i].innerHTML = i+1;
-					//번호 새로 부여
-					
+					steps = $('#Project_container').find('h3');
+
+					for (var i = 0; i < steps.length; i++) {
+
+						steps[i].innerHTML = i + 1;
+						//번호 새로 부여
+
 					}
 				}
 
@@ -371,25 +482,24 @@
 
 				// Project_create_step
 				function Project_create_step() {
-					
+
 					var dataArray = $('td[alt=Project-Content]');
-					
+
 					var validity = false;
-					
+
 					for (var i = 0; i < dataArray.length; i++) {
-						
+
 						//프로젝트를 선택하지 않고 생성을 눌렀을 시!
-						if (dataArray[i].style.outline!='') {
-							validity =true;
+						if (dataArray[i].style.outline != '') {
+							validity = true;
 							break;
 						}
 					}
-					
-					if (validity==false) {
+
+					if (validity == false) {
 						alert('계획서를 선택하세요.');
 						return null;
 					}
-					
 
 					//console.log($('#Project_container').children('div:last').last().children('td[alt=Project_detail_num] h3').text());
 					var steps = $('#Project_container').children(
@@ -420,10 +530,7 @@
 					//생성시 나오는 폼
 					var component_move_text = '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'
 							+ '이동 : <a data-toggle="modal" data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
-							+ way 
-							+ distance
-							+ '</a>'
-							+ '</div>';
+							+ way + distance + '</a>' + '</div>';
 
 					var component_step_text = '<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;" alt="Project_div_step" onclick="Project_step_onclick(this);">'
 							+ '<table style="word-break: break-word;">'
@@ -490,7 +597,7 @@
 
 					$
 							.ajax({
-								url : "GetProjectData?mid=temp&ptitle="
+								url : "getProjectData?mid=temp&ptitle="
 										+ $(data).text(),//요청을 보낼 url
 								dataType : "json",//반환받을 데이터 타입 선택
 								success : function(result, confirm) {
@@ -527,7 +634,7 @@
 												result[i].longitude, '이동방법 : '
 														+ result[i].way,
 												'거리 : ' + result[i].distance
-														+ 'km / ');
+														+ ' km / ');
 
 										if (result[i].num != 1) {
 											$('#Project_container').append(
@@ -690,18 +797,24 @@
 								step_num = i + 1;
 							}
 						}
-						
+
 						$(steps[step_num - 1]).next().remove();
 
-						$(steps[step_num - 1])
-								.replaceWith(
-										Project_insert_element(step_num,
-												'http://placehold.it/500x300',
-												dataObj['title'],
-												dataObj['content'], '',
-												dataObj['latitude'],
-												dataObj['longitude'], '미정',
-												'미정').component_step);
+						var newStep = Project_insert_element(step_num,
+								'http://placehold.it/500x300',
+								dataObj['title'], dataObj['content'], '',
+								dataObj['latitude'], dataObj['longitude'],
+								'미정', '미정').component_step
+
+						$(steps[step_num - 1]).replaceWith(newStep);
+
+						$(newStep).filter('div').css('outline',
+								'blue 6px solid');
+
+						$(newStep).filter('div').next().next().find(
+								'a[data-toggle=modal]').text('이동경로를 설정하세요.');
+						$(newStep).filter('div').prev().find(
+								'a[data-toggle=modal]').text('이동경로를 설정하세요.');
 
 					} else {
 						alert('삭제');
@@ -800,8 +913,8 @@
     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="GoogleMap_exit" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary">저장</button>
+        <button type="button" class="btn btn-secondary" id="GoogleMap_exit" data-dismiss="modal" >취소</button>
+        <button type="button" class="btn btn-primary" onclick="GoogleMap_confirm(this)">선택</button>
       </div>
     </div>
   </div>
@@ -824,7 +937,66 @@
 	var move_parent;
 	var move;
 	var g_travel_method;
+	var search_place = {name : null , address: null};
 	var end_mode;
+	// end_mode = 1 : 검색모드로 장소 결정
+	
+	
+	function GoogleMap_confirm(button) {
+		
+
+		 var next_step =   $(move).parent('div').next();
+		 var next_step_in = $(next_step).find('div[alt=Project_detail_content_head]');
+		  
+		if (end_mode == 1) {
+			// 검색모드로 장소 결정
+		  
+			
+			
+		 $(next_step_in).find('h5').text(search_place.name);
+		 $(next_step_in).find('span').text(search_place.address);
+		 
+		 $(next_step).next().find('input[name=latitude]').val(end.lat);
+		 $(next_step).next().find('input[name=longitude]').val(end.lng);
+		 
+		}
+		
+		
+		if ($('#Miss_Path').css('display') == 'none') {
+			//경로가 존재할 경우
+			
+		    var distance = $('span#total').text();
+		    
+		    var temp_method;
+		    
+		    switch (g_travel_method) {
+			case 'WALKING': temp_method= '걷기';
+				break;
+			case 'BICYCLING': temp_method = '자전거';
+				break;
+			case 'TRANSIT':  temp_method = '대중교통';
+				break;
+			case 'DRIVING':  temp_method = '자동차' ;
+			}
+			
+		    move.innerHTML =  distance+' / 이동방법 : '+ temp_method; 
+		    
+		    //$(next_step).next().css('outline', 'blue 6px solid');
+		    //확인용
+		    
+		    //$(next_step).next().children('input[]');
+			
+		}else {
+			
+			move.innerHTML =  '이동경로를 설정하세요.'; 
+			
+		}
+		
+		$(button).prev().click();
+		//창 종료
+		
+	}
+
 	
 	// 이동 방법을 선택!
 	function Mode_select(me) {
@@ -845,6 +1017,11 @@
 	// GoogleMap_open
 	function GoogleMap_open(move_in,travel_method) {
 		
+		//alert(now_move.innerHTML);
+		//now_move에 노드가 잘 들어갔는지 확인용
+		
+		$('#pac-input').val('');
+		
 		if (travel_method==null) {
 			
 			end_mode=0;
@@ -860,7 +1037,6 @@
 		}
 		
 		g_travel_method = travel_method;
-		
 		
 		$('#total').text('');
 		
@@ -1134,6 +1310,10 @@
 								infowindowContent.children['place-name'].textContent = place.name;
 								infowindowContent.children['place-address'].textContent = address;
 								infowindow.open(map, marker);
+								
+								search_place.name =  place.name;
+								search_place.address = address;
+								//검색을 임시 저장소에 저장
 
 								end = {
 									lat : place.geometry.location.lat(),

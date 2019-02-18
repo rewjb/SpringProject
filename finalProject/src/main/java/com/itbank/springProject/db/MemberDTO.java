@@ -15,64 +15,82 @@ public class MemberDTO {
 	public String getMid() {
 		return mid;
 	}
+
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
+
 	public String getMpw() {
 		return mpw;
 	}
+
 	public void setMpw(String mpw) {
 		this.mpw = mpw;
 	}
+
 	public String getMname() {
 		return mname;
 	}
+
 	public void setMname(String mname) {
 		this.mname = mname;
 	}
+
 	public String getMprofile() {
 		return mprofile;
 	}
+
 	public void setMprofile(String mprofile) {
 		this.mprofile = mprofile;
 	}
+
 	public String getMtel() {
 		return mtel;
 	}
+
 	public void setMtel(String mtel) {
 		this.mtel = mtel;
 	}
+
 	public String getMaddr1() {
 		return maddr1;
 	}
+
 	public void setMaddr1(String maddr1) {
 		this.maddr1 = maddr1;
 	}
+
 	public String getMaddr2() {
 		return maddr2;
 	}
+
 	public void setMaddr2(String maddr2) {
 		this.maddr2 = maddr2;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public String getAgegroup() {
 		return agegroup;
 	}
+
 	public void setAgegroup(String agegroup) {
 		this.agegroup = agegroup;
 	}
+
 	public String getRdate() {
 		return rdate;
 	}
+
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
-	
 	
 	
 	}

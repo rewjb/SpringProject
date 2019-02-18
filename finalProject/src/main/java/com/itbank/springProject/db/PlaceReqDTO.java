@@ -42,7 +42,7 @@ public class PlaceReqDTO {
 		this.mainImg = mainImg;
 		this.time = time;
 	}
-
+	
 	public int getNo() {
 		return no;
 	}

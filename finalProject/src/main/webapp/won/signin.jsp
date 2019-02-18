@@ -1,3 +1,8 @@
+<!-- 
+로그인 페이지 
+로그인 성공시 : 메인화면( 위치 : won/home.jsp )
+로그인 실패시 : 로그인 화면으로( 위치 : won/signin.jsp )
+-->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!doctype html>

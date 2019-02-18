@@ -12,7 +12,7 @@
 		FROM tablename1
 		WHERE columnname1 = #{value}
 	</select>
-
+  
 	<resultMap type="attrDTO" id="rs">
 		<result property="continent" column="continent" />
 		<result property="city" column="city" />

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.itbank.springProject.db.AttractionsDAO;
 import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlaceCartDTO;
 
@@ -17,7 +18,7 @@ public class J_CartController {
 	private PlaceCartDAO placeCartDAO;
 	
 	@Autowired
-	
+	private AttractionsDAO attractionsDAO;
 	
 	
 	@RequestMapping("cartInsert")

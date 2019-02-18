@@ -5,12 +5,7 @@
 <mapper namespace="attractions">
 
 	 <select id="select" parameterType="String" resultMap="rs">
-		SELECT
-		columnname1,
-		columnname2,
-		columnname3
-		FROM tablename1
-		WHERE columnname1 = #{value}
+		SELECT * FROM ATTRACTIONS WHERE id = #{id}
 	</select>
   
 	<resultMap type="attrDTO" id="rs">

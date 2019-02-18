@@ -4,7 +4,7 @@
 
 <mapper namespace="attractions">
 
-	<!-- <select id="getSomething" parameterType="int" resultType="rs">
+	 <select id="select" parameterType="String" resultMap="rs">
 		SELECT
 		columnname1,
 		columnname2,
@@ -13,20 +13,26 @@
 		WHERE columnname1 = #{value}
 	</select>
 
-	<resultMap type="#modelname" id="YourResultSet">
-		<id property="param1" column="columnname1" />
-		<result property="param2" column="columnname2" />
-		<result property="param3" column="columnname3" />
+	<resultMap type="attrDTO" id="rs">
+		<result property="continent" column="continent" />
+		<result property="city" column="city" />
+		<result property="id" column="id" />
+		<result property="mainImg" column="mainImg" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="contentElements" column="contentElements" />
+		<result property="findWay" column="findWay" />
+		<result property="longitude" column="longitude" />
+		<result property="latitude" column="latitude" />
+		<result property="category" column="category" />
 	</resultMap>
-
+		
+	<!--
 	<select id="getAll" resultMap="YourResultSet">
 		SELECT * FROM tablename1
 	</select>
 
-	<insert id="insertSomething" parameterType="#modelname">
-		INSERT INTO tablename1 (columnname1, columnname2, columnname3)
-		VALUES(#{value1},#{value2},#{value3})
-	</insert>
+	
 
 	<update id="updateSomething" parameterType="#modelname">
 		UPDATE tablename1

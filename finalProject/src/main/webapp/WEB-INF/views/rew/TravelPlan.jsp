@@ -351,8 +351,8 @@
 							}
 					        	//ptitle
 						        form.find('input[name=num]').val ($(steps[i]).find('td[alt=Project_detail_num] h3').text());
-					        	form.find('input[name=mainimg]').val($(steps[i]).find('img').attr('src'));
-					        	form.find('input[name=title]').val($(steps[i]).find('h3').text());
+					        	form.find('input[name=mainImg]').val($(steps[i]).find('img').attr('src'));
+					        	form.find('input[name=title]').val($(steps[i]).find('h5').text());
 					        	form.find('input[name=content]').val($(steps[i]).find('span').text());
 					        	form.find('input[name=detail]').val($(steps[i]).find('textarea').val());
 						        //latitude
@@ -373,8 +373,9 @@
 							data : data,
 							dataType : "text",//반환받을 데이터 타입 선택
 							success : function(result, confirm) {
+								
 								alert(result);
-								alert(confirm);
+								
 								
 							}//success끝
 						})//ajax끝
@@ -557,7 +558,7 @@
 							+ '</div>'
 							+ '<form>'
 							+ '<input name="num" type="hidden" value="">'
-							+ '<input name="mainimg" type="hidden" value="">'
+							+ '<input name="mainImg" type="hidden" value="">'
 							+ '<input name="title" type="hidden" value="'+title+'">'
 							+ '<input name="content" type="hidden" value="'+content+'">'
 							+ '<input name="detail" type="hidden" value="">'

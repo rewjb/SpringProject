@@ -35,40 +35,34 @@ public class R_PlanController {
 	}
 	
    @RequestMapping("rew/projcetDataSave")
-   public void projcetDataSave(PlanDTO planDTO , HttpServletResponse response ,  @RequestParam("ptitle") String ptitle) throws IOException{
-	   
-	   planDTO.setMid("temp");
-	   
-	   
-	   //response.getWriter().write("");
-	   //좋은 예시라서 남겨둠.
-	   
-	   
-   }
-//   
-//	//mid
-//	//ptitle
-//	form.find('input[name=num]').val();   td[alt=Project_detail_num]
-//	form.find('input[name=mainimg]').val();  img
-//	form.find('input[name=title]').val();
-//	form.find('input[name=content]').val();
-//	form.find('input[name=detail]').val();
-//	//latitude
-//	//longitude
-//	form.find('input[name=distance]').val();
-//	form.find('input[name=way]').val();
-   
-//	private String mid;
-//	private String ptitle;
-//	private String title;
-//	private String content;
-//	private String latitude;
-//	private String longitude;
-//	private String way;
-//	private String mainImg;
-//	private String detail;
-//	private int num;
-//	private int distance;
+	public void projcetDataSave(PlanDTO planDTO, HttpServletResponse response, @RequestParam("ptitle") String ptitle)
+			throws IOException {
 
+		planDTO.setMid("temp");
+
+		int result1 = planDAO.deleteProjectData(planDTO);
+
+		response.getWriter().write("success");
+
+		int result2 = planDAO.insertProjectData(planDTO);
+	
+//		if (result1==0) {
+//			result2=planDAO.insertProjectData(planDTO);
+//			
+//			if (result2==0) {
+//				
+//				response.getWriter().write("success");
+//				
+//			}else {
+//				
+//				response.getWriter().write("insert success");
+//				
+//			}
+//		}else {
+//			
+//			response.getWriter().write("delete fail");
+//		}
+
+	}
 
 }

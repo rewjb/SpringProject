@@ -9,5 +9,15 @@
 	order by NUM
 	</select>
 	
+	<select id="selectPlanNameAll" parameterType="String" resultType="String">
+	select distinct PTITLE  from PLAN 
+	where MID=#{mid}
+	order by PTITLE
+	</select>
+	
+	<insert id="insertProjectData" parameterType="PlanDTO">
+	insert into PLAN values( #{MID},#{PTITLE},#{TITLE},#{CONTENT},#{ptitle},#{ptitle},#{ptitle},#{ptitle},#{ptitle},#{ptitle},#{ptitle});
+	</insert>
+	
 </mapper>
 

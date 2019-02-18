@@ -7,7 +7,7 @@
 	insert into PLACECART values(#{mid},#{pid})
 	</insert>
 	
-	<select id="selectAll" parameterType="String" resultType="PlaceCartDTO">
+	<select id="selectCartAll" parameterType="String" resultType="PlaceCartDTO">
 	select ATTRACTIONS.PID,TITLE,CONTENT,LATITUDE,LONGITUDE,MAINIMG 
 	from PLACECART,ATTRACTIONS 
 	where PLACECART.MID=#{value} AND PLACECART.PID = ATTRACTIONS.PID

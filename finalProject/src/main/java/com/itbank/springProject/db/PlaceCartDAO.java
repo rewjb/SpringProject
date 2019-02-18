@@ -13,8 +13,13 @@ public class PlaceCartDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public List<PlaceCartDTO> selectAll(String mid){
-		return session.selectList("PlaceCart.selectAll",mid);
+	public List<PlaceCartDTO> selectCartAll(String mid){
+		return session.selectList("PlaceCart.selectCartAll",mid);
+	}
+	
+	//번외 메서드입니다.
+	public List<String> selectPlanNameAll(String mid){
+		return session.selectList("Plan.selectPlanNameAll",mid);
 	}
 	
 

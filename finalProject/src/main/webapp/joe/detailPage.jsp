@@ -6,6 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
+<% 
+	String pid = request.getParameter("pid"); 
+    String mid = request.getParameter("mid");	
+%>
+
+
 <script type="text/javascript">
 
 function cart() {
@@ -33,17 +39,20 @@ function cart() {
 
 </script>
 
-
 </head>
 <body>
 	<%@ include file="/UserMainHeader.jsp"%>
-
+	<form id = "form">
 	<div class="row featurette">
 		<div style="width: 200px; height: 500px; margin-left: 40px; position: fixed;">
 			<table border="2" id = "cartTable">
 			
 			</table>
 		</div>
+		
+		<input type="hidden" value="<%=pid%>" name = "pid">
+		<input type="hidden" value="<%=mid%>" name = "mid">
+		
 		<div class="col-md-5" style="margin-left: auto; margin-right: auto;">
 			<svg
 				class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
@@ -53,6 +62,7 @@ function cart() {
 			<rect width="100%" height="100%" fill="#eee" /></svg>
 		</div>
 	</div>
+	</form>
 		<div class="col-md-5"  style="margin-left: auto; margin-right: auto;">
 		<button class="btn btn-secondary my-2" onclick="cart()" id = "cart"	>장바구니</button>
 		<button class="btn btn-secondary my-2">예비 버튼</button><h2 class="featurette-heading">★별점</h2>	

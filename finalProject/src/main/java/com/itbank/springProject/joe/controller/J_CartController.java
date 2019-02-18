@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itbank.springProject.db.PlaceCartDAO;
+import com.itbank.springProject.db.PlaceCartDTO;
 
 @Controller
 public class J_CartController {
@@ -16,11 +17,8 @@ public class J_CartController {
 	private PlaceCartDAO placeCartDAO;
 	
 	@RequestMapping("cartInsert")
-	public String cartInsert() {
-		
-		
-		
-		
+	public String cartInsert(PlaceCartDTO placeCartDTO) {
+		placeCartDAO.cartInsert(placeCartDTO);
 		return null;
 	}
 	

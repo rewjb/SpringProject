@@ -17,5 +17,9 @@ public class PlaceCartDAO {
 		return session.selectList("PlaceCart.selectAll",mid);
 	}
 	
-
+	public void cartInsert(PlaceCartDTO dto) {
+		session.insert("PlaceCart.insert", dto);
+	}
+	
+	
 }

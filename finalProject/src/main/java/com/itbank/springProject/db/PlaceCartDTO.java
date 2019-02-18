@@ -16,7 +16,6 @@ public class PlaceCartDTO {
 	// 경도
 	private String mainImg;
 	// 메인이미지
-
 	
 	
 	public String getMid() {

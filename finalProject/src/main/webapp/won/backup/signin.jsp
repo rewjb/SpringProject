@@ -11,14 +11,14 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v3.8.5">
-
+	
 <title>logIn</title>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto"
 	rel="stylesheet" type="text/css">
 <script src="https://apis.google.com/js/api:client.js"></script>
 <script type="text/javascript">
-	/* 구글 계정 연동하여 회원가입 */
+	/* 구글 로그인 관련 설정 */
 	var googleUser = {};
 	
 	var startApp = function() {
@@ -51,32 +51,19 @@
 			var d = $("#hidden").serialize();
 			console.log(d);
 			$.ajax({
-				url : "/springProject/WEB-INF/views/won/insertMember.jsp",
+				url : "checkMember.do",
 				data : d,
 				type: "post",
 				success : function(result){
 					alert(result);
-					$("#form").html(result);
+					$("body").html(result);
 					
 				}
 			})
 			
 		}, function(error) {
 			alert(JSON.stringify(error, undefined, 2));
-		}); 
-		
-		
-		/* 이메일로 회원가입 */
-		$(function() {
-			$.ajax({
-				url : "/springProject/WEB-INF/views/won/insertMember.jsp",
-				success : function(result){
-					alert(result);
-					$("form").html(result);
-					
-				}
-			})
-		})
+		});
 	}
 </script>
 <style type="text/css">
@@ -91,11 +78,9 @@
 	border: thin solid #888;
 	white-space: nowrap;
 }
-
 #customBtn:hover {
 	cursor: pointer;
 }
-
 span.icon {
 	background: url(/test1/resources/IMAGE/LoginLogo/googleLogo.png);
 	display: inline-block;
@@ -106,7 +91,6 @@ span.icon {
 	background-repeat: no-repeat;
 	background-position: 0% 50%;
 }
-
 span.buttonText {
 	display: inline-block;
 	vertical-align: middle;
@@ -117,7 +101,6 @@ span.buttonText {
 	/* Use the Roboto font that is loaded in the <head> */
 	font-family: 'Roboto', sans-serif;
 }
-
 .button {
 	height: 55px;
 	vertical-align: top;
@@ -130,41 +113,44 @@ span.buttonText {
 	<!-- header -->
 	<%@ include file="/UserMainHeader.jsp"%>
 
-	<!-- 가입방식 선택 -->
-	<div id="form" style="text-align: center; display: inline-block;">
-		<!-- 위쪽공간 -->
+	<!-- login content -->
+	<div style="text-align: center; display: inline-block;">
 		<div style="height: 150px;"></div>
-		<!-- 기본 로그인 -->
-		<div class="button">
-			<button class="btn btn-lg btn-secondary btn-block" type="button"
-				id="signIn">Sign up</button>
-		</div>
-		<!-- 구글 로그인 -->
-		<div id="gSignInWrapper" class="button">
-			<div id="customBtn" class="customGPlusSignIn">
-				<span class="icon"></span> <span class="buttonText">Google</span>
+		<form action="" class="form-signin" style="width: 300px;">
+		<!-- 아이디 비밀번호 입력 폼 -->
+			<label for="inputEmail" class="sr-only">Email address</label> 
+			<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus> 
+			<label for="inputPassword" class="sr-only">Password</label> 
+			<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+			<div class="checkbox mb-3">
+				<label> <input type="checkbox" value="remember-me">Remember me</label>
 			</div>
-			<script>startApp();</script>
-		</div>
-
-		<!-- 외부 로그인 -->
-		<div class="button">
-			<button class="btn btn-lg btn-primary btn-block" type="button"
-				id="google">OtherLogin1</button>
-		</div>
-		<div class="button">
-			<button class="btn btn-lg btn-primary btn-block" type="button"
-				id="github">OtherLogin2</button>
-		</div>
-		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+			<!-- 기본 로그인 -->
+			<div class="button"><button class="btn btn-lg btn-secondary btn-block" type="button"
+				id="signIn">Sign-in</button></div>
+			<!-- 구글 로그인 -->
+			<div id="gSignInWrapper" class="button">
+				<div id="customBtn" class="customGPlusSignIn">
+				<span class="icon"></span> <span class="buttonText">Google</span>
+				</div>
+					<script>startApp();</script>
+			</div>
+			
+			<!-- 외부 로그인 -->
+			<div class="button"><button class="btn btn-lg btn-primary btn-block" type="button"
+				id="google">OtherLogin1</button></div>
+			<div  class="button"><button class="btn btn-lg btn-primary btn-block" type="button"
+				id="github">OtherLogin2</button></div>
+			<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+		</form>
 		<!-- 아래쪽 공간 -->
 		<div style="height: 150px;">
-			<!-- 외부 로그인 성공시 데이터를 임시로 담아둘 공간 -->
-			<form id="hidden" action="insertMember.jsp">
-				<input type="hidden" id="mid" name="mid" class="hidden"> <input
-					type="hidden" id="mname" name="mname" class="hidden"> <input
-					type="hidden" id="mprofile" name="mprofile" class="hidden">
-			</form>
+			<!-- 외부 로그인 성공시 임시로 담아둘 공간 -->
+			<form id="hidden" action="checkMember.do">
+				<input type="hidden" id="mid" name="mid" class="hidden">		
+				<input type="hidden" id="mname" name="mname" class="hidden">		
+				<input type="hidden" id="mprofile" name="mprofile" class="hidden">
+			</form>		
 		</div>
 	</div>
 

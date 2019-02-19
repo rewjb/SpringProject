@@ -4,14 +4,30 @@
 <mapper namespace="PlaceCart">
 
 	<insert id="insert" parameterType="PlaceCartDTO">
-	insert into PLACECART values(#{mid},#{pid})
+	insert into PLACECART values(#{pid},#{mid})
 	</insert>
 	
-	<select id="selectAll" parameterType="String" resultType="PlaceCartDTO">
+	<select id="selectCartAll" parameterType="String" resultType="PlaceCartDTO">
 	select ATTRACTIONS.PID,TITLE,CONTENT,LATITUDE,LONGITUDE,MAINIMG 
 	from PLACECART,ATTRACTIONS 
 	where PLACECART.MID=#{value} AND PLACECART.PID = ATTRACTIONS.PID
 	</select>
+	
+	<select id="selectAll" resultMap="rs" >
+	select * from PLACECART
+	</select>
+	
+	<resultMap type="PlaceCartDTO" id="rs">
+		<result property="pid" column="pid" />
+		<result property="mid" column="mid" />
+	</resultMap>
+		
+	<delete id="delete" parameterType="String">
+		delete from PLACECART where pid = #{value}
+	</delete>	
+		
+		
+		
 	
 </mapper>
 

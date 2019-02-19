@@ -1,6 +1,6 @@
 package com.itbank.springProject.db;
 
-public class attractionsDTO {
+public class AttractionsDTO {
 	
 	private String continent;// 대륙
 	private String city;// 도시
@@ -15,7 +15,7 @@ public class attractionsDTO {
 	private String category;// 태그
 	
 	//매개변수 있는 생성자
-	public attractionsDTO(String continent, String city, String id, String mainImg, String title, String content,
+	public AttractionsDTO(String continent, String city, String id, String mainImg, String title, String content,
 			String contentElements, String findWay, String longitude, String latitude, String category) {
 		super();
 		this.continent = continent;
@@ -31,7 +31,7 @@ public class attractionsDTO {
 		this.category = category;
 	}
 	
-	public attractionsDTO() {//기본 생성자
+	public AttractionsDTO() {//기본 생성자
 		super();
 	}
 	

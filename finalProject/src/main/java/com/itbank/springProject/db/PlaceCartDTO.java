@@ -6,6 +6,9 @@ public class PlaceCartDTO {
 	//회원 아이디;
 	private String pid;
 	//관광명소 아이디
+	
+	
+	// 아래는 관광명소 테이블과의 조합을 통한 삽입
 	private String title;
 	// 명소이름
 	private String content;

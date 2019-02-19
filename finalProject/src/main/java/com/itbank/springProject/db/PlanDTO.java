@@ -6,8 +6,8 @@ public class PlanDTO {
 	private String ptitle;
 	private String title;
 	private String content;
-	private String latitude;
-	private String longitude;
+	private double latitude;
+	private double longitude;
 	private String way;
 	private String mainImg;
 	private String detail;
@@ -63,19 +63,19 @@ public class PlanDTO {
 		this.content = content;
 	}
 
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
@@ -103,7 +103,7 @@ public class PlanDTO {
 		this.num = num;
 	}
 
-	public PlanDTO(String mid, String ptitle, String title, String content, String latitude, String longitude,
+	public PlanDTO(String mid, String ptitle, String title, String content, double latitude, double longitude,
 			String way, String mainImg, int num) {
 		super();
 		this.mid = mid;
@@ -121,7 +121,25 @@ public class PlanDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+     @Override
+    public String toString() {
+    	 
+    	 StringBuffer tostring = new StringBuffer();
+    	 tostring.append("[");
+    	 tostring.append("   mid=   "+mid);
+    	 tostring.append("   ptitle=   "+ptitle);
+    	 tostring.append("   title=   "+title);
+    	 tostring.append("   content=   "+content);
+    	 tostring.append("   latitude=   "+latitude);
+    	 tostring.append("   longitude=   "+longitude);
+    	 tostring.append("   way=   "+way);
+    	 tostring.append("   mainImg=   "+mainImg);
+    	 tostring.append("   num=   "+num);
+    	 tostring.append("]");
+    	 
+    	 
+    	return tostring.toString();
+    }	
 
 	
 	

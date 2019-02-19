@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itbank.springProject.db.PlaceReqDAO;
 import com.itbank.springProject.db.PlaceReqDTO;
+import com.itbank.springProject.db.TagDAO;
+import com.itbank.springProject.db.attractionsDTO;
 
 @Controller
 public class PlaceReqController {
@@ -21,6 +23,9 @@ public class PlaceReqController {
 	@Autowired
 	//@Qualifier("PlaceReqDAO")
 	PlaceReqDAO dao;
+	
+	@Autowired
+	TagDAO dao2;
 
 	@RequestMapping("kim/placeReq")
 	public void add(PlaceReqDTO placeReqDTO) throws Exception{
@@ -51,5 +56,11 @@ public class PlaceReqController {
 	@RequestMapping("kim/placeReq_content")
 	public void content(@RequestParam("no") String no, Model model) throws Exception{
 		model.addAttribute("dto", dao.select(no));
+	}
+	
+	@RequestMapping("kim/placeReq_accept")
+	public void agree(Model model, attractionsDTO attractionsDTO) throws Exception {
+		
+		dao2.insert("", "");
 	}
 }

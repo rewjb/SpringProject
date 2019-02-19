@@ -6,12 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<% 
+<%-- <% 
 	String pid = request.getParameter("pid"); 
     String mid = request.getParameter("mid");	
-%>
+%> --%>
 
-
+<!--제이쿼리-->
+<script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 <script type="text/javascript">
 
 function cart() {
@@ -24,18 +25,25 @@ function cart() {
 			Type : "POST",
 			data : data,
 			success : function (result) {
-				alert("성공 체크 ");
+				$("#cartTable").append(result);
 			}//success끝
 		})//ajax끝
 		
 		
-		
-		
-		
 	}else if ($("#cart").attr("class") == "btn btn-primary my-2") {
 		$("#cart").attr("class","btn btn-secondary my-2");
+		
+		$.ajax({
+			url : "cartDelete",
+			Type : "POST",
+			data : data,
+			success : function (result) {
+				$("#cartTable").append(result);
+			}//success끝
+		})//ajax끝
+		
+		
 	}
-	
 	
 }
 
@@ -46,14 +54,12 @@ function cart() {
 	<%@ include file="/UserMainHeader.jsp"%>
 	<form id = "form">
 	<div class="row featurette">
-		<div style="width: 200px; height: 500px; margin-left: 40px; position: fixed;">
-			<table border="2" id = "cartTable">
+		<div style="width: 200px; height: 500px; margin-left: 40px; position: fixed;" id = "cartTable">
 			
-			</table>
 		</div>
 		
-		<input type="hidden" value="<%=pid%>" name = "pid">
-		<input type="hidden" value="<%=mid%>" name = "mid">
+		<input type="hidden" value="1000000074101" name = "pid">
+		<input type="hidden" value="rhkdwo" name = "mid">
 		
 		<div class="col-md-5" style="margin-left: auto; margin-right: auto;">
 			<svg

@@ -57,9 +57,7 @@
 			       // process form
 			    });
 
-				}//end success
 			})//end ajax
-
 		}, function(error) {
 			alert(JSON.stringify(error, undefined, 2));
 		}); //attachClickHandler()

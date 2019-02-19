@@ -8,7 +8,7 @@
 %>
 
 <form id = '<%=dto.getId() %>'>
-	<img  src="<%=dto.getMainImg() %>"><br>
+	<img src="/springProject/resources/IMAGE/attractionsImg/<%=dto.getMainImg()%>" width="150" height="150"><br>
 	<label><%= dto.getTitle() %></label>
 </form>
 

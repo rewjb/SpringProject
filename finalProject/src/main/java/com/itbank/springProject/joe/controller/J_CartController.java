@@ -3,6 +3,8 @@ package com.itbank.springProject.joe.controller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -38,7 +40,6 @@ public class J_CartController {
 	
 	@RequestMapping("joe/cartInsert")
 	public String cartInsert(PlaceCartDTO placeCartDTO ,Model model) {
-		System.out.println("넘어옴");
 		System.out.println(placeCartDTO.getPid());
 		System.out.println(placeCartDTO.getMid());
 		
@@ -46,6 +47,45 @@ public class J_CartController {
 		model.addAttribute("dto", attractionsDAO.select(placeCartDTO.getPid()));
 		return "joe/j_cart";
 	}
+	
+	
+	@RequestMapping("joe/cartList")
+	public String cartList(Model model) {
+		System.out.println("리스트 보여줄라고 넘어왔니");
+		ArrayList<PlaceCartDTO> list = (ArrayList)placeCartDAO.selectAll();
+		ArrayList<AttractionsDTO> attList = new ArrayList<>();
+		
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				attList.add(attractionsDAO.select(list.get(i).getPid()));
+			}
+		}
+		model.addAttribute("list", attList);
+		return "joe/cartList";
+	}
+	
+	@RequestMapping("joe/cartDelete")
+	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
+		
+		placeCartDAO.delete(placeCartDTO.getPid());
+		
+		ArrayList<PlaceCartDTO> list = (ArrayList)placeCartDAO.selectAll();
+		ArrayList<AttractionsDTO> attList = new ArrayList<>();
+		
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				attList.add(attractionsDAO.select(list.get(i).getPid()));
+			}
+		}
+		model.addAttribute("list", attList);
+		
+		
+		return "joe/cartList";
+	}
+	
+	
+	
+	
 	
 	@RequestMapping("joe/crawling")
 	public String crawling() throws Exception {

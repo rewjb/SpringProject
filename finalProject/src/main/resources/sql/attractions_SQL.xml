@@ -4,7 +4,7 @@
 
 <mapper namespace="attractions">
 
-	 <select id="select" parameterType="String" resultMap="rs">
+	 <select id="select" parameterType="String" resultType="attrDTO">
 		SELECT * FROM ATTRACTIONS WHERE id = #{id}
 	</select>
   
@@ -22,19 +22,15 @@
 		<result property="category" column="category" />
 	</resultMap>
 		
-		
 	<insert id="insert" parameterType="attrDTO">
 		insert into ATTRACTIONS values(#{continent},#{city},#{id},#{mainImg},#{title},#{content},#{contentElements},#{findWay},#{longitude},#{latitude},#{category})
 	</insert>
 		
-
-		
-	<!--
-	<select id="getAll" resultMap="YourResultSet">
-		SELECT * FROM tablename1
+	<select id="selectAll" resultMap="rs">
+		SELECT * FROM ATTRACTIONS
 	</select>
 
-	
+	<!--
 
 	<update id="updateSomething" parameterType="#modelname">
 		UPDATE tablename1

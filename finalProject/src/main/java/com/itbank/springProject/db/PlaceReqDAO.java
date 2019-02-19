@@ -24,4 +24,7 @@ public class PlaceReqDAO {
 	public PlaceReqDTO select(String no) throws Exception{		
 		return session.selectOne("PlaceReq.select", no);
 	}
+	
+	
+	
 }

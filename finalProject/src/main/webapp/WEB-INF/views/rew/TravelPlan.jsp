@@ -348,7 +348,7 @@
 								form.find('input[name=distance]').val(move_component.distance);
 								form.find('input[name=way]').val(move_component.method);
 
-							}
+							}  
 					        	//ptitle
 						        form.find('input[name=num]').val ($(steps[i]).find('td[alt=Project_detail_num] h3').text());
 					        	form.find('input[name=mainImg]').val($(steps[i]).find('img').attr('src'));

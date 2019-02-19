@@ -21,7 +21,7 @@ import com.itbank.springProject.db.PlanDTO;
 import com.sun.javafx.collections.MappingChange.Map;
 
 @Controller
-public class R_PlanController {
+public class R_PlanController {  
 
 	@Autowired
 	@Qualifier("PlanDAO")

@@ -20,7 +20,7 @@ import com.itbank.springProject.db.PlanDAO;
 import com.itbank.springProject.db.PlanDTO;
 import com.sun.javafx.collections.MappingChange.Map;
 
-@Controller
+@Controller  
 public class R_PlanController {  
 
 	@Autowired

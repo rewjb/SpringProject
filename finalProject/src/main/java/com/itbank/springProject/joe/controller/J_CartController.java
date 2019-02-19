@@ -34,7 +34,7 @@ public class J_CartController {
 	private PlaceCartDAO placeCartDAO;
 	
 	@Autowired
-	@Qualifier("attractionsDAO")
+	@Qualifier("AttractionsDAO")
 	private AttractionsDAO attractionsDAO;
 	
 	

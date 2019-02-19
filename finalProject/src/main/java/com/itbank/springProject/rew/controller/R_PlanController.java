@@ -41,7 +41,7 @@ public class R_PlanController {
 		
 		String json = parameters.get("form0").toString();
 
-        System.out.println(json);
+        System.out.println(json);  
 
 	}
 

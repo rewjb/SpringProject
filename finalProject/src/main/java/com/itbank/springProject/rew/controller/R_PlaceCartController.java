@@ -24,7 +24,7 @@ public class R_PlaceCartController {
 	public void cartSelectAll(@RequestParam("mid") String mid, Model model ) {
 		model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
 		model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
-	}
+	}  
 	
 	
 }

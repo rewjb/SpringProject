@@ -352,7 +352,7 @@
 					        	//ptitle
 						        form.find('input[name=num]').val ($(steps[i]).find('td[alt=Project_detail_num] h3').text());
 					        	form.find('input[name=mainImg]').val($(steps[i]).find('img').attr('src'));
-					        	form.find('input[name=title]').val($(steps[i]).find('h5').text());
+					          	form.find('input[name=title]').val($(steps[i]).find('h5').text());
 					        	form.find('input[name=content]').val($(steps[i]).find('span').text());
 					        	form.find('input[name=detail]').val($(steps[i]).find('textarea').val());
 						        //latitude

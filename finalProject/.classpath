@@ -30,7 +30,5 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/user/Desktop/jsoup-1.11.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/user/Desktop/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

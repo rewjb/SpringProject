@@ -37,7 +37,7 @@
 			<!-- 상위는 SQL를 설정한 xml을 등록하는 과정 -->
 		</property>
 	</bean>
-
+  
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>

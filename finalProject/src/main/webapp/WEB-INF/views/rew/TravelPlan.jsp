@@ -348,38 +348,45 @@
 								form.find('input[name=distance]').val(move_component.distance);
 								form.find('input[name=way]').val(move_component.method);
 
-							}
+							}      
 					        	//ptitle
 						        form.find('input[name=num]').val ($(steps[i]).find('td[alt=Project_detail_num] h3').text());
 					        	form.find('input[name=mainImg]').val($(steps[i]).find('img').attr('src'));
-					        	form.find('input[name=title]').val($(steps[i]).find('h5').text());
+					          	form.find('input[name=title]').val($(steps[i]).find('h5').text());
 					        	form.find('input[name=content]').val($(steps[i]).find('span').text());
 					        	form.find('input[name=detail]').val($(steps[i]).find('textarea').val());
 						        //latitude
 						        //longitude
 						}
+				
+				
+				console.log('form의 수='+forms.length);
+				
+				var data={};
+				
+				for (var i = 0; i < forms.length; i++) {
+					
+					data['form'+i] = decodeURIComponent($(forms[i]).serialize());
+					alert(data['form'+i]);
+					
+				}
+				
+				
+				$.ajax({
+					url : "projcetDataSave?ptitle="+ptitle,
+					type : 'post',
+					data : data,
+					dataType : "json",//반환받을 데이터 타입 선택
+					success : function(result, confirm) {
+						
+					}//success끝
+				})//ajax끝
+				
+						
 
 					} else {
 						alert('프로젝트 항목별 내용을 채워주세요.');
 					}
-				
-			
-				for (var i = 0; i < forms.length; i++) {
-					
-					var data = $(forms[i]).serialize();
-				$.ajax({
-							url : "projcetDataSave?ptitle="+ptitle,
-							type : "post",
-							data : data,
-							dataType : "text",//반환받을 데이터 타입 선택
-							success : function(result, confirm) {
-								
-								alert(result);
-								
-								
-							}//success끝
-						})//ajax끝
-					}// for문 종료
 
 				}
 				// ...save_project()
@@ -407,9 +414,11 @@
 					//거리 : 1000 km / 이동방법 : WAY2
 					//위에는 형식
 					var total_text = move.find('a').text()
-					var distance = total_text.split('/')[0].split(':')[1]
-							.replace('km', '').trim();
+					var distance = total_text.split('/')[0].split(':')[1];
+
 					var method = total_text.split('/')[1].split(':')[1].trim();
+
+					console.log(distance);
 
 					var move_component = {
 						distance : distance,
@@ -1320,6 +1329,11 @@
 									lat : place.geometry.location.lat(),
 									lng : place.geometry.location.lng()
 								};
+								
+								move_parent =  $(move).parent('div');
+								var move_parent_front = $(move_parent).next().next();
+								$(move_parent_front).children('input[name=latitude]').val(end.lat);
+								$(move_parent_front).children('input[name=longitude]').val(end.lng);
 								
 								$('#Miss_Path').css('display','none');
 								

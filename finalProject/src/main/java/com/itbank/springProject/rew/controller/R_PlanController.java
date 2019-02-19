@@ -1,6 +1,7 @@
 package com.itbank.springProject.rew.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,18 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.resource.HttpResource;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlanDAO;
 import com.itbank.springProject.db.PlanDTO;
 import com.sun.javafx.collections.MappingChange.Map;
 
-@Controller  
-public class R_PlanController {  
+@Controller
+public class R_PlanController {
 
 	@Autowired
 	@Qualifier("PlanDAO")
@@ -37,12 +41,32 @@ public class R_PlanController {
 	}
 
 	@RequestMapping("rew/projcetDataSave")
-	public void projcetDataSave(@RequestParam HashMap<String, Object> parameters, @RequestParam("ptitle") String ptitle , HttpServletResponse response ) throws IOException {
+	@ResponseBody
+	public String projcetDataSave(@RequestBody List<PlanDTO> planList, @RequestParam("ptitle") String ptitle) {
+
+		String check = "good";
 		
-		String json = parameters.get("form0").toString();
-
-        System.out.println(json);  
-
+		try {
+			
+			
+			if (planList.size() > 0) {
+				for (int i = 0; i < planList.size(); i++) {
+					planList.get(i).setMid("temp");
+					planList.get(i).setPtitle(ptitle);
+				}
+				planDAO.deleteProjectData(planList.get(0));
+				planDAO.insertProjectData(planList);
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			check = "no";
+		}
+		
+		
+		return check;
 	}
 
 }

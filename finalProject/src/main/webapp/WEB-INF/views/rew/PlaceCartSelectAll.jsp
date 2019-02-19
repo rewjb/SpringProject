@@ -26,6 +26,10 @@ PID = ${cart_list.mainImg} <br/>
 프로젝트 ${project_list} <br/>
 </c:forEach>
 
+
+<c:forEach items="${project_list}" var="project_list">
+프로젝트 ${project_list} <br/>
+</c:forEach>
  
  
  

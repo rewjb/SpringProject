@@ -13,23 +13,27 @@ import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlanDAO;
 import com.itbank.springProject.db.PlanDTO;
 import com.itbank.springProject.db.ShareProjectDAO;
-
+import com.itbank.springProject.db.ShareProjectDTO;
+    
 @Controller
-public class R_PlaceCartController {
+public class R_ShareProjectController {
 
-	@Autowired
-	@Qualifier("PlaceCartDAO")
-	private PlaceCartDAO placeCartDAO;
-	
 	@Autowired
 	@Qualifier("ShareProjectDAO")
-	private ShareProjectDAO shareProjectDAO;
+	ShareProjectDAO shareProjectDAO;
 	
-	@RequestMapping("rew/TravelPlan")
-	public void cartSelectAll(@RequestParam("mid") String mid, Model model ) {
-		model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
-		model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
-	}
-	
+	@RequestMapping("rew/insertShareProject")
+	public String cartSelectAll(@RequestParam("ptitle") String ptitle) {
+		String check = "good";
+		
+		ShareProjectDTO shareProjectDTO = new ShareProjectDTO();
+		shareProjectDTO.setMid("temp");
+		shareProjectDTO.setPtitle(ptitle);
+		
+		if (shareProjectDAO.insertShareProject(shareProjectDTO) != 1) {
+			check = "bad";
+		}
+		return check;
+	}  
 	
 }

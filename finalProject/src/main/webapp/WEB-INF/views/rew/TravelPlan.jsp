@@ -165,13 +165,13 @@
 					<button class="btn btn-secondary" id="Project_ptitle">프로젝트 제목</button>
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active"><a class="nav-link" href="#"
-							onclick="save_project();">저장</a></li> <!-- 작업중 -->
+							onclick="return save_project();">저장</a></li> <!-- 작업중 -->
 						<li class="nav-item active"><a class="nav-link" onclick="Project_create_step();">
 							생성</a></li>
 						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_delete">
 						삭제</a></li>
-						<li class="nav-item active"><a class="nav-link" href="#"
-							onclick="alert('공유');">공유</a></li>
+						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_share">
+						공유</a></li>
 					</ul>
 					<form>
 						<input class="form-control" type="text" placeholder="내용을 입력">
@@ -302,9 +302,55 @@
  </div>
  <!-- /.프로젝트 step 컴포넌트 삭제시 모달 -->
  
- 
+ <!-- 프로젝트 공유 버튼 모달 -->
+ <div class="modal fade" id="Project_place_share" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+    선택하신 여행계획서를 공유하시겠습니까?<br>
+    =주의사항=<br>
+    -공유 후 여행계획서는 수정이 불가능 합니다.<br>
+    -공유 후 계획서를 삭제 시 공유된 계획서도 삭제됩니다.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" onclick="share_projcet(this);">공유</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- /.프로젝트 공유 버튼 모달 -->
  
 			<script type="text/javascript">
+			
+			// 프로젝트 공유
+			function share_projcet(button) {
+				
+				$(button).prev().click();
+				
+				var ptitle = $('#Project_ptitle').text();
+				//프로젝트 이름
+				
+				$.ajax({
+					url : "insertShareProject?ptitle="+ptitle,
+					type : 'post',
+					dataType : "text",//반환받을 데이터 타입 선택
+					success : function(result, confirm) {
+						if (result == 'good') {
+							alert('공유가 완료되었습니다.');
+						}else {
+							alert('공유오류 발생');
+						}
+					}//success끝
+				})//ajax끝
+				
+				
+				
+				
+			}
+			// ...프로젝트 공유
+			
+			
 			
 			// 프로젝트 "저장"
 			function save_project() {
@@ -327,7 +373,6 @@
 				// 각 공정별 넘길 form
 				var ptitle = $('#Project_ptitle').text();
 				//프로젝트 이름
-				
 
 				if (validity == true) {
 
@@ -359,26 +404,42 @@
 						        //longitude
 						}
 				
+				var dataArray=new Array;
 				
-				console.log('form의 수='+forms.length);
+				var temp_serial ;
 				
-				var data={};
+				var temp_data;
+				
 				
 				for (var i = 0; i < forms.length; i++) {
 					
-					data['form'+i] = decodeURIComponent($(forms[i]).serialize());
-					alert(data['form'+i]);
+					temp_data = {};
 					
+					temp_serial= $(forms[i]).serializeArray();
+					for (var j = 0; j < temp_serial.length; j++) {
+						console.log(j);
+						temp_data[temp_serial[j].name]= decodeURIComponent(temp_serial[j].value) ;
+					}
+					dataArray.push(temp_data);
+					//alert('temp_data.title='+temp_data.title);
+					//데이터가 정상 셋팅 여부
 				}
 				
+				//alert(JSON.stringify(dataArray));
+				// 보내기전 출력
 				
 				$.ajax({
 					url : "projcetDataSave?ptitle="+ptitle,
 					type : 'post',
-					data : data,
-					dataType : "json",//반환받을 데이터 타입 선택
+					data : JSON.stringify(dataArray),
+					dataType : "text",//반환받을 데이터 타입 선택
+					contentType : 'application/json',
 					success : function(result, confirm) {
-						
+						if (result == 'good') {
+							alert('저장이 완료되었습니다.');
+						}else {
+							alert('저장오류 발생');
+						}
 					}//success끝
 				})//ajax끝
 				
@@ -387,6 +448,9 @@
 					} else {
 						alert('프로젝트 항목별 내용을 채워주세요.');
 					}
+				
+				 return false;
+				 //저장 클릭시 화면이 위로 올라가는 현상 방지
 
 				}
 				// ...save_project()
@@ -414,7 +478,7 @@
 					//거리 : 1000 km / 이동방법 : WAY2
 					//위에는 형식
 					var total_text = move.find('a').text()
-					var distance = total_text.split('/')[0].split(':')[1];
+					var distance = total_text.split('/')[0].split(':')[1].replace('km','').trim();
 
 					var method = total_text.split('/')[1].split(':')[1].trim();
 
@@ -431,11 +495,29 @@
 				// ...프로젝트 "저장"
 
 				function Project_delete(button) {
+					
+					var steps = $('#Project_container').children(
+					'div[alt=Project_div_step]');
+
+					var validity = false;
+
+					for (var i = 0; i < steps.length; i++) {
+
+						//프로젝트를 선택하지 않고 생성을 눌렀을 시!
+						if (steps[i].style.outline != '') {
+							validity = true;
+							break;
+						}
+					}
+
+					
+				if (validity == false) {
+						alert('계획서 선택 및 계획서 내용을 선택하세요.');
+						$(button).prev().click();
+						return null;
+					}
 
 					$(button).prev().click();
-
-					var steps = $('#Project_container').children(
-							'div[alt=Project_div_step]');
 
 					//step이 1개 초과일때
 					for (var i = 0; i < steps.length; i++) {
@@ -473,7 +555,6 @@
 
 						steps[i].innerHTML = i + 1;
 						//번호 새로 부여
-
 					}
 				}
 
@@ -537,9 +618,13 @@
 						detail_content, latitude, longitude, distance, way) {
 					//아직 src는 설정이 안되어 있다.
 
+					if (detail_content == null) {
+						detail_content = '';
+					}
+
 					//생성시 나오는 폼
 					var component_move_text = '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'
-							+ '이동 : <a data-toggle="modal" data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
+							+ '이동 = <a data-toggle="modal" data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
 							+ way + distance + '</a>' + '</div>';
 
 					var component_step_text = '<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;" alt="Project_div_step" onclick="Project_step_onclick(this);">'
@@ -989,7 +1074,7 @@
 			case 'DRIVING':  temp_method = '자동차' ;
 			}
 			
-		    move.innerHTML =  distance+' / 이동방법 : '+ temp_method; 
+		    move.innerHTML = '거리 : '+ distance+' / 이동방법 : '+ temp_method; 
 		    
 		    //$(next_step).next().css('outline', 'blue 6px solid');
 		    //확인용

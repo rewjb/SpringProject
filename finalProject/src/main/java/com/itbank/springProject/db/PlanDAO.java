@@ -21,9 +21,20 @@ public class PlanDAO {
 	}
 	
 	// 계획서 저장하기
-	public int insertProjectData(PlanDTO planDTO){
-		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
-		return session.insert("Plan.insertProjectData", planDTO);
+	public int insertProjectData(List<PlanDTO> planList){
+		
+		int check = 1;
+		
+		for (int i = 0; i < planList.size(); i++) {
+			
+			if (session.insert("Plan.insertProjectData", planList.get(i))==0) {
+				check = 0;
+				break;
+			}else {
+				check = 1;
+			}
+		}
+		return check;
 	}
 	
 	//계획서 삭제

@@ -8,6 +8,7 @@
 		<typeAlias type="com.itbank.springProject.db.MemberDTO" alias="MemberDTO" />
 		<typeAlias type="com.itbank.springProject.db.PlaceReqDTO" alias="PlaceReqDTO" />
 		<typeAlias type="com.itbank.springProject.db.AttractionsDTO" alias="attrDTO"/>
+		<typeAlias type="com.itbank.springProject.db.ShareProjectDTO" alias="ShareProjectDTO"/>
 	</typeAliases>
 	<!-- <mappers>
 		<mapper resource="rew/Member_SQL.xml" />

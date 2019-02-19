@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ShareProject">
+
+	<insert id="insertShareProject" parameterType="ShareProjectDTO">
+	insert into SHAREPROJECT values(
+	#{mid},
+	#{ptitle},
+	sysdate)
+	</insert>
+	
+	<select id="selectAllById" parameterType="String" resultMap="ShareProjectMAP">
+	select * from SHAREPROJECT where mid=#{value}
+	</select>
+
+	<resultMap type="ShareProjectDTO" id="ShareProjectMAP">
+		<result property="mid" column="MID" />
+		<result property="ptitle" column="PTITLE" />
+		<result property="reg_date" column="REG_DATE" />
+	</resultMap>
+	
+</mapper>
+

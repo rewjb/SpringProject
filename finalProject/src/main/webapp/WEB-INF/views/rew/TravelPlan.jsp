@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>여행계획서 작성하기!</title>
 <style>
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
@@ -141,7 +142,7 @@
 
 </head>
 <body>
- <%@ include file="/UserMainHeader.jsp" %>
+<%@ include file="/UserMainHeader.jsp" %>
 
  
  <!-- 최상위 컨테이너 -->
@@ -187,7 +188,7 @@
     <div class="col-md-4" style="padding: 0px">
 
 				<!-- 프로젝트 목록 -->
-				<div
+				<div id="projectList_container"
 					style="height: 40%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
 					
 					<table class="table table-striped" style="width: 100%;word-break:break-word;">
@@ -207,9 +208,18 @@
 						</thead>
 						<tbody id="Project-Container">
 						<c:forEach items="${project_list}" var="project_list">
+						 <c:choose>
+						  <c:when test="${fn:contains(projectShare_list, project_list)}">
+							<tr>
+								<td style="background:cadetblue;" alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">${project_list}</td>
+							</tr>
+						  </c:when>
+						  <c:otherwise>
 							<tr>
 								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">${project_list}</td>
 							</tr>
+						  </c:otherwise>
+						 </c:choose>
 						</c:forEach>
 						</tbody>
 					</table>
@@ -328,6 +338,10 @@
 				
 				$(button).prev().click();
 				
+				var validity = save_project_validity();
+				
+			    if (validity) {
+			    	
 				var ptitle = $('#Project_ptitle').text();
 				//프로젝트 이름
 				
@@ -338,14 +352,24 @@
 					success : function(result, confirm) {
 						if (result == 'good') {
 							alert('공유가 완료되었습니다.');
+							
+							var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
+							//작업중 id="projectList_container"
+							
+							for (var i = 0; i < projectList_container.length; i++) {
+								if(projectList_container[i].style.outline=='blue solid 6px'){
+									$(projectList_container[i]).css('background','cadetblue');
+								}
+							}
+							
 						}else {
 							alert('공유오류 발생');
 						}
 					}//success끝
 				})//ajax끝
-				
-				
-				
+		     	}else {
+					alert('여행계획을 공유할 수 없습니다.n\다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 삭제만 지원이 됩니다.');
+		     	}
 				
 			}
 			// ...프로젝트 공유
@@ -446,7 +470,7 @@
 						
 
 					} else {
-						alert('프로젝트 항목별 내용을 채워주세요.');
+						alert('여행계획을 저장할 수 없습니다.\n다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 수정할 수 없습니다. ');
 					}
 				
 				 return false;
@@ -461,14 +485,38 @@
 
 					var steps = $('#Project_container').children(
 							'div[alt=Project_div_step]');
+					
+					var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
+					var nowName = $('#Project_ptitle').text();
+					var selectedName;
+					
+					
+					//작업중 id="projectList_container"
+					
+					
+					for (var i = 0; i < projectList_container.length; i++) {
+						
+						if (projectList_container[i].style.outline=='blue solid 6px') {
+							if (projectList_container[i].style.background=='cadetblue') {
+							selectedName = $(projectList_container[i]).text();
+							}
+						}
+					}
 
 					var validity = true;
+					
+					if (nowName == selectedName) {
+						validity = false;
+					}
 
 					for (var i = 0; i < steps.length; i++) {
 						if ($(steps[i]).find('h5').text() == '장바구니 혹은 경로설정을 통해 장소를 결정') {
 							validity = false;
 						}
 					}
+					
+					
+					
 					return validity;
 				}
 				// ...save_project_validity()
@@ -615,7 +663,7 @@
 
 				// 여행계획 공정 생성
 				function Project_insert_element(num, src, title, content,
-						detail_content, latitude, longitude, distance, way) {
+						detail_content, latitude, longitude, distance, way , pid) {
 					//아직 src는 설정이 안되어 있다.
 
 					if (detail_content == null) {
@@ -624,7 +672,7 @@
 
 					//생성시 나오는 폼
 					var component_move_text = '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'
-							+ '이동 = <a data-toggle="modal" data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
+							+ '이동 = <a data-toggle="modal" alt="move"  data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
 							+ way + distance + '</a>' + '</div>';
 
 					var component_step_text = '<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;" alt="Project_div_step" onclick="Project_step_onclick(this);">'
@@ -660,6 +708,7 @@
 							+ '<input name="longitude" type="hidden" value="'+longitude+'">'
 							+ '<input name="distance" type="hidden" value="">'
 							+ '<input name="way" type="hidden" value="">'
+							+ '<input name="pid" type="hidden" value="'+pid+'">'
 							+ '</form>';
 					var component_step = $(component_step_text);
 					var component_move = $(component_move_text);
@@ -729,7 +778,7 @@
 												result[i].longitude, '이동방법 : '
 														+ result[i].way,
 												'거리 : ' + result[i].distance
-														+ ' km / ');
+														+ ' km / ' ,result[i].pid );
 
 										if (result[i].num != 1) {
 											$('#Project_container').append(
@@ -899,7 +948,7 @@
 								'http://placehold.it/500x300',
 								dataObj['title'], dataObj['content'], '',
 								dataObj['latitude'], dataObj['longitude'],
-								'미정', '미정').component_step
+								'미정', '미정',dataObj['pid']).component_step
 
 						$(steps[step_num - 1]).replaceWith(newStep);
 
@@ -907,9 +956,9 @@
 								'blue 6px solid');
 
 						$(newStep).filter('div').next().next().find(
-								'a[data-toggle=modal]').text('이동경로를 설정하세요.');
+								'a[alt=move]').text('이동경로를 설정하세요.');
 						$(newStep).filter('div').prev().find(
-								'a[data-toggle=modal]').text('이동경로를 설정하세요.');
+								'a[alt=move]').text('이동경로를 설정하세요.');
 
 					} else {
 						alert('삭제');

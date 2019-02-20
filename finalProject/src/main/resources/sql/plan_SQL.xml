@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Plan">
+<mapper namespace="Plan"> 
 	
 	<select id="selectAllById" parameterType="PlanDTO" resultType="PlanDTO">
 	select * from PLAN 
 	where MID=#{mid} and PTITLE=#{ptitle} 
 	order by NUM
+	</select>
+	
+	<select id="selectAllPid" parameterType="ShareProjectDTO" resultType="PlanDTO">
+	select mid,ptitle,pid from PLAN 
+	where  ptitle=#{ptitle} and mid=#{mid} 
 	</select>
 	
 	<select id="selectPlanNameAll" parameterType="String" resultType="String">
@@ -27,7 +32,8 @@
 	#{mainImg},
 	#{num},
 	#{distance},
-	#{detail})
+	#{detail},
+	#{pid})
 	</insert>
 	
 	<delete id="deleteAllById"  parameterType="PlanDTO">

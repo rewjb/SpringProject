@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:gogo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-2.0.xsd">
+	
 	<context:component-scan base-package="com.itbank.springProject.db" />
 	<context:component-scan base-package="com.itbank.springProject.rew.controller" />
 	<context:component-scan base-package="com.itbank.springProject.won.controller" />
 	<context:component-scan base-package="com.itbank.springProject.kim.controller" />
 	<context:component-scan base-package="com.itbank.springProject.joe.controller" />
-
 	<!-- DataSource config -->
 	<context:property-placeholder location="classpath:db.properties" />
 
@@ -39,9 +42,18 @@
 			<!-- 상위는 SQL를 설정한 xml을 등록하는 과정 -->
 		</property>
 	</bean>
-  
+
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
+    
+    <bean id="mongoUri" class="com.mongodb.MongoClientURI">
+    <constructor-arg name="uri" value="mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true"></constructor-arg>
+    </bean>
+    
+    <bean id="mongoClient" class="com.mongodb.MongoClient">
+    <constructor-arg name="uri" ref="mongoUri"></constructor-arg>
+    </bean>
+
 
 </beans>

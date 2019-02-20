@@ -46,6 +46,11 @@ public class R_PlanController {
 
 		String check = "good";
 		
+		for (int i = 0; i < planList.size(); i++) {
+			System.out.println(planList.get(i).getPid());
+		}
+		
+		
 		try {
 			
 			

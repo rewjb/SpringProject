@@ -40,7 +40,7 @@ function continent(event) {
 		}
 	});
 }
-     
+       
 
 function city(event) {
 	var con = event.target;

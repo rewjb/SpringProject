@@ -3,9 +3,10 @@
 <%@page import="com.itbank.springProject.db.CommentDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
     
   
-  
+<%--   
 <!--jstl안될때  -->
 <div>
 <%
@@ -33,27 +34,23 @@ CommentDTO dto;
 </form>
 <%} %>
   
-</div>  
-    
-    
-    
-    
-    
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+</div>   --%>
 
 <div id="replyList"> 
-    <c:forEach var="replylist" items="${replylist}" var="list">
-   	 <form id="<c:out value="${list.reno}"/>">
-        <div id="replyItem<c:out value="${list.reno}"/>" 
-             style="border: 1px solid gray; width: 600px; padding: 5px; margin-top: 5px; margin-left: <c:out value="${20*replylist.redepth}"/>px; display: inline-block">    
-            <c:out value="${list.rewriter}"/> <c:out value="${list.redate}"/>
-            <a href="#" onclick="fn_replyDelete('<c:out value="${list.reno}"/>')">삭제</a>
-            <a href="#" onclick="fn_replyUpdate('<c:out value="${list.reno}"/>')">수정</a>
-            <a href="#" onclick="fn_replyReply('<c:out value="${list.reno}"/>')">댓글</a>
+    <c:forEach  items="${list}" var="list">
+   	 <form id="<c:out value="${list.bnum}"/>">
+        <div id="replyItem<c:out value="${list.bnum}"/>" 
+             style="border: 1px solid gray; width: 600px; padding: 5px; margin-top: 5px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block">    
+             <input type="hidden" name= "bnum"value="<c:out value="${list.bnum}"/>">
+            <input type="hidden" name= "parents" value="<c:out value="${list.parents}"/>">
+            <c:out value="${list.id}"/> <c:out value="${list.bdate}"/>
+            <button onclick="return deleteComment('<c:out value="${list.bnum}"/>')">삭제</button>
+            <button onclick="return Update('<c:out value="${list.bnum}"/>')">수정</button>
+            <button onclick="return Reply('<c:out value="${list.bnum}"/>')">댓글</button>
             <br/>
-            <div id="reply<c:out value="${list.reno}"/>"><c:out value="${list.rememo}"/></div>
+            <div id="reply<c:out value="${list.bnum}"/>"><c:out value="${list.content}"/></div>
         </div><br/>
         </form>
     </c:forEach>
 </div>
- --%>
+

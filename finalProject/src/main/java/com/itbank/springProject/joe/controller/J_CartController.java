@@ -2,7 +2,9 @@ package com.itbank.springProject.joe.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -241,20 +243,34 @@ public class J_CartController {
 	      return buffer;
 	   }
 	
-	 private void imageSave(String source, String fileName) {
+	 private void imageSave(String source, String fileName) throws Exception {
          
-         File outputFile = new File("C:\\Users\\user\\git\\SpringProject\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
-         try {
-        	
-            URL url = new URL(source);            // 이미지 소스를 url에 넣기
-            BufferedImage imgBuffer = ImageIO.read(url);
-            // 해당  소스를 읽어오기
-            ImageIO.write(imgBuffer, "jpg", outputFile);
-            
-
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
+		 File asdd  = new File("src\\main\\webapp\\resources\\IMAGE\\PlaceCartImg\\");
+		 
+		 
+		 String asddd = asdd.pathSeparator ;
+		 String asddd2 = asdd.getAbsolutePath() ;
+		 Path asddd3 = asdd.toPath() ;
+		 String asddd4 = asdd.getPath() ;
+		 
+		 System.out.println(asddd);
+		 System.out.println(asddd2);
+		 System.out.println(asddd3);
+		 System.out.println(asddd4);
+		 
+		 
+//         File outputFile = new File(asddd+"\\"+fileName+".jpg");
+//         try {
+//        	
+//            URL url = new URL(source);            // 이미지 소스를 url에 넣기
+//            BufferedImage imgBuffer = ImageIO.read(url);
+//            // 해당  소스를 읽어오기
+//            ImageIO.write(imgBuffer, "jpg", outputFile);
+//            
+//
+//         } catch (Exception e) {
+//            e.printStackTrace();
+//         }
 
       }   // imageSave() : 메서드 종료
 	

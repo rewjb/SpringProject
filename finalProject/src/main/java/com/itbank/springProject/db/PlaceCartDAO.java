@@ -26,5 +26,15 @@ public class PlaceCartDAO {
 		session.insert("PlaceCart.insert", dto);
 	}
 	
+	public List<PlaceCartDTO> selectAll() {
+		return session.selectList("PlaceCart.selectAll");
+	}
+	
+	public void delete(String pid) {
+		session.delete("PlaceCart.delete", pid);
+	}
+	
+	
+	
 	
 }

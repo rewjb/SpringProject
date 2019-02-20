@@ -16,8 +16,23 @@
 	</select>
 	
 	<insert id="insertProjectData" parameterType="PlanDTO">
-	insert into PLAN values( #{MID},#{PTITLE},#{TITLE},#{CONTENT},#{ptitle},#{ptitle},#{ptitle},#{ptitle},#{ptitle},#{ptitle},#{ptitle});
+	insert into PLAN values(
+	#{mid},
+	#{ptitle},
+	#{title},
+	#{content},
+	#{latitude},
+	#{longitude},
+	#{way},
+	#{mainImg},
+	#{num},
+	#{distance},
+	#{detail})
 	</insert>
+	
+	<delete id="deleteAllById"  parameterType="PlanDTO">
+	delete from PLAN where mid =  #{mid}
+	</delete>
 	
 </mapper>
 

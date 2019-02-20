@@ -100,7 +100,7 @@
 <%@ include file="/UserMainHeader.jsp" %>
 </head>
 <!-- <body style="background: #e5ffeb;"> -->
-<body style="background-image: url('/springProject/resources/IMAGE/placeAdd/bg.jpg2');">
+<body>
 
 <div class="container marketing" style="background-color: rgba(255,255,255,0.8); border-radius: 1.0rem;">
 <div class="col-12 pt-3">
@@ -128,7 +128,7 @@
 		<hr>
 	</form>
     
-<form action="">
+<form action="placeReq_accept">
     <div class="form-group">
       <label for="exampleSelect1">대륙</label>
       <select class="form-control" id="continent" name="continent">
@@ -150,6 +150,17 @@
     <div class="form-group">
       <label for="exampleInputEmail1">주소</label>
       <input type="text" class="form-control" id="address" name="address" value="${dto.address }">
+    
+    </div>
+      <label for="exampleInputEmail1">경위도</label>
+    <div class="form-group" style="width: auto;">
+      <div style="width: 200px; display: inline-block;">
+      <input type="text" class="form-control" id="longitude" name="longitude" placeholder="경도">
+      </div>
+      <div style="width: 200px; display: inline-block;">
+      <input type="text" class="form-control" id="latitude" name="latitude" placeholder="위도">
+      </div>
+    
     </div>
     <div class="form-group">
       <label for="exampleTextarea">소개</label>

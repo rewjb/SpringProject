@@ -7,20 +7,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itbank.springProject.db.AttractionsDTO;
 import com.itbank.springProject.db.PlaceReqDAO;
 import com.itbank.springProject.db.PlaceReqDTO;
+import com.itbank.springProject.db.TagDAO;
 
 @Controller
 public class PlaceReqController {
 
 	@Autowired
-	//@Qualifier("PlaceReqDAO")
+	@Qualifier("PlaceReqDAO")
 	PlaceReqDAO dao;
+	
+	@Autowired
+	@Qualifier("TagDAO")
+	TagDAO dao2;
 
 	@RequestMapping("kim/placeReq")
 	public void add(PlaceReqDTO placeReqDTO) throws Exception{
@@ -51,5 +58,11 @@ public class PlaceReqController {
 	@RequestMapping("kim/placeReq_content")
 	public void content(@RequestParam("no") String no, Model model) throws Exception{
 		model.addAttribute("dto", dao.select(no));
+	}
+	
+	@RequestMapping("kim/placeReq_accept")
+	public void agree(Model model, AttractionsDTO attractionsDTO) throws Exception {
+		
+		dao2.insert("", "");
 	}
 }

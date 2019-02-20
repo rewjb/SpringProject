@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+
+	<select id="Pselect" parameterType="String" resultType="ComDTO">
+		SELECT pid,depth+1 depth,border FROM RIVIEW WHERE bnum = #{parents}
+	</select> 
+	
+	<select id="selectMax" parameterType="String" resultType="Int">
+		SELECT NVL(MAX(border),0)+1 FROM RIVIEW WHERE pid = #{value}
+	</select> 
+	
+	<select id="select" parameterType="Int" resultType="ComDTO">
+		SELECT * FROM RIVIEW WHERE bnum = #{value}
+	</select> 
+
+	<select id="borderSelect" parameterType="ComDTO" resultType="Int">
+		SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents}
+	
+	</select>
+
+
+
+	<update id="countUpdate" parameterType="Int">
+		UPDATE RIVIEW SET border = border+1  WHERE border <![CDATA[ >= ]]> #{border}
+	</update>
+
+	<update id="update" parameterType="ComDTO"> 
+		UPDATE RIVIEW SET border = border+1  WHERE pid = #{pid} AND border = #{border}
+	</update>
+	
+	
+	<update id="commentUpdate" parameterType="ComDTO" >
+		UPDATE RIVIEW SET content = #{content}  WHERE bnum = #{bnum}
+	</update>
+	
+	
+	
+
+	<resultMap type="ComDTO" id="rs">
+		<result property="pid" column="pid" />
+		<result property="bnum" column="bnum" />
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="bdate" column="bdate" />
+		<result property="parents" column="parents" />
+		<result property="depth" column="depth" />
+		<result property="border" column="border" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="rs">
+		SELECT * FROM RIVIEW ORDER BY border ASC	
+	</select>
+	
+	<select id="selectParents" resultMap="rs" parameterType = "String">
+		SELECT * FROM RIVIEW WHERE parents = #{value}
+	</select>
+	
+	<insert id="insert" parameterType="ComDTO">
+		<selectKey resultType="Int" keyProperty="bnum" order="BEFORE">
+            SELECT NVL(MAX(bnum),0)+1 FROM RIVIEW
+        </selectKey>
+        INSERT INTO RIVIEW VALUES (#{pid}, #{bnum},null,#{content},SYSDATE,
+                   <choose>
+                       <when test="parents == null">#{bnum}, 0</when>
+                       <otherwise>#{parents}, #{depth}</otherwise>
+                   </choose>
+             ,#{border} )
+	</insert>
+
+	<insert id="insertInsert" parameterType="ComDTO">
+		 <selectKey resultType="Int" keyProperty="bnum" order="BEFORE">
+            SELECT NVL(MAX(bnum),0)+1 FROM RIVIEW
+        </selectKey> 
+        <!-- <selectKey resultType="String" keyProperty="border,parents" order="BEFORE">
+            SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents}
+        </selectKey>  -->
+        
+		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum},null , #{content},SYSDATE,#{parents},#{depth},#{border})
+	
+	</insert>
+
+
+	<delete id="delete1" parameterType ="Int">
+		DELETE FROM RIVIEW WHERE bnum = #{value}
+	</delete>
+	
+	<delete id="delete2" parameterType ="ComDTO">
+		DELETE FROM RIVIEW WHERE bnum <![CDATA[ >= ]]> #{bnum} and parents = #{parents}
+	</delete>
+
+</mapper>

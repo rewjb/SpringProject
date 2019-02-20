@@ -16,6 +16,14 @@ public class AttractionsDAO {
 		return session.selectOne("attractions.select", id);
 	}
 	
+	public List<AttractionsDTO> selectTag(String continent) {//대륙을 통한  select문
+		return session.selectList("attractions.selectCon", continent);
+	}
+	
+	public List<AttractionsDTO> selectCity(String city) {//대륙을 통한  select문
+		return session.selectList("attractions.selectCity", city);
+	}
+	
 	public void insert(AttractionsDTO dto) {
 		session.insert("attractions.insert", dto);
 	}

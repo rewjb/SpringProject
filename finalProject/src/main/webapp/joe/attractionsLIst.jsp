@@ -3,6 +3,65 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<!--제이쿼리-->
+<script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
+	
+
+<script type="text/javascript">
+
+var arr = new Array();
+arr = ["아시아" , "동남아시아" , "유럽" ,"미주" , "남태평양" ,"대한민국"];
+
+var count  = 0;
+
+$(function () {
+	if (count == 0) {
+		for (var i = 0; i < arr.length; i++) {
+			$("#continentList").append($("<button class='btn btn-secondary my-2' onclick = 'continent(event)'>" +arr[i] +  "</button>"));  
+		}
+	}count +=1
+})
+
+function continent(event) {
+	var con = event.target;
+	$(con).attr("class" , "btn btn-primary my-2");
+	
+	if ($(con).text()=="아시아" ) {
+		
+		var temp = "아시아";
+		$.ajax({
+			url : "tagCon",
+			Type : "POST",
+			data : "tag="+temp,
+			success : function(result) {
+				
+		
+			}
+		});
+		
+		  
+	}else if ($(con).text()=="동남아시아") {
+		
+	}else if ($(con).text()=="유럽") {
+		
+	}else if ($(con).text()=="미주") {
+		
+	}else if ($(con).text()=="남태평양") {
+		
+	}else if ($(con).text()=="대한민국") {
+		
+	} 
+	
+	
+	
+	
+}
+
+
+
+
+
+</script>
 </head>
 <body>
 	<%@ include file="/UserMainHeader.jsp"%>
@@ -10,31 +69,31 @@
 	<nav class="navbar navbar-dark bg-dark"> 
 	<button style="margin-left: 0;"  class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarsExample01" aria-controls="navbarsExample01"
-		aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span><span class="navbar-brand">조건검색</span>
+		aria-expanded="false" aria-label="Toggle navigation" >  
+		<span class="navbar-toggler-icon"></span><span class="navbar-brand" >조건검색</span>
 	</button>
 		 <form class="form-inline my-2 my-md-0">
     <span class="navbar-brand">검색</span><input class="form-control" type="text" placeholder="Search" aria-label="Search">
     </form>
-
 	<div class="collapse navbar-collapse" id="navbarsExample01">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link" href="#">Home
-					<span class="sr-only">(current)</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+			<li class="navbar-brand"><label>대륙</label> 
+			
+				<div style="height: 70px; width: 1000px; overflow : auto;" id = "continentList">  
+				</div>  
+				
 			</li>
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="#" id="dropdown01"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-				<div class="dropdown-menu" aria-labelledby="dropdown01">
-					<a class="dropdown-item" href="#">Action</a> <a
-						class="dropdown-item" href="#">Another action</a> <a
-						class="dropdown-item" href="#">Something else here</a>
-				</div></li>
+			<li class="navbar-brand"><label>도시</label>
+			 	<div style="overflow-x : auto; height: 70px; width: 1000px;" id = "city">
+								 
+			 	</div>
+			</li>
+			<li class="navbar-brand"><label>태그</label>
+				<div style="overflow-x : auto; height: 70px; width: 1000px;" id = "tag">
+					
+				</div>
+			</li>
 		</ul>
-		
 	</div>
 	</nav>
 </div>
@@ -55,7 +114,7 @@
 					aria-label="Placeholder: 500x500">
 				<title>Placeholder</title>
 				<rect fill="#eee" width="100%" height="100%"></rect>
-				<text fill="#aaa" dy=".3em" x="50%" y="50%"></text></svg>
+				<text fill="#aaa" dy=".3em" x="50%" y="50%"></text>
 				<title>Placeholder</title>
 				<rect fill="#eee" width="100%" height="100%"></rect>
 				<text fill="#777" dy=".3em" x="50%" y="50%"></text>
@@ -93,27 +152,7 @@
                 </ul>
               </div>
 		</div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		
 		
 	</body>
 </html>

@@ -49,7 +49,7 @@
 }
 
 span.icon {
-    background: url(/test1/resources/IMAGE/LoginLogo/googleLogo.png);
+    background: url(/springProject/resources/IMAGE/LoginLogo/googleLogo.png);
     display: inline-block;
     vertical-align: middle;
     width: 42px;

@@ -37,6 +37,7 @@
 				<value>classpath:sql/placeReq_SQL.xml</value>
 				<value>classpath:sql/attractions_SQL.xml</value>
 				<value>classpath:sql/ShareProject_SQL.xml</value>
+				<value>classpath:sql/comment_SQL.xml</value>
 			</list>
 			<!-- 상위는 SQL를 설정한 xml을 등록하는 과정 -->
 		</property>

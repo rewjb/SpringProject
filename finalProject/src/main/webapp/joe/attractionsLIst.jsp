@@ -39,7 +39,7 @@ function continent(event) {
 			}
 		});
 		
-		
+		  
 	}else if ($(con).text()=="동남아시아") {
 		
 	}else if ($(con).text()=="유럽") {

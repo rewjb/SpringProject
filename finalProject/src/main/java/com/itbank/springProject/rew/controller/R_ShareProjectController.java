@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlanDAO;
@@ -23,6 +24,7 @@ public class R_ShareProjectController {
 	ShareProjectDAO shareProjectDAO;
 	
 	@RequestMapping("rew/insertShareProject")
+	@ResponseBody
 	public String cartSelectAll(@RequestParam("ptitle") String ptitle) {
 		String check = "good";
 		

@@ -27,7 +27,8 @@
 	#{mainImg},
 	#{num},
 	#{distance},
-	#{detail})
+	#{detail},
+	#{pid})
 	</insert>
 	
 	<delete id="deleteAllById"  parameterType="PlanDTO">

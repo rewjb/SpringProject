@@ -1,19 +1,33 @@
 package com.itbank.springProject.db;
 
+import org.springframework.data.mongodb.core.MongoClientFactoryBean;
+
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
+
 public class PlanDTO {
 	
+	private String pid;
 	private String mid;
 	private String ptitle;
 	private String title;
 	private String content;
-	private double latitude;
-	private double longitude;
+	private String latitude;
+	private String longitude;
 	private String way;
 	private String mainImg;
 	private String detail;
 	private int num;
 	private int distance;
 	
+	
+	public String getPid() {
+		return pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
 	
 	public String getDetail() {
 		return detail;
@@ -63,19 +77,19 @@ public class PlanDTO {
 		this.content = content;
 	}
 
-	public double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 
@@ -103,7 +117,7 @@ public class PlanDTO {
 		this.num = num;
 	}
 
-	public PlanDTO(String mid, String ptitle, String title, String content, double latitude, double longitude,
+	public PlanDTO(String mid, String ptitle, String title, String content, String latitude, String longitude,
 			String way, String mainImg, int num) {
 		super();
 		this.mid = mid;
@@ -136,7 +150,6 @@ public class PlanDTO {
     	 tostring.append("   mainImg=   "+mainImg);
     	 tostring.append("   num=   "+num);
     	 tostring.append("]");
-    	 
     	 
     	return tostring.toString();
     }	

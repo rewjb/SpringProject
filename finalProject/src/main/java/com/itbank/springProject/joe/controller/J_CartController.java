@@ -168,7 +168,7 @@ public class J_CartController {
 	                        
 	                        dto.setContinent((String)jo.get("대륙"));
 	                        dto.setCity((String)jo.get("도시"));
-	                        dto.setId((String)jo.get("고유아이디"));
+	                        dto.setPid((String)jo.get("고유아이디"));
 	                        dto.setMainImg(jo.get("메인이미지").toString().split("/")[4] + ".jpg");
 	                        dto.setTitle((String)jo.get("명소이름"));
 	                        dto.setContent((String)jo.get("명소설명"));
@@ -182,7 +182,7 @@ public class J_CartController {
 	                        
 	                        System.out.println(dto.getContinent());
 	                        System.out.println(dto.getCity());
-	                        System.out.println(dto.getId());
+	                        System.out.println(dto.getPid());
 	                        System.out.println(dto.getMainImg());
 	                        System.out.println(dto.getTitle());
 	                        System.out.println(dto.getContent());
@@ -242,8 +242,11 @@ public class J_CartController {
 	   }
 	
 	 private void imageSave(String source, String fileName) {
+		 
+		 File tempfile = new File("src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\");
+		 String abpath = tempfile.getAbsolutePath();
          
-         File outputFile = new File("C:\\Users\\user\\git\\SpringProject\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
+         File outputFile = new File(abpath+"\\"+fileName+".jpg");
          try {
         	
             URL url = new URL(source);            // 이미지 소스를 url에 넣기

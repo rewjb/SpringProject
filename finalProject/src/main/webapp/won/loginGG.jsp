@@ -1,19 +1,6 @@
+<!-- 구글 로그인을 위한 설정들입니다. -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!doctype html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author"
-	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-<meta name="generator" content="Jekyll v3.8.5">
-
-<title>logIn</title>
-
+    pageEncoding="UTF-8"%>
 <link href="https://fonts.googleapis.com/css?family=Roboto"
 	rel="stylesheet" type="text/css">
 <script src="https://apis.google.com/js/api:client.js"></script>
@@ -22,7 +9,7 @@
 	/* 구글 계정 연동하여 회원가입 */
 	var googleUser = {};
 
-	var startApp = function() {
+	var startAppGG = function() {
 		gapi.load('auth2',function() {
 			// Retrieve the singleton for the GoogleAuth library and set up the client.
 			auth2 = gapi.auth2
@@ -57,8 +44,7 @@
 			       // process form
 			    });
 
-			})//end ajax
-		}, function(error) {
+		},function(error) {
 			alert(JSON.stringify(error, undefined, 2));
 		}); //attachClickHandler()
 	}//end function attachSignin() 
@@ -81,9 +67,11 @@
 	background: white;
 	color: #444;
 	width: 300px;
+	height: 40px;
 	border-radius: 5px;
 	border: thin solid #888;
 	white-space: nowrap;
+	vertical-align: top;
 }
 
 #customBtn:hover {
@@ -98,7 +86,7 @@ span.icon {
 	height: 42px;
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
-	background-position: 0% 50%;
+	background-position: 00% 50%;
 }
 
 span.buttonText {
@@ -106,7 +94,7 @@ span.buttonText {
 	vertical-align: middle;
 	padding-left: 42px;
 	padding-right: 42px;
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: bold;
 	/* Use the Roboto font that is loaded in the <head> */
 	font-family: 'Roboto', sans-serif;
@@ -118,54 +106,3 @@ span.buttonText {
 	padding-top: 10%;
 }
 </style>
-
-</head>
-<body class="text-center">
-	<!-- header -->
-	<%@ include file="/UserMainHeader.jsp"%>
-	<div  id="signup">
-		<!-- 가입방식 선택 -->
-		<div style="text-align: center; display: inline-block;">
-			<!-- 위쪽공간 -->
-			<div style="height: 150px;"></div>
-			<!-- 이메일 회원가입 -->
-			<div class="button">
-				<button class="btn btn-lg btn-secondary btn-block" type="button"
-					id="signIn">Sign up</button>
-			</div>
-			<!-- 구글 계정을 통한 회원가입 -->
-			<div id="gSignInWrapper" class="button">
-				<div id="customBtn" class="customGPlusSignIn">
-					<span class="icon"></span> <span class="buttonText">Google</span>
-				</div>
-				<script>
-					startApp();
-				</script>
-			</div>
-	
-			<!-- 외부 계정을 통한 회원가입 -->
-			<div class="button">
-				<button class="btn btn-lg btn-primary btn-block" type="button"
-					id="google">OtherLogin1</button>
-			</div>
-			<div class="button">
-				<button class="btn btn-lg btn-primary btn-block" type="button"
-					id="github">OtherLogin2</button>
-			</div>
-			<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-			<!-- 아래쪽 공간 -->
-			<div style="height: 150px;">
-				<!-- 외부 로그인 성공시 데이터를 임시로 담아둘 공간 -->
-				<form id="hidden" action="insertMember.jsp">
-					<input type="hidden" id="mid" name="mid" class="hidden"> <input
-						type="hidden" id="mname" name="mname" class="hidden"> <input
-						type="hidden" id="mprofile" name="mprofile" class="hidden">
-				</form>
-			</div>
-		</div>
-	</div>
-	<!-- footer -->
-	<%@ include file="/UserMainFooter.jsp"%>
-
-</body>
-</html>

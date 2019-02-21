@@ -1,4 +1,3 @@
-<!-- 페이스북 로그인을 위한 설정들 입니다 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
@@ -11,10 +10,10 @@
 			FB.api('/me',function(resp) {
 				//mid(이메일)받아오기
 				console.log(resp.name);
-				document.getElementById('mid').value = resp.id;
+				document.getElementById('mid').value = resp.name;
 				//mname받아오기
 				console.log(resp.id);
-				document.getElementById('mname').value = resp.name;
+				document.getElementById('mname').value = resp.id;
 				//mprofile받아오기
 				console.log('https://graph.facebook.com/' + resp.id + '/picture?width=250&height=250>');
 				document.getElementById('mprofile').value = 'https://graph.facebook.com/'
@@ -64,3 +63,50 @@
 	}(document, 'script', 'facebook-jssdk'));
 
 </script>
+<style type="text/css">
+/* 사용자 설정 css */
+/* 구글 로그인 버튼 설정 */
+#authBtn {
+	display: inline-block;
+	background: white;
+	color: #444;
+	width: 300px;
+	height: 40px;
+	border-radius: 5px;
+	border: thin solid #888;
+	white-space: nowrap;
+	vertical-align: top;
+}
+
+#authBtn:hover {
+	cursor: pointer;
+}
+
+/* span.icon {
+	background: url(/springProject/resources/IMAGE/LoginLogo/googleLogo.png);
+	display: inline-block;
+	vertical-align: middle;
+	width: 42px;
+	height: 42px;
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	background-position: 00% 50%;
+}
+
+span.buttonText {
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 42px;
+	padding-right: 42px;
+	font-size: 16px;
+	font-weight: bold;
+	/* Use the Roboto font that is loaded in the <head> */
+	font-family: 'Roboto', sans-serif;
+} */
+
+.button {
+	height: 55px;
+	vertical-align: top;
+	padding-top: 10%;
+}
+</style>

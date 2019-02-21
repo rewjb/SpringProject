@@ -16,6 +16,21 @@
 		SELECT distinct category FROM ATTRACTIONS WHERE city = #{value}
 	</select>
   
+  	<select id="selectThree" parameterType="String" resultMap="rs">
+		SELECT * FROM ATTRACTIONS WHERE continent = #{continent} and  city = #{city} and category = #{category}
+	</select>
+  
+  	<select id="selectSecond" parameterType="String" resultMap="rs">
+		SELECT * FROM ATTRACTIONS WHERE continent = #{continent} and  city = #{city} 
+	</select>
+  
+  	<select id="selectFirst" parameterType="String" resultMap="rs">
+		SELECT * FROM ATTRACTIONS WHERE continent = #{continent} 
+	</select>
+  
+  
+  
+  
   
 	<resultMap type="attrDTO" id="rs">
 		<result property="continent" column="continent" />

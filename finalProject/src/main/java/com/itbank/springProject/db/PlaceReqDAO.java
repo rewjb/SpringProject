@@ -17,6 +17,10 @@ public class PlaceReqDAO {
 		session.insert("PlaceReq.insert", dto);
 	}
 	
+	public void delete(String no) throws Exception{
+		session.delete("PlaceReq.delete", no);
+	}
+	
 	public List<PlaceReqDTO> selectAll() throws Exception{		
 		return session.selectList("PlaceReq.selectAll");
 	}
@@ -24,7 +28,5 @@ public class PlaceReqDAO {
 	public PlaceReqDTO select(String no) throws Exception{		
 		return session.selectOne("PlaceReq.select", no);
 	}
-	
-	
 	
 }

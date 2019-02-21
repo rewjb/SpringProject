@@ -1,5 +1,7 @@
 package com.itbank.springProject.db;
 
+import org.springframework.stereotype.Repository;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -7,6 +9,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 
+@Repository("TagDAO")
 public class TagDAO {
 	
 	public void insert(String name, String tag) {

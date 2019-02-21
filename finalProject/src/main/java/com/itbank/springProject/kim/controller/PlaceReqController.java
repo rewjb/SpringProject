@@ -1,31 +1,39 @@
 package com.itbank.springProject.kim.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itbank.springProject.db.AttractionsDAO;
+import com.itbank.springProject.db.AttractionsDTO;
 import com.itbank.springProject.db.PlaceReqDAO;
 import com.itbank.springProject.db.PlaceReqDTO;
 import com.itbank.springProject.db.TagDAO;
-import com.itbank.springProject.db.AttractionsDTO;
 
 @Controller
 public class PlaceReqController {
 
 	@Autowired
-	//@Qualifier("PlaceReqDAO")
+	@Qualifier("PlaceReqDAO")
 	PlaceReqDAO dao;
 	
 	@Autowired
-	TagDAO dao2;
+	@Qualifier("attractionsDAO")
+	AttractionsDAO dao2;
+	
+	@Autowired
+	TagDAO dao3;
 
 	@RequestMapping("kim/placeReq")
 	public void add(PlaceReqDTO placeReqDTO) throws Exception{
@@ -33,7 +41,7 @@ public class PlaceReqController {
 	}
 	
 	@RequestMapping("kim/placeReq_list")
-	public void list(Model model, HttpSession session, HttpServletRequest request) throws Exception {
+	public void list(Model model, HttpSession session) throws Exception {
 		List<PlaceReqDTO> list = dao.selectAll();	
 		List<Integer> page = new ArrayList<>();
 		//게시물 수에따라 페이지 리스트의 인덱스 증가
@@ -59,8 +67,25 @@ public class PlaceReqController {
 	}
 	
 	@RequestMapping("kim/placeReq_accept")
-	public void agree(Model model, AttractionsDTO attractionsDTO) throws Exception {
+	public String agree(@RequestParam("no") String no, Model model, AttractionsDTO attractionsDTO) throws Exception {
+		dao2.insert(attractionsDTO);
+		dao.delete(no);
+		String img = attractionsDTO.getMainImg().substring(attractionsDTO.getMainImg().lastIndexOf("/")+1);
 		
-		dao2.insert("", "");
+		File file = new File("C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/resources/IMAGE/placeAdd/" + img);
+		file.delete();
+		
+		return "redirect:placeReq_list";
+	}
+	
+	@RequestMapping("kim/placeReq_reject")
+	public String reject(@RequestParam("no") String no, @RequestParam("mainImg") String mainImg) throws Exception {
+		dao.delete(no);
+		
+		String img = mainImg.substring(mainImg.lastIndexOf("/")+1);
+		File file = new File("C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/resources/IMAGE/placeAdd/" + img);
+		file.delete();
+		
+		return "redirect:placeReq_list";
 	}
 }

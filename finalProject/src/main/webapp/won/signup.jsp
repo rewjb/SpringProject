@@ -99,7 +99,6 @@
 									console.log('logout =>',res);
 									checkLoginStatus(res);
 								});
-								
 							}
 						">
 					</td>

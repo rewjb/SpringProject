@@ -5,8 +5,17 @@
 <mapper namespace="attractions">
 
 	 <select id="select" parameterType="String" resultType="attrDTO">
-		SELECT * FROM ATTRACTIONS WHERE id = #{id}
+		SELECT * FROM ATTRACTIONS WHERE id = #{value}
 	</select>
+	
+	 <select id="selectCon" parameterType="String" resultMap="rs">
+		SELECT distinct city FROM ATTRACTIONS WHERE continent = #{value}
+	</select>
+  
+	 <select id="selectCity" parameterType="String" resultMap="rs">
+		SELECT distinct category FROM ATTRACTIONS WHERE city = #{value}
+	</select>
+  
   
 	<resultMap type="attrDTO" id="rs">
 		<result property="continent" column="continent" />

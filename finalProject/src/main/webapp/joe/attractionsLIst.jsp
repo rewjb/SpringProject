@@ -10,52 +10,57 @@
 <script type="text/javascript">
 
 var arr = new Array();
-arr = ["아시아" , "동남아시아" , "유럽" ,"미주" , "남태평양" ,"대한민국"];
+arr = ["아시아" , "동남아시	아" , "유럽" ,"미주" , "남태평양" ,"대한민국"];
 
 var count  = 0;
 
 $(function () {
 	if (count == 0) {
 		for (var i = 0; i < arr.length; i++) {
-			$("#continentList").append($("<button class='btn btn-secondary my-2' onclick = 'continent(event)'>" +arr[i] +  "</button>"));  
+			$("#continentList").append($("<button name = '1' class='btn btn-secondary my-2' onclick = 'continent(event)'>" +arr[i] +  "</button>"));  
 		}
 	}count +=1
 })
 
 function continent(event) {
 	var con = event.target;
-	$(con).attr("class" , "btn btn-primary my-2");
 	
-	if ($(con).text()=="아시아" ) {
+	$("#city").empty();
+	$("#tag").empty();
+	$("button[name=1]").attr("class","btn btn-secondary my-2");
 		
-		var temp = "아시아";
-		$.ajax({
-			url : "tagCon",
-			Type : "POST",
-			data : "tag="+temp,
-			success : function(result) {
-				
-		
-			}
-		});
-		
-		  
-	}else if ($(con).text()=="동남아시아") {
-		
-	}else if ($(con).text()=="유럽") {
-		
-	}else if ($(con).text()=="미주") {
-		
-	}else if ($(con).text()=="남태평양") {
-		
-	}else if ($(con).text()=="대한민국") {
-		
-	} 
-	
-	
-	
-	
+	var temp = $(con).attr("class" , "btn btn-primary my-2");
+	var temp2 = $(con).text();
+	$.ajax({
+		url : "tagCon",
+		Type : "POST",
+		data : "tag="+temp2,
+		success : function(result) {
+				$("#city").append(result);
+		}
+	});
 }
+       
+
+function city(event) {
+	var con = event.target;
+	
+	$("#tag").empty();
+	$("button[name=2]").attr("class","btn btn-secondary my-2");
+	
+	var temp = $(con).attr("class" , "btn btn-primary my-2");
+	var temp2 = $(con).text();
+	$.ajax({
+		url : "tagCity",
+		Type : "POST",
+		data : "tag="+temp2,
+		success : function(result) {
+				$("#tag").append(result);
+		}
+	});
+}
+     
+
 
 
 

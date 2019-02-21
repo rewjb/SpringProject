@@ -245,9 +245,9 @@ public class J_CartController {
 	
 	 private void imageSave(String source, String fileName) {
 		 
-		 File tempfile = new File("src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\");
-		 String abpath = tempfile.getAbsolutePath();
          
+		 /*File asdd  = new File("src\\main\\webapp\\resources\\IMAGE\\PlaceCartImg\\");
+=======
          File outputFile = new File(abpath+"\\"+fileName+".jpg");
          try {
         	
@@ -261,6 +261,7 @@ public class J_CartController {
             e.printStackTrace();
          }
 		 File asdd  = new File("src\\main\\webapp\\resources\\IMAGE\\PlaceCartImg\\");
+>>>>>>> branch 'master' of https://github.com/rewjb/SpringProject
 		 
 		 
 		 String asddd = asdd.pathSeparator ;
@@ -271,21 +272,21 @@ public class J_CartController {
 		 System.out.println(asddd);
 		 System.out.println(asddd2);
 		 System.out.println(asddd3);
-		 System.out.println(asddd4);
+		 System.out.println(asddd4);*/
 		 
-		 
-//         File outputFile = new File(asddd+"\\"+fileName+".jpg");
-//         try {
-//        	
-//            URL url = new URL(source);            // 이미지 소스를 url에 넣기
-//            BufferedImage imgBuffer = ImageIO.read(url);
-//            // 해당  소스를 읽어오기
-//            ImageIO.write(imgBuffer, "jpg", outputFile);
-//            
-//
-//         } catch (Exception e) {
-//            e.printStackTrace();
-//         }
+
+         File outputFile = new File("C:\\Users\\user\\git\\SpringProject2\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractions\\"+fileName+".jpg");
+         try {
+        	
+            URL url = new URL(source);            // 이미지 소스를 url에 넣기
+            BufferedImage imgBuffer = ImageIO.read(url);
+            // 해당  소스를 읽어오기
+            ImageIO.write(imgBuffer, "jpg", outputFile);
+            
+
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
 
       }   // imageSave() : 메서드 종료
 	

@@ -30,7 +30,7 @@ public class R_ShareProjectController {
 	
 	@Autowired
 	@Qualifier("PlanDAO")
-	PlanDAO planDAO;
+	PlanDAO planDAO;  
 	
 	
 	

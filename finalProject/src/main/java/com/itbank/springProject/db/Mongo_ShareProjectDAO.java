@@ -68,7 +68,7 @@ public class Mongo_ShareProjectDAO {
 					}
 				}
 			}
-
+  
 			String insertTag = "";
 			for (int i = 0; i < singleTagList.size(); i++) {
 				insertTag += singleTagList.get(i)+"/";

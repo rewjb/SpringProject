@@ -5,13 +5,22 @@
 <mapper namespace="attractions">
 
 	 <select id="select" parameterType="String" resultType="attrDTO">
-		SELECT * FROM ATTRACTIONS WHERE id = #{id}
+		SELECT * FROM ATTRACTIONS WHERE id = #{value}
 	</select>
+	
+	 <select id="selectCon" parameterType="String" resultMap="rs">
+		SELECT distinct city FROM ATTRACTIONS WHERE continent = #{value}
+	</select>
+  
+	 <select id="selectCity" parameterType="String" resultMap="rs">
+		SELECT distinct category FROM ATTRACTIONS WHERE city = #{value}
+	</select>
+  
   
 	<resultMap type="attrDTO" id="rs">
 		<result property="continent" column="continent" />
 		<result property="city" column="city" />
-		<result property="id" column="id" />
+		<result property="pid" column="pid" />
 		<result property="mainImg" column="mainImg" />
 		<result property="title" column="title" />
 		<result property="content" column="content" />
@@ -23,7 +32,7 @@
 	</resultMap>
 		
 	<insert id="insert" parameterType="attrDTO">
-		insert into ATTRACTIONS values(#{continent},#{city},#{id},#{mainImg},#{title},#{content},#{contentElements},#{findWay},#{longitude},#{latitude},#{category})
+		insert into ATTRACTIONS values(#{continent},#{city},#{pid},#{mainImg},#{title},#{content},#{contentElements},#{findWay},#{longitude},#{latitude},#{category})
 	</insert>
 		
 	<select id="selectAll" resultMap="rs">

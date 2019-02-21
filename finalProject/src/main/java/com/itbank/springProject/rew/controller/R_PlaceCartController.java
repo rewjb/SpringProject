@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlanDAO;
 import com.itbank.springProject.db.PlanDTO;
-    
+import com.itbank.springProject.db.ShareProjectDAO;
+
 @Controller
 public class R_PlaceCartController {
 
@@ -20,11 +21,16 @@ public class R_PlaceCartController {
 	@Qualifier("PlaceCartDAO")
 	private PlaceCartDAO placeCartDAO;
 	
+	@Autowired
+	@Qualifier("ShareProjectDAO")
+	private ShareProjectDAO shareProjectDAO;
+	
 	@RequestMapping("rew/TravelPlan")
 	public void cartSelectAll(@RequestParam("mid") String mid, Model model ) {
 		model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
 		model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
-	}  
+		model.addAttribute("projectShare_list", shareProjectDAO.selectAllShareProjectById(mid));
+	}
 	
 	
 }

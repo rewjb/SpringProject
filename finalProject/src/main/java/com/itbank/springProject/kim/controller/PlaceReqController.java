@@ -2,10 +2,8 @@ package com.itbank.springProject.kim.controller;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,7 @@ public class PlaceReqController {
 	AttractionsDAO dao2;
 	
 	@Autowired
+	@Qualifier("TagDAO")
 	TagDAO dao3;
 
 	@RequestMapping("kim/placeReq")

@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>여행계획서 작성하기!</title>
 <style>
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
@@ -141,10 +142,21 @@
 
 </head>
 <body>
- <%@ include file="/UserMainHeader.jsp" %>
+<%@ include file="/UserMainHeader.jsp" %>
 
- 
- <!-- 최상위 컨테이너 -->
+
+	<div class="spinner-border"  id="loading" role="status" style="position:relative;z-index: 1"> 
+		<span class="sr-only">Loading...</span>
+	</div>
+	
+<script type="text/javascript">
+
+$('#loading').css('top',document.body.clientWidth/2);
+$('#loading').css('left',document.body.clientHeight/2);
+
+</script>
+
+	<!-- 최상위 컨테이너 -->
 <div class="container">
 
   <!-- 페이지 큰 글자 제목 -->
@@ -156,7 +168,7 @@
   <!-- 계획 툴 -->
   <div class="row" style="height:600px">
 
-    <!-- 프로젝트 상세 기록 -->
+			<!-- 프로젝트 상세 기록 -->
 			<div class="col-md-8"
 				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px;height: 600px" id="Project_container">
 
@@ -165,19 +177,21 @@
 					<button class="btn btn-secondary" id="Project_ptitle">프로젝트 제목</button>
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active"><a class="nav-link" href="#"
-							onclick="save_project();">저장</a></li> <!-- 작업중 -->
+							onclick="return save_project();">저장</a></li> <!-- 작업중 -->
 						<li class="nav-item active"><a class="nav-link" onclick="Project_create_step();">
 							생성</a></li>
 						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_delete">
 						삭제</a></li>
-						<li class="nav-item active"><a class="nav-link" href="#"
-							onclick="alert('공유');">공유</a></li>
+						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_share">
+						공유</a></li>
 					</ul>
 					<form>
 						<input class="form-control" type="text" placeholder="내용을 입력">
 					</form>
 				</div>
 				</nav>
+				
+			
 				
 			</div>
 			<!-- /.프로젝트 상세 기록 -->
@@ -187,7 +201,7 @@
     <div class="col-md-4" style="padding: 0px">
 
 				<!-- 프로젝트 목록 -->
-				<div
+				<div id="projectList_container"
 					style="height: 40%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
 					
 					<table class="table table-striped" style="width: 100%;word-break:break-word;">
@@ -207,9 +221,18 @@
 						</thead>
 						<tbody id="Project-Container">
 						<c:forEach items="${project_list}" var="project_list">
+						 <c:choose>
+						  <c:when test="${fn:contains(projectShare_list, project_list)}">
+							<tr>
+								<td style="background:cadetblue;" alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">${project_list}</td>
+							</tr>
+						  </c:when>
+						  <c:otherwise>
 							<tr>
 								<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">${project_list}</td>
 							</tr>
+						  </c:otherwise>
+						 </c:choose>
 						</c:forEach>
 						</tbody>
 					</table>
@@ -302,9 +325,69 @@
  </div>
  <!-- /.프로젝트 step 컴포넌트 삭제시 모달 -->
  
- 
+ <!-- 프로젝트 공유 버튼 모달 -->
+ <div class="modal fade" id="Project_place_share" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+    선택하신 여행계획서를 공유하시겠습니까?<br>
+    =주의사항=<br>
+    -공유 후 여행계획서는 수정이 불가능 합니다.<br>
+    -공유 후 계획서를 삭제 시 공유된 계획서도 삭제됩니다.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" onclick="share_projcet(this);">공유</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- /.프로젝트 공유 버튼 모달 -->
  
 			<script type="text/javascript">
+			
+			// 프로젝트 공유
+			function share_projcet(button) {
+				
+				$(button).prev().click();
+				
+				var validity = save_project_validity();
+				
+			    if (validity) {
+			    	
+				var ptitle = $('#Project_ptitle').text();
+				//프로젝트 이름
+				
+				$.ajax({
+					url : "insertShareProject?ptitle="+ptitle,
+					type : 'post',
+					dataType : "text",//반환받을 데이터 타입 선택
+					success : function(result, confirm) {
+						if (result == 'good') {
+							alert('공유가 완료되었습니다.');
+							
+							var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
+							//작업중 id="projectList_container"
+							
+							for (var i = 0; i < projectList_container.length; i++) {
+								if(projectList_container[i].style.outline=='blue solid 6px'){
+									$(projectList_container[i]).css('background','cadetblue');
+								}
+							}
+							
+						}else {
+							alert('공유오류 발생');
+						}
+					}//success끝
+				})//ajax끝
+		     	}else {
+					alert('여행계획을 공유할 수 없습니다.n\다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 삭제만 지원이 됩니다.');
+		     	}
+				
+			}
+			// ...프로젝트 공유
+			
+			
 			
 			// 프로젝트 "저장"
 			function save_project() {
@@ -327,7 +410,6 @@
 				// 각 공정별 넘길 form
 				var ptitle = $('#Project_ptitle').text();
 				//프로젝트 이름
-				
 
 				if (validity == true) {
 
@@ -359,34 +441,53 @@
 						        //longitude
 						}
 				
+				var dataArray=new Array;
 				
-				console.log('form의 수='+forms.length);
+				var temp_serial ;
 				
-				var data={};
+				var temp_data;
+				
 				
 				for (var i = 0; i < forms.length; i++) {
 					
-					data['form'+i] = decodeURIComponent($(forms[i]).serialize());
-					alert(data['form'+i]);
+					temp_data = {};
 					
+					temp_serial= $(forms[i]).serializeArray();
+					for (var j = 0; j < temp_serial.length; j++) {
+						console.log(j);
+						temp_data[temp_serial[j].name]= decodeURIComponent(temp_serial[j].value) ;
+					}
+					dataArray.push(temp_data);
+					//alert('temp_data.title='+temp_data.title);
+					//데이터가 정상 셋팅 여부
 				}
 				
+				//alert(JSON.stringify(dataArray));
+				// 보내기전 출력
 				
 				$.ajax({
 					url : "projcetDataSave?ptitle="+ptitle,
 					type : 'post',
-					data : data,
-					dataType : "json",//반환받을 데이터 타입 선택
+					data : JSON.stringify(dataArray),
+					dataType : "text",//반환받을 데이터 타입 선택
+					contentType : 'application/json',
 					success : function(result, confirm) {
-						
+						if (result == 'good') {
+							alert('저장이 완료되었습니다.');
+						}else {
+							alert('저장오류 발생');
+						}
 					}//success끝
 				})//ajax끝
 				
 						
 
 					} else {
-						alert('프로젝트 항목별 내용을 채워주세요.');
+						alert('여행계획을 저장할 수 없습니다.\n다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 수정할 수 없습니다. ');
 					}
+				
+				 return false;
+				 //저장 클릭시 화면이 위로 올라가는 현상 방지
 
 				}
 				// ...save_project()
@@ -397,14 +498,38 @@
 
 					var steps = $('#Project_container').children(
 							'div[alt=Project_div_step]');
+					
+					var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
+					var nowName = $('#Project_ptitle').text();
+					var selectedName;
+					
+					
+					//작업중 id="projectList_container"
+					
+					
+					for (var i = 0; i < projectList_container.length; i++) {
+						
+						if (projectList_container[i].style.outline=='blue solid 6px') {
+							if (projectList_container[i].style.background=='cadetblue') {
+							selectedName = $(projectList_container[i]).text();
+							}
+						}
+					}
 
 					var validity = true;
+					
+					if (nowName == selectedName) {
+						validity = false;
+					}
 
 					for (var i = 0; i < steps.length; i++) {
 						if ($(steps[i]).find('h5').text() == '장바구니 혹은 경로설정을 통해 장소를 결정') {
 							validity = false;
 						}
 					}
+					
+					
+					
 					return validity;
 				}
 				// ...save_project_validity()
@@ -414,7 +539,7 @@
 					//거리 : 1000 km / 이동방법 : WAY2
 					//위에는 형식
 					var total_text = move.find('a').text()
-					var distance = total_text.split('/')[0].split(':')[1];
+					var distance = total_text.split('/')[0].split(':')[1].replace('km','').trim();
 
 					var method = total_text.split('/')[1].split(':')[1].trim();
 
@@ -431,11 +556,29 @@
 				// ...프로젝트 "저장"
 
 				function Project_delete(button) {
+					
+					var steps = $('#Project_container').children(
+					'div[alt=Project_div_step]');
+
+					var validity = false;
+
+					for (var i = 0; i < steps.length; i++) {
+
+						//프로젝트를 선택하지 않고 생성을 눌렀을 시!
+						if (steps[i].style.outline != '') {
+							validity = true;
+							break;
+						}
+					}
+
+					
+				if (validity == false) {
+						alert('계획서 선택 및 계획서 내용을 선택하세요.');
+						$(button).prev().click();
+						return null;
+					}
 
 					$(button).prev().click();
-
-					var steps = $('#Project_container').children(
-							'div[alt=Project_div_step]');
 
 					//step이 1개 초과일때
 					for (var i = 0; i < steps.length; i++) {
@@ -473,7 +616,6 @@
 
 						steps[i].innerHTML = i + 1;
 						//번호 새로 부여
-
 					}
 				}
 
@@ -534,12 +676,16 @@
 
 				// 여행계획 공정 생성
 				function Project_insert_element(num, src, title, content,
-						detail_content, latitude, longitude, distance, way) {
+						detail_content, latitude, longitude, distance, way , pid) {
 					//아직 src는 설정이 안되어 있다.
+
+					if (detail_content == null) {
+						detail_content = '';
+					}
 
 					//생성시 나오는 폼
 					var component_move_text = '<div alt="Project_div_move" class="alert alert-info" role="alert" style="padding: 0px;display: inline-block;margin-top: 10px;margin-bottom: 5px;margin-left:30px;">'
-							+ '이동 : <a data-toggle="modal" data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
+							+ '이동 = <a data-toggle="modal" alt="move"  data-target="#GoogleMap" onclick="GoogleMap_open(this);">'
 							+ way + distance + '</a>' + '</div>';
 
 					var component_step_text = '<div class="shadow p-1 mb-1 bg-white rounded" style="border: 1px solid;" alt="Project_div_step" onclick="Project_step_onclick(this);">'
@@ -575,6 +721,7 @@
 							+ '<input name="longitude" type="hidden" value="'+longitude+'">'
 							+ '<input name="distance" type="hidden" value="">'
 							+ '<input name="way" type="hidden" value="">'
+							+ '<input name="pid" type="hidden" value="'+pid+'">'
 							+ '</form>';
 					var component_step = $(component_step_text);
 					var component_move = $(component_move_text);
@@ -644,7 +791,7 @@
 												result[i].longitude, '이동방법 : '
 														+ result[i].way,
 												'거리 : ' + result[i].distance
-														+ ' km / ');
+														+ ' km / ' ,result[i].pid );
 
 										if (result[i].num != 1) {
 											$('#Project_container').append(
@@ -814,7 +961,7 @@
 								'http://placehold.it/500x300',
 								dataObj['title'], dataObj['content'], '',
 								dataObj['latitude'], dataObj['longitude'],
-								'미정', '미정').component_step
+								'미정', '미정',dataObj['pid']).component_step
 
 						$(steps[step_num - 1]).replaceWith(newStep);
 
@@ -822,9 +969,9 @@
 								'blue 6px solid');
 
 						$(newStep).filter('div').next().next().find(
-								'a[data-toggle=modal]').text('이동경로를 설정하세요.');
+								'a[alt=move]').text('이동경로를 설정하세요.');
 						$(newStep).filter('div').prev().find(
-								'a[data-toggle=modal]').text('이동경로를 설정하세요.');
+								'a[alt=move]').text('이동경로를 설정하세요.');
 
 					} else {
 						alert('삭제');
@@ -968,6 +1115,7 @@
 		 
 		 $(next_step).next().find('input[name=latitude]').val(end.lat);
 		 $(next_step).next().find('input[name=longitude]').val(end.lng);
+		 $(next_step).next().find('input[name=pid]').val(' ');
 		 
 		}
 		
@@ -989,7 +1137,7 @@
 			case 'DRIVING':  temp_method = '자동차' ;
 			}
 			
-		    move.innerHTML =  distance+' / 이동방법 : '+ temp_method; 
+		    move.innerHTML = '거리 : '+ distance+' / 이동방법 : '+ temp_method; 
 		    
 		    //$(next_step).next().css('outline', 'blue 6px solid');
 		    //확인용

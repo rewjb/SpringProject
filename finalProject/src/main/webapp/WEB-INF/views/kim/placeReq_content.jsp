@@ -91,7 +91,16 @@
 					}
 				})				
 				return false;
-			})			
+			})	
+			
+			$("#reject").click(function() {
+				
+				var no = $("#no").val();
+				var mainImg = $("#mainImg").val();
+				location.href = "placeReq_reject?no=" + no + "&mainImg=" + mainImg;
+			})
+			
+			
 		})
 		
 		
@@ -149,8 +158,7 @@
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">주소</label>
-      <input type="text" class="form-control" id="address" name="address" value="${dto.address }">
-    
+      <input type="text" class="form-control" value="${dto.address }">   
     </div>
       <label for="exampleInputEmail1">경위도</label>
     <div class="form-group" style="width: auto;">
@@ -170,12 +178,23 @@
       <label for="exampleTextarea">설명</label>
       <textarea class="form-control" id="contentElements" name="contentElements" rows="5">${dto.contentElements }</textarea>
     </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">태그</label>
+      <input type="text" class="form-control" id="category" name="category" value="g">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">id</label>
+      <input type="text" class="form-control" id="id" name="id" value="">
+    </div>
     
-    <input type="hidden" id="mainImg" name="mainImg" value="123">
+    <input type="hidden" id="mainImg" name="mainImg" value="${dto.mainImg }">
     <input type="hidden" id="userId" name="userId" value="유저아이디">
+    <input type="hidden" id="findWay" name="findWay" value="notFound">
+    <input type="hidden" id="no" name="no" value="${param.no }">
     
     <input type="submit" class="btn btn-primary" value="승인">
-    <button class="btn btn-danger">꺼절</button>
+    <button type="button" class="btn btn-danger" id="reject">꺼절</button>
+    <button type="button" class="btn btn-warnning" id="modal">modal</button>
     </form>
     <p class="pb-1">
   </fieldset>

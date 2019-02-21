@@ -144,8 +144,19 @@
 <body>
 <%@ include file="/UserMainHeader.jsp" %>
 
- 
- <!-- 최상위 컨테이너 -->
+
+	<div class="spinner-border"  id="loading" role="status" style="position:relative;z-index: 1"> 
+		<span class="sr-only">Loading...</span>
+	</div>
+	
+<script type="text/javascript">
+
+$('#loading').css('top',document.body.clientWidth/2);
+$('#loading').css('left',document.body.clientHeight/2);
+
+</script>
+
+	<!-- 최상위 컨테이너 -->
 <div class="container">
 
   <!-- 페이지 큰 글자 제목 -->
@@ -157,7 +168,7 @@
   <!-- 계획 툴 -->
   <div class="row" style="height:600px">
 
-    <!-- 프로젝트 상세 기록 -->
+			<!-- 프로젝트 상세 기록 -->
 			<div class="col-md-8"
 				style="width: 750px; overflow: scroll; overflow-x: hidden; border: 5px ridge; padding: 0px;height: 600px" id="Project_container">
 
@@ -179,6 +190,8 @@
 					</form>
 				</div>
 				</nav>
+				
+			
 				
 			</div>
 			<!-- /.프로젝트 상세 기록 -->
@@ -1102,6 +1115,7 @@
 		 
 		 $(next_step).next().find('input[name=latitude]').val(end.lat);
 		 $(next_step).next().find('input[name=longitude]').val(end.lng);
+		 $(next_step).next().find('input[name=pid]').val(' ');
 		 
 		}
 		

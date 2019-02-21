@@ -21,6 +21,10 @@
 	to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'), #{userId})
 	</insert>
 	
+	<delete id="delete" parameterType="String">
+	delete from place_req where no=#{value}
+	</delete>
+	
 	<select id="selectAll" resultMap="rs">
 	select * from PLACE_REQ
 	</select>

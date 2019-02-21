@@ -11,7 +11,7 @@
 // 		tempPage = Integer.parseInt(request.getParameter("page"));
 // 	}
 // 	ArrayList list = (ArrayList)request.getAttribute("list");
-	
+	  
 %>
 
 

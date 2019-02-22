@@ -9,11 +9,24 @@
 
 <script type="text/javascript">
 
+
+var listCount = 0;
+$(function () {
+	if (listCount ==0) {
+		$.ajax({
+			url : "allList",
+			Type : "POST",
+			success : function(result) {
+					$("#container").append(result);
+			}
+		});
+	}listCount += 1;
+})
+
 var arr = new Array();
-arr = ["아시아" , "동남아시	아" , "유럽" ,"미주" , "남태평양" ,"대한민국"];
+arr = ["아시아" , "동남아시아" , "유럽" , "미주" , "남태평양" , "대한민국"];
 
 var count  = 0;
-
 $(function () {
 	if (count == 0) {
 		for (var i = 0; i < arr.length; i++) {
@@ -25,11 +38,16 @@ $(function () {
 function continent(event) {
 	var con = event.target;
 	
+	if ($(con).attr("class")=="btn btn-secondary my-2") {
+		
+	
 	$("#city").empty();
 	$("#tag").empty();
 	$("button[name=1]").attr("class","btn btn-secondary my-2");
+	$("button[name=1]").attr("id","");
 		
-	var temp = $(con).attr("class" , "btn btn-primary my-2");
+	 $(con).attr("class" , "btn btn-primary my-2");
+	 $(con).attr("id" , "1");
 	var temp2 = $(con).text();
 	$.ajax({
 		url : "tagCon",
@@ -39,16 +57,26 @@ function continent(event) {
 				$("#city").append(result);
 		}
 	});
+	
+	}else if ($(con).attr("class") == "btn btn-primary my-2") {
+		$("#city").empty();
+		$("#tag").empty();
+		$(con).attr("class" , "btn btn-secondary my-2");
+	}
 }
        
 
 function city(event) {
 	var con = event.target;
 	
+	if ($(con).attr("class")=="btn btn-secondary my-2") {
+	
 	$("#tag").empty();
 	$("button[name=2]").attr("class","btn btn-secondary my-2");
+	$("button[name=2]").attr("id","");
 	
-	var temp = $(con).attr("class" , "btn btn-primary my-2");
+	$(con).attr("class" , "btn btn-primary my-2");
+	$(con).attr("id" , "2");
 	var temp2 = $(con).text();
 	$.ajax({
 		url : "tagCity",
@@ -58,12 +86,49 @@ function city(event) {
 				$("#tag").append(result);
 		}
 	});
+	
+	}else if($(con).attr("class") == "btn btn-primary my-2") {
+		$("#tag").empty();
+		$("button[name=2]").attr("id","");
+		$(con).attr("class" , "btn btn-secondary my-2");
+		
+	}
 }
-     
 
+function tag(event) {
+	var con = event.target;
+	
+	if ($(con).attr("class")=="btn btn-secondary my-2") {
+	
+	$("button[name=tag]").attr("class","btn btn-secondary my-2");
+	$("button[name=tag]").attr("id","");
+	$(con).attr("class" , "btn btn-primary my-2");
+	$(con).attr("id" , "3");
+	
+	}else if ($(con).attr("class") == "btn btn-primary my-2") {
+		$("button[name=tag]").attr("id","");
+		$(con).attr("class" , "btn btn-secondary my-2");
+	}
+	
+}
 
-
-
+function tagSearch() {
+	
+	var con = $("button[id=1]").text();
+	var city = $("button[id=2]").text();
+	var tag = $("button[id=3]").text();
+	
+	
+	$.ajax({
+		url : "attList",
+		Type : "POST",
+		data : "continent="+con+"&city="+city+"&category="+tag,
+		success : function(result) {
+			$("#container").empty();
+			$("#container").append(result);
+		}
+	});
+}
 
 
 </script>
@@ -84,79 +149,31 @@ function city(event) {
 		<ul class="navbar-nav mr-auto">
 			<li class="navbar-brand"><label>대륙</label> 
 			
-				<div style="height: 70px; width: 1000px; overflow : auto;" id = "continentList">  
+				<div style="height: 80px; width: 1080px; overflow : auto;" id = "continentList">  
 				</div>  
-				
 			</li>
 			<li class="navbar-brand"><label>도시</label>
-			 	<div style="overflow-x : auto; height: 70px; width: 1000px;" id = "city">
-								 
+			 	<div style="overflow-x : auto; height: 80px; width: 1080px;" id = "city">
 			 	</div>
 			</li>
 			<li class="navbar-brand"><label>태그</label>
-				<div style="overflow-x : auto; height: 70px; width: 1000px;" id = "tag">
-					
+				<div style="overflow-x : auto; height: 80px; width: 1080px;" id = "tag">
+				
 				</div>
 			</li>
+			<li><button id ="searchBtn"    class="btn btn-secondary my-2" style="text-align: center; width: 1080px;" onclick="tagSearch()">검색</button></li>
 		</ul>
 	</div>
 	</nav>
 </div>
-
 	<!--해더랑 리스트랑 공간  어차피  jstl for문을 통해서 구현할곳  -->
 	<div style="width: 100%; height: 100px;"></div>
 		<textarea style="width: 200px; height: 500px; margin-left: 50px; position: fixed;"></textarea>
-
+  
 	<!--추천에 의해 뿌려줄 리스트   -->
-	<div class="container marketing">
-		<!-- Three columns of text below the carousel -->
-		<div class="row">
-			<div class="col-lg-4">
-				<svg
-					class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-					width="300" height="300" xmlns="http://www.w3.org/2000/svg"
-					preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
-					aria-label="Placeholder: 500x500">
-				<title>Placeholder</title>
-				<rect fill="#eee" width="100%" height="100%"></rect>
-				<text fill="#aaa" dy=".3em" x="50%" y="50%"></text>
-				<title>Placeholder</title>
-				<rect fill="#eee" width="100%" height="100%"></rect>
-				<text fill="#777" dy=".3em" x="50%" y="50%"></text>
-				</svg>
-				<h2>조광재</h2>
-				<p>짱짱맨</p>
-				<p>
-					<a class="btn btn-secondary" href="#" role="button">장바구니</a>
-				</p>
-			</div>
-			<!-- /.col-lg-4 -->
-			
-		</div>
-		<!-- /.row -->
-		<br>
-		<br>
-		<br>
-		 <div >
-                <ul class="pagination pagination-lg">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#">&laquo;</a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">&raquo;</a>
-                  </li>
-                </ul>
-              </div>
-		</div>
+	<div class="container marketing" id = "container">
+	
+	</div>
 		
 		
 	</body>

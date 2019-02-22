@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itbank.springProject.db.AttractionsDAO;
+import com.itbank.springProject.db.AttractionsDTO;
 
 @Controller
 public class TagController {
@@ -33,6 +34,34 @@ public class TagController {
 		
 		return "joe/tagCity";
 	}
+	
+	@RequestMapping("joe/attList")
+	public String attList(AttractionsDTO attractionsDTO , Model model) {
+		
+		if (attractionsDTO.getContinent() != "" && attractionsDTO.getCity() != "" && attractionsDTO.getCategory() != "" ) {
+			System.out.println("3가지 ");
+			model.addAttribute("list", attractionsDAO.selectThree(attractionsDTO)) ;
+		}else if(attractionsDTO.getContinent() != "" && attractionsDTO.getCity() != "" && attractionsDTO.getCategory() == ""){
+			model.addAttribute("list", attractionsDAO.selectSecond(attractionsDTO))  ;
+		}else if(attractionsDTO.getContinent() != "" && attractionsDTO.getCity() == "" && attractionsDTO.getCategory() == ""){
+			model.addAttribute("list", attractionsDAO.selectFirst(attractionsDTO)) ;
+		}
+		
+		
+			System.out.println("태그"+attractionsDTO.getCategory());
+			System.out.println("도시"+attractionsDTO.getCity());
+			System.out.println("대륙"+attractionsDTO.getContinent());
+		return "joe/attList";
+	}
+	
+	@RequestMapping("joe/allList")
+	public String allList(Model model) {
+		model.addAttribute("list", attractionsDAO.selectAll());
+		return "joe/attList";
+	}
+	
+	
+	
 	
 	
 }

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:forEach  items="${list}" var="list">   
-<button class = "btn btn-secondary my-2" onclick = 'tag(event)'>
-${list.category }
+<button class = "btn btn-secondary my-2" onclick = 'tag(event)' name = "tag">
+${list.category}
 </button>
 </c:forEach> 

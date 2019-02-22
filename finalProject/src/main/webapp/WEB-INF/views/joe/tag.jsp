@@ -6,6 +6,6 @@
     
 <c:forEach  items="${list}" var="list">   
 <button class = "btn btn-secondary my-2" onclick = 'city(event)' name = "2">
-${list.city }
+${list.city}
 </button>
 </c:forEach> 

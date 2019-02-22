@@ -195,6 +195,7 @@
     <input type="submit" class="btn btn-primary" value="승인">
     <button type="button" class="btn btn-danger" id="reject">꺼절</button>
     <button type="button" class="btn btn-warnning" id="modal">modal</button>
+    
     </form>
     <p class="pb-1">
   </fieldset>

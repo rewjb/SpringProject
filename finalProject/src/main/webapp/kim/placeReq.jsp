@@ -164,6 +164,7 @@
     <input type="hidden" id="userId" name="userId" value="유저아이디">
     
     <input type="submit" class="btn btn-primary">
+    <a class="btn btn-sm btn-outline-secondary" href="Tag_Select">태그페이지</a>
     </form>
     <p class="pb-1">
   </fieldset>

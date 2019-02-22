@@ -56,9 +56,9 @@
 	</bean>
 <!-- MongoClient mongoClient = new MongoClient(uri); -->
 
-   <bean id="Mongo_ShareProjectDAO" class="com.itbank.springProject.db.Mongo_ShareProjectDAO">
-   <property name="mongoClient" ref="mongoClient"></property>
-   </bean>
+<!--    <bean id="Mongo_ShareProjectDAO" class="com.itbank.springProject.db.Mongo_ShareProjectDAO"> -->
+<!--    <property name="mongoClient" ref="mongoClient"></property> -->
+<!--    </bean> -->
 
 
 <!-- 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"> -->

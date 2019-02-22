@@ -27,7 +27,7 @@ public class PlaceReqController {
 	PlaceReqDAO dao;
 	
 	@Autowired
-	@Qualifier("attractionsDAO")
+	@Qualifier("AttractionsDAO")
 	AttractionsDAO dao2;
 	
 	@Autowired

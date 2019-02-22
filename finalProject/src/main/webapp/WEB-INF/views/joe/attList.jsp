@@ -14,7 +14,6 @@
 	  
 %>
 
-
 <div class="row">
 	<c:forEach items="${list}" var="list">
 		<div class="col-lg-4">

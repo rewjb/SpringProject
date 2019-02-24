@@ -3,9 +3,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
+		<style type="text/css">
+	.row
+{
+   font-family: 'Noto Sans KR', sans-serif;
+}
 	
+	
+	</style>
 
 <script type="text/javascript">
 
@@ -171,7 +179,7 @@ function tagSearch() {
 		<textarea style="width: 200px; height: 500px; margin-left: 50px; position: fixed;"></textarea>
   
 	<!--추천에 의해 뿌려줄 리스트   -->
-	<div class="container marketing" id = "container">
+	<div class="container marketing" id = "container" >
 	
 	</div>
 		

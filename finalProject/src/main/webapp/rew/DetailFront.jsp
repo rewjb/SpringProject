@@ -13,9 +13,7 @@
 
 <body>
 <%@ include file="/UserMainHeader.jsp"%>
-<script type="text/javascript" src="/springProject/resources/JS/R_star.js"></script>
 
-	<
 	<!-- 최상위 컨테이너 -->
 	<div class="container">
 
@@ -92,15 +90,15 @@
 <!-- 전체댓글,내댓글,리뷰 관련된 내용이 보이는 곳 -->
     <div class="tab-content" id="v-pills-tabContent">
 <!-- 전체댓글 보기 -->
-      <div class="tab-pane fade show active" id="totalCommentDiv" role="tabpanel" aria-labelledby="v-pills-home-tab" style="background: gray;">
+      <div class="tab-pane fade show active" id="totalCommentDiv" role="tabpanel" aria-labelledby="v-pills-home-tab" style="">
 <!--    작업중 -->
 
 
-       <div id="totalCommentDiv_head" style="background: red;margin-left: 50px;margin-right: 50px;margin-bottom: 10px" >
+       <div id="totalCommentDiv_head" style="margin-left: 50px;margin-right: 50px;margin-bottom: 10px" >
         <div style="margin-left: 10px;">댓글을 작성해 주세요</div>
-        <div style="margin-left: 10px;">
-         <div id="stars-existing" class="starrr" data-rating='4' style=" display: inline-block;"></div>
-         <span id="count-existing">4</span> star(s)
+        <div id="head_star"  alt="" style="margin-left: 10px;display: inline-block;">
+<!--       별점이 들어가는 곳 -->
+<img alt=1 style="width: 25px;" src="/springProject/resources/IMAGE/star/star_off.png" onclick="checkStar(event);">
         </div>
          <div style="margin-left: 10px;"></div>
           <div style="margin: 10px">
@@ -108,6 +106,7 @@
            </textarea>
          </div>
        </div>
+       <hr>
         <div id="totalCommentDiv_body" style="background: blue;">dd</div>
       </div>
 <!-- /.전체댓글 보기 -->
@@ -131,6 +130,46 @@
   </div>
 </div>
 
+
+
+<script type="text/javascript">
+// 	/springProject/resources/IMAGE/star/star_off.png
+
+	$(document).ready(function name() {
+		
+	 var star;
+
+	 for (var i = 0; i < 5; i++) {
+		star = '<img alt="'+(i+1)+'" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_off.png"  onclick="checkStar(event);">';
+		$('#head_star').append($(star));
+
+	 }
+	});
+	
+// 	function checkStar(event) {
+		
+// 		var clickStar =$(event.target);
+		
+// 		var seq = $(clickStar).attr('alt');
+		
+// 		var clickStarP = $(clickStar).parent('div#head_star');
+		
+// 		$(clickStarP).attr('alt',seq);
+		
+// 		var clickStars = $(clickStarP).children();
+		
+// 		for (var i = 0; clickStars.length; i++) {
+// 			$(clickStars[i]).attr('src', '/springProject/resources/IMAGE/star/star_off.png' );
+// 		}
+		
+// 		for (var i = 0; seq; i++) {
+// 			$(clickStars[i]).attr('src', '/springProject/resources/IMAGE/star/star_on.png' );
+// 		}
+		
+// 	}
+
+
+</script>
 
 
 		

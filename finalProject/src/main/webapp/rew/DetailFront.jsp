@@ -7,14 +7,13 @@
 <title>여행계획서 상세페이지</title>
 
 <style>
-#cart_container {
-	
-}
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
 </style>
-
 </head>
+
 <body>
-	<%@ include file="/UserMainHeader.jsp"%>
+<%@ include file="/UserMainHeader.jsp"%>
+<script type="text/javascript" src="/springProject/resources/JS/R_star.js"></script>
 
 	<
 	<!-- 최상위 컨테이너 -->
@@ -69,50 +68,66 @@
 			<!-- /.프로젝트 목록 + 관광명소 장바구니 -->
 		</div>
 		
-		<hr>
 <!-- 		댓글과 게시글 내용의 구분선 -->
-	
+		<hr>
+<!-- 		/.댓글과 게시글 내용의 구분선 -->
+
+<!-- 댓글 및 리뷰에 관한 버튼 -->
 <div class="row">
   <div class="col-3">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">전체댓글</a>
-      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">내 댓글</a>
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">관련리뷰</a>
-      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">리뷰 작성하기</a>
+      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#totalCommentDiv" role="tab" aria-controls="v-pills-home" aria-selected="true">전체댓글</a>
+      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#privateCommentDiv" role="tab" aria-controls="v-pills-profile" aria-selected="false">내 댓글</a>
+      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#relatedReviewDiv" role="tab" aria-controls="v-pills-messages" aria-selected="false">관련리뷰</a>
+      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#makeReviewDiv" role="tab" aria-controls="v-pills-settings" aria-selected="false">리뷰 작성하기</a>
     </div>
   </div>
   <div class="col-9">
+<!-- /.댓글 및 리뷰에 관한 버튼 -->
+
+
+
+
+
+<!-- 전체댓글,내댓글,리뷰 관련된 내용이 보이는 곳 -->
     <div class="tab-content" id="v-pills-tabContent">
 <!-- 전체댓글 보기 -->
-      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" style="background: gray;">
-      hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-      <br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-      
+      <div class="tab-pane fade show active" id="totalCommentDiv" role="tabpanel" aria-labelledby="v-pills-home-tab" style="background: gray;">
+<!--    작업중 -->
+
+
+       <div id="totalCommentDiv_head" style="background: red;margin-left: 50px;margin-right: 50px;margin-bottom: 10px" >
+        <div style="margin-left: 10px;">댓글을 작성해 주세요</div>
+        <div style="margin-left: 10px;">
+         <div id="stars-existing" class="starrr" data-rating='4' style=" display: inline-block;"></div>
+         <span id="count-existing">4</span> star(s)
+        </div>
+         <div style="margin-left: 10px;"></div>
+          <div style="margin: 10px">
+           <textarea rows="" cols="" style="margin-bottom: 10px;margin-bottom: 10px;width: 100%;  resize: none;height: 100px">
+           </textarea>
+         </div>
+       </div>
+        <div id="totalCommentDiv_body" style="background: blue;">dd</div>
       </div>
 <!-- /.전체댓글 보기 -->
 <!-- 내 댓글 -->
-      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+      <div class="tab-pane fade" id="privateCommentDiv" role="tabpanel" aria-labelledby="v-pills-profile-tab">
       내 댓글
       </div>
 <!-- /.내 댓글 -->
 <!-- 관련리뷰 -->
-      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+      <div class="tab-pane fade" id="relatedReviewDiv" role="tabpanel" aria-labelledby="v-pills-messages-tab">
       관련리뷰
       </div>
 <!-- /.관련리뷰 -->
 <!--리뷰 작성하기 -->
-      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+      <div class="tab-pane fade" id="makeReviewDiv" role="tabpanel" aria-labelledby="v-pills-settings-tab">
       리뷰 작성하기
       </div>
-<!--리뷰 작성하기 -->
+<!--/.ㄴ리뷰 작성하기 -->
     </div>
+<!-- /.전체댓글,내댓글,리뷰 관련된 내용이 보이는 곳 -->
   </div>
 </div>
 

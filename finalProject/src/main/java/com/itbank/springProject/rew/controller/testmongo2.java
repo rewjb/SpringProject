@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
@@ -25,11 +26,11 @@ public class testmongo2 {
 		MongoClientURI uri = new MongoClientURI(
 				"mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true");
 
-		MongoClient mongoClient = new MongoClient(uri);
+		MongoClient mongoClient = new MongoClient("211.181.190.201", 27017);
+
 		
-		MongoTemplate mongoTemplate = new MongoTemplate(mongoClient ,"tag");
-		
-		
+		MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, "tag");
+
 		MongoCollection<Document> collectionPlace = mongoTemplate.getCollection("place");
 		MongoCollection<Document> collectionsharePlace = mongoTemplate.getCollection("sharePlace");
 
@@ -42,11 +43,8 @@ public class testmongo2 {
 		MongoCursor<Document> result = collectionPlace.find(new Document("$or", condition)).iterator();
 
 		while (result.hasNext()) {
-                System.out.println(result.next().toJson());			
+			System.out.println(result.next().toJson());
 		}
-		
-		
-		
-	}
 
+	}
 }

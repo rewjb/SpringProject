@@ -18,23 +18,45 @@
 <meta name="generator" content="Jekyll v3.8.5">
 
 <title>logIn</title>
+<script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 
 </head>
 <body class="text-center">
 	<!-- header -->
-	<%@ include file="/UserMainHeader.jsp"%>
-	<div  id="signup">
+	<%@ include file="/won/loginHeader.jsp"%>
+	<div id="signup">
 		<!-- 위쪽공간 -->
 		<div style="text-align: center;">
 			<!-- 가입방식 선택 -->
 			<table style="width: 100%; text-align: center;">
 				<tr>
 					<td></td>
-					<td style="width:300px;">
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td style="width: 300px;">
+						<form action="" class="form-signin" style="width: 300px;">
+							<!-- 아이디 비밀번호 입력 폼 -->
+							<label for="inputEmail" class="sr-only">Email address</label> 
+							<input type="email" id="inputMid" class="form-control"
+								placeholder="Email address" required autofocus>
+							<div style="height: 3px;"></div> 
+							<label for="inputPassword" class="sr-only">Password</label> 
+							<input type="password" id="inputMpw" class="form-control"
+								placeholder="Password" required>
+							<div style="height: 3px;"></div> 
+							<label for="inputUserName" class="sr-only">UserName</label> 
+							<input type="text" id="inputMname" class="form-control"
+								placeholder="UserName" required>
+						</form> 
 						<!-- 이메일 회원가입 -->
-						<div class="button">
+						<%@ include file="loginEm.jsp" %>
+						<div style="height: 60px; vertical-align: top; padding-top: 10px">
 							<button class="btn btn-lg btn-secondary btn-block" type="button"
-								id="signIn" style="width: 300px; height: 40px;">Sign up</button>
+								id="signup" style="width: 300px;">Sign up</button>
+							<hr>
 						</div>
 					</td>
 					<td></td>
@@ -46,12 +68,12 @@
 						<!-- 구글 계정을 통한 회원가입 -->
 						<div id="gSignInWrapper" class="button">
 							<div id="customBtn" class="customGPlusSignIn">
-								<span class="icon"></span> 
-								<span class="buttonText">Login with Google</span>
+								<span class="icon"></span> <span class="buttonText">
+								Login with Google</span>
 							</div>
 							<script>
-							startAppGG();
-						</script>
+								startAppGG();
+							</script>
 						</div>
 					</td>
 					<td></td>
@@ -61,40 +83,41 @@
 					<td>
 						<!-- 페이스북 로그인 설정 --> <%@ include file="/won/loginFB.jsp"%>
 						<!-- 페이스북 계정을 통한 회원가입 -->
-						<div style="height: 20px;"></div>
-						<div class="fb-login-button" data-width="300px" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+						<div style="height: 20px;"></div> 
+						<input type="button" id="authBtn" value="checking..." 
+						onclick="
+							if(this.value === 'Login with Facebook'){
+								//now logout
+								FB.login(function(res){
+									console.log('login =>',res);
+									checkLoginStatus(res);
+								});
+							}else{
+								//now login
+								FB.logout(function(res){
+									console.log('logout =>',res);
+									checkLoginStatus(res);
+								});
+							}
+						">
 					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<!-- 외부 계정을 통한 회원가입 -->
-						<div class="button">
-							<button class="btn btn-lg btn-primary btn-block" type="button"
-								id="google">OtherLogin1</button>
-						</div>
-						<div class="button">
-							<button class="btn btn-lg btn-primary btn-block" type="button"
-								id="github">OtherLogin2</button>
-						</div>
-					</td>
+					<td style="height: 100px"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td>
 						<div style="height: 150px;">
-							<!-- 외부 로그인 성공시 데이터를 임시로 담아둘 공간 -->
+							<!-- 외부 로그인 성공시 데이터를 담아놨다가 넘겨주는 공간 -->
 							<form id="hidden" action="insertMember.jsp">
-								<input type="text" id="mid" name="mid" class="hidden"> <input
-									type="text" id="mname" name="mname" class="hidden"> <input
-									type="text" id="mprofile" name="mprofile" class="hidden">
+								<input type="text" id="mid" name="mid" class="hidden"><br>
+								<input type="text" id="mpw" name="mpw" class="hidden"><br>
+								<input type="text" id="mname" name="mname" class="hidden"><br>
+								<input type="text" id="mprofile" name="mprofile" class="hidden"><br>
 							</form>
 						</div>
 					</td>
@@ -102,15 +125,7 @@
 				</tr>
 			</table>
 		</div>
-
-
-
-
-
-		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-		</div>
-	<!-- footer -->
-	<%@ include file="/UserMainFooter.jsp"%>
+	</div>
 
 </body>
 </html>

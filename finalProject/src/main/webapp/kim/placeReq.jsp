@@ -100,7 +100,7 @@
 <%@ include file="/UserMainHeader.jsp" %>
 </head>
 <!-- <body style="background: #e5ffeb;"> -->
-<body style="background-image: url('/springProject/resources/IMAGE/placeAdd/bg.jpg2');">
+<body>
 
 <div class="container marketing" style="background-color: rgba(255,255,255,0.8); border-radius: 1.0rem;">
 <div class="col-12 pt-3">
@@ -165,6 +165,7 @@
     
     <input type="submit" class="btn btn-primary">
     <a class="btn btn-sm btn-outline-secondary" href="Tag_Select">태그페이지</a>
+    <a class="btn btn-sm btn-outline-secondary" href="../joe/crawling">크롤링</a>
     </form>
     <p class="pb-1">
   </fieldset>

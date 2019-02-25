@@ -1,4 +1,3 @@
-<!-- 페이스북 로그인을 위한 설정들 입니다 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
@@ -8,13 +7,14 @@
 		/* statusChangeCallback(response); */
 		if (response.status === 'connected') {
 			//로그인 되었을때
+			document.querySelector('#authBtn').value = 'Use Facebook account';
 			FB.api('/me',function(resp) {
 				//mid(이메일)받아오기
 				console.log(resp.name);
-				document.getElementById('mid').value = resp.id;
+				document.getElementById('mid').value = resp.name;
 				//mname받아오기
 				console.log(resp.id);
-				document.getElementById('mname').value = resp.name;
+				document.getElementById('mname').value = resp.id;
 				//mprofile받아오기
 				console.log('https://graph.facebook.com/' + resp.id + '/picture?width=250&height=250>');
 				document.getElementById('mprofile').value = 'https://graph.facebook.com/'
@@ -22,7 +22,7 @@
 			});
 		} else {
 			//로그인 안되어 있을때
-			document.querySelector('#authBtn').value = 'Login';
+			document.querySelector('#authBtn').value = 'Login with Facebook';
 		}
 	}
 
@@ -50,7 +50,7 @@
 
 		FB.getLoginStatus(checkLoginStatus);
 	};
-
+	
 	//페이스북의 SDK를 가져오기
 	// Load the SDK asynchronously 
 	(function(d, s, id) {
@@ -64,3 +64,41 @@
 	}(document, 'script', 'facebook-jssdk'));
 
 </script>
+<style type="text/css">
+/* 사용자 설정 css */
+/* 구글 로그인 버튼 설정 */
+#authBtn {
+	display: inline-block;
+	color: #FFFFFF;
+	width: 300px;
+	height: 40px;
+	border-radius: 5px;
+	border: thin solid #888;
+	white-space: nowrap;
+	vertical-align: top;
+
+	background: url(/springProject/resources/IMAGE/LoginLogo/fbookLogo.png);
+	background-color: #3A559F;
+	background-size: 25px 25px;
+	background-repeat: no-repeat;
+	background-position: 5% 45%;
+	
+	font-size: 16px;
+	font-family: 'Roboto', sans-serif;
+	
+	text-align: right;
+	padding-right: 50px;
+}
+
+
+
+#authBtn:hover {
+	cursor: pointer;
+}
+
+#authBth {
+	display: inline-block;
+	
+}
+
+</style>

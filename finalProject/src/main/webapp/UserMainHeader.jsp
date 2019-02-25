@@ -24,15 +24,15 @@
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/blog.css" />
 <br>
   <div class="container pb-3" style="background: white; border-radius: 1.0rem;">
-  <header class="blog-header py-3">
+  <header class="blog-header py-4 rounded" style="background: linear-gradient(to bottom, #a6bddb, white)">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
-        <a class="text-muted" href="#">Subscribe</a>
+        <a class="text-muted pl-3" href="#">Subscribe</a>
       </div>
       <div class="col-4 text-center">
         <a class="blog-header-logo text-dark" href="#">IT Tour</a>
       </div>
-      <div class="col-4 d-flex justify-content-end align-items-center">
+      <div class="col-4 d-flex justify-content-end align-items-center pr-4">
         <a class="btn btn-sm btn-outline-secondary" href="placeReq_list">admin</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>

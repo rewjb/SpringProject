@@ -275,7 +275,7 @@ public class J_CartController {
 		 System.out.println(asddd4);*/
 		 
 
-         File outputFile = new File("C:\\Users\\user\\git\\SpringProject2\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractions\\"+fileName+".jpg");
+         File outputFile = new File("C:\\Users\\user\\git\\SpringProject2\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
          try {
         	
             URL url = new URL(source);            // 이미지 소스를 url에 넣기

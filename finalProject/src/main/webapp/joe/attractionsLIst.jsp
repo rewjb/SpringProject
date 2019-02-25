@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,7 +8,7 @@
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 		<style type="text/css">
-	.row
+	
 {
    font-family: 'Noto Sans KR', sans-serif;
 }
@@ -16,20 +17,18 @@
 
 <script type="text/javascript">
 
-
-var listCount = 0;
 $(function () {
-	if (listCount ==0) {
+	if (<%=request.getParameter("page") %> == null || <%=request.getParameter("page") %> ==1) {
 		$.ajax({
-			url : "allList",
+			url : "allList?page=" + <%=request.getParameter("page") %>,
 			Type : "POST",
 			success : function(result) {
 					$("#container").append(result);
 			}
 		});
-	}listCount += 1;
+	}
 })
-
+ 
 var arr = new Array();
 arr = ["아시아" , "동남아시아" , "유럽" , "미주" , "남태평양" , "대한민국"];
 
@@ -46,7 +45,6 @@ function continent(event) {
 	var con = event.target;
 	
 	if ($(con).attr("class")=="btn btn-secondary my-2") {
-		
 	
 	$("#city").empty();
 	$("#tag").empty();
@@ -136,8 +134,6 @@ function tagSearch() {
 		}
 	});
 }
-
-
 </script>
 </head>
 <body>
@@ -181,7 +177,17 @@ function tagSearch() {
 	<div class="container marketing" id = "container" >
 	
 	</div>
-		
+	
+
+
 		
 	</body>
 </html>
+<%
+		int tempPage = 1;
+		if(request.getParameter("page") != null){
+			System.out.println("null이니");
+			tempPage = Integer.parseInt(request.getParameter("page"));
+		pageContext.setAttribute("tempPage", tempPage);
+		}
+	%>

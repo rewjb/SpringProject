@@ -44,42 +44,6 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 
-	<bean id="mongoUri" class="com.mongodb.MongoClientURI">
-		<constructor-arg name="uri"
-			value="mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true"></constructor-arg>
-	</bean>
-
-	<bean id="mongoClient" class="com.mongodb.MongoClient">
-		<constructor-arg name="uri" ref="mongoUri"></constructor-arg>
-	</bean>
-
-	<bean id="mongoClientOptions"
-		class="org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean">
-		<property name="connectionsPerHost" value="3" />
-		<property name="connectTimeout" value="1000" />
-		<property name="maxWaitTime" value="1500" />
-		<property name="socketKeepAlive" value="true" />
-	</bean>
-
-	<bean id="mongo"
-		class="org.springframework.data.mongodb.core.MongoClientFactoryBean">
-		<property name="host" value="211.181.190.201" />
-		<property name="port" value="27017" />
-		<property name="mongoClientOptions" ref="mongoClientOptions" />
-	</bean>
-
-	<bean id="simpleMongoDbFactory"
-		class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
-		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="tag" />
-		<constructor-arg name="databaseName" value="tag" />
-	</bean>
-
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg name="mongoDbFactory" ref="simpleMongoDbFactory" />
-	</bean>
-
-
 
 
 </beans>

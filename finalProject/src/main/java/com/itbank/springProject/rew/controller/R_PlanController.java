@@ -19,7 +19,6 @@ import org.springframework.web.servlet.resource.HttpResource;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itbank.springProject.db.Mongo_ShareProjectDAO;
 import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlanDAO;
 import com.itbank.springProject.db.PlanDTO;
@@ -42,9 +41,9 @@ public class R_PlanController {
 	@Qualifier("ShareProjectDAO")
 	private ShareProjectDAO shareProjectDAO;
 
-	@Autowired
-	@Qualifier("Mongo_ShareProjectDAO")
-	Mongo_ShareProjectDAO mongo_ShareProjectDAO;
+//	@Autowired
+//	@Qualifier("Mongo_ShareProjectDAO")
+//	Mongo_ShareProjectDAO mongo_ShareProjectDAO;
 
 	@RequestMapping("rew/insertShareProject")
 	@ResponseBody
@@ -60,7 +59,7 @@ public class R_PlanController {
 			check = "bad";
 		} else {
 			// 공유 성공
-			mongo_ShareProjectDAO.mongoTest(planDAO.selectAllPid(shareProjectDTO));
+//			mongo_ShareProjectDAO.mongoTest(planDAO.selectAllPid(shareProjectDTO));
 
 		}
 		return check;

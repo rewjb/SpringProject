@@ -44,14 +44,14 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 
-	<bean id="mongoUri" class="com.mongodb.MongoClientURI">
-		<constructor-arg name="uri"
-			value="mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true"></constructor-arg>
-	</bean>
+<!-- 	<bean id="mongoUri" class="com.mongodb.MongoClientURI"> -->
+<!-- 		<constructor-arg name="uri" -->
+<!-- 			value="mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true"></constructor-arg> -->
+<!-- 	</bean> -->
 
-	<bean id="mongoClient" class="com.mongodb.MongoClient">
-		<constructor-arg name="uri" ref="mongoUri"></constructor-arg>
-	</bean>
+<!-- 	<bean id="mongoClient" class="com.mongodb.MongoClient"> -->
+<!-- 		<constructor-arg name="uri" ref="mongoUri"></constructor-arg> -->
+<!-- 	</bean> -->
 	
 	
 	

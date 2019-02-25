@@ -21,13 +21,18 @@
    font-family: 'Noto Sans KR', sans-serif;
 }
 	
-	
 	</style>
+
+<c:set var="list" value="${list}" />
 
 	
 	
+<c:choose>	
 	
-	
+<c:when test="${list.size}">
+
+
+</c:when>
 	
 
 <div class="row" style="margin-left: auto; margin-right: auto; padding-left: 70px;">
@@ -49,6 +54,23 @@
 		<!-- /.col-lg-4' -->
 	</c:forEach>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</c:choose>
+
+
 <div>
 	<ul class="pagination pagination-lg">
 		<li class="page-item active"><a class="page-link" href="#"id="firstA">1</a>

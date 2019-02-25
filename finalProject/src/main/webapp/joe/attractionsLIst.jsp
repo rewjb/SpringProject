@@ -31,7 +31,7 @@ $(function () {
  
 var arr = new Array();
 arr = ["아시아" , "동남아시아" , "유럽" , "미주" , "남태평양" , "대한민국"];
-
+  
 var count  = 0;
 $(function () {
 	if (count == 0) {

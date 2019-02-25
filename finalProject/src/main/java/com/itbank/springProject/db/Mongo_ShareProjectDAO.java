@@ -6,6 +6,7 @@ import java.util.List;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,29 +26,24 @@ import com.mongodb.client.MongoDatabase;
 public class Mongo_ShareProjectDAO {
 
 	
+//	@Autowired
+//	@Qualifier("mongoClient")
 	MongoClient mongoClient;
-	MongoDatabase database;
-	
-	public MongoClient getMongoClient() {
-		return mongoClient;
-	}
-
-	public void setMongoClient(MongoClient mongoClient) {
-		this.mongoClient = mongoClient;
-		database = mongoClient.getDatabase("tag");
-	}
 
 	public void mongoTest(List<PlanDTO> sharePidList) {
 		
+		MongoDatabase database = mongoClient.getDatabase("tag");
+
+
 		if (sharePidList.size() > 0) {
-			
+
 			MongoCollection<Document> collectionPlace = database.getCollection("place");
 			MongoCollection<Document> collectionsharePlace = database.getCollection("sharePlace");
 
 			List<Document> condition = new ArrayList<>();
 
 			for (int i = 0; i < sharePidList.size(); i++) {
-				if (sharePidList.get(i).getPid()!=null) {
+				if (sharePidList.get(i).getPid() != null) {
 					condition.add(new Document("id", sharePidList.get(i).getPid()));
 					System.out.println("아이디" + sharePidList.get(i).getPid());
 				}
@@ -68,24 +64,24 @@ public class Mongo_ShareProjectDAO {
 					}
 				}
 			}
-  
+
 			String insertTag = "";
 			for (int i = 0; i < singleTagList.size(); i++) {
-				insertTag += singleTagList.get(i)+"/";
+				insertTag += singleTagList.get(i) + "/";
 			}
-			
-			Document insertDocument = new Document("mid" , sharePidList.get(0).getMid());
+
+			Document insertDocument = new Document("mid", sharePidList.get(0).getMid());
 			insertDocument.append("ptitle", sharePidList.get(0).getPtitle());
 			insertDocument.append("tag", insertTag);
 
 			collectionsharePlace.insertOne(insertDocument);
-			
+
 			MongoCursor<Document> result2 = collectionsharePlace.find().iterator();
-			
+
 			while (result2.hasNext()) {
 				System.out.println(result2.next().toJson());
 			}
-			
+
 		}
 	}
 

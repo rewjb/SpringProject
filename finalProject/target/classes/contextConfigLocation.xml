@@ -45,21 +45,21 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
-
+<!-- 
 	<bean id="mongoUri" class="com.mongodb.MongoClientURI">
 	<constructor-arg name="uri" value="mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true"></constructor-arg>
 	</bean>
-<!-- MongoClientURI uri = new MongoClientURI("mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true"); 0 -->
+MongoClientURI uri = new MongoClientURI("mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true"); 0
 
 	<bean id="mongoClient" class="com.mongodb.MongoClient">
 	<constructor-arg name="uri" ref="mongoUri"></constructor-arg>
 	</bean>
-<!-- MongoClient mongoClient = new MongoClient(uri); -->
+MongoClient mongoClient = new MongoClient(uri);
 
    <bean id="Mongo_ShareProjectDAO" class="com.itbank.springProject.db.Mongo_ShareProjectDAO">
    <property name="mongoClient" ref="mongoClient"></property>
    </bean>
-
+ -->
 
 <!-- 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"> -->
 <!-- 	<constructor-arg name="mongoClient"  ref="mongoClient"/> -->

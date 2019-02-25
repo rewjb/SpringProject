@@ -15,6 +15,13 @@
   	margin-top: auto;
   	margin-bottom: auto;
 }
+
+a:link {text-decoration: none; color: black;}
+a:visited {text-decoration: none; color: black;}
+a:active {text-decoration: none; color: black;}
+a:hover {text-decoration: underline; color: black;}
+
+
 </style>
 
 </head>
@@ -33,7 +40,7 @@
 	</div>
 		<hr>
 		<div class="margin-auto" style="background-color: rgba(255,255,255,0.9); width: 1050px;">
-		<table class="table table-hover">
+		<table class="table table-hover table-striped">
 		  <thead>
 		    <tr class="table-secondary">
 		      <th scope="col" width="10%">No</th>

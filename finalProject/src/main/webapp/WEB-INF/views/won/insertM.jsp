@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>insertMember</title>
 </head>
 <body>
-
+	insertMember 완료
 </body>
 </html>

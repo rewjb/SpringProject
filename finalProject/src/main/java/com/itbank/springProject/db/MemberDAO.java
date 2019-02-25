@@ -14,25 +14,21 @@ public class MemberDAO{
 	
 	@Autowired
 	private SqlSession session; 
-
+	
+	
 	public void insert(MemberDTO dto) {
-		try {
-			session.insert("member.insert", dto);	//member : member.xml 파일의 namespace
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		session.insert("member.insert", dto);	//member : member.xml 파일의 namespace
 	}
 	
 	public void update(MemberDTO dto){
-		try {
-			session.update("member.update", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		session.update("member.update", dto);
 	}
 	
 	public void delete(MemberDTO dto) throws Exception {
 		session.delete("member.delete", dto);
+	}
+	public void delete(String mid) throws Exception {
+		session.delete("member.delete", mid);
 	}
 	
 	public MemberDTO select(MemberDTO dto) throws Exception {	

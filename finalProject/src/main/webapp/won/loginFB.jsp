@@ -7,6 +7,7 @@
 		/* statusChangeCallback(response); */
 		if (response.status === 'connected') {
 			//로그인 되었을때
+			document.querySelector('#authBtn').value = 'Use Facebook account';
 			FB.api('/me',function(resp) {
 				//mid(이메일)받아오기
 				console.log(resp.name);
@@ -21,7 +22,7 @@
 			});
 		} else {
 			//로그인 안되어 있을때
-			document.querySelector('#authBtn').value = 'Login';
+			document.querySelector('#authBtn').value = 'Login with Facebook';
 		}
 	}
 
@@ -49,7 +50,7 @@
 
 		FB.getLoginStatus(checkLoginStatus);
 	};
-
+	
 	//페이스북의 SDK를 가져오기
 	// Load the SDK asynchronously 
 	(function(d, s, id) {
@@ -68,45 +69,36 @@
 /* 구글 로그인 버튼 설정 */
 #authBtn {
 	display: inline-block;
-	background: white;
-	color: #444;
+	color: #FFFFFF;
 	width: 300px;
 	height: 40px;
 	border-radius: 5px;
 	border: thin solid #888;
 	white-space: nowrap;
 	vertical-align: top;
+
+	background: url(/springProject/resources/IMAGE/LoginLogo/fbookLogo.png);
+	background-color: #3A559F;
+	background-size: 25px 25px;
+	background-repeat: no-repeat;
+	background-position: 5% 45%;
+	
+	font-size: 16px;
+	font-family: 'Roboto', sans-serif;
+	
+	text-align: right;
+	padding-right: 50px;
 }
+
+
 
 #authBtn:hover {
 	cursor: pointer;
 }
 
-/* span.icon {
-	background: url(/springProject/resources/IMAGE/LoginLogo/googleLogo.png);
+#authBth {
 	display: inline-block;
-	vertical-align: middle;
-	width: 42px;
-	height: 42px;
-	background-size: 20px 20px;
-	background-repeat: no-repeat;
-	background-position: 00% 50%;
+	
 }
 
-span.buttonText {
-	display: inline-block;
-	vertical-align: middle;
-	padding-left: 42px;
-	padding-right: 42px;
-	font-size: 16px;
-	font-weight: bold;
-	/* Use the Roboto font that is loaded in the <head> */
-	font-family: 'Roboto', sans-serif;
-} */
-
-.button {
-	height: 55px;
-	vertical-align: top;
-	padding-top: 10%;
-}
 </style>

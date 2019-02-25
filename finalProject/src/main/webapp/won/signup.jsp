@@ -19,21 +19,11 @@
 
 <title>logIn</title>
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
-<script type="text/javascript">
-	/* 이메일로 회원가입 */
-	$(function() {
-		$("#signIn").click(function() {
-			$("#mid").$("#hidden").on("submit", function(event) {
-				event.preventDefault();
-				// process form
-			});//end on()
-		})//end click()
-	})//end funcion
-</script>
+
 </head>
 <body class="text-center">
 	<!-- header -->
-	<%@ include file="/UserMainHeader.jsp"%>
+	<%@ include file="/won/loginHeader.jsp"%>
 	<div id="signup">
 		<!-- 위쪽공간 -->
 		<div style="text-align: center;">
@@ -49,16 +39,24 @@
 					<td style="width: 300px;">
 						<form action="" class="form-signin" style="width: 300px;">
 							<!-- 아이디 비밀번호 입력 폼 -->
-							<label for="inputEmail" class="sr-only">Email address</label> <input
-								type="email" id="inputEmail" class="form-control"
-								placeholder="Email address" required autofocus> <label
-								for="inputPassword" class="sr-only">Password</label> <input
-								type="password" id="inputPassword" class="form-control"
+							<label for="inputEmail" class="sr-only">Email address</label> 
+							<input type="email" id="inputMid" class="form-control"
+								placeholder="Email address" required autofocus>
+							<div style="height: 3px;"></div> 
+							<label for="inputPassword" class="sr-only">Password</label> 
+							<input type="password" id="inputMpw" class="form-control"
 								placeholder="Password" required>
-						</form> <!-- 이메일 회원가입 -->
-						<div class="button">
+							<div style="height: 3px;"></div> 
+							<label for="inputUserName" class="sr-only">UserName</label> 
+							<input type="text" id="inputMname" class="form-control"
+								placeholder="UserName" required>
+						</form> 
+						<!-- 이메일 회원가입 -->
+						<%@ include file="loginEm.jsp" %>
+						<div style="height: 60px; vertical-align: top; padding-top: 10px">
 							<button class="btn btn-lg btn-secondary btn-block" type="button"
 								id="signup" style="width: 300px;">Sign up</button>
+							<hr>
 						</div>
 					</td>
 					<td></td>
@@ -70,8 +68,8 @@
 						<!-- 구글 계정을 통한 회원가입 -->
 						<div id="gSignInWrapper" class="button">
 							<div id="customBtn" class="customGPlusSignIn">
-								<span class="icon"></span> <span class="buttonText">Login
-									with Google</span>
+								<span class="icon"></span> <span class="buttonText">
+								Login with Google</span>
 							</div>
 							<script>
 								startAppGG();
@@ -85,9 +83,10 @@
 					<td>
 						<!-- 페이스북 로그인 설정 --> <%@ include file="/won/loginFB.jsp"%>
 						<!-- 페이스북 계정을 통한 회원가입 -->
-						<div style="height: 20px;"></div> <input type="button"
-						id="authBtn" value="checking..." onclick="
-							if(this.value === 'Login'){
+						<div style="height: 20px;"></div> 
+						<input type="button" id="authBtn" value="checking..." 
+						onclick="
+							if(this.value === 'Login with Facebook'){
 								//now logout
 								FB.login(function(res){
 									console.log('login =>',res);
@@ -113,9 +112,10 @@
 					<td></td>
 					<td>
 						<div style="height: 150px;">
-							<!-- 외부 로그인 성공시 데이터를 임시로 담아둘 공간 -->
+							<!-- 외부 로그인 성공시 데이터를 담아놨다가 넘겨주는 공간 -->
 							<form id="hidden" action="insertMember.jsp">
 								<input type="text" id="mid" name="mid" class="hidden"><br>
+								<input type="text" id="mpw" name="mpw" class="hidden"><br>
 								<input type="text" id="mname" name="mname" class="hidden"><br>
 								<input type="text" id="mprofile" name="mprofile" class="hidden"><br>
 							</form>
@@ -125,15 +125,7 @@
 				</tr>
 			</table>
 		</div>
-
-
-
-
-
-		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 	</div>
-	<!-- footer -->
-	<%@ include file="/UserMainFooter.jsp"%>
 
 </body>
 </html>

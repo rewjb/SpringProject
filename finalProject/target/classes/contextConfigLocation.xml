@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+
 	<context:component-scan base-package="com.itbank.springProject.db" />
 	<context:component-scan base-package="com.itbank.springProject.rew.controller" />
 	<context:component-scan base-package="com.itbank.springProject.won.controller" />
 	<context:component-scan base-package="com.itbank.springProject.kim.controller" />
 	<context:component-scan base-package="com.itbank.springProject.joe.controller" />
-
 	<!-- DataSource config -->
 	<context:property-placeholder location="classpath:db.properties" />
 
@@ -39,9 +39,13 @@
 			<!-- 상위는 SQL를 설정한 xml을 등록하는 과정 -->
 		</property>
 	</bean>
-  
+
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
+  
 
 </beans>
+
+
+

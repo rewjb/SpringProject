@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("AttractionsDAO")
-public class AttractionsDAO {
+public class AttractionsDAO {//관광명소 DAO
 	
 	@Autowired
 	private SqlSession session;
@@ -16,12 +16,34 @@ public class AttractionsDAO {
 		return session.selectOne("attractions.select", id);
 	}
 	
-	public void insert(AttractionsDTO dto) {
+	public List<AttractionsDTO> selectTag(String continent) {//대륙을 통한  select문
+		return session.selectList("attractions.selectCon", continent);
+	}
+	
+	public List<AttractionsDTO> selectCity(String city) {//대륙을 통한  select문
+		return session.selectList("attractions.selectCity", city);
+	}
+	
+	public void insert(AttractionsDTO dto) {//최초의 크롤링시 관관명소 insert문
 		session.insert("attractions.insert", dto);
 	}
 	
-	public List<AttractionsDTO> selectAll() {
+	public List<AttractionsDTO> selectAll() {//모든 관광명소 select문
 		return session.selectList("attractions.selectAll");
+	}
+	
+	public  List<AttractionsDTO> selectThree(AttractionsDTO dto) {//대륙 도시 태그 3개조건을 다만족하는 경우의 select문
+		return session.selectList("attractions.selectThree", dto);
+	}
+	
+	public  List<AttractionsDTO> selectSecond(AttractionsDTO dto) {//대륙 도시 2개조건을 만족하는 경우의 select문
+		return session.selectList("attractions.selectSecond", dto);
+		
+	}
+	
+	public  List<AttractionsDTO> selectFirst(AttractionsDTO dto) {//대륙 1개조건을 만족하는 경우의 select문
+		return session.selectList("attractions.selectFirst", dto);
+		
 	}
 	
 }

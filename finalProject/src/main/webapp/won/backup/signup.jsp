@@ -57,7 +57,6 @@
 			       // process form
 			    });
 
-			})//end ajax
 		}, function(error) {
 			alert(JSON.stringify(error, undefined, 2));
 		}); //attachClickHandler()

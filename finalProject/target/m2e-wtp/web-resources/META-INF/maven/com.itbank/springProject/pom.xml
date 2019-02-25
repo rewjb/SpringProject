@@ -14,7 +14,6 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 
-
 	<!--오라클을 위한 셋팅 -->
 	<repositories>
 		<repository>
@@ -35,6 +34,14 @@
 		<repository>
 			<id>codelds</id>
 			<url>http://code.lds.org/nexus/content/groups/main-repo</url>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 	<!--/.오라클을 위한 셋팅 -->
@@ -205,18 +212,67 @@
 			<version>1.8.3</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-<dependency>
-    <groupId>com.googlecode.json-simple</groupId>
-    <artifactId>json-simple</artifactId>
-    <version>1.1.1</version>
-</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
+		<!-- 몽곧 디비 설정 -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>2.1.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-releasetrain</artifactId>
+			<version>Lovelace-M3</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+		<!-- 몽곧 디비 설정 -->
 		
-	<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
-	<dependency>
-	    <groupId>org.mongodb</groupId>
-	    <artifactId>mongo-java-driver</artifactId>
-	    <version>3.7.0</version>
-	</dependency>
+		<!-- 구글비전API -->
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-vision</artifactId>
+			<version>1.59.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
+		<dependency>
+			<groupId> com.google.cloud </groupId>
+			<artifactId>google-cloud-storage</artifactId>
+			<version> 1.59.0 </version>
+		</dependency>
+
+		<!-- Google Translation -->
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-translate</artifactId>
+			<version>1.49.0</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-gson</artifactId>
+            <version>LATEST</version>
+        </dependency>
 
 	</dependencies>
 	<build>

@@ -42,4 +42,9 @@ public class PlanDAO {
 		return session.insert("Plan.deleteAllById", planDTO);
 	}
 	
+	
+	public List<PlanDTO> selectAllPid(ShareProjectDTO shareProjectDTO){
+		return session.selectList("Plan.selectAllPid", shareProjectDTO);
+	}
+	
 }

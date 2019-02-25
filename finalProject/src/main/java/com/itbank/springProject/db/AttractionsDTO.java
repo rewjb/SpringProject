@@ -4,7 +4,7 @@ public class AttractionsDTO {
 	
 	private String continent;// 대륙
 	private String city;// 도시
-	private String id;// 고유아이디
+	private String pid;// 고유아이디
 	private String mainImg;// 메인이미지
 	private String title;// 명소이름
 	private String content;// 내용
@@ -15,12 +15,12 @@ public class AttractionsDTO {
 	private String category;// 태그
 	
 	//매개변수 있는 생성자
-	public AttractionsDTO(String continent, String city, String id, String mainImg, String title, String content,
+	public AttractionsDTO(String continent, String city, String pid, String mainImg, String title, String content,
 			String contentElements, String findWay, String longitude, String latitude, String category) {
 		super();
 		this.continent = continent;
 		this.city = city;
-		this.id = id;
+		this.pid = pid;
 		this.mainImg = mainImg;
 		this.title = title;
 		this.content = content;
@@ -47,11 +47,11 @@ public class AttractionsDTO {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public String getId() {
-		return id;
+	public String getPid() {
+		return pid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
 	public String getMainImg() {
 		return mainImg;

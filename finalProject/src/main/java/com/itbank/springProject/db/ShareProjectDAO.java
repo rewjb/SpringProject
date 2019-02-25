@@ -16,15 +16,8 @@ public class ShareProjectDAO {
 		return session.insert("ShareProject.insertShareProject", shareProjectDTO);
 	}
 	
-	public List<ShareProjectDTO> selectAllShareProjectById(String mid) {
-		
-		List<ShareProjectDTO> list = session.selectList("ShareProject.insertShareProject",mid);
-		
-		for (int i = 0; i < list.size(); i++) {
-			
-		}
-		
-		return null;
+	public List<String> selectAllShareProjectById(String mid) {
+		return session.selectList("ShareProject.selectAllById",mid);
 	}
 
 }

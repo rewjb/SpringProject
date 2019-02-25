@@ -7,7 +7,7 @@
 	AttractionsDTO dto = (AttractionsDTO)request.getAttribute("dto");
 %>
 
-<form id = '<%=dto.getId() %>'>
+<form id = '<%=dto.getPid() %>'>
 	<img src="/springProject/resources/IMAGE/attractionsImg/<%=dto.getMainImg()%>" width="150" height="150"><br>
 	<label><%= dto.getTitle() %></label>
 </form>

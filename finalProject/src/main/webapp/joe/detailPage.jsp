@@ -169,7 +169,7 @@ $(function() {
 })//ready끝
 
 	var time = 0;
-	var form = "1000003978101";
+	var form = "1000000074101";
 	$(function() {
 
 		if (time == 0) {//최초실행시 댓글 리스트 보여주는 조건문
@@ -240,7 +240,7 @@ $(function() {
 				style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;"
 				id="cartTable"></div>
 
-			<input type="hidden" value="1000003978101" name="pid"> <input
+			<input type="hidden" value="1000000074101" name="pid"> <input
 				type="hidden" value="rhkdwo" name="mid">
 
 			<div class="col-md-5" style="margin-left: auto; margin-right: auto;">

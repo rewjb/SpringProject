@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>업데이트 성공</title>
+<title>Insert title here</title>
 </head>
 <body>
-	업데이트 성공
-	dto에 들어온 값을 띄워줘야 함
-	<%@ include file="/won/mypage.jsp" %>
+	회원정보가 삭제되었습니다. 이용해주셔서 감사합니다.
+	<a href="/springProject/won/home">메인화면으로</a>
 </body>
 </html>

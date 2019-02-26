@@ -17,7 +17,8 @@ public class MemberDAO{
 	
 	
 	public void insert(MemberDTO dto) {
-		session.insert("member.insert", dto);	//member : member.xml 파일의 namespace
+		session.insert("member.insert", dto);	
+		//member : member.xml 파일의 namespace
 	}
 	
 	public void update(MemberDTO dto){
@@ -26,9 +27,6 @@ public class MemberDAO{
 	
 	public void delete(MemberDTO dto) throws Exception {
 		session.delete("member.delete", dto);
-	}
-	public void delete(String mid) throws Exception {
-		session.delete("member.delete", mid);
 	}
 	
 	public MemberDTO select(MemberDTO dto) throws Exception {	

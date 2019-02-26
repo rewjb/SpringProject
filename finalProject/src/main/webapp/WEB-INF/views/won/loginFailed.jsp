@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>업데이트 성공</title>
+<title>Insert title here</title>
 </head>
 <body>
-	업데이트 성공
-	dto에 들어온 값을 띄워줘야 함
-	<%@ include file="/won/mypage.jsp" %>
+	비밀번호가 틀립니다
 </body>
 </html>

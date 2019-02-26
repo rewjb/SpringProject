@@ -5,7 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
-
 	<style type="text/css">
 	.row
 {

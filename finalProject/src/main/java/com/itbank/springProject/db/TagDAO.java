@@ -150,11 +150,8 @@ public class TagDAO {
 	        	  String val = cursor.next().toString().replaceAll("\"", "").replaceAll("}", "");
 	        	  String val2 = val.substring(val.indexOf(",")+1).replaceAll(" ", "");
 	        	  String[] valRs = val2.split(":");
-//	              System.out.print(val2.split(":")[0] + "-");
-//	              System.out.println(val2.split(":")[1]);
 	              map.put(valRs[0] + ".jpg", valRs[1]);
 	          }
-	          System.out.println("dmd");
     		
     	}catch (Exception e) {
     		System.out.println(e.getMessage());

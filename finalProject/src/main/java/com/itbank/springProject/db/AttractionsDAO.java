@@ -46,4 +46,8 @@ public class AttractionsDAO {//관광명소 DAO
 		
 	}
 	
+	public AttractionsDTO selectImg(String id) {//이미지를 통한  select문
+		return session.selectOne("attractions.selectImg", id);
+	}
+	
 }

@@ -68,5 +68,9 @@
 		DELETE FROM tablename1 WHERE
 		columnname1 = #{param1}
 	</delete> -->
+	
+	<select id="selectImg" parameterType="String" resultType="attrDTO">
+		SELECT * FROM ATTRACTIONS WHERE MAINIMG = #{value}
+	</select>
 
 </mapper>

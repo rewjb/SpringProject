@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	로그인 성공 메인화면으로 이동합니다.
 </body>
 </html>

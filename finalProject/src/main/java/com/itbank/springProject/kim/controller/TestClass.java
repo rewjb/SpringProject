@@ -1,14 +1,20 @@
 package com.itbank.springProject.kim.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import com.itbank.springProject.db.AttractionsDAO;
+import com.itbank.springProject.db.AttractionsDTO;
 
 public class TestClass {
 
 	public static void main(String[] args) {
 		
-		File file = new File("src/main/webapp/resources/IMAGE/placeAdd/");
-		System.out.println(file.isDirectory());
+		AttractionsDAO dao = new AttractionsDAO();
+		List<AttractionsDTO> list = dao.selectAll();
+		System.out.println(list.size());
 	}
 
 }

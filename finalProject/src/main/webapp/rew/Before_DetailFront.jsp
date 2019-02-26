@@ -6,16 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body>   
  
-<form action="test">
+<form action="DetailPlan">
 <input type="hidden" name="mid" value="temp">
-<input type="submit" value="여행계확짜기로 이동!"> 
+<input type="hidden" name="ptitle" value="안녕">
+<input type="submit" value="여행상세페이지 이동!"> 
 </form>
-
 
 </body> 
 </html>
-
-
-

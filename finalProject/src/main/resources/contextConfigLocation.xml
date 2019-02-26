@@ -43,7 +43,45 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
-  
+
+
+
+	<!-- <bean id="mongoClientOptions" -->
+	<!-- class="org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean"> -->
+	<!-- <property name="connectionsPerHost" value="3" /> -->
+	<!-- <property name="connectTimeout" value="1000" /> -->
+	<!-- <property name="maxWaitTime" value="1500" /> -->
+	<!-- <property name="socketKeepAlive" value="true" /> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="mongo" -->
+	<!-- class="org.springframework.data.mongodb.core.MongoClientFactoryBean"> -->
+	<!-- <property name="host" value="localhost" /> -->
+	<!-- <property name="port" value="27017" /> -->
+	<!-- <property name="mongoClientOptions" ref="mongoClientOptions" /> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="simpleMongoDbFactory" -->
+	<!-- class="org.springframework.data.mongodb.core.SimpleMongoDbFactory"> -->
+	<!-- <constructor-arg name="mongoClient" ref="mongo" /> -->
+	<!-- <constructor-arg name="databaseName" value="groupware" /> -->
+	<!-- </bean> -->
+	
+<!-- 	<bean id="mongo" class="com.mongodb.MongoClient"> -->
+<!-- 	<constructor-arg name="host" value="localhost" ></constructor-arg> -->
+<!-- 	<constructor-arg name="port" value="27017"></constructor-arg> -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean id="simpleMongoDbFactory" -->
+<!-- 	class="org.springframework.data.mongodb.core.SimpleMongoDbFactory"> -->
+<!-- 	<constructor-arg name="mongoClient" ref="mongo" /> -->
+<!-- 	<constructor-arg name="databaseName" value="tag" /> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"> -->
+<!-- 	<constructor-arg name="mongoDbFactory" ref="simpleMongoDbFactory"></constructor-arg> -->
+<!-- 	</bean> -->
+
 
 </beans>
 

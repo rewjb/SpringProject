@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
+import javax.print.Doc;
+
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.eclipse.jdt.internal.compiler.codegen.DoubleCache;
@@ -16,6 +18,7 @@ import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
@@ -24,162 +27,189 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.result.UpdateResult;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
-@Controller
+
+//commentColl.deleteMany(new Document());
+//ArrayList<String> asd = new ArrayList<>();
+//Document tempInsert = new Document();
+//tempInsert.append("pMid", "temp");
+//tempInsert.append("ptitle", "안녕");
+//tempInsert.append("star", null);
+//tempInsert.append("star_join", null);
+//tempInsert.append("tag", null);
+//tempInsert.append("link", asd);
+//commentColl.insertOne(tempInsert);
+//데이터 초기화 주석
+
+@Repository("Mongo_ShareProjectDAO")
 public class Mongo_ShareProjectDAO {
 
-	MongoClient mongoClient = new MongoClient("localhost", 27017);
+	// private MongoTemplate mongoTemplate;
 
-	public void insertHeadComment(List<PlanDTO> sharePidList) {
-		
-		MongoClient mongoClient = new MongoClient("localhost", 27017);
+	private MongoClient mongoClient = new MongoClient("localhost", 27017);
 
-		Mongo_ShareProjectDTO MongoComment = new Mongo_ShareProjectDTO();
+	private MongoDatabase tagDB = mongoClient.getDatabase("tag");
 
-		MongoDatabase tagDB = mongoClient.getDatabase("tag");
+	public MongoCollection<Document> commentColl = tagDB.getCollection("shareProjectComment");
 
-		MongoCollection<Document> commentColl = tagDB.getCollection("shareProjectComment");
+	private int spaceCount = 0;
+
+	// 경로의 저장을 위한 stack
+	private Stack<String> stackID = new Stack<>();
+	private String space;
+
+
+	// HeadCommnet 삽입
+	public Document insertComment(Mongo_ShareProjectDTO MongoComment) {
+
+		List<Document> findOptionList = new ArrayList<>();
+		findOptionList.add(new Document("pMid", MongoComment.getpMid()));
+		findOptionList.add(new Document("ptitle", MongoComment.getPtitle()));
+
+		Document insertDocument = new Document();
+		insertDocument.append("mid", MongoComment.getMid());
+		insertDocument.append("content", MongoComment.getContent());
+		insertDocument.append("reg_date", new Date().toString() );
+		insertDocument.append("link", Arrays.asList());
+		if (MongoComment.getLevel() == 1) {
+			insertDocument.append("star", MongoComment.getStarValue());
+		}
+
+		String path = "link";
+		for (int i = 1; i < MongoComment.getLevel(); i++) {
+			if (i == (MongoComment.getLevel() - 1)) {
+				path += ".$[abcd].link";
+			} else {
+				path += ".$[].link";
+			}
+		}
+		Document insertDoc_path = new Document(path, insertDocument);
 		
-//		commentColl.deleteMany(new Document());
-//		ArrayList<String> asd = new ArrayList<>();
-//		Document tempInsert = new Document();
-//		tempInsert.append("mid", "temp");
-//		tempInsert.append("ptitle", "안녕");
-//		tempInsert.append("star", null);
-//		tempInsert.append("star_join", null);
-//		tempInsert.append("tag", null);
-//		tempInsert.append("link", asd);
-//		commentColl.insertOne(tempInsert);
-//		데이터 초기화 주석
+		UpdateResult result;
 		
-		Date time = new Date();
-		Document insertComment = new Document();
-		insertComment.append("mid", "temp1");
-		insertComment.append("star", 5);
-		insertComment.append("time", time.toString());
-		insertComment.append("comment", "그건 아닌듯..");
-		insertComment.put("link", Arrays.asList());
+		System.out.println(path);
 		
-		Document findCondition1 = new Document("mid","temp");
-		Document findCondition2 = new Document("ptitle","안녕");
-		 
+		if (MongoComment.getLevel() == 1) {
+			
+			System.out.println("첫댓글을 !!");
+			
+			System.out.println(new Document("$and", findOptionList).toJson());
+			System.out.println( new Document("$push", insertDoc_path).toJson());
+			
+			result =  commentColl.updateOne(new Document("$and", findOptionList), new Document("$push", insertDoc_path));
+			
+			MongoCursor<Document> tempResult = commentColl.find(new Document("$and", findOptionList)).iterator();
+			
+			System.out.println("여기 실행되니 ?");
+			
+			Document tempDoc;
+			double tempStar = 0;
+			int tempStar_join = 0;
+
+			while (tempResult.hasNext()) {
+
+				tempDoc = tempResult.next();
+
+				tempStar = tempDoc.get("star", Double.class);
+				tempStar_join = tempDoc.get("star_join", Integer.class);
+			}
+
+			Document starPath = new Document("star",
+					(double) (((int) insertDocument.get("star")) + tempStar * tempStar_join) / (tempStar_join + 1));
+			Document star_joinPath = new Document("star_join", tempStar_join + 1);
+
+			commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", starPath));
+			commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", star_joinPath));
+			
+		} else {
+			System.out.println("답글이네");
+			List<Document> optionList = new ArrayList<>();
+			optionList.add(new Document("abcd.reg_date", MongoComment.getDistinction().split("&&")[1]));
+			UpdateOptions options = new UpdateOptions().arrayFilters(optionList);
+			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$push", insertDoc_path), options);
+		}
+		
+		if (result.getMatchedCount()>0) {
+			return insertDocument;
+		}else {
+			return null;
+		}
+		
+		
+	}
+	// ...HeadCommnet 삽입
+
+	// 전부 선택하는 메서드
+	public List<Document>  selectAll(Mongo_ShareProjectDTO mongoDTO) {
+		
+		Document findCondition1 = new Document("pMid", mongoDTO.getpMid() );
+		Document findCondition2 = new Document("ptitle", mongoDTO.getPtitle());
+
 		ArrayList<Document> conditionList = new ArrayList<>();
 		conditionList.add(findCondition1);
 		conditionList.add(findCondition2);
 		
+		MongoCursor<Document> cursor =  commentColl.find(new Document("$and", conditionList)).iterator();
 		
-		MongoCursor<Document> tempResult  = commentColl.find(new Document("$and",conditionList)).iterator();
-		Document tempDoc;
-		double tempStar = 0;
-		int tempStar_join = 0;
-		
-		while (tempResult.hasNext()) {
-			
-			tempDoc = tempResult.next();
-			
-			tempStar =  tempDoc.get("star", Double.class);
-			tempStar_join = tempDoc.get("star_join",Integer.class);
-		}
-		
-		Document starPath=  new Document("star", (double)(((int)insertComment.get("star"))+tempStar*tempStar_join)/(tempStar_join+1));
-		Document star_joinPath=  new Document("star_join", tempStar_join+1);
-		
-		commentColl.updateOne(new Document("$and",conditionList) , new Document("$set", starPath));
-		commentColl.updateOne(new Document("$and",conditionList) , new Document("$set", star_joinPath));
-		
-//		Document pathCondition =  new Document("link.$[].link.$[abcd].link", new Document("pid","doc1_1_1"));
-		Document commentPath=  new Document("link", insertComment);
-		commentColl.updateOne(new Document("$and",conditionList) , new Document("$push", commentPath));
-		
-		MongoCursor<Document> result = commentColl.find().iterator();
-		while (result.hasNext()) {
-			System.out.println(result.next().toJson());
-		}
-
+		List<Document> list = new ArrayList<>();
+		readAllComment(cursor.next() , list);
+		return list;
 	}
+	// ...전부 선택하는 메서드
 
-	Mongo_ShareProjectDAO() {
-		
-		MongoClient mongoClient = new MongoClient("localhost", 27017);
-
-		Mongo_ShareProjectDTO MongoComment = new Mongo_ShareProjectDTO();
-
-		MongoDatabase tagDB = mongoClient.getDatabase("tag");
-
-		MongoCollection<Document> commentColl = tagDB.getCollection("shareProjectComment");
-		
-		MongoCursor<Document> result = commentColl.find().iterator();
-		
-		Document sad ;
-		while (result.hasNext()) {
-			
-			sad = result.next();
-			
-			System.out.println(sad.toJson());
-			
-			selectAll(sad);
-		}
-
-	}
-	
-	Document field;
-
-	int spaceCount = 0;
-
-	String space;
-
-	Stack<String> stackID = new Stack<>();
-	
-	ArrayList<Document> totalCommentList = new ArrayList<>();
-	
-	private void selectAll(Document result) {
+	// 모든 댓글을 읽는 메서드! = > 전부 선택하는 메서드와 쌍을 이룬다.
+	private void readAllComment(Document result , List<Document> totalCommentList) {
 		++spaceCount;
-		
+
 		List<Document> list;
-		
+
 		list = (List<Document>) result.get("link");
 
-		for (int i = 0; i < list.size(); i++) {
+		if (list != null) {
 
-			System.out.println();
+			for (int i = 0; i < list.size(); i++) {
 
-			space = "";
-			for (int j = 0; j < spaceCount; j++) {
-				space += "\t";
-			}
+				System.out.println();
 
-			stackID.push((String) list.get(i).get("mid"));
-			for (int j = 0; j < stackID.size(); j++) {
-				System.out.print(stackID.get(j) + "/");
-			}
-			
-			System.out.println();
-			System.out.println("------------------------------------------------");
+				space = "";
+				for (int j = 0; j < spaceCount; j++) {
+					space += "\t";
+				}
 
-			System.out.println(space + "mid = " + list.get(i).get("mid"));
-			System.out.println(space + "star = " + list.get(i).get("star"));
-			System.out.println(space + "content = " + list.get(i).get("comment"));
-			System.out.println(space + "time = " + list.get(i).get("time"));
-			
-			
-//			totalCommentList.add(e);
-			
-			selectAll(list.get(i));
+				stackID.push((String) list.get(i).get("mid") + "&&" + (String) list.get(i).get("reg_date"));
+				System.out.print("구분값 = " + stackID.get(stackID.size() - 1) + "/ 레벨 = " + spaceCount);
 
-			if (stackID.size() != 0) {
-				stackID.pop();
+				System.out.println();
+				System.out.println("------------------------------------------------");
+
+				System.out.println(space + "mid = " + list.get(i).get("mid"));
+				System.out.println(space + "star = " + list.get(i).get("star"));
+				System.out.println(space + "content = " + list.get(i).get("content"));
+				System.out.println(space + "time = " + list.get(i).get("reg_date"));
+
+				list.get(i).append("level", spaceCount);
+				list.get(i).append("distinction", stackID.get(stackID.size() - 1));
+
+				totalCommentList.add(list.get(i));
+
+				// totalCommentList.add(e);
+
+				readAllComment(list.get(i),totalCommentList);
+
+				if (stackID.size() != 0) {
+					stackID.pop();
+				}
 			}
 		}
 		--spaceCount;
 	}
-	
-	public static void main(String[] args) {
-		new Mongo_ShareProjectDAO();
-	}
+	// 모든 댓글을 읽는 메서드! = > 전부 선택하는 메서드와 쌍을 이룬다.
 
 }

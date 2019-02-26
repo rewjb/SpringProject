@@ -33,7 +33,7 @@
         <a class="blog-header-logo text-dark" href="#">IT Tour</a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
-        <a class="btn btn-sm btn-outline-secondary" href="placeReq_list">admin</a>
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
       </div>
@@ -70,7 +70,7 @@
          관광명소 신청
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
-      <a class="dropdown-item" href="placeReq.jsp">명소 신청</a>
+      <a class="dropdown-item" href="/springProject/kim/placeReq.jsp">명소 신청</a>
       <a class="dropdown-item" href="#">Dropdown link</a>
     </div>
   </div>

@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>업데이트 성공</title>
 </head>
 <body>
-
+	업데이트 성공
+	dto에 들어온 값을 띄워줘야 함
+	<%@ include file="/won/mypage.jsp" %>
 </body>
 </html>

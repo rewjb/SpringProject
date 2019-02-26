@@ -43,7 +43,7 @@ li{padding-top: 1rem;}
 
 body {
   background: #007bff;
-  background: linear-gradient(to right, #0062E6, #84ceff);
+  background: linear-gradient(to bottom, #70a6ff, #d8e7ff);
 }
 
 .card-signin {

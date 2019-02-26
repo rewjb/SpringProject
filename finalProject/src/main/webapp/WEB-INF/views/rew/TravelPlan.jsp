@@ -1281,10 +1281,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 	   }else {
 		   
        }
-	
-	  
-	   
-	   
 	   
 	   if (back_latitude=='' && back_longitude=='') {
 		   

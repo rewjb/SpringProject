@@ -15,11 +15,11 @@
 <%
   ArrayList list2 = (ArrayList)request.getAttribute("list");
 	int tempPage = 0;
-	if ( request.getAttribute("page") == null ) {
+	if ( Integer.valueOf((String)request.getAttribute("page")) == 0 ) {
 		System.out.println(request.getAttribute("page") + "null일때");
 		tempPage = 1;
 	} else {
-		System.out.println(request.getParameter("page") + "null아닐때");
+		System.out.println(request.getAttribute("page") + "null아닐때");
 		tempPage = Integer.valueOf((String)request.getAttribute("page"));
 	}
 	
@@ -145,26 +145,25 @@
 
 <script type="text/javascript">
 
+
+
 function first() {
-	
-	
 	$.ajax({
 		url : "firstButton?page=" + $("#firstA").text(),
 		Type : "POST",
 		success : function(result) {
-			
-			
 		}
 	});
 }
+     
 
 function third() {
-	
-	
+	alert("안녕");
 	$.ajax({
 		url : "thirdButton?page=" + $("#firstC").text(),
 		Type : "POST",
 		success : function(result) {
+			
 		}
 	});
 }
@@ -174,12 +173,14 @@ function third() {
 			var secondBtn = document.getElementById("firstB");
 			var thirdBtn = document.getElementById("firstC");
 			
-			var page = <%=tempPage %>;
 			
 			
 	<%if(list2.size() == 0){
 		
 	}else{%>
+	
+	
+	page = <%= tempPage%>
 	
 	console.log("0");
 			secondBtn.innerHTML = page; 

@@ -180,7 +180,10 @@ public class J_CartController {
 	                        dto.setLongitude((String)jo.get("좌표(경도)"));
 	                        dto.setCategory((String)jo.get("태그"));
 	                        
-	                        attractionsDAO.insert(dto);
+	                     
+	                        if ( imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4])==0) {
+	                        	attractionsDAO.insert(dto);
+							}
 	                        
 	                        System.out.println(dto.getContinent());
 	                        System.out.println(dto.getCity());
@@ -198,7 +201,6 @@ public class J_CartController {
 	                        System.out.println(jo.get("메인이미지").toString());
 	                        
 	                        
-//	                        imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4]);
 	                     }//길찾기 값이 존재할때만 db저장 및 이미지저장
 
 	               }
@@ -243,22 +245,26 @@ public class J_CartController {
 	      return buffer;
 	   }
 	
-	 private void imageSave(String source, String fileName) {
+	 private int imageSave(String source, String fileName) {
 		 
 
+		 int check = 0;
+		 
          File outputFile = new File("C:\\Users\\user\\git\\SpringProject2\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
          try {
-        	
+        	if (outputFile.isFile()) {
+				check +=1;
+			}else{
             URL url = new URL(source);            // 이미지 소스를 url에 넣기
             BufferedImage imgBuffer = ImageIO.read(url);
             // 해당  소스를 읽어오기
             ImageIO.write(imgBuffer, "jpg", outputFile);
-            
+			}
 
          } catch (Exception e) {
             e.printStackTrace();
          }
-
+         	return check;
       }   // imageSave() : 메서드 종료
 	
 }

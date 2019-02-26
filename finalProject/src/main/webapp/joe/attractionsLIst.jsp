@@ -19,18 +19,16 @@
 
  var count = 0;
 $(function () {
-// 		alert($('[name = tag]').lenght);
-// 		alert($('[name = 1]').lenght);
 	if (count==0) {
+		alert("뭐하니");
 		$.ajax({ 
-			url : "allList",
+			url : "allList?page=0",
 			Type : "POST",
 			success : function(result) {
 					$("#container").append(result);
 			}
 		});
 	}count += 1;
-	
 })
  
 var arr = new Array();
@@ -180,9 +178,6 @@ function tagSearch() {
 	<div class="container marketing" id = "container" >
 	
 	</div>
-	
-
-
 		
 	</body>
 </html>

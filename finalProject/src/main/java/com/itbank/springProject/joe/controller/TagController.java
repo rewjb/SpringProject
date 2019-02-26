@@ -31,22 +31,15 @@ public class TagController {
 	}
 	
 	@RequestMapping("joe/tagCity")
-	public String tagCity(@RequestParam("tag") String city , Model model , @RequestParam("page") String page) {
-		if (page !=null) {
-			page = "0";
-		}
-		model.addAttribute("page", page);
+	public String tagCity(@RequestParam("tag") String city , Model model ) {
+		
 		model.addAttribute("list", attractionsDAO.selectCity(city));
 		
 		return "joe/tagCity";
 	}
 	
 	@RequestMapping("joe/attList")
-	public String attList(AttractionsDTO attractionsDTO , Model model , @RequestParam("page") String page ) {
-		if (page !=null) {
-			page = "0";
-		}
-		model.addAttribute("page", page);
+	public String attList(AttractionsDTO attractionsDTO , Model model  ) {
 		
 		if (attractionsDTO.getContinent() != "" && attractionsDTO.getCity() != "" && attractionsDTO.getCategory() != "" ) {
 			System.out.println("3가지 ");
@@ -65,7 +58,10 @@ public class TagController {
 	}
 	
 	@RequestMapping("joe/allList")
-	public String allList(Model model) {
+	public String allList(Model model ,@RequestParam("page") String page) {
+		System.out.println("넘어왔니?????");
+		System.out.println(page);
+		model.addAttribute("page", page);
 		model.addAttribute("list", attractionsDAO.selectAll());
 		return "joe/attList";
 	}
@@ -73,13 +69,14 @@ public class TagController {
 	@RequestMapping("joe/firstButton")
 	public String firstButton(Model model ,@RequestParam("page") String page) {
 	
+		System.out.println("첫번째 넘어왔니");
 		model.addAttribute("page", page);
 		
 		return "joe/attList";
 	}
 	@RequestMapping("joe/thirdButton")
 	public String thirdButton(Model model ,@RequestParam("page") String page) {
-		
+		System.out.println("세번째 넘어왔니");
 		model.addAttribute("page", page);
 		
 		return "joe/attList";

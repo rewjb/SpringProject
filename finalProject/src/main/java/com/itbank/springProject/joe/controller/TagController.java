@@ -50,7 +50,6 @@ public class TagController {
 			model.addAttribute("list", attractionsDAO.selectFirst(attractionsDTO)) ;
 		}
 		
-		
 			System.out.println("태그"+attractionsDTO.getCategory());
 			System.out.println("도시"+attractionsDTO.getCity());
 			System.out.println("대륙"+attractionsDTO.getContinent());
@@ -81,7 +80,5 @@ public class TagController {
 		
 		return "joe/attList";
 	}
-	
-	
 	
 }

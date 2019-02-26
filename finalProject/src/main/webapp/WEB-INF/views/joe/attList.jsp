@@ -132,11 +132,11 @@
 
 	<div>
 	<ul class="pagination pagination-lg">
-		<li class="page-item active"><a class="page-link" id="firstA" onclick="first">1</a>
+		<li class="page-item active"><a class="page-link" id="firstA" onclick="first()">1</a>
 		</li>
-		<li class="page-item"><button class="page-link"  id="firstB" >2</button>>
+		<li class="page-item"><button class="page-link"  id="firstB" >2</button>
 		</li>
-		<li class="page-item"><button class="page-link"  id="firstC" onclick="third">3</button>>
+		<li class="page-item"><button class="page-link"  id="firstC" onclick="third()">3</button>
 		</li>
 	</ul>
 </div>

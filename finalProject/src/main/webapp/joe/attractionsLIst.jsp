@@ -8,19 +8,18 @@
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 		<style type="text/css">
-	
 {
    font-family: 'Noto Sans KR', sans-serif;
 }
-	
 	</style>
 
 <script type="text/javascript">
 
  var count = 0;
 $(function () {
+// 		alert($('[name = tag]').lenght);
+// 		alert($('[name = 1]').lenght);
 	if (count==0) {
-		alert("뭐하니");
 		$.ajax({ 
 			url : "allList?page=0",
 			Type : "POST",
@@ -28,7 +27,7 @@ $(function () {
 					$("#container").append(result);
 			}
 		});
-	}count += 1;
+	}count +=1;
 })
  
 var arr = new Array();
@@ -42,7 +41,7 @@ $(function () {
 		}
 	}count +=1
 })
-    
+
 function continent(event) {
 	var con = event.target;
 	if ($(con).attr("class")=="btn btn-secondary my-2") {
@@ -138,7 +137,7 @@ function tagSearch() {
 </script>
 </head>
 <body>
-	<jsp:include page="/UserMainHeader.jsp" />
+	<%@ include file="/UserMainHeader.jsp"%>
 	<div class = "container marketing">
 	<nav class="navbar navbar-dark bg-dark"> 
 	<button style="margin-left: 0;"  class="navbar-toggler" type="button" data-toggle="collapse"
@@ -178,6 +177,9 @@ function tagSearch() {
 	<div class="container marketing" id = "container" >
 	
 	</div>
+	
+
+
 		
 	</body>
 </html>

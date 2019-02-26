@@ -884,6 +884,30 @@ $('#loading').css('left',document.body.clientHeight/2);
 				function finish_MakePlan(button) {
 
 					if (button.getAttribute('alt') == 'save') {
+						
+						var temp = $('td[alt=Project-Content]');
+
+						alert(temp.length);
+						
+						if (temp.length == 0) {
+							
+							var component_text = '<tr>'
+								+ '<td alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">'
+								+ $('#MakePlan').val() + '</td>' + '</tr>';
+						//생설될 태그 컴포넌트 미리 제작
+
+						$('#MakePlan').val('');
+						$('#cancel_button').click();
+						$('#PlanName').text('');
+						// 모달을 취소하며 input의 value를 ''로 대체
+
+						var component = $(component_text);
+
+						$('#Project-Container').prepend(component);
+							
+							
+						}
+						
 
 						if ($('#PlanName').text() == '사용이 가능한 이름입니다.') {
 							// 설명 : 저장을 할 수 있는 if문 내부!

@@ -31,10 +31,8 @@ public class mongoDB_delete {
 
 	public mongoDB_delete() {
 
-		MongoClientURI uri = new MongoClientURI(
-				    "mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true");
 
-		MongoClient mongoClient = new MongoClient(uri);
+		MongoClient mongoClient = new MongoClient("localhost",27017);
 		MongoDatabase database = mongoClient.getDatabase("test");
 
 		MongoCollection<Document> collection = database.getCollection("test2");

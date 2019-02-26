@@ -39,7 +39,7 @@
 <c:when test="${tempPage eq 0 or tempPage eq 1}">
 
 <c:choose>
-
+  
 <c:when test="${fn:length(list) le 12}"><!-- ge   =   <= -->
 	<c:forEach items="${list}" var="list">
 		<div class="col-lg-4">

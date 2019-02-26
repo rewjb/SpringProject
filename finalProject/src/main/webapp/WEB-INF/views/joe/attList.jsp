@@ -15,16 +15,16 @@
 <%
   ArrayList list2 = (ArrayList)request.getAttribute("list");
 	int tempPage = 0;
-	if (request.getParameter("page") == null) {
-		System.out.println(request.getParameter("page"));
+	if ( request.getAttribute("page") == null ) {
+		System.out.println(request.getAttribute("page") + "null일때");
 		tempPage = 1;
 	} else {
-		System.out.println(request.getParameter("page"));
-		tempPage = Integer.parseInt(request.getParameter("page"));
+		System.out.println(request.getParameter("page") + "null아닐때");
+		tempPage = Integer.valueOf((String)request.getAttribute("page"));
 	}
 	
 	pageContext.setAttribute("tempPage", tempPage);
-	System.out.println(tempPage);
+	System.out.println("temp체크"+ tempPage);
 
 %>
 
@@ -44,7 +44,7 @@
 	<c:forEach items="${list}" var="list">
 		<div class="col-lg-4">
 			<a href="/springProject/joe/detailPage.jsp"><img style="border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; bor"
-				src="/springProject/resources/IMAGE/attractions/${list.mainImg}"
+				src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
 				width="300px" height="250px"></a>
 				<table>
 					<tr style="width: 300px;">
@@ -86,7 +86,7 @@
 			<c:forEach begin="${((tempPage-1)*12)+1 }" end="${tempPage*12}" items="${list}" var="list">
 				<div class="col-lg-4">
 					<a href="/springProject/joe/detailPage.jsp"><img style="border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; bor"
-						src="/springProject/resources/IMAGE/attractions/${list.mainImg}"
+						src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
 						width="300px" height="250px"></a>
 						<table>
 							<tr style="width: 300px;">
@@ -105,7 +105,7 @@
 				<c:forEach begin="${(tempPage-1)*10 }" end="${(tempPage*12) + fn:length(list) % 12 }" items="${list}" var="list">
 				<div class="col-lg-4">
 					<a href="/springProject/joe/detailPage.jsp"><img style="border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; bor"
-						src="/springProject/resources/IMAGE/attractions/${list.mainImg}"
+						src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
 						width="300px" height="250px"></a>
 						<table>
 							<tr style="width: 300px;">
@@ -132,11 +132,11 @@
 
 	<div>
 	<ul class="pagination pagination-lg">
-		<li class="page-item active"><a class="page-link" id="firstA">1</a>
+		<li class="page-item active"><a class="page-link" id="firstA" onclick="first">1</a>
 		</li>
-		<li class="page-item"><a class="page-link"  id="firstB">2</a>
+		<li class="page-item"><button class="page-link"  id="firstB" >2</button>>
 		</li>
-		<li class="page-item"><a class="page-link"  id="firstC">3</a>
+		<li class="page-item"><button class="page-link"  id="firstC" onclick="third">3</button>>
 		</li>
 	</ul>
 </div>
@@ -144,6 +144,31 @@
 
 
 <script type="text/javascript">
+
+function first() {
+	
+	
+	$.ajax({
+		url : "firstButton?page=" + $("#firstA").text(),
+		Type : "POST",
+		success : function(result) {
+			
+			
+		}
+	});
+}
+
+function third() {
+	
+	
+	$.ajax({
+		url : "thirdButton?page=" + $("#firstC").text(),
+		Type : "POST",
+		success : function(result) {
+		}
+	});
+}
+
 		$( function() {
 			var firstBtn = document.getElementById("firstA");
 			var secondBtn = document.getElementById("firstB");
@@ -164,13 +189,13 @@
 			}else{
 				console.log("2");
 				firstBtn.innerHTML = page-1;
-				firstBtn.setAttribute("href","attractionsLIst.jsp?page=" +'<%= (tempPage-1) %>');
+<%-- 				firstBtn.setAttribute("href","attractionsLIst.jsp?page=" +'<%= (tempPage-1) %>'); --%>
 			}
 			
 		if (page < <%= list2.size()/12 %> + <%= list2.size()%12 %> && page <= <%= list2.size()/12 %>){
 			console.log("3");
 				thirdBtn.innerHTML = page+1;
-				thirdBtn.setAttribute("href","attractionsLIst.jsp?page="+ '<%=(tempPage+1) %>');
+<%-- 				thirdBtn.setAttribute("href","attractionsLIst.jsp?page="+ '<%=(tempPage+1) %>'); --%>
 		}else{
 			console.log("4");
 				thirdBtn.innerHTML = "";

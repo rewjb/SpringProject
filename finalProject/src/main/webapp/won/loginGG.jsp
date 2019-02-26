@@ -4,7 +4,6 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto"
 	rel="stylesheet" type="text/css">
 <script src="https://apis.google.com/js/api:client.js"></script>
-<script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 <script type="text/javascript">
 	/* 구글 계정 연동하여 회원가입 */
 	var googleUser = {};
@@ -48,16 +47,7 @@
 			alert(JSON.stringify(error, undefined, 2));
 		}); //attachClickHandler()
 	}//end function attachSignin() 
-
-	/* 이메일로 회원가입 */
-	$(function() {
-		$("#signIn").click(function() {
-			 $("#hidden").on("submit", function(event) {
-			       event.preventDefault();
-			       // process form
-			    });//end on()
-		})//end click()
-	})//end funcion
+	
 </script>
 <style type="text/css">
 /* 사용자 설정 css */
@@ -79,7 +69,7 @@
 }
 
 span.icon {
-	background: url(/test1/resources/IMAGE/LoginLogo/googleLogo.png);
+	background: url(/springProject/resources/IMAGE/LoginLogo/googleLogo.png);
 	display: inline-block;
 	vertical-align: middle;
 	width: 42px;

@@ -23,12 +23,7 @@ public class testmongo2 {
 	// 아이디1000000354101
 	public static void main(String[] args) {
 
-		MongoClientURI uri = new MongoClientURI(
-				"mongodb+srv://rew:1234@rewjubinmongo-g7aac.mongodb.net/test?retryWrites=true");
-		
-		
-
-		MongoClient mongoClient = new MongoClient(uri);
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
 		MongoDatabase data =  mongoClient.getDatabase("tag");
 		
 //		MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, "tag");

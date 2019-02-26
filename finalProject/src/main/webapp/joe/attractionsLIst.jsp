@@ -142,7 +142,7 @@ function tagSearch() {
 </script>
 </head>
 <body>
-	<%@ include file="/UserMainHeader.jsp"%>
+	<jsp:include page="/UserMainHeader.jsp" />
 	<div class = "container marketing">
 	<nav class="navbar navbar-dark bg-dark"> 
 	<button style="margin-left: 0;"  class="navbar-toggler" type="button" data-toggle="collapse"

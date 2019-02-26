@@ -112,7 +112,7 @@
 	    <div class="card border-secondary mb-3 margin-auto" style="max-width: 50rem;">
 		  <div class="card-header">이미지 등록</div>
 		  <div class="card-body margin-auto">
-		    <p class="card-text">
+		    <p class="card-text"></p>
 		    <div class="file_input">
 		   		<label>
 		    	<img src="/springProject/resources/IMAGE/placeAdd/imgAdd.png" width="100" height="100" id="picture">	   		
@@ -122,7 +122,6 @@
 				<input title="File Route" id="file_route1" type="hidden" 
 					readonly="readonly" onchange="img()">				
 		    </div>
-		    </p>
 		  </div>
 		</div>
 		<hr>

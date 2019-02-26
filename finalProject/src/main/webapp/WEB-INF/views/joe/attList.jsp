@@ -13,7 +13,7 @@
 // 	}
 	
   	ArrayList list = (ArrayList)request.getAttribute("list");
- 	System.out.println(list.size()) ;
+ 	System.out.println(list.size());
 %>
 	<style type="text/css">
 	.row
@@ -34,7 +34,7 @@
 	<c:forEach  items="${list}" var="list">
 		<div class="col-lg-4">
 			<a href="/springProject/joe/detailPage.jsp"><img style="border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; bor"
-				src="/springProject/resources/IMAGE/attractions/${list.mainImg}"
+				src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
 				width="300px" height="250px"></a>
 				<table>
 					<tr style="width: 300px;">

@@ -42,7 +42,7 @@ $(function () {
 		}
 	}count +=1
 })
-  
+    
 function continent(event) {
 	var con = event.target;
 	

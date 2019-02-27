@@ -64,6 +64,115 @@ public class Mongo_ShareProjectDAO {
 	// 경로의 저장을 위한 stack
 	private Stack<String> stackID = new Stack<>();
 	private String space;
+	
+	
+	
+	//댓글 삭제하는 메서드
+	public String deleteComment(Mongo_ShareProjectDTO MongoComment , String dist){
+		
+		UpdateResult result;
+		
+//	    System.out.println("DAO로 넘어온 DTO 값="+MongoComment);
+	    
+	    List<Document> findOptionList = new ArrayList<>();
+		findOptionList.add(new Document("pMid", MongoComment.getpMid()));
+		findOptionList.add(new Document("ptitle", MongoComment.getPtitle()));
+		
+		String path = "link";
+		for (int i = 1; i < MongoComment.getLevel(); i++) {
+			if (i == (MongoComment.getLevel() - 1)) {
+				path += ".$[abcd].link";
+			} else {
+				path += ".$[].link";
+			}
+		}
+		
+//		System.out.println(path);
+		Document updateDocument = new Document();
+		updateDocument.append( path , new Document("reg_date" , dist.split("&&")[1]));
+		
+//		System.out.println(updateDocument.toJson());
+		
+		Document temp = new Document();
+		temp.append(path, updateDocument);
+		
+//	    Document temp=  new Document("link.$[].link.$[abcd].link", new Document("pid","doc1_1_1"));
+//	    Document temp2 = new Document("abcd.pid","doc1_1");
+		
+		List<Document> optionList = new ArrayList<>();
+		optionList.add(new Document("abcd.reg_date", MongoComment.getDistinction().split("&&")[1]));
+		UpdateOptions options = new UpdateOptions().arrayFilters(optionList);
+		
+		if (MongoComment.getLevel()==1) {
+			path="link";
+			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$pull", updateDocument));
+		}else {
+			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$pull", updateDocument), options);
+		}
+		
+		String resultString = "no";
+		
+		if (result.getModifiedCount()>0) {
+			resultString="yes";
+		}
+		
+		return resultString;
+	}
+	//...댓글 삭제하는 메서드
+	
+	// 대댓글 수정하는 메서드 
+	public String updateComment(Mongo_ShareProjectDTO MongoComment){
+		
+		UpdateResult result;
+		
+//	    System.out.println("DAO로 넘어온 DTO 값="+MongoComment);
+	    
+	    List<Document> findOptionList = new ArrayList<>();
+		findOptionList.add(new Document("pMid", MongoComment.getpMid()));
+		findOptionList.add(new Document("ptitle", MongoComment.getPtitle()));
+		
+		
+		
+		String path = "link";
+		for (int i = 0; i < MongoComment.getLevel(); i++) {
+			if (i == (MongoComment.getLevel() - 1)) {
+				path += ".$[abcd].content";
+			} else {
+				path += ".$[].link";
+			}
+		}
+		
+//		System.out.println(path);
+		Document updateDocument = new Document();
+		updateDocument.append( path , MongoComment.getContent());
+		
+//		System.out.println(updateDocument.toJson());
+		
+		Document temp = new Document();
+		temp.append(path, updateDocument);
+		
+//		System.out.println("답글이네");
+		List<Document> optionList = new ArrayList<>();
+		optionList.add(new Document("abcd.reg_date", MongoComment.getDistinction().split("&&")[1]));
+		UpdateOptions options = new UpdateOptions().arrayFilters(optionList);
+		
+		if (MongoComment.getLevel()==1) {
+			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", updateDocument), options);
+		}else {
+			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", updateDocument), options);
+		}
+		
+		String resultString = "no";
+		
+		if (result.getModifiedCount()>0) {
+			resultString="yes";
+		}
+		
+		return resultString;
+	}
+	// ...대댓글 수정하는 메서드 
+	
+	
 
 
 	// HeadCommnet 삽입
@@ -94,20 +203,20 @@ public class Mongo_ShareProjectDAO {
 		
 		UpdateResult result;
 		
-		System.out.println(path);
+//		System.out.println(path);
 		
 		if (MongoComment.getLevel() == 1) {
 			
-			System.out.println("첫댓글을 !!");
+//			System.out.println("첫댓글을 !!");
 			
-			System.out.println(new Document("$and", findOptionList).toJson());
-			System.out.println( new Document("$push", insertDoc_path).toJson());
+//			System.out.println(new Document("$and", findOptionList).toJson());
+//			System.out.println( new Document("$push", insertDoc_path).toJson());
 			
 			result =  commentColl.updateOne(new Document("$and", findOptionList), new Document("$push", insertDoc_path));
 			
 			MongoCursor<Document> tempResult = commentColl.find(new Document("$and", findOptionList)).iterator();
 			
-			System.out.println("여기 실행되니 ?");
+//			System.out.println("여기 실행되니 ?");
 			
 			Document tempDoc;
 			double tempStar = 0;
@@ -129,7 +238,7 @@ public class Mongo_ShareProjectDAO {
 			commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", star_joinPath));
 			
 		} else {
-			System.out.println("답글이네");
+//			System.out.println("답글이네");
 			List<Document> optionList = new ArrayList<>();
 			optionList.add(new Document("abcd.reg_date", MongoComment.getDistinction().split("&&")[1]));
 			UpdateOptions options = new UpdateOptions().arrayFilters(optionList);
@@ -168,6 +277,8 @@ public class Mongo_ShareProjectDAO {
 	private void readAllComment(Document result , List<Document> totalCommentList) {
 		++spaceCount;
 
+		int tempI=0;
+		
 		List<Document> list;
 
 		list = (List<Document>) result.get("link");
@@ -176,32 +287,34 @@ public class Mongo_ShareProjectDAO {
 
 			for (int i = 0; i < list.size(); i++) {
 
-				System.out.println();
+				tempI = list.size()-i-1;
+				
+//				System.out.println();
 
 				space = "";
 				for (int j = 0; j < spaceCount; j++) {
 					space += "\t";
 				}
 
-				stackID.push((String) list.get(i).get("mid") + "&&" + (String) list.get(i).get("reg_date"));
-				System.out.print("구분값 = " + stackID.get(stackID.size() - 1) + "/ 레벨 = " + spaceCount);
+				stackID.push((String) list.get(tempI).get("mid") + "&&" + (String) list.get(tempI).get("reg_date"));
+//				System.out.print("구분값 = " + stackID.get(stackID.size() - 1) + "/ 레벨 = " + spaceCount);
 
-				System.out.println();
-				System.out.println("------------------------------------------------");
+//				System.out.println();
+//				System.out.println("------------------------------------------------");
 
-				System.out.println(space + "mid = " + list.get(i).get("mid"));
-				System.out.println(space + "star = " + list.get(i).get("star"));
-				System.out.println(space + "content = " + list.get(i).get("content"));
-				System.out.println(space + "time = " + list.get(i).get("reg_date"));
+//				System.out.println(space + "mid = " + list.get(tempI).get("mid"));
+//				System.out.println(space + "star = " + list.get(tempI).get("star"));
+//				System.out.println(space + "content = " + list.get(tempI).get("content"));
+//				System.out.println(space + "time = " + list.get(tempI).get("reg_date"));
 
-				list.get(i).append("level", spaceCount);
-				list.get(i).append("distinction", stackID.get(stackID.size() - 1));
+				list.get(tempI).append("level", spaceCount);
+				list.get(tempI).append("distinction", stackID.get(stackID.size() - 1));
 
-				totalCommentList.add(list.get(i));
+				totalCommentList.add(list.get(tempI));
 
 				// totalCommentList.add(e);
 
-				readAllComment(list.get(i),totalCommentList);
+				readAllComment(list.get(tempI),totalCommentList);
 
 				if (stackID.size() != 0) {
 					stackID.pop();

@@ -139,6 +139,15 @@
         <div id="totalCommentDiv_body">
 <!--       댓글이 들어가는 곳  -->
 		</div>
+		
+		<div style="text-align: center;">
+		<div id="pageButton" class="btn-group mr-2" role="group" aria-label="Second group">
+        <button alt="prev" type="button" class="btn btn-secondary btn-lg" onclick="pageChage(this)">1</button>
+        <button alt="now" type="button" class="btn  btn-primary btn-lg" onclick="pageChage(this)">2</button>
+        <button alt="next" type="button" class="btn btn-secondary btn-lg" onclick="pageChage(this)">3</button>
+        </div>
+		</div>
+		
       </div>
 <!-- /.전체댓글 보기 -->
 <!-- 내 댓글 -->
@@ -161,12 +170,99 @@
   </div>
 </div>
 
-
-
 <script type="text/javascript">
-// 	/springProject/resources/IMAGE/star/star_off.png
 
+
+   
 	var totalComment;
+	
+	 // 페이지 변환 메서드
+    function pageChage(button) {
+		 
+	
+		 
+		
+		 var pageInCount = 10;
+		 //보여줄 댓글 수량
+		 
+		 $.ajax({
+		 url: "getCommentInfoAjax?pMid=${mid}&ptitle=${ptitle}",
+		 dataType: "json",
+		 async: false,
+		 success: function(result) {
+			 totalComment = result;
+		},
+		 error:  function() {
+			alert('댓글로딩에 오류 발생!');
+		}
+	    });
+		 
+		 $('div#totalCommentDiv_body').empty();
+		 
+		 var inputNum = parseInt( $(button).text() );
+		 
+		 $('button[alt=prev]').text(inputNum-1);
+		 $('button[alt=now]').text(inputNum);
+		 $('button[alt=next]').text(inputNum+1);
+		 
+		 
+		 if ( $('button[alt=now]').text() == '1') {
+			 $('button[alt=prev]').css('visibility' , 'hidden');
+		}else {
+			 $('button[alt=prev]').css('visibility' , 'visible' );
+		}
+		 
+		if (Math.ceil(totalComment.length/pageInCount) == $('button[alt=now]').text()) {
+			 $('button[alt=next]').css('visibility' , 'hidden');
+		}else {
+			 $('button[alt=next]').css('visibility' , 'visible');
+		}
+		 
+		var index=-1; 
+		 
+		var startIndex = (inputNum-1)*pageInCount;
+		
+		var endIndex = (inputNum-1)*pageInCount+pageInCount;
+		//마지막 번호는 미포함!
+		
+    	 var standardHiddenDiv;
+         //가장 최근에 생성된 hidden div!
+         
+    	 for (var i = 0; i < totalComment.length; i++) {
+    		 
+    		 if (totalComment[i].level==1) {
+    			 ++index;
+    			 
+    			 if (index == endIndex) {
+        			 break;
+    			 }
+    			 if (index >= startIndex) {
+    			 
+    			 $('div#totalCommentDiv_body').append( insertViewCommentO(totalComment[i].star,
+    					                                                  totalComment[i].reg_date,
+    					                                                  totalComment[i].mid,
+    					                                                  totalComment[i].content) );
+    			 standardHiddenDiv = insertViewHiddenDiv();
+    			 $('div#totalCommentDiv_body').append(standardHiddenDiv);
+				}
+    		}else {
+    			$(standardHiddenDiv).append( insertViewCommentX(totalComment[i].level,
+    					                                        totalComment[i].reg_date,
+    					                                        totalComment[i].mid,
+    					                                        totalComment[i].content) );
+    		}
+    	}
+    	 
+    	 $('div[alt=down_comment_container').hide();
+    	 
+    	 $('button[alt=down_comment]').click(function() {
+    			var temp = $(this).parents('table').nextAll('div')[0]
+    			$(temp).toggle(500);
+    	  });
+		
+	}
+    // ...페이지 변환 메서드
+
 	
 
     // 시작하자마자 별을 추가하는 메서드
@@ -187,7 +283,6 @@
 		 async: false,
 		 success: function(result) {
 			 totalComment = result;
-			 alert(result.length);
 		},
 		 error:  function() {
 			alert('댓글로딩에 오류 발생!');
@@ -197,29 +292,7 @@
 //       alert(totalComment.length);
 //       확인용
      
-     var standardHiddenDiv;
-     //가장 최근에 생성된 hidden div!
-     
-     var reversCount = 0;
-     
-	 for (var i = 0; i < totalComment.length; i++) {
-		 
-		 reversCount = totalComment.length-i-1;
-		 
-		 if (totalComment[reversCount].level==1) {
-			 $('div#totalCommentDiv_body').append( insertViewCommentO(totalComment[reversCount].star,
-					                                                  totalComment[reversCount].reg_date,
-					                                                  totalComment[reversCount].mid,
-					                                                  totalComment[reversCount].content) );
-			 standardHiddenDiv = insertViewHiddenDiv();
-			 $('div#totalCommentDiv_body').append(standardHiddenDiv);
-		}else {
-			$(standardHiddenDiv).append( insertViewCommentX(totalComment[reversCount].level,
-					                                        totalComment[reversCount].reg_date,
-					                                        totalComment[reversCount].mid,
-					                                        totalComment[reversCount].content) );
-		}
-	}
+     pageChage($('button[alt=now]'));
 	 
 	 $('div[alt=down_comment_container').hide();
 	 
@@ -232,22 +305,12 @@
 	});
     // ...시작하자마자 별을 추가하는 메서드
     
-    
-    function bodyCommentInsert(button) {
-    	
-     var parentTable = $(button).parents('table');
-     var prevTable = $(button).parents('table').prev();
-     
-     alert($(parentTable).find('textarea').val());
-		
-	}
-    
-    
    // 최초 댓글 입력
    function headCommentInsert() {
     	//작업중
     	
     	var text = $('#totalCommentDiv_head').find('textarea').val();
+    	 $('#totalCommentDiv_head').find('textarea').val('');
     	var star = $('#head_star').attr('alt');
     	
 //     	alert(star);
@@ -278,8 +341,6 @@
    }    
    // ...최초 댓글 입력
    
-
-   
    // 댓글에 답글 달기!
 	function showLinkAddComment(button) {
 	   
@@ -293,7 +354,49 @@
 	}
    // ...댓글에 답글 달기!
    
-   
+
+	// 댓글-답글-등록
+	function bodyCommentInsert(button) {
+
+		var parentTable = $(button).parents('table');
+		var prevTable = $(button).parents('table').prev();
+		
+		var Content = $(parentTable).find('textarea').val();
+		var level = parseInt($(prevTable).attr('alt'))+1;
+		var distinction = $(prevTable).find('span[alt=mid]').text()+'&&'+$(prevTable).find('span[alt=time]').text();
+		var sendContent = $(parentTable).find('textarea').val();
+		var pMid = '${mid}';
+		var ptitle= '${ptitle}';
+
+		var sendData = {Content : Content,
+			     level : level,
+			     distinction : distinction,
+			     sendContent : sendContent,
+			     pMid : pMid,
+			     ptitle : ptitle};
+		 $.ajax({
+			 url: "setBodyCommentInfoAjax",
+			 data : sendData,
+			 type: "POST",
+			 dataType: "json",
+			 async: false,
+			 success: function(result) {
+				 
+				  var Level = parseInt($(prevTable).attr('alt'));
+				  
+				  if (Level==1) {
+					  $(parentTable).next().prepend( insertViewCommentX(Level+1, result.reg_date, result.mid, result.content) );
+				  }else {
+					  $(prevTable).after(insertViewCommentX(Level+1, result.reg_date, result.mid, result.content));
+				 }
+				  $('table[alt=addForm]').remove();
+			},
+			 error:  function() {
+				alert('댓글로딩에 오류 발생!');
+			}
+		 });
+	}
+	// ...댓글-답글-등록
 
 	// 별 추가 메서드 
 	function checkStar(star) {
@@ -330,15 +433,129 @@
 			}
 			$(textArea).val(temp);
 			$('#text_length').text(0);
-		}else {
-		$(textArea).next().find('span').text(150 - length);
+		} else {
+			$(textArea).next().find('span').text(150 - length);
 		}
 	}
 	//  ...글자 계산 메서드  + 글자입력 제한
+	
+	//댓글 수정
+	function updateTextarea(button) {
+		
+		if ($(button).text()=='수정') {
+			
+			$(button).parents('table').find('textarea').removeAttr( 'readonly' );
+			$(button).before('<div style="text-align: right;color: gray;" ><span alt=150></span>글자</div>');	
+			
+			$(button).text('수정완료')
+		}else {
+			var parentTable =  $(button).parents('table')
+			
+			var content = $(parentTable).find('textarea').val();
+			var level = parseInt($(parentTable).attr('alt'));
+			var distinction = $(parentTable).find('span[alt=mid]').text()+'&&'+$(parentTable).find('span[alt=time]').text();
+			var pMid = '${mid}';
+			var ptitle= '${ptitle}';
 
+			var sendData = {content : content,
+				     level : level,
+				     distinction : distinction,
+				     pMid : pMid,
+				     ptitle : ptitle};
+			
+			 $.ajax({
+				 url: "setBodyCommentInfoUpdateAjax",
+			     data : sendData,
+				 dataType: "text",
+				 async: false,
+				 success: function(result) {
+					 if (result=='yes') {
+		             $(button).prev().remove();
+                     $(button).parents('table').find('textarea').attr( 'readonly','readonly' );
+                     $(button).text('수정')
+                     alert('댓글수정 완료');
+					}else {
+						alert('댓글수정 - 데이터 베이스 오류!');
+					}
+				},
+				 error:  function() {
+					alert('댓글수정에 오류 발생!');
+				}
+			 });
+		}
+	}
+	// ...댓글 수정
+	
+	// 댓글 삭제
+	function deleteComment(button) {
+        var temp =confirm('정말로 삭제하시겠습니까?');	
+        
+        if (temp == true) {
+        	
+        	 var parentTable = $(button).parents('table');
+        	 
+        	 var distinction ;
+    		 var level ;
+    		 var pMid ;
+    		 var ptitle;
+        	 
+        	 if ( parseInt($(parentTable).attr('alt')) > 2 ) {
+        		 distinction = $(parentTable).prev().find('span[alt=mid]').text()+'&&'+$(parentTable).prev().find('span[alt=time]').text();
+			}else if (parseInt($(parentTable).attr('alt')) == 2) {
+				var tempP = $(parentTable).parent('div');
+        		distinction = $(tempP).prev().find('span[alt=mid]').text()+'&&'+$(tempP).prev().find('span[alt=time]').text();
+			}else {
+        	    distinction = $(parentTable).find('span[alt=mid]').text()+'&&'+$(parentTable).find('span[alt=time]').text();
+			}
+        	 
+    		 var level = parseInt($(parentTable).attr('alt'));
+    		 var pMid = '${mid}';
+    		 var ptitle= '${ptitle}';
+        	 
+    		 var dist = $(parentTable).find('span[alt=mid]').text()+'&&'+$(parentTable).find('span[alt=time]').text();
+    		 
+    		 var sendData = {
+   				     level : level,
+   				     distinction : distinction,
+   				     pMid : pMid,
+   				     ptitle : ptitle,
+   				     dist : dist};
+        	 $.ajax({
+				 url: "setDeleteCommentAjax",
+			     data : sendData,
+				 dataType: "text",
+				 async: false,
+				 success: function(result) {
+					 if (result == 'yes') {
+						 if (parseInt($(parentTable).attr('alt'))==1) {
+							 $(parentTable).next().remove();
+							 $(parentTable).remove();
+						}else {
+							while (true) {
+								if ($(parentTable).attr('alt') >= $(parentTable).next().attr('alt') ||  $(parentTable).next().attr('alt')==null) {
+									break;
+								}else{
+								$(parentTable).next().remove();
+								}
+							}
+								$(parentTable).remove();
+						}
+					}else {
+						alert('댓글삭제 오류발생!');
+					}
+				},
+				 error:  function() {
+					alert('댓글삭제에 오류 발생!');
+				}
+			 });
+		}
+	}
+	// ...댓글 삭제
+	
+	
 	function insertViewHiddenDiv() {
 
-		var hiddenDiv = '<div alt="down_comment_container">' + '</div>';
+		var hiddenDiv = '<div alt="down_comment_container" style="background: ghostwhite;">' + '</div>';
 
 		return $(hiddenDiv);
 	}
@@ -355,18 +572,16 @@
 				+ '<div style="text-align: right;color: gray;" ><span alt=150>150</span>글자</div>'
 				+ '<div style="text-align: right;">'
 				+ '<button onclick="bodyCommentInsert(this);">등록</button>'
-				+ '</div>' + '</td>' + '</tr>'
-				+ '</table>';
+				+ '</div>' + '</td>' + '</tr>' + '</table>';
 
 		return $(starComment);
 	}
-	
+
 	function insertViewCommentX(levelNum, reg_date, mid, content) {
 
-		var starComment = '<table class="table" style="margin: 0px;">'
-			    + '<input type="hidden" value='+levelNum+'>'
+		var starComment = '<table class="table" style="margin: 0px;" alt='+levelNum+'>'
 				+ '<tr>'
-				+ '<td style="text-align: right;width: ' 
+				+ '<td style="text-align: right;width: '
 				+ (85 + levelNum * 25)
 				+ 'px"  alt="width"><img alt="댓글 이미지"  style="width: 75px" src="/springProject/resources/IMAGE/star/add_comment.png"></td>'
 				+ '<td>'
@@ -375,19 +590,18 @@
 				+ '</span> / 작성자 : <span alt="mid">'
 				+ mid
 				+ '</span>님 </p>'
-				+ '<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly">'
+				+ '<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly" onkeydown="cal_text_margin(this);">'
 				+ content + '</textarea>' + '<div style="text-align: right;">'
-				+ '<button>수정</button>' + '<button>삭제</button>'
-				+ '<button onclick="showLinkAddComment(this)">답글</button>' + '</div>' + '</td>' + '</tr>'
-				+ '</table>';
+				+ '<button onclick="updateTextarea(this);">수정</button>' + '<button onclick="deleteComment(this);">삭제</button>'
+				+ '<button onclick="showLinkAddComment(this)">답글</button>'
+				+ '</div>' + '</td>' + '</tr>' + '</table>';
 
 		return $(starComment);
 	}
 
 	function insertViewCommentO(starNum, reg_date, mid, content) {
 
-		var starComment = '<table class="table" style="margin: 0px;">'
-		        + '<input type="hidden" value=1>'
+		var starComment = '<table class="table" style="margin: 0px;" alt=1>'
 				+ '<tr>'
 				+ '<td style="text-align: right;width: 1px" ></td>'
 				+ '<td>'
@@ -399,7 +613,7 @@
 		for (var i = 0; i < 5 - starNum; i++) {
 			starComment += '<img alt="1" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_off.png">';
 		}
-
+		
 		starComment = starComment
 				+ '</div>'
 				+ '<p style="color: gray;">작성시간 : <span alt="time">'
@@ -407,25 +621,16 @@
 				+ '</span> / 작성자 : <span alt="mid">'
 				+ mid
 				+ '</span>님 </p>'
-				+ '<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly">'
+				+ '<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly" onkeydown="cal_text_margin(this);">'
 				+ content + '</textarea>' + '<div style="text-align: right;">'
-				+ '<button>수정</button>' + '<button>삭제</button>'
+				+ '<button onclick="updateTextarea(this);">수정</button>'
 				+ '<button onclick="showLinkAddComment(this)">답글</button>'
+				+ '<button onclick="deleteComment(this);">삭제</button>'
 				+ '<button alt="down_comment">답글열기</button>' + '</div>'
 				+ '</td>' + '</tr>' + '</table>';
 		return $(starComment);
 	}
 </script>
-
-<!-- 스크롤을 만들기 위한 br! -->
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br> <br> <br> <br> <br> <br>
 
 		<script type="text/javascript">
 		

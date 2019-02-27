@@ -1,5 +1,7 @@
 package com.itbank.springProject.rew.controller;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +58,31 @@ public class R_PlanDetailController {
 		return result;
 	}
 	
+	@RequestMapping("rew/setBodyCommentInfoAjax")
+	@ResponseBody
+	public Document setBodyCommentInfoAjax(Mongo_ShareProjectDTO mongoDTO) {
+		mongoDTO.setMid("임시 아이디!");
+		System.out.println(mongoDTO);
+		Document result = mongoShareDAO.insertComment(mongoDTO);
+		return result;
+	}
+	
+	@RequestMapping("rew/setBodyCommentInfoUpdateAjax")
+	@ResponseBody
+	public String setBodyCommentInfoUpdateAjax(Mongo_ShareProjectDTO mongoDTO) {
+		mongoDTO.setMid("임시 아이디!");
+		return mongoShareDAO.updateComment(mongoDTO);
+	}
+	
+	@RequestMapping("rew/setDeleteCommentAjax")
+	@ResponseBody
+	public String setDeleteCommentAjax(Mongo_ShareProjectDTO mongoDTO , @RequestParam("dist") String dist) {
+		
+		System.out.println(mongoDTO);
+		System.out.println(dist);
+		
+		return mongoShareDAO.deleteComment(mongoDTO,dist);
+	}
 	
 
 }

@@ -60,6 +60,21 @@ public class Mongo_ShareProjectDTO {
 		this.starValue = starValue;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuffer outPut = new StringBuffer();
+		outPut.append("[");
+		outPut.append("pMid="+pMid);
+		outPut.append("/ mid="+mid);
+		outPut.append("/ ptitle="+ptitle);
+		outPut.append("/ content="+content);
+		outPut.append("/ starValue="+starValue);
+		outPut.append("/ reg_date="+reg_date);
+		outPut.append("/ distinction="+distinction);
+		outPut.append("/ level="+level);
+		outPut.append("]");
+		return outPut.toString();
+	}
 	
 	
 	

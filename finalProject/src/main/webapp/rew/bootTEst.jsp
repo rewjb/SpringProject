@@ -24,9 +24,6 @@
 
 $('button[alt=temp]').click(function() {
 	$(this).next().toggle(500);
-	$(this).prev().toggle(500);
-	
-	
 })
 
 

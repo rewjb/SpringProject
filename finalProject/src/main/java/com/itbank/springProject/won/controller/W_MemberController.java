@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.springProject.db.MemberDAO;
 import com.itbank.springProject.db.MemberDTO;
@@ -17,7 +18,7 @@ public class W_MemberController{
 	
 	@Autowired
 	@Qualifier("MemberDAO")
-	MemberDAO memberDAO;
+	private MemberDAO memberDAO;
 	
 	//회원가입
 	@RequestMapping("won/insertMember")
@@ -66,6 +67,32 @@ public class W_MemberController{
 			return "redirect:mypage.jsp";
 		}
 	}//end deleteMember()
+	
+	//회원가입시 아이디 중복확인
+	@RequestMapping("won/checkMid")
+	@ResponseBody
+	public String checkId(@RequestParam("mid") String mid, MemberDTO dto){
+		System.out.println("아이디 중복확인 mid:"+ mid);
+		System.out.println("아이디 중복확인 dto:"+ dto.getMid());
+		try {
+			dto.setMid(mid);
+			MemberDTO mdto = memberDAO.select(dto);
+			if(mdto == null || mdto.getMid().equals("")){
+				System.out.println("존재하지 않는 아이디! 가입 가능합니다!");
+			}else{
+				System.out.println("존재하는 아이디! 가입 불가능!");
+			}
+			//로그인 성공시 id를 세션에 넣어줌
+			
+		} catch (Exception e) {
+			//실패시 회원가입 페이지로 돌아감
+			e.printStackTrace();
+			System.out.println("select실패");
+		}
+		
+		return mid; 
+		
+	}
 	
 	//로그인을 위한 확인
 	@RequestMapping("won/login")

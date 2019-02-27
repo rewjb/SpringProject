@@ -30,7 +30,6 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 
-@Controller
 public class Mongo_ShareProjectDAO {
 
 	MongoClient mongoClient = new MongoClient("localhost", 27017);

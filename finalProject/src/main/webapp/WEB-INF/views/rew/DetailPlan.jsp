@@ -7,9 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>여행계획서 상세페이지</title>
-
 <style>
-@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
 </style>
 </head>
 
@@ -122,93 +120,24 @@
   <div class="col-9">
 <!-- /.댓글 및 리뷰에 관한 버튼 -->
 
-
-
-
-
 <!-- 전체댓글,내댓글,리뷰 관련된 내용이 보이는 곳 -->
     <div class="tab-content" id="v-pills-tabContent">
 <!-- 전체댓글 보기 -->
       <div class="tab-pane fade show active" id="totalCommentDiv" role="tabpanel" aria-labelledby="v-pills-home-tab" style="">
-       <div id="totalCommentDiv_head" style="margin-left: 50px;margin-right: 50px;margin-bottom: 10px" >
+       <div id="totalCommentDiv_head" style="margin-left: 50px;margin-right: 50px;margin-bottom: 10px;background: gainsboro;" >
        <div  style="margin-left: 10px;">댓글작성</div>
-        <div id="head_star"  alt="" style="margin-left: 10px;display: inline-block;">
+        <div id="head_star"  alt=0 style="margin-left: 10px;display: inline-block;">
 <!--       별점이 들어가는 곳 -->
         </div>
          <div style="margin-left: 10px;"></div>
           <div style="margin: 10px">
-           <textarea placeholder="댓글을 입력해주세요!"  style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" onkeydown="cal_text_margin(this);"></textarea>
-           <div style="text-align: right;color: gray;" ><span  id="text_length" alt=150>150</span>글자</div>
+           <textarea  placeholder="댓글을 입력해주세요!" name="headTextArea" style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" onkeydown="cal_text_margin(this);"></textarea>
+           <div style="text-align: right;color: gray;" ><span alt=150>150</span>글자</div>
+           <div style="text-align: right;"><button onclick="headCommentInsert();">입력</button></div>
          </div>
        </div>
         <div id="totalCommentDiv_body">
-
-							<table class="table">
-									<tr>
-										<td style="text-align: right;width: 1px" ></td>
-										<td>
-										<div style="margin-bottom: 10px;float: left;margin-right: 20px">
-										<img alt="1" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="2" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="3" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="4" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="5" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_off.png">
-										</div>
-										<p style="color: gray;">작성시간 : <span alt="time">2019-02-25</span> / 작성자 : <span alt="mid">유주빈</span>님 </p>
-										<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly">멋져요 1</textarea>
-										<div style="text-align: right;">
-										<button>수정</button>
-										<button>삭제</button>
-										<button alt="down_comment">답글</button>
-										</div>
-										</td>
-									</tr>
-							</table>
-							<div alt="down_comment_container">
-							<table class="table">
-									<tr>
-										<td style="text-align: right;width: 75px" ><img alt="댓글 이미지"  style="width: 50px" src="/springProject/resources/IMAGE/star/add_comment.png"></td>
-										<td>
-										<div style="margin-bottom: 10px;float: left;margin-right: 20px">
-										<img alt="1" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="2" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="3" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="4" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="5" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_off.png">
-										</div>
-										<p style="color: gray;">작성시간 : <span alt="time">2019-02-25</span> / 작성자 : <span alt="mid">유주빈</span>님 </p>
-										<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly">멋져요 2</textarea>
-										<div style="text-align: right;">
-										<button>수정</button>
-										<button>삭제</button>
-										</div>
-										</td>
-									</tr>
-							</table>
-							<table class="table">
-									<tr>
-										<td style="text-align: right;width: 100px" ><img alt="댓글 이미지"  style="width: 50px" src="/springProject/resources/IMAGE/star/add_comment.png"></td>
-										<td>
-										<div style="margin-bottom: 10px;float: left;margin-right: 20px">
-										<img alt="1" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="2" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="3" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="4" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
-										<img alt="5" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_off.png">
-										</div>
-										<p style="color: gray;">작성시간 : <span alt="time">2019-02-25</span> / 작성자 : <span alt="mid">유주빈</span>님 </p>
-										<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly">멋져요 3</textarea>
-										<div style="text-align: right;">
-										<button>수정</button>
-										<button>삭제</button>
-										</div>
-										</td>
-									</tr>
-							</table>
-							</div>
-							
-							dddddddddddddddddddddd
-
+<!--       댓글이 들어가는 곳  -->
 		</div>
       </div>
 <!-- /.전체댓글 보기 -->
@@ -218,7 +147,7 @@
       </div>
 <!-- /.내 댓글 -->
 <!-- 관련리뷰 -->
-      <div class="tab-pane fade" id="relatedReviewDiv" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+      <div  class="tab-pane fade" id="relatedReviewDiv" role="tabpanel" aria-labelledby="v-pills-messages-tab">
       관련리뷰
       </div>
 <!-- /.관련리뷰 -->
@@ -237,8 +166,10 @@
 <script type="text/javascript">
 // 	/springProject/resources/IMAGE/star/star_off.png
 
+	var totalComment;
+	
 
-    // 시작하자마자 별을 추가하는 메서드ㅊ
+    // 시작하자마자 별을 추가하는 메서드
 	$(document).ready(function start() {
 		
 	 // 밑에는 별을 추가하는 메서드	
@@ -250,60 +181,240 @@
 
 	 }
 	 
+	 $.ajax({
+		 url: "getCommentInfoAjax?pMid=${mid}&ptitle=${ptitle}",
+		 dataType: "json",
+		 async: false,
+		 success: function(result) {
+			 totalComment = result;
+			 alert(result.length);
+		},
+		 error:  function() {
+			alert('댓글로딩에 오류 발생!');
+		}
+	 });
+	 
+//       alert(totalComment.length);
+//       확인용
+     
+     var standardHiddenDiv;
+     //가장 최근에 생성된 hidden div!
+     
+     var reversCount = 0;
+     
+	 for (var i = 0; i < totalComment.length; i++) {
+		 
+		 reversCount = totalComment.length-i-1;
+		 
+		 if (totalComment[reversCount].level==1) {
+			 $('div#totalCommentDiv_body').append( insertViewCommentO(totalComment[reversCount].star,
+					                                                  totalComment[reversCount].reg_date,
+					                                                  totalComment[reversCount].mid,
+					                                                  totalComment[reversCount].content) );
+			 standardHiddenDiv = insertViewHiddenDiv();
+			 $('div#totalCommentDiv_body').append(standardHiddenDiv);
+		}else {
+			$(standardHiddenDiv).append( insertViewCommentX(totalComment[reversCount].level,
+					                                        totalComment[reversCount].reg_date,
+					                                        totalComment[reversCount].mid,
+					                                        totalComment[reversCount].content) );
+		}
+	}
 	 
 	 $('div[alt=down_comment_container').hide();
 	 
 	 $('button[alt=down_comment]').click(function() {
-			$(this).parents('table').next().toggle(500);
+			var temp = $(this).parents('table').nextAll('div')[0]
+			$(temp).toggle(500);
 	  })
-      
-      parents('table');
+	  
+	  
 	});
-    // ...시작하자마자 별을 추가하는 메서드ㅊ
-	
+    // ...시작하자마자 별을 추가하는 메서드
+    
+    
+    function bodyCommentInsert(button) {
+    	
+     var parentTable = $(button).parents('table');
+     var prevTable = $(button).parents('table').prev();
+     
+     alert($(parentTable).find('textarea').val());
+		
+	}
+    
+    
+   // 최초 댓글 입력
+   function headCommentInsert() {
+    	//작업중
+    	
+    	var text = $('#totalCommentDiv_head').find('textarea').val();
+    	var star = $('#head_star').attr('alt');
+    	
+//     	alert(star);
+//     	alert(text);
+//      확인용
+
+    	 $.ajax({
+    		 url: "setHeadCommentInfoAjax",
+    		 data : 'starValue='+star+'&Content='+text+'&ptitle=${ptitle}&pMid=${mid}',
+    		 dataType: "json",
+    		 async: false,
+    		 success: function(result) {
+    			 //mid,content,reg_date,star
+    			 if (result != null) {
+    			 $('div#totalCommentDiv_body').prepend(insertViewHiddenDiv());
+    			 $('div#totalCommentDiv_body').prepend(insertViewCommentO(result.star,
+                                                                          result.reg_date,
+                                                                          result.mid,
+                                                                          result.content));
+				}else {
+					alert('댓글등록 오류발생!');
+				}
+    		},
+    		 error:  function() {
+    			alert('댓글등록 오류발생!');
+    		}
+    	 });
+   }    
+   // ...최초 댓글 입력
+   
+
+   
+   // 댓글에 답글 달기!
+	function showLinkAddComment(button) {
+	   
+	   var table = $(button).parents('table');
+	   var td = $(table).find('td')[0];
+	   var width = parseInt($(td).css('width').split('p')[0])+25;
+	   
+	   $('table[alt=addForm]').remove();
+	   var temp  = insertFormComment(width);
+	   $(table).after(temp);
+	}
+   // ...댓글에 답글 달기!
+   
+   
+
 	// 별 추가 메서드 
 	function checkStar(star) {
 		var number = $(star).attr('alt');
-		
-		var stars = $(star).parent('div#head_star').children();	
-		
+
+		var stars = $(star).parent('div#head_star').children();
+
 		for (var i = 0; i < stars.length; i++) {
-			$(stars[i]).attr('src' ,'/springProject/resources/IMAGE/star/star_off.png');
+			$(stars[i]).attr('src',
+					'/springProject/resources/IMAGE/star/star_off.png');
 		}
-		
+
 		for (var i = 0; i < number; i++) {
-			$(stars[i]).attr('src' ,'/springProject/resources/IMAGE/star/star_on.png');
+			$(stars[i]).attr('src',
+					'/springProject/resources/IMAGE/star/star_on.png');
 		}
-		
-		$(star).parent('div#head_star').attr('alt',number);
+
+		$(star).parent('div#head_star').attr('alt', number);
 	}
 	// ...별 추가 메서드 
 
-
-	
-	
 	//  글자 계산 메서드  + 글자입력 제한
 	function cal_text_margin(textArea) {
-// 		console.log('입력값 = '+$(textArea).val() + ' / 길이 = '+$(textArea).val().length );
-// 		글자 갯수 확인용
+		// 		console.log('입력값 = '+$(textArea).val() + ' / 길이 = '+$(textArea).val().length );
+		// 		글자 갯수 확인용
 		var length = $(textArea).val().length;
-		
-		$('#text_length').text(150-length);
-		
-		var temp ='';
-		
-		if (length>150) {
-			
+
+		var temp = '';
+
+		if (length > 150) {
+
 			for (var i = 0; i < 150; i++) {
 				temp += $(textArea).val()[i];
 			}
 			$(textArea).val(temp);
-		    $('#text_length').text(0);
+			$('#text_length').text(0);
+		}else {
+		$(textArea).next().find('span').text(150 - length);
 		}
 	}
 	//  ...글자 계산 메서드  + 글자입력 제한
+
+	function insertViewHiddenDiv() {
+
+		var hiddenDiv = '<div alt="down_comment_container">' + '</div>';
+
+		return $(hiddenDiv);
+	}
+
+	function insertFormComment(width) {
+
+		var starComment = '<table class="table" style="margin: 0px;" alt="addForm">'
+				+ '<tr>'
+				+ '<td style="text-align: right;width: ' 
+				+ width
+				+ 'px"  alt="width"><img alt="댓글 이미지"  style="width: 75px" src="/springProject/resources/IMAGE/star/add.png"></td>'
+				+ '<td>'
+				+ '<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" onkeydown="cal_text_margin(this);"></textarea>'
+				+ '<div style="text-align: right;color: gray;" ><span alt=150>150</span>글자</div>'
+				+ '<div style="text-align: right;">'
+				+ '<button onclick="bodyCommentInsert(this);">등록</button>'
+				+ '</div>' + '</td>' + '</tr>'
+				+ '</table>';
+
+		return $(starComment);
+	}
 	
-	
+	function insertViewCommentX(levelNum, reg_date, mid, content) {
+
+		var starComment = '<table class="table" style="margin: 0px;">'
+			    + '<input type="hidden" value='+levelNum+'>'
+				+ '<tr>'
+				+ '<td style="text-align: right;width: ' 
+				+ (85 + levelNum * 25)
+				+ 'px"  alt="width"><img alt="댓글 이미지"  style="width: 75px" src="/springProject/resources/IMAGE/star/add_comment.png"></td>'
+				+ '<td>'
+				+ '<p style="color: gray;">작성시간 : <span alt="time">'
+				+ reg_date
+				+ '</span> / 작성자 : <span alt="mid">'
+				+ mid
+				+ '</span>님 </p>'
+				+ '<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly">'
+				+ content + '</textarea>' + '<div style="text-align: right;">'
+				+ '<button>수정</button>' + '<button>삭제</button>'
+				+ '<button onclick="showLinkAddComment(this)">답글</button>' + '</div>' + '</td>' + '</tr>'
+				+ '</table>';
+
+		return $(starComment);
+	}
+
+	function insertViewCommentO(starNum, reg_date, mid, content) {
+
+		var starComment = '<table class="table" style="margin: 0px;">'
+		        + '<input type="hidden" value=1>'
+				+ '<tr>'
+				+ '<td style="text-align: right;width: 1px" ></td>'
+				+ '<td>'
+				+ '<div style="margin-bottom: 10px;float: left;margin-right: 20px">';
+
+		for (var i = 0; i < starNum; i++) {
+			starComment += '<img alt="1" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">';
+		}
+		for (var i = 0; i < 5 - starNum; i++) {
+			starComment += '<img alt="1" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_off.png">';
+		}
+
+		starComment = starComment
+				+ '</div>'
+				+ '<p style="color: gray;">작성시간 : <span alt="time">'
+				+ reg_date
+				+ '</span> / 작성자 : <span alt="mid">'
+				+ mid
+				+ '</span>님 </p>'
+				+ '<textarea style="margin-bottom: 0px;width: 100%;  resize: none;height: 100px" readonly="readonly">'
+				+ content + '</textarea>' + '<div style="text-align: right;">'
+				+ '<button>수정</button>' + '<button>삭제</button>'
+				+ '<button onclick="showLinkAddComment(this)">답글</button>'
+				+ '<button alt="down_comment">답글열기</button>' + '</div>'
+				+ '</td>' + '</tr>' + '</table>';
+		return $(starComment);
+	}
 </script>
 
 <!-- 스크롤을 만들기 위한 br! -->
@@ -350,29 +461,6 @@
 	
 				
 		</script>
-		
-		  
-		
-		
-
-
-
-
-<%-- <c:forEach items="${planDetail_list}" var="planDetail_list"> --%>
-<%-- PID = ${planDetail_list.pid} <br/> --%>
-<%-- PID = ${planDetail_list.mid} <br/> --%>
-<%-- PID = ${planDetail_list.ptitle} <br/> --%>
-<%-- PID = ${planDetail_list.title} <br/> --%>
-<%-- PID = ${planDetail_list.content} <br/> --%>
-<%-- PID = ${planDetail_list.latitude} <br/> --%>
-<%-- PID = ${planDetail_list.longitude} <br/> --%>
-<%-- PID = ${planDetail_list.way} <br/> --%>
-<%-- PID = ${planDetail_list.detail} <br/> --%>
-<%-- PID = ${planDetail_list.num} <br/> --%>
-<%-- PID = ${planDetail_list.distance} <br/> --%>
-<!-- ------------------------------------------<br> -->
-<%-- </c:forEach> --%>
-
 
 		
 </body>

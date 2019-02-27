@@ -93,7 +93,7 @@ public class J_CartController {
 	public String crawling() throws Exception {
 		System.out.println("넘어왔니 크롤링");
 		
-		  Document doc = Jsoup.connect("http://www.tourtips.com/dest/main/").get();
+		  Document doc = Jsoup.connect("http://www.tourtips.com/dest/main/").timeout(0).get();
 
 	      Document doc2 = null;
 
@@ -129,13 +129,13 @@ public class J_CartController {
 	            // System.out.println(element2.get(j).text());
 	            // System.out.println("http://www.tourtips.com" +
 	            // element2.get(j).attr("href"));
-	            doc2 = Jsoup.connect("http://www.tourtips.com" + element2.get(j).attr("href")).get();
+	            doc2 = Jsoup.connect("http://www.tourtips.com" + element2.get(j).attr("href")).timeout(0).get();
 
 	            element3 = doc2.select("div.popular_box a.more_info");
 
 	            // System.out.println(element3.get(0).attr("href"));
 
-	            doc3 = Jsoup.connect("http://www.tourtips.com" + element3.get(0).attr("href")).get();
+	            doc3 = Jsoup.connect("http://www.tourtips.com" + element3.get(0).attr("href")).timeout(0).get();
 
 	            element4 = doc3.select("div.paging a");
 	            // System.out.println(element4.size());
@@ -151,7 +151,7 @@ public class J_CartController {
 	            
 	            for (int k = 0; k < temp.length; k++) {
 //	               System.out.println(temp[0]);
-	               doc4 = Jsoup.connect(temp[k]).get();
+	               doc4 = Jsoup.connect(temp[k]).timeout(0).get();
 	               element5 = doc4.select("div.spot_list li");
 //	               System.out.println(element5);
 
@@ -180,7 +180,10 @@ public class J_CartController {
 	                        dto.setLongitude((String)jo.get("좌표(경도)"));
 	                        dto.setCategory((String)jo.get("태그"));
 	                        
-	                        attractionsDAO.insert(dto);
+	                     
+	                        if ( imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4])==0) {
+	                        	attractionsDAO.insert(dto);
+							}
 	                        
 	                        System.out.println(dto.getContinent());
 	                        System.out.println(dto.getCity());
@@ -198,7 +201,6 @@ public class J_CartController {
 	                        System.out.println(jo.get("메인이미지").toString());
 	                        
 	                        
-	                        imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4]);
 	                     }//길찾기 값이 존재할때만 db저장 및 이미지저장
 
 	               }
@@ -243,51 +245,26 @@ public class J_CartController {
 	      return buffer;
 	   }
 	
-	 private void imageSave(String source, String fileName) {
-		 
-         
-		 /*File asdd  = new File("src\\main\\webapp\\resources\\IMAGE\\PlaceCartImg\\");
-=======
-         File outputFile = new File(abpath+"\\"+fileName+".jpg");
-         try {
-        	
-            URL url = new URL(source);            // 이미지 소스를 url에 넣기
-            BufferedImage imgBuffer = ImageIO.read(url);
-            // 해당  소스를 읽어오기
-            ImageIO.write(imgBuffer, "jpg", outputFile);
-            
-
-         } catch (Exception e) {
-            e.printStackTrace();
-         }
-		 File asdd  = new File("src\\main\\webapp\\resources\\IMAGE\\PlaceCartImg\\");
->>>>>>> branch 'master' of https://github.com/rewjb/SpringProject
-		 
-		 
-		 String asddd = asdd.pathSeparator ;
-		 String asddd2 = asdd.getAbsolutePath() ;
-		 Path asddd3 = asdd.toPath() ;
-		 String asddd4 = asdd.getPath() ;
-		 
-		 System.out.println(asddd);
-		 System.out.println(asddd2);
-		 System.out.println(asddd3);
-		 System.out.println(asddd4);*/
+	 private int imageSave(String source, String fileName) {
 		 
 
+		 int check = 0;
+		 
          File outputFile = new File("C:\\Users\\user\\git\\SpringProject2\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
          try {
-        	
+        	if (outputFile.isFile()) {
+				check +=1;
+			}else{
             URL url = new URL(source);            // 이미지 소스를 url에 넣기
             BufferedImage imgBuffer = ImageIO.read(url);
             // 해당  소스를 읽어오기
             ImageIO.write(imgBuffer, "jpg", outputFile);
-            
+			}
 
          } catch (Exception e) {
             e.printStackTrace();
          }
-
+         	return check;
       }   // imageSave() : 메서드 종료
 	
 }

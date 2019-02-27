@@ -8,25 +8,26 @@
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 		<style type="text/css">
-	
 {
    font-family: 'Noto Sans KR', sans-serif;
 }
-	
 	</style>
 
 <script type="text/javascript">
 
+ var count = 0;
 $(function () {
-	if (<%=request.getParameter("page") %> == null || <%=request.getParameter("page") %> ==1) {
-		$.ajax({
-			url : "allList?page=" + <%=request.getParameter("page") %>,
+// 		alert($('[name = tag]').lenght);
+// 		alert($('[name = 1]').lenght);
+	if (count==0) {
+		$.ajax({ 
+			url : "allList?page=0",
 			Type : "POST",
 			success : function(result) {
 					$("#container").append(result);
 			}
 		});
-	}
+	}count +=1;
 })
  
 var arr = new Array();
@@ -43,7 +44,6 @@ $(function () {
 
 function continent(event) {
 	var con = event.target;
-	
 	if ($(con).attr("class")=="btn btn-secondary my-2") {
 	
 	$("#city").empty();
@@ -63,13 +63,14 @@ function continent(event) {
 		}
 	});
 	
+	
 	}else if ($(con).attr("class") == "btn btn-primary my-2") {
+		alert($("[name = '1']").attr("class"));
 		$("#city").empty();
 		$("#tag").empty();
 		$(con).attr("class" , "btn btn-secondary my-2");
 	}
 }
-       
 
 function city(event) {
 	var con = event.target;
@@ -122,7 +123,6 @@ function tagSearch() {
 	var con = $("button[id=1]").text();
 	var city = $("button[id=2]").text();
 	var tag = $("button[id=3]").text();
-	
 	
 	$.ajax({
 		url : "attList",
@@ -183,11 +183,3 @@ function tagSearch() {
 		
 	</body>
 </html>
-<%
-		int tempPage = 1;
-		if(request.getParameter("page") != null){
-			System.out.println("null이니");
-			tempPage = Integer.parseInt(request.getParameter("page"));
-		pageContext.setAttribute("tempPage", tempPage);
-		}
-	%>

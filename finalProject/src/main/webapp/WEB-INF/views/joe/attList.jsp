@@ -89,8 +89,8 @@
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
-             <input type="hidden" name="mid" value="123">
-      <input type="hidden" name="pid" value="${list.pid}">
+             <input type="text" name="mid" value="123">
+      <input type="text" name="pid" value="${list.pid}">
             </form>
       </div>
       <!-- /.col-lg-4' -->

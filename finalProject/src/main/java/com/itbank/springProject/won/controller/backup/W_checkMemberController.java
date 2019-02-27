@@ -11,13 +11,13 @@ import com.itbank.springProject.db.MemberDAO;
 import com.itbank.springProject.db.MemberDTO;
 
 
-@Controller
+//@Controller
 public class W_checkMemberController {
 	
-	@Autowired
+//	@Autowired
 	MemberDAO dao;
 	
-	@RequestMapping("won/checkMember.do")
+//	@RequestMapping("won/checkMember.do")
 	public String test(MemberDTO memberDTO, Model model, HttpSession session) throws Exception {
 		//넘어온 아이디 확인
 		System.out.println(memberDTO.getMid());

@@ -69,6 +69,9 @@ public class J_CartController {
 	@RequestMapping("joe/cartDelete")
 	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
 		
+		System.out.println(placeCartDTO.getPid());
+		
+		
 		placeCartDAO.delete(placeCartDTO.getPid());
 		
 		ArrayList<PlaceCartDTO> list = (ArrayList)placeCartDAO.selectAll();

@@ -42,7 +42,7 @@ function comment() {//대댓글 등록시 처리함수
 			$("#content2").val("");
 			 $("#temp").after($("#replyDialog").css('display', 'none'));
 			if (result != null) {
-				$("#replyList").empty();
+// 				$("#replyList").empty();
 				 $("#replyList").append(result); 
 			}//if문 끝
 			
@@ -301,6 +301,7 @@ $(function() {
     </form>
 </div>  
 
+
  <div id="updateDialog" style="width: 99%; display:none">
     <form id= "updateForm"  action="review2" method="post">
         <input type="hidden" name="pid" value="id"> 
@@ -312,6 +313,7 @@ $(function() {
         <a href="#" onclick="return updateCancel()">취소</a>
     </form>
 </div>  
+	
 	
 </body>
 </html>

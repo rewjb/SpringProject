@@ -2,7 +2,7 @@ package com.itbank.springProject.won.controller.backup;
 
 import org.springframework.stereotype.Controller;
 
-@Controller
+//@Controller
 public class W_CustomerController {
 
 	

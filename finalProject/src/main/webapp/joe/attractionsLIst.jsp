@@ -16,7 +16,7 @@
 <script type="text/javascript">
 
 function cart(event) {
-	var data;
+	 
 	var cart = event.target;
 	if ($(cart).attr("class") == "btn btn-secondary my-2") {
 		$(cart).attr("class", "btn btn-primary my-2");	
@@ -24,7 +24,7 @@ function cart(event) {
 		 var val =  "#"+$(cart).attr("value");
 		alert("insert val : "+val);
 		
-		 data = $(val).serialize();
+		var data = $(val).serialize();
 		alert("insert data : "+data);
 		$.ajax({
 			url : "cartInsert",
@@ -37,9 +37,10 @@ function cart(event) {
 		})//ajax끝
 	}else if ($(cart).attr("class") == "btn btn-primary my-2") {
 		$(cart).attr("class", "btn btn-secondary my-2");
-
 		var val =  "#"+$(cart).attr("value");
-		
+		alert(val);
+		var data = $(val).serialize();
+		alert(data);
 		$.ajax({
 			url : "cartDelete",
 			Type : "POST",
@@ -51,6 +52,7 @@ function cart(event) {
 		})//ajax끝 
 	}		
 }
+
 
 $(function () {
    var continent = "<%=session.getAttribute("continent") %>"

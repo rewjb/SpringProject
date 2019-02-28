@@ -21,132 +21,152 @@
 <script type="text/javascript">
 	
 	$(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
+		
 	// 정규식을 변수에 할당
 	// 변수 이름을 're_'로 정한것은 'Reguar Expression'의 머릿글자
 		// 아이디(이메일) 검사식 : 소문자,대문자,숫자 @ 소문자 . 소문자 2-3글자
-// 		var re_inputMid = /^[a-zA-Z0-9]+@[a-z]*+\.[a-z]{2,3}$/; 
+		var re_email = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
 		// 비밀번호 검사식 : 소문자,대문자,숫자 / 6~18자
-		var re_inputMpw = /^[a-zA-Z0-9]{6,18}$/; 
+		var re_pw = /^[a-zA-Z0-9]{6,18}$/; 
 		// 유저이름 검사식 : 소문자,대문자,숫자,_ / 3~16자
-		var re_inputMname = /^[a-zA-Z0-9_-]{3,16}$/; 
-		// 모든 공백 정규식 : 
-		var re = /\w+\s/g;
-				
+		var re_name = /^[a-zA-Z0-9_-]{3,16}$/; 
 		
-		// 선택할 요소를 변수에 할당
-		var emForm = $('#EmForm');
-		var inputMname = $('#inputMname');
-		var inputMpw = $('#inputMpw');
-		var inputMid = $('#inputMid');
+		//식을 간단하게 하기 위해 변수에 담아주기
+		var id = $('#inputMid');
+		var pw = $('#inputMpw');
+		var cf = $("#inputConform"); //비밀번호 확인
+		var name = $('#inputMname');
 
-		// 서밋 이벤트가 발생하면 실행한다
-		// if (사용자 입력 값이 정규식 검사에 의해 참이 아니면) {포함한 코드를 실행}
-		// if 조건절 안의 '정규식.test(검사할값)' 형식은 true 또는 false를 반환한다
-		// if 조건절 안의 검사 결과가 '!= true' 참이 아니면 {...} 실행
-		// 사용자 입력 값이 참이 아니면 alert을 띄운다
-		// 사용자 입력 값이 참이 아니면 오류가 발생한 input으로 포커스를 보낸다
-		// 사용자 입력 값이 참이 아니면 form 서밋을 중단한다
-/*
-		$("#signup").click(function() {
-			if (re_inputMid.test(inputMid.val()) != true) { // 아이디(이메일) 검사
-				alert('[ID 입력 오류] 유효한 이메일 주소를 입력해 주세요.');
-				$("#inputMid").css("display", "inline")
-				inputMid.focus();
-				return false;
-			} else if (re_inputMpw.test(uinputMpw.val()) != true) { // 비밀번호 검사
-				alert('[PW 입력 오류] 유효한 inputMpw를 입력해 주세요.');
-				uinputMpw.focus();
-				return false;
-			} else if (re_inputMname.test(inputMname.val()) != true) { // 이름 검사
-				alert('[user name 입력 오류] 유효한 inputMname를 입력해 주세요.');
-				uinputMname.focus();
-				return false;
-			} 
-		}); 
-*/
-		
-		//#inputMid 인풋에서 onkeyup 이벤트가 발생하면
-		//abc@spring.com 유효한 메일 주소를 입력해주세요.	
-		$("#inputMid").keyup(function() {
-			var s = $("#feedback-inputMid"); //feedback div
-			if (inputMid.val().length == 0) { // 입력 값이 없을 때
-				s.text(''); // feedback 요소에 포함된 문자 지움
-			} else if (inputMid.val().length > 30) { // 입력 값이 30보다 클 때
-				s.text('너무 길어요.'); // feedback div에 문자 출력
-			} else { // 길이가 적당할때
-				var email = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
-				if (!email.test(inputMid.val())) { // 아이디(이메일) 검사
-					s.text('유효한 이메일 주소를 입력해 주세요.')
-				}else{
-					alert("유효성 통과");
-					var mid = $("#inputMid").val();
-					alert("확인할 값 : "+mid);
-					$.ajax({
-						url:"checkMid?mid="+mid,
-						type:"GET",
-						success: function(result){
-							alert("확인");						
-							s.text(result+'적당합니다'); // feedback div에 문자 출력
-						}//end success
-					});//end ajax
-					
-				}
+		//유효성 결과를 화면에 띄워주는 함수
+		function hasColor(var input, var v){
+			if(v == 0){ //success
 				
+			}else if{
+				
+			}
+			input.parent().attr("class", v1);
+			input.attr("class",v2);				
+		}
+		
+		//ID유효성 : #inputMid에서 onkeyup 이벤트가 발생시
+ 		id.keyup(function() {
+ 			//feedback div : 피드백 내용을 모여주는 div
+ 			var f = $("#feedback-inputMid");
+ 			//유효성 검사
+ 			if (id.val().length == 0) { // 입력 값이 없을 때
+ 				//기본설정
+ 				hasColor(id,"form-group","form-control");
+ 				f.text(''); // feedback 요소에 포함된 문자 지움
+ 			} else if (id.val().length > 30) { 
+ 				//기준보다 입력값이 길때
+ 				hasColor(id,"form-group has-danger","form-control is-invalid");
+ 				f.text('너무 길어요.'); // feedback div에 문자 출력
+ 			} else { 
+ 				// 길이가 적당할때 - 유효성 검사
+ 				if (!re_email.test(id.val())) { // 아이디(이메일) 검사
+	 				hasColor(id,"form-group has-danger","form-control is-invalid");
+ 					f.text('spring@abc.com 유효한 메일 주소를 입력해주세요.')
+ 				} else { //유효성 검사 통과 후 중복 아이디 확인
+ 					var mid = id.val();
+ 					$.ajax({
+ 						url : "checkMid?mid=" + mid,
+ 						type : "GET",
+ 						success : function(result) {
+			 				hasColor(id,"form-group has-success","form-control is-valid");
+ 			 				f.text(''); // feedback 요소에 포함된 문자 지움
+ 			 				//중복아이디 확인까지 끝나면 값 세팅
+ 							$("#mid").val(result);
+ 						}//end success
+ 					});//end ajax
+ 				}//end if()
+ 			}//end if
+ 		});//end keyup()
+		
+		//pw유효성 : #inputMpw에서 onkeyup 이벤트가 발생시
+		pw.keyup(function() {
+			//feedback div : 피드백 내용을 모여주는 div
+			var f = $("#feedback-inputMpw"); 
+			//유효성 검사
+			if (pw.val().length == 0) { // 입력 값이 없을 때
+				f.text(''); // feedback 요소에 포함된 문자 지움
+			} else if(pw.val().length < 6){
+				f.text('6자 이상 입력해주세요') // feedback div에 문자 출력
+			} else if (pw.val().length > 18) { 
+				f.text('18자 이내로 입력해주세요'); // feedback div에 문자 출력
+			} else { // 길이가 적당할때 - 유효성 검사
+				if (!re_pw.test(pw.val())) { // 비밀번호 검사
+					f.text('영문 대소문자와 숫자를 사용하여 6~18자 사이로 만들어주세요.')
+				} else {
+					var mpw = pw.val();
+					console.log("pw : " + mpw);
+					f.text(''); // feedback 요소에 포함된 문자 지움
+				}//end if()
 			}//end if
 		});//end keyup()
-
-		/* 
-		// #inputMpw 인풋에서 onkeyup 이벤트가 발생하면
-		inputMpw.keyup(function() {
-			var s = $(this).next('strong'); // strong 요소를 변수에 할당
-			if (inputMpw.val().length == 0) { // 입력 값이 없을 때
-				s.text(''); // strong 요소에 포함된 문자 지움
-			} else if (uinputMpw.val().length < 6) { // 입력 값이 6보다 작을 때
-				s.text('너무 짧아요.'); // strong 요소에 문자 출력
-			} else if (uinputMpw.val().length > 18) { // 입력 값이 18보다 클 때
-				s.text('너무 길어요.'); // strong 요소에 문자 출력
-			} else { // 입력 값이 6 이상 18 이하일 때
-				s.text('적당해요.'); // strong 요소에 문자 출력
-			}
-		});
 		
+		//pw유효성 : #inputConform에서 onkeyup 이벤트가 발생시
+		cf.keyup(function() {
+			//feedback div : 피드백 내용을 모여주는 div
+			var f = $("#feedback-inputMpw1"); 
+			//유효성 검사
+			if (pw.val().length == 0) { // 입력 값이 없을 때
+				f.text(''); // feedback 요소에 포함된 문자 지움
+			} else if(cf.val() != pw.val()){
+				var mcf = cf.val();
+				console.log("cf : " + mcf);
+				f.text('비밀번호가 일치하지 않습니다.') // feedback div에 문자 출력
+			} else { // 비밀번호가 일치할때
+				var mcf = cf.val();
+				console.log("cf : " + mcf);
+				$("#mpw").val(mcf);
+				f.text(''); // feedback 요소에 포함된 문자 지움
+			}//end if()
+		});//end keyup()
+		 
+			 
+		//name유효성 : #inputMname에서 onkeyup 이벤트가 발생시
+		name.keyup(function() {
+			//feedback div : 피드백 내용을 모여주는 div
+			var f = $("#feedback-inputMname"); 
+			//유효성 검사
+			if (name.val().length == 0) { // 입력 값이 없을 때
+				f.text(''); // feedback 요소에 포함된 문자 지움
+			} else if(name.val().length < 3){
+				f.text('3자 이상 입력해주세요') // feedback div에 문자 출력
+			} else if (name.val().length > 16) { 
+				f.text('16자 이내로 입력해주세요'); // feedback div에 문자 출력
+			} else { // 길이가 적당할때 - 유효성 검사
+				if (!re_name.test(name.val())) { // 아이디(이메일) 검사
+					f.text('영문 대소문자와 숫자를 사용하여 3~16자 사이로 만들어주세요.')
+				} else {
+					var mname = name.val();
+					$.ajax({
+						url : "checkMname?mname=" + mname,
+						type : "GET",
+						success : function(result) {
+							f.text('사용 가능한 이름 입니다.'); // feedback div에 문자 출력
+							f.css("color", "grey")
+							$("#mname").val(result)
+						}//end success
+					});//end ajax
+				}//end if()
+			}//end if
+		});//end keyup()
 		
-		// 원본 : #inputMpw 인풋에서 onkeyup 이벤트가 발생하면
-		inputMpw.keyup(function() {
-			var s = $(this).next('strong'); // strong 요소를 변수에 할당
-			if (uinputMpw.val().length == 0) { // 입력 값이 없을 때
-				s.text(''); // strong 요소에 포함된 문자 지움
-			} else if (uinputMpw.val().length < 6) { // 입력 값이 6보다 작을 때
-				s.text('너무 짧아요.'); // strong 요소에 문자 출력
-			} else if (uinputMpw.val().length > 18) { // 입력 값이 18보다 클 때
-				s.text('너무 길어요.'); // strong 요소에 문자 출력
-			} else { // 입력 값이 6 이상 18 이하일 때
-				s.text('적당해요.'); // strong 요소에 문자 출력
-			}
-		}); 
-		*/
-
-		// #tel 인풋에 onkeydown 이벤트가 발생하면
-		// 하이픈(-) 키가 눌렸는지 확인
-		// 하이픈(-) 키가 눌렸다면 입력 중단
-/* 
-		tel.keydown(function() {
-			if (event.keyCode == 109 || event.keyCode == 189) {
-				return false;
-			}
-		});
-		
- */		
+		$("#signup").click(function() {
+			
+		})
 	});
 </script>
 <style type="text/css">
 	.feedback{
 		text-align : left;
 		padding-left : 5px;
+		padding-top : -10px;
 		color:red;
 		font-size: 10px;
 	}
-</style>
+</style> 
 
 </head>
 <body class="text-center">
@@ -166,27 +186,34 @@
                <td></td>
                <td style="width: 300px;">
                  <form id="EmForm" class="form-signin" style="width: 300px;">
-                    <!-- 아이디 비밀번호 입력 폼 -->
-                    <label for="inputEmail" class="sr-only">Email address</label> 
-                    <input type="email" id="inputMid" class="form-control"
-                       placeholder="Email address" required autofocus><!--  onkeyup="midCheck" -->
-                    <div id="feedback-inputMid" class="feedback"></div>
+                    <!-- MID 아이디(이메일) 입력 폼 -->
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Email address" id="inputMid">
+	                    <div class="feedback" id="feedback-inputMid"></div>
+					</div>
+
                     <div style="height: 7px;"></div> 
-                    <label for="inputPassword" class="sr-only">Password</label> 
-                    <input type="password" id="inputMpw" class="form-control"
-                       placeholder="Password" required>
-  					<div id="feedback-inputMpw" class="feedback">영문 대소문자와 숫자를 사용하여 6~18자 사이로 만들어주세요.</div>
+                    
+                    <!-- MPW 비밀번호 입력 폼 -->
+					<div class="form-group">
+	                    <input type="password" id="inputMpw" class="form-control" placeholder="Password" required>
+	  					<div id="feedback-inputMpw" class="feedback"></div>
+					</div>
                     <div style="height: 3px;"></div> 
-                    <label for="inputConform" class="sr-only">Password</label> 
-                    <input type="password" id="inputConform" class="form-control"
-                       placeholder="Password Conform" required>
-                    <div id="feedback-inputMid3" class="feedback">비밀번호가 일치하지 않습니다.</div>
+					<div class="form-group">
+	                    <input type="password" id="inputConform" class="form-control" placeholder="Password Conform" required>
+	                    <div id="feedback-inputMpw1" class="feedback"></div>
+					</div>  
+					                  
                     <div style="height: 7px;"></div> 
-                    <label for="inputUserName" class="sr-only">UserName</label> 
-                    <input type="text" id="inputMname" class="form-control"
-                       placeholder="UserName" required>
-                    <div id="feedback-inputMname" class="feedback" style="width: 100%;">유효한 이름을 입력해 주세요.</div>
-                 </form>
+                    
+                    <!-- 이름 입력 폼 -->
+                    <div class="form-group">
+	                    <input type="text" id="inputMname" class="form-control" placeholder="UserName" required>
+	                    <div id="feedback-inputMname" class="feedback" style="width: 100%;"></div>
+                    </div>
+
+				</form>
                   
                   <!-- 이메일 회원가입 -->
                   <%@ include file="loginEm.jsp" %>
@@ -246,18 +273,19 @@
                <td></td>
             </tr>
             <tr>
-               <td></td>
-               <td>
-                  <div style="height: 150px;">
-                     <!-- 외부 로그인 성공시 데이터를 담아놨다가 넘겨주는 공간 -->
-                     <form id="hidden" action="insertMember.jsp">
-                        <input type="text" id="mid" name="mid" class="hidden"><br>
-                        <input type="text" id="mpw" name="mpw" class="hidden"><br>
-                        <input type="text" id="mname" name="mname" class="hidden"><br>
-                        <input type="text" id="mprofile" name="mprofile" class="hidden"><br>
-                        <img id="imgTest" src="">
-                     </form>
-                  </div>
+              <td></td>
+              <td>
+				<div style="height: 150px;">
+                    <!-- 외부 로그인 성공시 데이터를 담아놨다가 넘겨주는 공간 -->
+						<form id="hidden" action="insertMember.jsp">
+							<input type="text" id="mid" name="mid" class="hidden"><br>
+							<input type="text" id="mpw" name="mpw" class="hidden"><br>
+							<input type="text" id="mname" name="mname" class="hidden"><br>
+							<input type="text" id="mprofile" name="mprofile" class="hidden"
+								value="/springProject/resources/IMAGE/LoginLogo/user.png"><br>
+							<img id="imgTest" src="/springProject/resources/IMAGE/LoginLogo/user.png" style="width: 100px">
+						</form>
+					</div>
                </td>
                <td></td>
             </tr>

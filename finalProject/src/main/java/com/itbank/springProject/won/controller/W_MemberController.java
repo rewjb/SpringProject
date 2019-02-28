@@ -71,7 +71,7 @@ public class W_MemberController{
 	//회원가입시 아이디 중복확인
 	@RequestMapping("won/checkMid")
 	@ResponseBody
-	public String checkId(@RequestParam("mid") String mid, MemberDTO dto){
+	public String checkMid(@RequestParam("mid") String mid, MemberDTO dto){
 		System.out.println("아이디 중복확인 mid:"+ mid);
 		System.out.println("아이디 중복확인 dto:"+ dto.getMid());
 		try {
@@ -89,9 +89,31 @@ public class W_MemberController{
 			e.printStackTrace();
 			System.out.println("select실패");
 		}
-		
 		return mid; 
-		
+	}
+	
+	//회원가입시 이름 중복확인
+	@RequestMapping("won/checkMname")
+	@ResponseBody
+	public String checkMname(@RequestParam("mname") String mname, MemberDTO dto){
+		System.out.println("이름 중복확인 mname:"+ mname);
+		System.out.println("이름 중복확인 dto:"+ dto.getMname());
+		try {
+			dto.setMname(mname);
+			MemberDTO mdto = memberDAO.selectName(dto);
+			if(mdto == null || mdto.getMname().equals("")){
+				System.out.println("존재하지 않는 이름! 사용 가능합니다!");
+			}else{
+				System.out.println("존재하는 이름! 사용 가능!");
+			}
+			//로그인 성공시 name을 세션에 넣어줌
+			
+		} catch (Exception e) {
+			//실패시 회원가입 페이지로 돌아감
+			e.printStackTrace();
+			System.out.println("select실패");
+		}
+		return mname; 
 	}
 	
 	//로그인을 위한 확인

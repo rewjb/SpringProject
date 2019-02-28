@@ -33,6 +33,10 @@ public class MemberDAO{
 		return session.selectOne("member.select", dto);
 	}
 	
+	public MemberDTO selectName(MemberDTO dto) throws Exception {	
+		return session.selectOne("member.selectName", dto);
+	}
+	
 	public List<MemberDTO> selectAll() throws Exception {
 		return session.selectList("member.selectAll");
 	}

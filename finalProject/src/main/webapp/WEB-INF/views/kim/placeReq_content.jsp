@@ -115,7 +115,7 @@
 <div class="col-12 pt-3">
 
   <fieldset>
-    <legend class="display-4" style="text-align: center;">승인대기중인 여행지</legend>
+    <legend class="display-4" style="text-align: center; font-family: 'Do Hyeon', sans-serif;">승인대기중인 여행지</legend>
 	<form method="post" enctype="multipart/form-data" action="imgTest.jsp" id="form">
 	    <hr>
 	    <div class="card border-secondary mb-3 margin-auto" style="max-width: 50rem;">
@@ -137,7 +137,8 @@
 		<hr>
 	</form>
     
-<form action="placeReq_accept">
+<form action="placeReq_accept" style="text-align: left;">
+	<div style="width: 500px; display: inline-block;">
     <div class="form-group">
       <label for="exampleSelect1">대륙</label>
       <select class="form-control" id="continent" name="continent">
@@ -156,19 +157,34 @@
       <label for="exampleInputEmail1">여행지 명</label>
       <input type="text" class="form-control" id="title" name="title" value="${dto.title }">
     </div>
+      <label for="exampleInputEmail1">경위도</label>
+    <div class="form-group" style="width: auto;">
+      <div style="width: 245px; display: inline-block;">
+      <input type="text" class="form-control" id="longitude" name="longitude" placeholder="경도">
+      </div>
+      <div style="width: 245px; display: inline-block;">
+      <input type="text" class="form-control" id="latitude" name="latitude" placeholder="위도">
+      </div>
+    </div>   
+    <div class="form-group">
+      <label for="exampleInputEmail1">태그</label>
+      <input type="text" class="form-control" id="category" name="category" value="g">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">id</label>
+      <input type="text" class="form-control" id="id" name="id" value="">
+    </div>
+    </div>
+    
+    <!-- 구글 맵 들어갈 공간 -->
+    <div style="width: 500px; height: 450px;  display: inline-block; padding-left: 80px;">
+    	<div style="width: 450px; height: 450px; background-color: lightgrey;">
+    	</div>
+    </div>
+    
     <div class="form-group">
       <label for="exampleInputEmail1">주소</label>
       <input type="text" class="form-control" value="${dto.address }">   
-    </div>
-      <label for="exampleInputEmail1">경위도</label>
-    <div class="form-group" style="width: auto;">
-      <div style="width: 200px; display: inline-block;">
-      <input type="text" class="form-control" id="longitude" name="longitude" placeholder="경도">
-      </div>
-      <div style="width: 200px; display: inline-block;">
-      <input type="text" class="form-control" id="latitude" name="latitude" placeholder="위도">
-      </div>
-    
     </div>
     <div class="form-group">
       <label for="exampleTextarea">소개</label>
@@ -177,14 +193,6 @@
     <div class="form-group">
       <label for="exampleTextarea">설명</label>
       <textarea class="form-control" id="contentElements" name="contentElements" rows="5">${dto.contentElements }</textarea>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">태그</label>
-      <input type="text" class="form-control" id="category" name="category" value="g">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">id</label>
-      <input type="text" class="form-control" id="id" name="id" value="">
     </div>
     
     <input type="hidden" id="mainImg" name="mainImg" value="${dto.mainImg }">

@@ -16,12 +16,14 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+<!-- 	결과를 담아 호출할 VIEW파일의 위치설정 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
 	<context:component-scan base-package="com.itbank.springProject" />
+<!-- 	프로젝트의 기본적인 패키지 설정 ! 즉 class ? ? -->
 	
 	
 	

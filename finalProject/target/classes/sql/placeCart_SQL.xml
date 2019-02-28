@@ -22,11 +22,13 @@
 		<result property="mid" column="mid" />
 	</resultMap>
 		
-	<delete id="delete" parameterType="String">
-		delete from PLACECART where pid = #{value}
+	<delete id="delete" parameterType="PlaceCartDTO">
+		delete from PLACECART where mid = #{mid} and pid=#{pid}
 	</delete>	
 		
-		
+	<select id="midSelect" parameterType="String" resultMap="rs">
+		select * from PLACECART where mid = #{value}
+	</select>	
 		
 	
 </mapper>

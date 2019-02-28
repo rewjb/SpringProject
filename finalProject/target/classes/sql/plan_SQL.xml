@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="selectAllPid" parameterType="ShareProjectDTO" resultType="PlanDTO">
-	select mid,ptitle,pid from PLAN 
+	select mid,ptitle,pid,mainImg from PLAN 
 	where  ptitle=#{ptitle} and mid=#{mid} 
 	</select>
 	
@@ -37,7 +37,7 @@
 	</insert>
 	
 	<delete id="deleteAllById"  parameterType="PlanDTO">
-	delete from PLAN where mid =  #{mid}
+	delete from PLAN where mid = #{mid} and ptitle=#{ptitle}
 	</delete>
 	
 </mapper>

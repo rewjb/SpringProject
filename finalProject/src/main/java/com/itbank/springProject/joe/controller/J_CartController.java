@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.springProject.db.AttractionsDAO;
 import com.itbank.springProject.db.AttractionsDTO;
@@ -46,8 +47,17 @@ public class J_CartController {
 		System.out.println(placeCartDTO.getMid());
 		
 		placeCartDAO.cartInsert(placeCartDTO);
-		model.addAttribute("dto", attractionsDAO.select(placeCartDTO.getPid()));
-		return "joe/j_cart";
+		ArrayList<PlaceCartDTO> list = 	(ArrayList<PlaceCartDTO>)placeCartDAO.midSelect(placeCartDTO.getMid());
+		ArrayList<AttractionsDTO> attList = new ArrayList<>();
+		
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				attList.add(attractionsDAO.select(list.get(i).getPid()));
+			}
+		}
+		model.addAttribute("list", attList);
+		
+		return "joe/cartList";
 	}
 	
 	
@@ -65,16 +75,10 @@ public class J_CartController {
 		model.addAttribute("list", attList);
 		return "joe/cartList";
 	}
-	
-	@RequestMapping("joe/cartDelete")
-	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
+	@RequestMapping("joe/midCartList")
+	public String midCartList(PlaceCartDTO placeCartDTO,Model model) {
 		
-		System.out.println(placeCartDTO.getPid());
-		
-		
-		placeCartDAO.delete(placeCartDTO.getPid());
-		
-		ArrayList<PlaceCartDTO> list = (ArrayList)placeCartDAO.selectAll();
+		ArrayList<PlaceCartDTO> list = 	(ArrayList<PlaceCartDTO>)placeCartDAO.midSelect(placeCartDTO.getMid());
 		ArrayList<AttractionsDTO> attList = new ArrayList<>();
 		
 		if (list.size() != 0) {
@@ -84,12 +88,40 @@ public class J_CartController {
 		}
 		model.addAttribute("list", attList);
 		
-		
 		return "joe/cartList";
+	}
+	
+	@RequestMapping("joe/midCart")
+	@ResponseBody
+	public List<PlaceCartDTO> midCart(PlaceCartDTO placeCartDTO) {
+		return placeCartDAO.midSelect(placeCartDTO.getMid());
 	}
 	
 	
 	
+	
+	@RequestMapping("joe/cartDelete")
+	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
+		
+		System.out.println(placeCartDTO.getPid());
+		
+		
+		placeCartDAO.delete(placeCartDTO);
+		
+		ArrayList<PlaceCartDTO> list = (ArrayList<PlaceCartDTO>)placeCartDAO.selectAll();
+		ArrayList<AttractionsDTO> attList = new ArrayList<>();
+		System.out.println("list" + list.size());
+		
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				attList.add(attractionsDAO.select(list.get(i).getPid()));
+			}
+		}
+		model.addAttribute("list", attList);
+		System.out.println(attList.size());
+		
+		return "joe/cartList";
+	}
 	
 	
 	@RequestMapping("joe/crawling")

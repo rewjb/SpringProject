@@ -88,6 +88,7 @@ public class VisionMethod {
 			
 //			HashMap<String, Integer> tagsRank = new HashMap<>();			
 //			ArrayList<TagDTO> tagList = new ArrayList<>();
+			
 			HashMap<String, String> tagList = new HashMap<>();
 			
 			for(int i = 0; i < imgs.length; i++){

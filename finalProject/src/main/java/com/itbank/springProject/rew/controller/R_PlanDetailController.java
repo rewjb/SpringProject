@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.springProject.db.Mongo_ShareProjectDAO;
 import com.itbank.springProject.db.Mongo_ShareProjectDTO;
+import com.itbank.springProject.db.PlaceCartDAO;
 import com.itbank.springProject.db.PlanDAO;
 import com.itbank.springProject.db.PlanDTO;
 
@@ -25,6 +26,10 @@ public class R_PlanDetailController {
 	@Autowired
 	@Qualifier("PlanDAO")
 	private PlanDAO planDAO;
+	
+	@Autowired
+	@Qualifier("PlaceCartDAO")
+	private PlaceCartDAO placeCartDAO;
 	
 	@Autowired
 	@Qualifier("Mongo_ShareProjectDAO")
@@ -38,6 +43,7 @@ public class R_PlanDetailController {
 		model.addAttribute("planDetail_list" , planDAO.selectAllById(planDTO));
 		model.addAttribute("mid", mid);
 		model.addAttribute("ptitle", ptitle);
+		model.addAttribute("cart_list", placeCartDAO.selectCartAll("temp"));
 	}
 	
 	@RequestMapping("rew/getCommentInfoAjax")

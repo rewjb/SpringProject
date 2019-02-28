@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -23,21 +24,14 @@ public class testmongo2 {
 	// 아이디1000000354101
 	public static void main(String[] args) {
 
-		MongoClient mongoClient = new MongoClient("localhost", 27017);
-		MongoDatabase data =  mongoClient.getDatabase("tag");
+//		ServerAddress asd = new ServerAddress("34.73.155.96:27017");
 		
-//		MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, "tag");
+		MongoClient mongoClient = new MongoClient("34.73.155.96", 27017);
+		MongoDatabase data =  mongoClient.getDatabase("tag");
 
 		MongoCollection<Document> collectionPlace = data.getCollection("place");
-//		MongoCollection<Document> collectionsharePlace = data.getCollection("sharePlace");
-
-//		List<Document> condition = new ArrayList<>();
-//
-//		condition.add(new Document("id", "1000000212101"));
-//		condition.add(new Document("id", "1000000348101"));
-//		condition.add(new Document("id", "1000000354101"));
 		
-		collectionPlace.insertOne(new Document("dd","sad"));
+//		collectionPlace.insertOne(new Document("dd","sad"));
 
 		MongoCursor<Document> result = collectionPlace.find().iterator();
 //		MongoCursor<Document> result = collectionPlace.find(new Document("$or", condition)).iterator();

@@ -30,8 +30,8 @@ public class PlaceCartDAO {
 		return session.selectList("PlaceCart.selectAll");
 	}
 	
-	public void delete(String pid) {
-		session.delete("PlaceCart.delete", pid);
+	public int delete(PlaceCartDTO placeCartDTO) {
+		return session.delete("PlaceCart.delete", placeCartDTO);
 	}
 	
 	

@@ -39,7 +39,7 @@
 				<td alt="Project_detail_num" class="btn-dark"><h3>
 				${planDetail_list.num}
 				</h3></td>
-				<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="http://placehold.it/500x300"></td>
+				<td alt="Project_detail_img"><img  alt="img" style="outline: 1px solid;width: 140px; height: 105px"	src="/springProject/resources/IMAGE/attractionsImg/${planDetail_list.mainImg}" onerror="errImage(this)"></td>
 				<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">
 				<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">
 				<h5 style="margin: 0px;">
@@ -92,10 +92,40 @@
 							<li class="nav-item active"><a class="nav-link" href="#">
 									장바구니 </a></li>
 						</ul>
-						<input class="form-control" type="text" placeholder="Search"
-							style="width: 200px; margin-right: 10px;">
+						<input class="form-control" type="text" placeholder="Search" style="width: 200px; margin-right: 10px;">
 					</div>
 					</nav>
+                   
+					<!-- 관광명소 테이블 -->		
+					<table class="table table-striped" style="width: 100%;word-break:break-word;border: 1px">
+						<thead>
+							<tr>
+								<th colspan="3"><input class="form-control" id="Cart-Search" type="text" placeholder="관광명소명을 입력" onkeyup="Cart_Search(this);"></th>
+							</tr>
+						</thead>
+						<tbody>
+						
+					<c:forEach items="${cart_list}" var="cart_list">
+							<form alt="나는 form!">
+							<tr>
+								<th style="padding: 2px;width:66px">
+								 <img  style="width:66px;height:50px;vertical-align: middle;"  class="img-fluid" src="/springProject/resources/IMAGE/attractionsImg/${cart_list.mainImg}" alt="${cart_list.mainImg}">
+								</th>
+								<td alt="Cart-Content" style="vertical-align: middle;">${cart_list.title}</td>
+								<td style="width:80px;padding: 0px;vertical-align :middle;text-align: right;" alt="asd" >
+								<input type="submit" value="삭제" alt="de" onclick="cart_button();">
+								</td>
+							</tr>
+							</form>
+					 </c:forEach>
+						</tbody>
+					</table>
+					<!-- /.관광명소 테이블 -->		
+							
+							
+							
+							
+							
 				</div>
 				<!-- /.관광명소 장바구니 -->
 
@@ -176,12 +206,13 @@
    
 	var totalComment;
 	
+	function errImage(img) {
+		img.src='/springProject/resources/IMAGE/star/lostImg.png';
+	}
+	
 	 // 페이지 변환 메서드
     function pageChage(button) {
 		 
-	
-		 
-		
 		 var pageInCount = 10;
 		 //보여줄 댓글 수량
 		 

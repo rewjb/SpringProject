@@ -31,6 +31,7 @@ public class PlaceCartDAO {
 	}
 	public int delete(PlaceCartDTO placeCartDTO) {
 		return session.delete("PlaceCart.delete", placeCartDTO);
+	}
 	
 	public List<PlaceCartDTO> midSelect(String mid) {
 		return session.selectList("PlaceCart.midSelect", mid);

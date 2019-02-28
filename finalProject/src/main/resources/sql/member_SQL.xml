@@ -43,6 +43,11 @@
 		SELECT * FROM member
 		WHERE mid = #{mid}
 	</select>
+	<!-- name 중복여부 확인 -->
+	<select id="selectName" parameterType="MemberDTO" resultMap="rs">
+		SELECT * FROM member
+		WHERE mname = #{mname}
+	</select>
 	
 	<!-- ResultSet (wonHN) == property : 변수명 / column : 테이블 컬럼명 -->
 	<resultMap type="MemberDTO" id="rs">

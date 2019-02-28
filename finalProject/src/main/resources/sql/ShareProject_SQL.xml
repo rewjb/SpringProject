@@ -14,5 +14,9 @@
 	select PTITLE from SHAREPROJECT where mid=#{value}
 	</select>
 	
+	<delete id="deleteOneShareProject" parameterType="PlanDTO">
+	delete from SHAREPROJECT where mid = #{mid} and ptitle=#{ptitle}
+	</delete>
+	
 </mapper>
 

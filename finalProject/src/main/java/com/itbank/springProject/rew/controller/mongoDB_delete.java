@@ -128,7 +128,11 @@ public class mongoDB_delete {
 	    List<Document> bb = new ArrayList<>();
 	    bb.add(temp2);
 	    UpdateOptions aa = new UpdateOptions().arrayFilters(bb);
+	    
 		collection.updateOne( new Document("link.pid" , "doc1"), new Document("$pull", temp )  , aa);
+		
+		
+		
 		//"booksToRead.${_id:1}.referrer.${\"userId\": 3}.type : "general friend"
 		MongoCursor<Document> result = collection.find().iterator();
 		//System.out.println(result.next().toJson());

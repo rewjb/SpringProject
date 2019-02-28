@@ -5,7 +5,7 @@
 <mapper namespace="attractions">
 
 	 <select id="select" parameterType="String" resultType="attrDTO">
-		SELECT * FROM ATTRACTIONS WHERE id = #{value}
+		SELECT * FROM ATTRACTIONS WHERE pid = #{value}
 	</select>
 	
 	 <select id="selectCon" parameterType="String" resultMap="rs">

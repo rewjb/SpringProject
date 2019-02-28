@@ -144,10 +144,10 @@
 <body>
 <%@ include file="/UserMainHeader.jsp" %>
 
-
-	<div class="spinner-border"  id="loading" role="status" style="position:relative;z-index: 1"> 
-		<span class="sr-only">Loading...</span>
-	</div>
+<!-- 	<div class="spinner-border"  id="loading" role="status" style="position:relative;z-index: 1">  -->
+<!-- 		<span class="sr-only">Loading...</span> -->
+<!-- 	</div> -->
+<!-- 	로딩 -->
 	
 <script type="text/javascript">
 
@@ -177,7 +177,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 					<button class="btn btn-secondary" id="Project_ptitle">프로젝트 제목</button>
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active"><a class="nav-link" href="#"
-							onclick="return save_project();">저장</a></li> <!-- 작업중 -->
+							onclick="return save_project();">저장</a></li>
 						<li class="nav-item active"><a class="nav-link" onclick="Project_create_step();">
 							생성</a></li>
 						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_delete">
@@ -207,13 +207,16 @@ $('#loading').css('left',document.body.clientHeight/2);
 					<table class="table table-striped" style="width: 100%;word-break:break-word;">
 						<thead>
 							<tr>
-								<th colspan="2" style="vertical-align : middle;">
-								<input class="form-control" id="Project-Search" placeholder="계획서명을 입력" onkeyup="Project_Search(this);">
+								<th colspan="2" style="vertical-align : middle;width: 170px">
+								<input style="width: 100%" class="form-control" id="Project-Search" placeholder="계획서명을 입력"  onkeyup="Project_Search(this);">
 								</th>
-								<th style="text-align: right;">
+								<th style="text-align: right;padding: 0px;vertical-align: middle;">
 									<!-- 여행계획 프로젝트 생성 버튼 -->
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 60px">
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 60px;float: left;">
 									생성
+									</button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenterdelete" style="width: 60px;float: left;">
+									삭제
 									</button>
 									<!-- /.여행계획 프로젝트 생성 버튼 -->
 								</th>
@@ -222,7 +225,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 						<tbody id="Project-Container">
 						<c:forEach items="${project_list}" var="project_list">
 						 <c:choose>
-						  <c:when test="${fn:contains(projectShare_list, project_list)}">
+						  <c:when test="${projectShare_list.contains(project_list)}">
 							<tr>
 								<td style="background:cadetblue;" alt="Project-Content" colspan="3" onclick="Move_Project_Data(this);">${project_list}</td>
 							</tr>
@@ -256,7 +259,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 							<form alt="나는 form!" onsubmit="return cart_form();" >
 							<tr>
 								<th style="padding: 2px;width:66px">
-								 <img  style="width:66px;height:50px;vertical-align: middle;"  class="img-fluid" src="http://placehold.it/500x300" alt="${cart_list.mainImg}">
+								 <img  style="width:66px;height:50px;vertical-align: middle;"  class="img-fluid" src="/springProject/resources/IMAGE/attractionsImg/${cart_list.mainImg}" alt="${cart_list.mainImg}">
 								</th>
 								<td alt="Cart-Content" style="vertical-align: middle;">${cart_list.title}</td>
 								
@@ -269,8 +272,8 @@ $('#loading').css('left',document.body.clientHeight/2);
 								<input type="hidden" name="mainImg" value="${cart_list.mainImg}"><!-- 이미지 -->
 								
 								<td style="width:80px;padding: 0px;vertical-align :middle;" alt="asd" >
-								<input type="submit" class="R_button_insert" alt="in" onclick="cart_button();">
-								<input type="submit" class="R_button_delete" alt="de" onclick="cart_button();">
+								<input type="submit" value="" class="R_button_insert" alt="in" onclick="cart_button();">
+								<input type="submit" value="" class="R_button_delete" alt="de" onclick="cart_button();">
 								</td>
 							</tr>
 							</form>
@@ -309,6 +312,25 @@ $('#loading').css('left',document.body.clientHeight/2);
  </div>
  <!-- /.여행계획 프로젝트  생성 버튼 클릭시 생성되는 모달  -->
  
+ <!-- 여행계획 프로젝트  삭제 버튼 클릭시 생성되는 모달  -->
+ <div class="modal fade" id="exampleModalCenterdelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">계획서를 정말 삭제하시겠습니까?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel_button" class="btn btn-secondary" alt="cancel" data-dismiss="modal" onclick="finish_MakePlan(this);">취소</button>
+        <button type="button" id="save_button" class="btn btn-primary" alt="save" onclick="delete_project(this);">삭제</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ <!-- /.여행계획 프로젝트  삭제 버튼 클릭시 생성되는 모달  작업중--> 
+ 
  <!-- 프로젝트 step 컴포넌트 삭제시 모달  -->
  <div class="modal fade" id="Project_place_delete" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -346,6 +368,58 @@ $('#loading').css('left',document.body.clientHeight/2);
  
 			<script type="text/javascript">
 			
+			// 프로젝트 삭제
+			function delete_project(button) {
+				
+				$(button).prev().click();
+				
+				var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
+				var selectedName;
+				for (var i = 0; i < projectList_container.length; i++) {
+					if(projectList_container[i].style.outline=='blue solid 6px'){
+						selectedName = $(projectList_container[i]);
+						break;
+					}
+				}
+// 				alert(selectedName);
+// 				확인용
+
+                if (selectedName != null) {
+					
+                var ptitle = $('#Project_ptitle').text();
+
+				$.ajax({
+					url : "setDeleteProjcet?ptitle="+ptitle,
+					type : 'post',
+					dataType : "text",//반환받을 데이터 타입 선택
+					contentType : 'application/json',
+					success : function(result, confirm) {
+						
+						if (confirm == 'success') {
+							alert('프로젝트 삭제가 완료되었습니다.');
+							
+							var Project_children = $('#Project_container').children();
+
+					        for (var i = 1; i < Project_children.length; i++) {
+						    $(Project_children[i]).remove();
+				         	}
+					        
+					        selectedName.parent('tr').remove();
+							
+						}else {
+							alert('프로젝트 삭제 오류 발생');
+						}
+					}//success끝
+				})//ajax끝
+                	
+				}else {
+					alert('프로젝트를 선택하세요');
+				}
+				
+			}
+			// ...프로젝트 삭제
+			
+			
 			// 프로젝트 공유
 			function share_projcet(button) {
 				
@@ -367,7 +441,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 							alert('공유가 완료되었습니다.');
 							
 							var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
-							//작업중 id="projectList_container"
 							
 							for (var i = 0; i < projectList_container.length; i++) {
 								if(projectList_container[i].style.outline=='blue solid 6px'){
@@ -381,7 +454,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 					}//success끝
 				})//ajax끝
 		     	}else {
-					alert('여행계획을 공유할 수 없습니다.n\다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 삭제만 지원이 됩니다.');
+					alert('여행계획을 공유할 수 없습니다. \n다음 항목을 체크해주세요 \n1.여행공정의 내용을 채워주세요 \n2.공유중인 프로젝트는 삭제만 지원이 됩니다.');
 		     	}
 				
 			}
@@ -413,6 +486,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 
 				if (validity == true) {
 
+				var tempImgCount;
 					
 				for (var i = 0; i < steps.length; i++) {
 
@@ -433,7 +507,8 @@ $('#loading').css('left',document.body.clientHeight/2);
 							}      
 					        	//ptitle
 						        form.find('input[name=num]').val ($(steps[i]).find('td[alt=Project_detail_num] h3').text());
-					        	form.find('input[name=mainImg]').val($(steps[i]).find('img').attr('src'));
+						        tempImgCount = $(steps[i]).find('img').attr('src').split('/');
+					        	form.find('input[name=mainImg]').val(tempImgCount.pop());
 					          	form.find('input[name=title]').val($(steps[i]).find('h5').text());
 					        	form.find('input[name=content]').val($(steps[i]).find('span').text());
 					        	form.find('input[name=detail]').val($(steps[i]).find('textarea').val());
@@ -483,7 +558,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 						
 
 					} else {
-						alert('여행계획을 저장할 수 없습니다.\n다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 수정할 수 없습니다. ');
+						alert('여행계획을 저장할 수 없습니다. \n 다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 수정할 수 없습니다. ');
 					}
 				
 				 return false;
@@ -502,10 +577,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 					var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
 					var nowName = $('#Project_ptitle').text();
 					var selectedName;
-					
-					
-					//작업중 id="projectList_container"
-					
 					
 					for (var i = 0; i < projectList_container.length; i++) {
 						
@@ -677,7 +748,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 				// 여행계획 공정 생성
 				function Project_insert_element(num, src, title, content,
 						detail_content, latitude, longitude, distance, way , pid) {
-					//아직 src는 설정이 안되어 있다.
 
 					if (detail_content == null) {
 						detail_content = '';
@@ -694,7 +764,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 							+ '<td alt="Project_detail_num" class="btn-dark"><h3>'
 							+ num
 							+ '</h3></td>'
-							+ '<td alt="Project_detail_img"><img alt="img"	style="width: 140px; height: 105px"	src="'+src+'"></td>'
+							+ '<td alt="Project_detail_img"><img alt="img"	style="outline: 1px solid;width: 140px; height: 105px"	src="'+src+'" onerror="errImage(this)"></td>'
 							+ '<td alt="Project_detail_content" style="vertical-align: top; width: 100%;">'
 							+ '<div alt="Project_detail_content_head" style="border-bottom: 1px solid;">'
 							+ '<h5 style="margin: 0px;">'
@@ -735,6 +805,10 @@ $('#loading').css('left',document.body.clientHeight/2);
 
 				}
 				// ...여행계획 공정 생성
+				
+				function errImage(img) {
+					img.src='/springProject/resources/IMAGE/star/lostImg.png';
+				}
 
 				// 프로젝트 선택 시 = > 해당 프로젝트에 맞는 프로젝트를 불러온다.
 				function Move_Project_Data(data) {
@@ -782,8 +856,8 @@ $('#loading').css('left',document.body.clientHeight/2);
 
 										component = Project_insert_element(
 										//step과 move 갖고오기
-										result[i].num,
-												'http://placehold.it/500x300',
+									        	result[i].num,
+										        '/springProject/resources/IMAGE/attractionsImg/'+result[i].mainImg,
 												result[i].title,
 												result[i].content,
 												result[i].detail,
@@ -792,7 +866,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 														+ result[i].way,
 												'거리 : ' + result[i].distance
 														+ ' km / ' ,result[i].pid );
-
 										if (result[i].num != 1) {
 											$('#Project_container').append(
 													component.component_move);
@@ -887,8 +960,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 						
 						var temp = $('td[alt=Project-Content]');
 
-						alert(temp.length);
-						
 						if (temp.length == 0) {
 							
 							var component_text = '<tr>'
@@ -939,6 +1010,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 
 				// 장바구니에 있는 버튼 자바스크립트
 				var inNde;
+				var cartComponent;
 
 				function cart_form() {
 
@@ -982,7 +1054,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 						$(steps[step_num - 1]).next().remove();
 
 						var newStep = Project_insert_element(step_num,
-								'http://placehold.it/500x300',
+								'/springProject/resources/IMAGE/attractionsImg/'+dataObj['mainImg'],
 								dataObj['title'], dataObj['content'], '',
 								dataObj['latitude'], dataObj['longitude'],
 								'미정', '미정',dataObj['pid']).component_step
@@ -998,14 +1070,32 @@ $('#loading').css('left',document.body.clientHeight/2);
 								'a[alt=move]').text('이동경로를 설정하세요.');
 
 					} else {
-						alert('삭제');
+						
+						var pid = $(cartComponent).parents('tr').find('input[name=pid]').val();
+						
+						$.ajax({
+							url : "setDeleteCart?pid="+pid,
+							type : 'post',
+							dataType : "text",//반환받을 데이터 타입 선택
+							success : function(result, confirm) {
+								
+								if (result =='success') {
+						        $(cartComponent).closest('tr').remove();
+						        alert('삭제가 완료되었습니다.');
+								}else {
+								alert('삭제오류 발생!');
+								}
+							}//success끝
+						})//ajax끝
+						
 					}
 
 					return false;
 				}
 
 				function cart_button() {
-					inNde = $(event.target).attr('alt');
+					cartComponent = $(event.target);
+					inNde = $(cartComponent).attr('alt');
 					//console.log('inNde 값 = ' + inNde);
 				}
 				// ...장바구니에 있는 버튼 자바스크립트
@@ -1281,10 +1371,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 	   }else {
 		   
        }
-	
-	  
-	   
-	   
 	   
 	   if (back_latitude=='' && back_longitude=='') {
 		   

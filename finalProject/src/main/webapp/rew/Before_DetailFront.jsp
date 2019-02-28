@@ -10,7 +10,7 @@
  
 <form action="DetailPlan">
 <input type="hidden" name="mid" value="temp">
-<input type="hidden" name="ptitle" value="안녕">
+<input type="hidden" name="ptitle" value="ㄴㅇㅁㅇ">
 <input type="submit" value="여행상세페이지 이동!"> 
 </form>
 

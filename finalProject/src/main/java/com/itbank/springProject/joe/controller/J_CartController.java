@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.springProject.db.AttractionsDAO;
 import com.itbank.springProject.db.AttractionsDTO;
@@ -46,8 +47,17 @@ public class J_CartController {
 		System.out.println(placeCartDTO.getMid());
 		
 		placeCartDAO.cartInsert(placeCartDTO);
-		model.addAttribute("dto", attractionsDAO.select(placeCartDTO.getPid()));
-		return "joe/j_cart";
+		ArrayList<PlaceCartDTO> list = 	(ArrayList<PlaceCartDTO>)placeCartDAO.midSelect(placeCartDTO.getMid());
+		ArrayList<AttractionsDTO> attList = new ArrayList<>();
+		
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				attList.add(attractionsDAO.select(list.get(i).getPid()));
+			}
+		}
+		model.addAttribute("list", attList);
+		
+		return "joe/cartList";
 	}
 	
 	
@@ -65,13 +75,10 @@ public class J_CartController {
 		model.addAttribute("list", attList);
 		return "joe/cartList";
 	}
-	
-	@RequestMapping("joe/cartDelete")
-	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
+	@RequestMapping("joe/midCartList")
+	public String midCartList(PlaceCartDTO placeCartDTO,Model model) {
 		
-		placeCartDAO.delete(placeCartDTO.getPid());
-		
-		ArrayList<PlaceCartDTO> list = (ArrayList)placeCartDAO.selectAll();
+		ArrayList<PlaceCartDTO> list = 	(ArrayList<PlaceCartDTO>)placeCartDAO.midSelect(placeCartDTO.getMid());
 		ArrayList<AttractionsDTO> attList = new ArrayList<>();
 		
 		if (list.size() != 0) {
@@ -81,12 +88,40 @@ public class J_CartController {
 		}
 		model.addAttribute("list", attList);
 		
-		
 		return "joe/cartList";
+	}
+	
+	@RequestMapping("joe/midCart")
+	@ResponseBody
+	public List<PlaceCartDTO> midCart(PlaceCartDTO placeCartDTO) {
+		return placeCartDAO.midSelect(placeCartDTO.getMid());
 	}
 	
 	
 	
+	
+	@RequestMapping("joe/cartDelete")
+	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
+		
+		System.out.println(placeCartDTO.getPid());
+		
+		
+		placeCartDAO.delete(placeCartDTO);
+		
+		ArrayList<PlaceCartDTO> list = (ArrayList<PlaceCartDTO>)placeCartDAO.selectAll();
+		ArrayList<AttractionsDTO> attList = new ArrayList<>();
+		System.out.println("list" + list.size());
+		
+		if (list.size() != 0) {
+			for (int i = 0; i < list.size(); i++) {
+				attList.add(attractionsDAO.select(list.get(i).getPid()));
+			}
+		}
+		model.addAttribute("list", attList);
+		System.out.println(attList.size());
+		
+		return "joe/cartList";
+	}
 	
 	
 	@RequestMapping("joe/crawling")
@@ -180,7 +215,10 @@ public class J_CartController {
 	                        dto.setLongitude((String)jo.get("좌표(경도)"));
 	                        dto.setCategory((String)jo.get("태그"));
 	                        
-	                        attractionsDAO.insert(dto);
+	                     
+	                        if ( imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4])==0) {
+	                        	attractionsDAO.insert(dto);
+							}
 	                        
 	                        System.out.println(dto.getContinent());
 	                        System.out.println(dto.getCity());
@@ -198,7 +236,6 @@ public class J_CartController {
 	                        System.out.println(jo.get("메인이미지").toString());
 	                        
 	                        
-//	                        imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4]);
 	                     }//길찾기 값이 존재할때만 db저장 및 이미지저장
 
 	               }
@@ -243,22 +280,26 @@ public class J_CartController {
 	      return buffer;
 	   }
 	
-	 private void imageSave(String source, String fileName) {
+	 private int imageSave(String source, String fileName) {
 		 
 
+		 int check = 0;
+		 
          File outputFile = new File("C:\\Users\\user\\git\\SpringProject2\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
          try {
-        	
+        	if (outputFile.isFile()) {
+				check +=1;
+			}else{
             URL url = new URL(source);            // 이미지 소스를 url에 넣기
             BufferedImage imgBuffer = ImageIO.read(url);
             // 해당  소스를 읽어오기
             ImageIO.write(imgBuffer, "jpg", outputFile);
-            
+			}
 
          } catch (Exception e) {
             e.printStackTrace();
          }
-
+         	return check;
       }   // imageSave() : 메서드 종료
 	
 }

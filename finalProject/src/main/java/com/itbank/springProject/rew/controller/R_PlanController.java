@@ -1,11 +1,9 @@
 package com.itbank.springProject.rew.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,16 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.resource.HttpResource;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itbank.springProject.db.Mongo_ShareProjectDAO;
 import com.itbank.springProject.db.PlaceCartDAO;
+import com.itbank.springProject.db.PlaceCartDTO;
 import com.itbank.springProject.db.PlanDAO;
 import com.itbank.springProject.db.PlanDTO;
 import com.itbank.springProject.db.ShareProjectDAO;
 import com.itbank.springProject.db.ShareProjectDTO;
-import com.sun.javafx.collections.MappingChange.Map;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
 
 @Controller
 public class R_PlanController {
@@ -41,13 +41,11 @@ public class R_PlanController {
 	@Qualifier("ShareProjectDAO")
 	private ShareProjectDAO shareProjectDAO;
 
-//	@Autowired
-//	@Qualifier("Mongo_ShareProjectDAO")
-//	Mongo_ShareProjectDAO mongo_ShareProjectDAO;
+	Mongo_ShareProjectDAO mongo_ShareProjectDAO = new Mongo_ShareProjectDAO();
 
 	@RequestMapping("rew/insertShareProject")
 	@ResponseBody
-	public String cartSelectAll(@RequestParam("ptitle") String ptitle) {
+	public String cartSelectAll(@RequestParam("ptitle") String ptitle ,HttpSession session) {
 		String check = "good";
 
 		ShareProjectDTO shareProjectDTO = new ShareProjectDTO();
@@ -58,9 +56,28 @@ public class R_PlanController {
 			// 공유 실패
 			check = "bad";
 		} else {
+			
+			
+			HashMap<String, String> map = new HashMap<>();
+			MongoClient mongoClient = new MongoClient("34.73.155.96", 27017);
+			DB db = mongoClient.getDB("tag");
+			// 컬렉션 가져오기
+			DBCollection coll = db.getCollection("place");
+			DBCursor cursor = coll.find();
+			while (cursor.hasNext()) {
+				// 커서의 이름중에 _id인 컬럼 값만 출력
+				String val = cursor.next().toString().replaceAll("\"", "").replaceAll("}", "");
+				String val2 = val.substring(val.indexOf(",") + 1).replaceAll(" ", "");
+				String[] valRs = val2.split(":");
+				map.put(valRs[0] + ".jpg", valRs[1]);
+			}
+			
+			
+			
 			// 공유 성공
-//			mongo_ShareProjectDAO.mongoTest(planDAO.selectAllPid(shareProjectDTO));
-
+			mongo_ShareProjectDAO.createProjectInMongo(shareProjectDTO,
+					map,
+					planDAO.selectAllPid(shareProjectDTO));
 		}
 		return check;
 	}
@@ -89,6 +106,7 @@ public class R_PlanController {
 
 		for (int i = 0; i < planList.size(); i++) {
 			System.out.println(planList.get(i).getPid());
+			System.out.println(planList.get(i).getMainImg());
 		}
 
 		try {
@@ -109,6 +127,33 @@ public class R_PlanController {
 		}
 
 		return check;
+	}
+
+	@RequestMapping("rew/setDeleteProjcet")
+	@ResponseBody
+	public String setDeleteProjcet(@RequestParam("ptitle") String ptitle) {
+		String mid = "temp";
+		PlanDTO planDTO = new PlanDTO();
+		planDTO.setMid(mid);
+		planDTO.setPtitle(ptitle);
+		planDAO.deleteProjectData(planDTO);
+		shareProjectDAO.deleteOneShareProject(planDTO);
+		return "";
+	}
+
+	@RequestMapping("rew/setDeleteCart")
+	@ResponseBody
+	public String setDeleteCart(@RequestParam("pid") String pid) {
+		String mid = "temp";
+		PlaceCartDTO placeCartDTO = new PlaceCartDTO();
+		placeCartDTO.setMid(mid);
+		placeCartDTO.setPid(pid);
+
+		if (placeCartDAO.delete(placeCartDTO) == 1) {
+			return "success";
+		} else {
+			return null;
+		}
 	}
 
 }

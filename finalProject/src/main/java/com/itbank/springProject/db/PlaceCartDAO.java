@@ -30,11 +30,13 @@ public class PlaceCartDAO {
 		return session.selectList("PlaceCart.selectAll");
 	}
 	
-	public void delete(String pid) {
-		session.delete("PlaceCart.delete", pid);
+	public void delete(PlaceCartDTO dto) {
+		session.delete("PlaceCart.delete", dto);
 	}
 	
-	
+	public List<PlaceCartDTO> midSelect(String mid) {
+		return session.selectList("PlaceCart.midSelect", mid);
+	}
 	
 	
 }

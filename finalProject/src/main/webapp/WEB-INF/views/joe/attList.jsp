@@ -61,7 +61,7 @@
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
              <input type="hidden" name="mid" value="123">
-      <input type="hidden" name="pid" value="${list.pid}" id ="${list.pid}">
+      <input type="hidden" name="pid" value="${list.pid}" >
             </form>
       </div>
       <!-- /.col-lg-4' -->
@@ -89,8 +89,8 @@
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
-             <input type="text" name="mid" value="123">
-      <input type="text" name="pid" value="${list.pid}">
+             <input type="hidden" name="mid" value="123">
+      <input type="hidden" name="pid" value="${list.pid}">
             </form>
       </div>
       <!-- /.col-lg-4' -->
@@ -167,9 +167,9 @@
 
    <div>
    <ul class="pagination pagination-lg">
-      <li class="page-item active"><a class="page-link" id="firstA">1</a>
+      <li class="page-item "><a class="page-link" id="firstA">1</a>
       </li>
-      <li class="page-item"><a class="page-link"  id="firstB" >2</a>
+      <li class="page-item active"><a class="page-link"  id="firstB" >2</a>
       </li>
       <li class="page-item"><a class="page-link"  id="firstC">3</a>
       </li>

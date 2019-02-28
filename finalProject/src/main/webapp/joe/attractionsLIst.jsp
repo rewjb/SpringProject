@@ -4,6 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%
+session.setAttribute("mid", "123");
+%>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
@@ -15,6 +18,39 @@
 
 <script type="text/javascript">
 
+function deleteCart(event) {
+	var deleteBtn = event.target;
+	alert(deleteBtn.value);
+	
+	$.ajax({ 
+	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+	         Type : "POST",
+	         success : function(result) {
+	        	 for (var i = 0; i < result.length; i++) {
+	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-secondary my-2");
+				}
+	        	 $.ajax({
+	        			url : "cartDelete?pid="+deleteBtn.value + "&mid=" + '<%=session.getAttribute("mid")%>',
+	        			Type : "POST",
+	        			success : function(result) {
+	        				$("#cartTable").empty();
+	        				$("#cartTable").append(result);
+	        		       
+	        				$.ajax({ 
+	        			         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+	        			         Type : "POST",
+	        			         success : function(result) {
+	        			        	 for (var i = 0; i < result.length; i++) {
+	        			        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+	        						}
+	        			         }
+	        			      });
+	        			}//success끝
+	        		})//ajax끝
+	         }
+	      });
+}
+
 function cart(event) {
 	 
 	var cart = event.target;
@@ -22,30 +58,32 @@ function cart(event) {
 		$(cart).attr("class", "btn btn-primary my-2");	
 
 		 var val =  "#"+$(cart).attr("value");
-		alert("insert val : "+val);
+// 		alert("insert val : "+val);
 		
 		var data = $(val).serialize();
-		alert("insert data : "+data);
+// 		alert("insert data : "+data);
 		$.ajax({
 			url : "cartInsert",
 			Type : "POST",
 			data : data,
 			success : function(result) {
 // 				alert(result);
+				$("#cartTable").empty();
 				$("#cartTable").append(result);
 			}//success끝
 		})//ajax끝
-	}else if ($(cart).attr("class") == "btn btn-primary my-2") {
+	}else if ($(cart).attr("class") == "btn btn-primary my-2") {//장바구니 취소 하는 ajax 인데 mid pid 둘 다 매개변수로 받아서 처리해야한다.
 		$(cart).attr("class", "btn btn-secondary my-2");
 		var val =  "#"+$(cart).attr("value");
-		alert(val);
+// 		alert(val);
 		var data = $(val).serialize();
-		alert(data);
+// 		alert(data);
 		$.ajax({
 			url : "cartDelete",
 			Type : "POST",
 			data : data,
 			success : function(result) {
+// 				alert(result);ss
 				$("#cartTable").empty();
 				$("#cartTable").append(result);
 			}//success끝
@@ -53,53 +91,137 @@ function cart(event) {
 	}		
 }
 
-
 $(function () {
    var continent = "<%=session.getAttribute("continent") %>"
    var city = "<%=session.getAttribute("city") %>"
    var tag = "<%=session.getAttribute("tag") %>"
-	if (continent=="null") {
+   var page = "<%=request.getParameter("page") %>"
+   
+	if (page=="null" ) {
+// 		alert("1");
       $.ajax({ 
-         url : "allList?page="+<%=request.getParameter("page") %> ,
+         url : "allList?page=null" ,
          Type : "POST",
          success : function(result) {
                $("#container").append(result);
+               
+               if ( '<%= session.getAttribute("mid") %>' != "null") {
+            		 $.ajax({ 
+            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+            	         Type : "POST",
+            	         success : function(result) {
+            	        	 for (var i = 0; i < result.length; i++) {
+            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+							}
+            	         }
+            	      });
+            	   }
          }
       });
 	}
+  
+	if (page !="null") {
+		alert("2");
+   $.ajax({ 
+       url : "allList?page=" + '<%=request.getParameter("page") %>',
+       Type : "POST",
+       success : function(result) {
+             $("#container").append(result);
+             if ( '<%= session.getAttribute("mid") %>' != "null") {
+        		 $.ajax({ 
+        	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+        	         Type : "POST",
+        	         success : function(result) {
+        	        	 for (var i = 0; i < result.length; i++) {
+        	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+						}
+        	         }
+        	      });
+        	   }
+       }
+    });
+	}
    
    if (continent != "null" && city != "null"  && tag != "null") {
+	   alert("3");
 	   $.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%> + "&continent=" + continent + "&city=" + city + "&category=" + tag,
 	         Type : "POST",
 	         success : function(result) {
 	        	 $("#container").empty();
 	               $("#container").append(result);
+	               if ( '<%= session.getAttribute("mid") %>' != "null") {
+	            		 $.ajax({ 
+	            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+	            	         Type : "POST",
+	            	         success : function(result) {
+	            	        	 for (var i = 0; i < result.length; i++) {
+	            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+								}
+	            	         }
+	            	      });
+	            	   }
 	            
 	         }
 	      });
 	   
 	}else if (continent != "null" && city != "null" && tag == "null") {
-		 $.ajax({ 
+		 alert("4");
+$.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%> + "&continent=" + continent + "&city=" + city,
 	         Type : "POST",
 	         success : function(result) {
 	        	 $("#container").empty();
 	             $("#container").append(result);
+	             if ( '<%= session.getAttribute("mid") %>' != "null") {
+            		 $.ajax({ 
+            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+            	         Type : "POST",
+            	         success : function(result) {
+            	        	 for (var i = 0; i < result.length; i++) {
+            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+							}
+            	         }
+            	      });
+            	   }
 	         }
 	      });
 		 
 	}else if (continent != "null" && city == "null" && tag == "null") {
-		 $.ajax({ 
+		 alert("5");
+		$.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%>+"&continent=" +continent,
 	         Type : "POST",
 	         success : function(result) {
 	        	 $("#container").empty();
 	             $("#container").append(result);
+	             if ( '<%= session.getAttribute("mid") %>' != "null") {
+            		 $.ajax({ 
+            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+            	         Type : "POST",
+            	         success : function(result) {
+            	        	 alert(result[0].pid);
+            	        	 for (var i = 0; i < result.length; i++) {
+            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+							}
+            	         }
+            	      });
+            	   }
 	         }
 	      });
 	} 
-})
+   
+   if ( '<%= session.getAttribute("mid") %>' != "null") {
+	 $.ajax({ 
+         url : "midCartList?mid="+ '<%= session.getAttribute("mid") %>',
+         Type : "POST",
+         success : function(result) {
+        	 $("#cartTable").empty();
+             $("#cartTable").append(result);
+         }
+      });
+   }
+})//ready 끝
  
 var arr = new Array();
 arr = ["아시아" , "동남아시아" , "유럽" , "미주" , "남태평양" , "대한민국"];
@@ -218,6 +340,17 @@ $(function () {
 			success : function(result) {
 				$("#container").empty();
 				$("#container").append(result);
+			      if ( '<%= session.getAttribute("mid") %>' != "null") {
+	            		 $.ajax({ 
+	            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+	            	         Type : "POST",
+	            	         success : function(result) {
+	            	        	 for (var i = 0; i < result.length; i++) {
+	            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+								}
+	            	         }
+	            	      });
+	            	   }
 				//현재 주소를 가져온다.
 				var renewURL = location.href;
 				//현재 주소 중 page 부분이 있다면 날려버린다.
@@ -235,6 +368,14 @@ $(function () {
 </head>
 <body>
    <%@ include file="/UserMainHeader.jsp"%>
+    <!--해더랑 리스트랑 공간  어차피  jstl for문을 통해서 구현할곳  -->
+   <div style="width: 100%; height: 100px;"></div>
+      <div style="margin-left: 50px; position: fixed;">
+				<h2>장바구니</h2>
+			</div>
+		<div style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;" id="cartTable">
+		
+		</div>
    <div class = "container marketing">
    <nav class="navbar navbar-dark bg-dark"> 
    <button style="margin-left: 0;"  class="navbar-toggler" type="button" data-toggle="collapse"
@@ -265,16 +406,9 @@ $(function () {
       </ul>
    </div>
    </nav>
+  
 </div>
 
-   <!--해더랑 리스트랑 공간  어차피  jstl for문을 통해서 구현할곳  -->
-   <div style="width: 100%; height: 100px;"></div>
-      <div style="margin-left: 50px; position: fixed;">
-				<h2>장바구니</h2>
-			</div>
-		<div style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;" id="cartTable">
-		
-		</div>
   
    <!--추천에 의해 뿌려줄 리스트   -->
    <div class="container marketing" id = "container" >

@@ -3,26 +3,22 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
-<%
-	ArrayList list = (ArrayList)request.getAttribute("list");
-	AttractionsDTO dto;
-	
-	
-	if (list.size() != 0) {
-		for (int i = 0; i < list.size(); i++) {
-			dto = (AttractionsDTO) list.get(i);
-%>
+<c:set var="list" value="${list}"/>
 
-<form id='<%=dto.getPid()%>'>
-	<img
-		src="/springProject/resources/IMAGE/attractionsImg/<%=dto.getMainImg()%>"
-		width="150" height="150"><br> <label><%=dto.getTitle()%></label>
+
+<c:if test="${fn:length(list) ne 0}">
+
+<c:forEach items="${list}" var="list">
+
+<form alt='${list.pid }'>
+		<img
+			src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg }"
+			width="150" height="150"><br> <label>${list.title }</label>
 </form>
-
-<%
-		}
-	}
-%>
-
+			<button value ='${list.pid }' onclick="deleteCart(event)">삭제</button>
+</c:forEach>
+</c:if>

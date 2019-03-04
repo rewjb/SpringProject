@@ -189,6 +189,11 @@ $(function() {
 	$("#b1").click(function() {//댓글입력시 등록해주는 함수 
 		
 		if('<%=mid%>' != 'null'){
+			
+			if ($("#j_grade").val()=="") {
+				alert("별점을 입력해주세요")
+			}
+			
 		if ($("#content").val() == "") {
 			alert("내용을 입력해주세요 ");
 		}else{
@@ -404,7 +409,7 @@ $(function() {
 	<br>
 	<br>
 	<div style="border: 1px solid; width: 600px; padding: 5px; margin-left: auto; margin-right: auto;">
-    <form id="comForm" name="form" action="review" method="post" >
+    <form id="comForm" name="form" method="post" >
         <input type="hidden" name="pid" id = "firstId" value="" > <!-- 각 게시물의 고유아이디가 들어간다. -->
         <ul>
         	<li><IMG style="width: 30px; height: 30px;" id=j_image1 onmouseover= "mouseIn(1)"  onmouseout="mouseOut(1)" onclick=clicked(1) src="/springProject/resources/IMAGE/star/unstar.png"></li>
@@ -413,10 +418,10 @@ $(function() {
     		<li><IMG style="width: 30px; height: 30px;" id=j_image4 onmouseover= "mouseIn(4)"  onmouseout="mouseOut(4)" onclick=clicked(4) src="/springProject/resources/IMAGE/star/unstar.png"></li>
     		<li><IMG style="width: 30px; height: 30px;" id=j_image5 onmouseover= "mouseIn(5)"  onmouseout="mouseOut(5)" onclick=clicked(5) src="/springProject/resources/IMAGE/star/unstar.png"></li>
     	</ul>
-    	<input type="hidden" name = "j_grade" id = "j_grade" value ="">
+    	<input type="hidden" name = "star" id = "j_grade" value ="">
         <textarea name="content" id = "content" rows="3" cols="60" maxlength="500" placeholder="댓글을 달아주세요."></textarea>
     </form>
-		<input type="button" value="등록" id = "b1" >
+		<input type="button" value="등록" id = "b1">
 </div>	
 
 <div id = "temp"></div>
@@ -424,6 +429,7 @@ $(function() {
 <div id="replyList" style="text-align: center;"> 
 
 </div>
+
 
  <div id="replyDialog" style="width: 99%; display:none">
     <form id= "formSecond"  method="post">
@@ -437,7 +443,6 @@ $(function() {
     </form>
 </div>  
 
-
  <div id="updateDialog" style="width: 99%; display:none">
     <form id= "updateForm"  method="post">
         <input type="hidden" name="pid" value="id"> 
@@ -449,7 +454,6 @@ $(function() {
         <a href="#" onclick="return updateCancel()">취소</a>
     </form>
 </div>  
-	
 	
 </body>
 </html>

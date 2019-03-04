@@ -167,7 +167,7 @@ $(function () {
 	   
 	}else if (continent != "null" && city != "null" && tag == "null") {
 // 		 alert("4");
-$.ajax({ 
+		$.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%> + "&continent=" + continent + "&city=" + city,
 	         Type : "POST",
 	         success : function(result) {

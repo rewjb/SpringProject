@@ -48,7 +48,6 @@
 		<result property="parents" column="parents" />
 		<result property="depth" column="depth" />
 		<result property="border" column="border" />
-		<result property="star" column="star" />
 	</resultMap>
 
 	<select id="selectAll" resultMap="rs">

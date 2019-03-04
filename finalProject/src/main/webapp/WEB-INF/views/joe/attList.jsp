@@ -10,6 +10,10 @@
 {
    font-family: 'Noto Sans KR', sans-serif;
 }
+a:link {text-decoration: none; color: black;}
+a:visited {text-decoration: none; color: black;}
+a:active {text-decoration: none; color: black;}
+a:hover {text-decoration: underline; color: black;}
    
    </style>
 <%

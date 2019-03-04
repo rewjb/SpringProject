@@ -61,7 +61,7 @@ function deleteCart(event) {
 	        		})//ajax끝
 	         }
 	      });
-}
+}  
 
 function cart(event) {
 	   

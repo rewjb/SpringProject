@@ -60,7 +60,6 @@ public class R_PlanDetailController {
 		mongoDTO.setLevel(1);
 		System.out.println(mongoDTO.getPtitle());
 		Document result = mongoShareDAO.insertComment(mongoDTO);
-		
 		return result;
 	}
 	
@@ -86,7 +85,6 @@ public class R_PlanDetailController {
 		
 		System.out.println(mongoDTO);
 		System.out.println(dist);
-		
 		return mongoShareDAO.deleteComment(mongoDTO,dist);
 	}
 	

@@ -1,6 +1,7 @@
 package com.itbank.springProject.rew.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
@@ -9,6 +10,10 @@ import org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
@@ -26,10 +31,10 @@ public class testmongo2 {
 
 //		ServerAddress asd = new ServerAddress("34.73.155.96:27017");
 		
-		MongoClient mongoClient = new MongoClient("34.73.155.96", 27017);
+		MongoClient mongoClient = new MongoClient("35.190.134.214", 27017);
 		MongoDatabase data =  mongoClient.getDatabase("tag");
 
-		MongoCollection<Document> collectionPlace = data.getCollection("place");
+		MongoCollection<Document> collectionPlace = data.getCollection("shareProject");
 		
 //		collectionPlace.insertOne(new Document("dd","sad"));
 
@@ -38,6 +43,24 @@ public class testmongo2 {
 
 		while (result.hasNext()) {
 			System.out.println(result.next().toJson());
+		}
+		
+		HashMap<String, String> map = new HashMap<>();
+		MongoClient mongoClient2 = new MongoClient("35.190.134.214", 27017);
+		DB db = mongoClient2.getDB("tag");
+		// 컬렉션 가져오기
+		DBCollection coll = db.getCollection("shareProject");
+		DBCursor cursor = coll.find();
+		String tag = "";
+		String pMid_ptitle = "";  
+		DBObject nowDoc;
+		while (cursor.hasNext()) {
+		nowDoc = cursor.next();
+		pMid_ptitle =  nowDoc.get("pMid")+"/"+nowDoc.get("ptitle");
+		tag = (String) nowDoc.get("tag");
+		
+		System.out.println(pMid_ptitle);
+		System.out.println(tag);
 		}
 
 	}

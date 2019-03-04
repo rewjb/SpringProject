@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -45,39 +46,47 @@ public class R_PlanController {
 
 	@RequestMapping("rew/insertShareProject")
 	@ResponseBody
-	public String cartSelectAll(@RequestParam("ptitle") String ptitle ,HttpSession session) {
+	public String insertShareProject(@RequestParam("ptitle") String ptitle ,HttpSession session) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		MongoClient mongoClient = new MongoClient("35.190.134.214", 27017);
+		DB db = mongoClient.getDB("tag");
+		// 컬렉션 가져오기
+		DBCollection coll = db.getCollection("place");
+		DBCursor cursor = coll.find();
+		while (cursor.hasNext()) {
+			// 커서의 이름중에 _id인 컬럼 값만 출력
+			String val = cursor.next().toString().replaceAll("\"", "").replaceAll("}", "");
+			String val2 = val.substring(val.indexOf(",") + 1).replaceAll(" ", "");
+			String[] valRs = val2.split(":");
+			map.put(valRs[0] + ".jpg", valRs[1]);}
+		
 		String check = "good";
 
 		ShareProjectDTO shareProjectDTO = new ShareProjectDTO();
 		shareProjectDTO.setMid("temp");
 		shareProjectDTO.setPtitle(ptitle);
+		
+		List<PlanDTO> list = planDAO.selectAllPid(shareProjectDTO);
+		
+		String insertTag = "";
+		String insertTotaImg = "";
 
+		for (int i = 0; i < list.size(); i++) {
+			if (map.containsKey(list.get(i).getMainImg())) {
+						insertTotaImg += list.get(i).getMainImg()+"/";
+						insertTag += map.get(list.get(i).getMainImg());
+			}
+		}
+		
+		shareProjectDTO.setImg(insertTotaImg);
+		
 		if (shareProjectDAO.insertShareProject(shareProjectDTO) != 1) {
 			// 공유 실패
 			check = "bad";
 		} else {
-			
-			
-			HashMap<String, String> map = new HashMap<>();
-			MongoClient mongoClient = new MongoClient("34.73.155.96", 27017);
-			DB db = mongoClient.getDB("tag");
-			// 컬렉션 가져오기
-			DBCollection coll = db.getCollection("place");
-			DBCursor cursor = coll.find();
-			while (cursor.hasNext()) {
-				// 커서의 이름중에 _id인 컬럼 값만 출력
-				String val = cursor.next().toString().replaceAll("\"", "").replaceAll("}", "");
-				String val2 = val.substring(val.indexOf(",") + 1).replaceAll(" ", "");
-				String[] valRs = val2.split(":");
-				map.put(valRs[0] + ".jpg", valRs[1]);
-			}
-			
-			
-			
 			// 공유 성공
-			mongo_ShareProjectDAO.createProjectInMongo(shareProjectDTO,
-					map,
-					planDAO.selectAllPid(shareProjectDTO));
+			mongo_ShareProjectDAO.createProjectInMongo(shareProjectDTO,insertTag);
 		}
 		return check;
 	}
@@ -103,11 +112,6 @@ public class R_PlanController {
 	public String projcetDataSave(@RequestBody List<PlanDTO> planList, @RequestParam("ptitle") String ptitle) {
 
 		String check = "good";
-
-		for (int i = 0; i < planList.size(); i++) {
-			System.out.println(planList.get(i).getPid());
-			System.out.println(planList.get(i).getMainImg());
-		}
 
 		try {
 

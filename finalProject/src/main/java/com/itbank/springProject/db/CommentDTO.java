@@ -1,30 +1,8 @@
 package com.itbank.springProject.db;
 
+
 public class CommentDTO {
 
-	private String pid;//관관명소 아이디
-	private int bnum;//댓글넘버
-	private String id;//작성자 아이디
-	private String content;//작성내용
-	private String bdate;//작성시간
-	private String parents;//부모
-	private int depth;//깊이
-	private int border;//순서
-	public CommentDTO(String pid, int bnum, String id, String content, String bdate, String parents, int depth,
-			int border) {
-		super();
-		this.pid = pid;
-		this.bnum = bnum;
-		this.id = id;
-		this.content = content;
-		this.bdate = bdate;
-		this.parents = parents;
-		this.depth = depth;
-		this.border = border;
-	}
-	public CommentDTO() {
-		super();
-	}
 	public String getPid() {
 		return pid;
 	}
@@ -73,9 +51,31 @@ public class CommentDTO {
 	public void setBorder(int border) {
 		this.border = border;
 	}
+	private String pid;//관관명소 아이디
+	private int bnum;//댓글넘버
+	private String id;//작성자 아이디
+	private String content;//작성내용
+	private String bdate;//작성시간
+	private String parents;//부모
+	private int depth;//깊이
+	private int border;//순서
+	public CommentDTO(String pid, int bnum, String id, String content, String bdate, String parents, int depth,
+			int border) {
+		super();
+		this.pid = pid;
+		this.bnum = bnum;
+		this.id = id;
+		this.content = content;
+		this.bdate = bdate;
+		this.parents = parents;
+		this.depth = depth;
+		this.border = border;
+	}
+	public CommentDTO() {
+		super();
+	}
 	
 	
 	
 	
-	
-}
+}//CommentDTO 끝

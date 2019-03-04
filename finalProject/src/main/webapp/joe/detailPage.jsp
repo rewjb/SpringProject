@@ -6,15 +6,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<%-- <% 
+ <% 
 	String pid = request.getParameter("pid"); 
-    String mid = request.getParameter("mid");	
-%> --%>
+    String mid = (String)session.getAttribute("mid");
+    System.out.println(pid);
+%> 
+<style type="text/css">
+ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
 
+li {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border : 0;
+    float: left;
+}
+</style>
 <!--제이쿼리-->
 <script type="text/javascript"
 	src="/springProject/resources/JS/jquery.min.js"></script>
 <script type="text/javascript">
+
+
 
 
 function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
@@ -28,6 +44,8 @@ function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
     
 function comment() {//대댓글 등록시 처리함수
 	
+	
+	if('<%=mid%>' != 'null'){
 	if ($("#content2").val() == "") {
 		alert("내용을 입력해주세요")
 	}else{
@@ -42,21 +60,23 @@ function comment() {//대댓글 등록시 처리함수
 			$("#content2").val("");
 			 $("#temp").after($("#replyDialog").css('display', 'none'));
 			if (result != null) {
-// 				$("#replyList").empty();
+				$("#replyList").empty();
 				 $("#replyList").append(result); 
 			}//if문 끝
 			
 		}//success끝
 	})//ajax끝
 }
-
+	}else{
+		alert("로그인한 회원만 댓글을 입력할 수 있습니다.");
+	}
 	return false;
 }
 
 function Update(bnum) {//댓글의 수정버튼 클릭시 다이얼로그 창 띄우는 함수
-	alert(bnum);
+// 	alert(bnum);
 	var num = "#" + bnum;
-	alert(num);	
+// 	alert(num);	
 	$("#updateDialog").css('display', 'block');
 	$(num).after($("#updateDialog"));
 	$("#replyDialog").css('display', 'none');
@@ -112,7 +132,7 @@ function deleteComment(bnum) {//댓글 삭제 함수
 	var num = "#" + bnum;
 	var data = $(num).serialize();//폼 아이디가 댓글번호와 같다
 	
-	alert(num);
+// 	alert(num);
 	$.ajax({
 		url : "reviewDelete",
 		Type : "POST",
@@ -131,9 +151,31 @@ function deleteComment(bnum) {//댓글 삭제 함수
 var time = 0;
 
 $(function() {
+	if ('<%=pid%>' != 'null') {
+		$.ajax({
+			url : "selectPid?pid=" + '<%=pid%>',
+			Type : "POST",
+			success : function(result) {
+				if (result != null) {
+// 					alert(result.pid);
+					$("#content6").text(result.contentElements);
+					$("#pid").val(result.pid);
+					$("#img").attr("src" ,"/springProject/resources/IMAGE/attractionsImg/"+result.mainImg);
+					$("#cPid").val('<%=pid%>');
+					$("#firstId").val('<%=pid%>');
+					if ('<%=mid%>' != 'null') {
+						$("#mid").val('<%=mid%>');						
+					}
+					
+				}//if문 끝
+			}//success끝
+		})//ajax끝
+	}
+	
+	
 	 if (time==0) {//최초실행시 댓글 리스트 보여주는 조건문
 		$.ajax({
-			url : "reviewAll",
+			url : "reviewAll?pid="+'<%=pid%>',
 			Type : "POST",
 			success : function(result) {
 				if (result != null) {
@@ -146,6 +188,7 @@ $(function() {
 	
 	$("#b1").click(function() {//댓글입력시 등록해주는 함수 
 		
+		if('<%=mid%>' != 'null'){
 		if ($("#content").val() == "") {
 			alert("내용을 입력해주세요 ");
 		}else{
@@ -165,14 +208,16 @@ $(function() {
 		})//ajax끝
 		
 		}//else문 끝
+		}else{
+			alert("로그인한 회원만 댓글을 입력할 수 있습니다.")
+		}
 	})//click끝
 })//ready끝
 
 	var time = 0;
-	var form = "1000000074101";
 	$(function() {
 
-		if (time == 0) {//최초실행시 댓글 리스트 보여주는 조건문
+		if (time == 0) {//최초실행시 장바구니 리스트 보여주는 조건문
 			$.ajax({
 				url : "cartList",
 				Type : "POST",
@@ -180,9 +225,9 @@ $(function() {
 					if (result != null) {
 						$("#cartTable").append(result);
 
-						if ($("#" + form).find('label').text() != '') {
+						if ($("#" +'<%=pid%>').find('label').text() != '') {
 							$("#cart").attr("class", "btn btn-primary my-2");
-						} else if ($("#" + form).find('label').text() == '') {
+						} else if ($("#" +'<%=pid%>').find('label').text() == '') {
 							$("#cart").attr("class", "btn btn-secondary my-2");
 						}
 					}
@@ -194,10 +239,13 @@ $(function() {
 
 	function cart() {
 
+		if ('<%=mid%>' != 'null') {
+		
 		if ($("#cart").attr("class") == "btn btn-secondary my-2") {
 			$("#cart").attr("class", "btn btn-primary my-2");
 
 			var data = $("#form").serialize();
+// 			alert(data);
 			$.ajax({
 				url : "cartInsert",
 				Type : "POST",
@@ -212,6 +260,7 @@ $(function() {
 			$("#cart").attr("class", "btn btn-secondary my-2");
 
 			var data = $("#form").serialize();
+		
 
 			$.ajax({
 				url : "cartDelete",
@@ -223,8 +272,93 @@ $(function() {
 				}//success끝
 			})//ajax끝 
 		}
-
+		}else{
+			alert("로그인한 회원만 장바구니에 담을수 있습니다.")
+			
+		}
 	}
+	
+	
+	//별점 기능
+	var locked = 0;
+	function mouseIn(imagenr) {
+		var image;
+		var el;
+
+		if (document.getElementById('j_grade').value != "") {
+			for (var i = 1; i <= 5; i++) {
+				image = 'j_image' + i;
+				el = document.getElementById(image);
+				el.src = "/springProject/resources/IMAGE/star/unstar.png";
+			}
+			for (var i = 1; i <= imagenr; i++) {
+				image = 'j_image' + i;
+				el = document.getElementById(image);
+				el.src = "/springProject/resources/IMAGE/star/star2.png";
+			}
+			/*  document.getElementById("j_grade").value = "";  */
+		} else {
+			for (var i = 1; i <= 5; i++) {
+				image = 'j_image' + i;
+				el = document.getElementById(image);
+				el.src = "/springProject/resources/IMAGE/star/unstar.png";
+			}
+			for (var i = 1; i <= imagenr; i++) {
+				image = 'j_image' + i;
+				el = document.getElementById(image);
+				el.src = "/springProject/resources/IMAGE/star/star2.png";
+			}
+		}
+	}
+
+	function trueClick(imagenr) {
+		for (var i = 1; i <= 5; i++) {
+			image = 'j_image' + i;
+			el = document.getElementById(image);
+			el.src = "/springProject/resources/IMAGE/star/unstar.png";
+		}
+		for (var i = 1; i <= imagenr; i++) {
+			image = 'j_image' + i;
+			el = document.getElementById(image);
+			el.src = "/springProject/resources/IMAGE/star/star.png";
+		}
+	}
+
+	function mouseOut(imagenr) {
+
+		if (locked) {
+			locked = 0;
+			return;
+		}
+		var a;
+		var el;
+
+		if (document.getElementById("j_grade").value == "") {
+			for (var i = 1; i <= imagenr; i++) {
+				a = 'j_image' + i;
+				el = document.getElementById(a);
+				el.src = "/springProject/resources/IMAGE/star/unstar.png";
+			}
+		} else {
+			for (var i = 1; i <= 5; i++) {
+				image = 'j_image' + i;
+				el = document.getElementById(image);
+				el.src = "/springProject/resources/IMAGE/star/unstar.png";
+			}
+			for (var i = 1; i <= document.getElementById("j_grade").value; i++) {
+				a = 'j_image' + i;
+				el = document.getElementById(a);
+				el.src = "/springProject/resources/IMAGE/star/star.png";
+			}
+		}
+	}
+
+	function clicked(imagenr) {
+		document.getElementById("j_grade").value = imagenr;
+		trueClick(imagenr);
+		locked = 1;
+	}
+	
 </script>
 
 </head>
@@ -240,22 +374,16 @@ $(function() {
 				style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;"
 				id="cartTable"></div>
 
-			<input type="hidden" value="1000000074101" name="pid"> <input
-				type="hidden" value="rhkdwo" name="mid">
+			<input type="hidden" value="" name="pid" id ="pid"> 
+			<input type="hidden" value="" name="mid" id = "mid">
 
 			<div class="col-md-5" style="margin-left: auto; margin-right: auto;">
-				<svg
-					class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-					width="1500" height="1000" xmlns="http://www.w3.org/2000/svg"
-					preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-				<title>Placeholder</title>
-				<rect width="100%" height="100%" fill="#eee" /></svg>
+				<img id="img"  style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;" width="300px" height="450px">
 			</div>
-		</div>
+		</div>  
 	</form>
 	<div class="col-md-5" style="margin-left: auto; margin-right: auto;">
 		<button class="btn btn-secondary my-2" onclick="cart()" id="cart">장바구니</button>
-		<button class="btn btn-secondary my-2">예비 버튼</button>
 		<h2 class="featurette-heading">★별점</h2>
 	</div>
 	<hr class="featurette-divider">
@@ -264,11 +392,11 @@ $(function() {
 
 	<div class="col-md-7" style="margin-left: auto; margin-right: auto;"
 		align="center">
-		<h2 class="featurette-heading">
-			관광명소 설명1<span class="text-muted">관광명소 설명2</span>
+		<h2 class="featurette-heading" id = "content4">
+			<span class="text-muted" id = "content5"></span>
 		</h2>
 		<br>
-		<p class="lead">관광명소 설명3</p>
+		<p class="lead" id = "content6"></p>
 	</div>
 	<br>
 	<br>
@@ -277,10 +405,18 @@ $(function() {
 	<br>
 	<div style="border: 1px solid; width: 600px; padding: 5px; margin-left: auto; margin-right: auto;">
     <form id="comForm" name="form" action="review" method="post" >
-        <input type="hidden" name="pid" value="id"> <!-- 각 게시물의 고유아이디가 들어간다. -->
+        <input type="hidden" name="pid" id = "firstId" value="" > <!-- 각 게시물의 고유아이디가 들어간다. -->
+        <ul>
+        	<li><IMG style="width: 30px; height: 30px;" id=j_image1 onmouseover= "mouseIn(1)"  onmouseout="mouseOut(1)" onclick=clicked(1) src="/springProject/resources/IMAGE/star/unstar.png"></li>
+   			<li><IMG style="width: 30px; height: 30px;" id=j_image2 onmouseover= "mouseIn(2)"  onmouseout="mouseOut(2)" onclick=clicked(2) src="/springProject/resources/IMAGE/star/unstar.png"></li>
+    		<li><IMG style="width: 30px; height: 30px;" id=j_image3 onmouseover= "mouseIn(3)"  onmouseout="mouseOut(3)" onclick=clicked(3) src="/springProject/resources/IMAGE/star/unstar.png"></li>
+    		<li><IMG style="width: 30px; height: 30px;" id=j_image4 onmouseover= "mouseIn(4)"  onmouseout="mouseOut(4)" onclick=clicked(4) src="/springProject/resources/IMAGE/star/unstar.png"></li>
+    		<li><IMG style="width: 30px; height: 30px;" id=j_image5 onmouseover= "mouseIn(5)"  onmouseout="mouseOut(5)" onclick=clicked(5) src="/springProject/resources/IMAGE/star/unstar.png"></li>
+    	</ul>
+    	<input type="hidden" name = "j_grade" id = "j_grade" value ="">
         <textarea name="content" id = "content" rows="3" cols="60" maxlength="500" placeholder="댓글을 달아주세요."></textarea>
     </form>
-		<input type="button" value="넘어가요" id = "b1" >
+		<input type="button" value="등록" id = "b1" >
 </div>	
 
 <div id = "temp"></div>
@@ -290,12 +426,12 @@ $(function() {
 </div>
 
  <div id="replyDialog" style="width: 99%; display:none">
-    <form id= "formSecond"  action="review2" method="post">
-        <input type="hidden" name="pid" value="id"> 
+    <form id= "formSecond"  method="post">
+        <input type="hidden" name="pid" id = "cPid" value=""> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input" name = "input">
-        작성자: <input type="hidden" name="id"><br>
-        <textarea name="content" id = "content2"rows="3" cols="60" maxlength="500"></textarea>
+        <input type="hidden" name="mid" ><br>
+        <textarea name="content" id = "content2" rows="3" cols="60" maxlength="500"></textarea>
         <a href="#" id ="onclick" onclick="return comment()">등록</a>
         <a href="#" onclick="return commentCancel()">취소</a>
     </form>
@@ -303,7 +439,7 @@ $(function() {
 
 
  <div id="updateDialog" style="width: 99%; display:none">
-    <form id= "updateForm"  action="review2" method="post">
+    <form id= "updateForm"  method="post">
         <input type="hidden" name="pid" value="id"> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input2" name = "input2">

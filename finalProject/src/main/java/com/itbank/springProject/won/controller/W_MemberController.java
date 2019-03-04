@@ -22,17 +22,25 @@ public class W_MemberController{
 	
 	//회원가입
 	@RequestMapping("won/insertMember")
+	@ResponseBody
 	public String insertMember(MemberDTO memberDTO){
+ 		System.out.println(memberDTO.getMid());
+ 		System.out.println(memberDTO.getMpw());
+ 		System.out.println(memberDTO.getMname());
+ 		System.out.println(memberDTO.getMprofile());
+ 		System.out.println(memberDTO.getMaddr1());
+ 		System.out.println(memberDTO.getMaddr2());
+ 		System.out.println(memberDTO.getMtel());
 		try {
 			//insert성공시 insertM으로
 			memberDAO.insert(memberDTO);
 			System.out.println("insertMember 성공");
-			return "won/insertM";
+			return "0";
 		} catch (Exception e) {
 			//insert실패시 다시 회원가입 화면으로
 			System.out.println("insertMember 실패");
 			e.printStackTrace();
-			return "redirect:signup.jsp";
+			return "1";
 		}
 	}//end insertMember()
 	
@@ -82,7 +90,6 @@ public class W_MemberController{
 			}else{
 				System.out.println("존재하는 아이디! 가입 불가능!");
 			}
-			//로그인 성공시 id를 세션에 넣어줌
 			
 		} catch (Exception e) {
 			//실패시 회원가입 페이지로 돌아감
@@ -106,7 +113,6 @@ public class W_MemberController{
 			}else{
 				System.out.println("존재하는 이름! 사용 가능!");
 			}
-			//로그인 성공시 name을 세션에 넣어줌
 			
 		} catch (Exception e) {
 			//실패시 회원가입 페이지로 돌아감

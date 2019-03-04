@@ -37,11 +37,12 @@ public class RecommendController {
 		//전체 태그 리스트 불러오기
 		HashMap<String, String> list = dao1.mongoSelectAll();		
 		List<String> keyList = dao1.sortByValue(list);
+		List<AttractionsDTO> allList = dao2.selectAll();
 		
 		//map을 DTO형태로 가
 		List<AttractionsDTO> daoList = new ArrayList<>();
 		for (int i = 0; i < keyList.size(); i++) {
-			daoList.add(i, dao2.selectImg(keyList.get(i)));
+			daoList.add(i, allList.get(i));
 		}	
 		
 		//불러온 리스트 세션에 세팅
@@ -101,12 +102,12 @@ public class RecommendController {
 		
 		//테스트용 유저선호도 세션등록
 		session.setAttribute("favor", tags);
-			
-		return "kim/tagSelect_submit";
+		
+		return "redirect:recommend";
 	}
 	
 	@RequestMapping("kim/recommend")
-	public void recommend(HttpSession session, Model model){
+	public String recommend(HttpSession session, Model model){
 		
 		//세션에서 사용자 선호태그 불러와서 배열형태로 변환
 		String ssFavor = (String) session.getAttribute("favor");
@@ -172,6 +173,13 @@ public class RecommendController {
 		}
 		
 		//결과를 모델객체로 반환
-		model.addAttribute("recommend", sortedList);
+		session.setAttribute("recommend", sortedList);
+		return "redirect:../main.jsp";
+	}
+	
+	@RequestMapping("kim/atList")
+	public String atList() {
+		
+		return "kim/recommend";
 	}
 }

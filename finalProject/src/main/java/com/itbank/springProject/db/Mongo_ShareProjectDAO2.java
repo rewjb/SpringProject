@@ -307,14 +307,29 @@ public class Mongo_ShareProjectDAO2 {
 //		Document tempInsert = new Document();
 //		tempInsert.append("pMid", "temp");
 //		tempInsert.append("ptitle", "안녕");
-//		tempInsert.append("star", 0);
+//		tempInsert.append("star", 0.0);
 //		tempInsert.append("star_join", 0);
 //		tempInsert.append("tag", "");
 //		tempInsert.append("link", asd);
 //		testDAO.commentColl.insertOne(tempInsert);
-		//데이터 초기화 주석
-
-
+//		//데이터 초기화 주석
+		
+//		MongoClient mongoClient = new MongoClient("localhost", 27017);
+//
+//		MongoDatabase tagDB = mongoClient.getDatabase("tag");
+//
+//		MongoCollection<Document> commentColl = tagDB.getCollection("shareProjectComment");
+//		
+//		
+//		List<Document> optionList = new ArrayList<>();
+//		optionList.add( new Document( "abcd.mid" , "temp") );
+//		UpdateOptions options = new UpdateOptions().arrayFilters(optionList);
+//		
+//        
+//		commentColl.updateOne(new Document("pMid" ,"temp" ), new Document("$set" , new Document("link.$[abcd].content" , "수정합니다!!!!")) ,options) ;
+//		
+//		System.out.println( new Document("link.$[abcd].content" , "수정합니다!!!!").toJson());
+//		System.out.println(options.toString());
 
 		MongoCursor<Document> result = testDAO.commentColl.find().iterator();
 		while (result.hasNext()) {
@@ -322,7 +337,5 @@ public class Mongo_ShareProjectDAO2 {
 			System.out.println(tempdoc.toJson());
 			testDAO.selectAll(tempdoc);
 		}
-
 	}
-
 }

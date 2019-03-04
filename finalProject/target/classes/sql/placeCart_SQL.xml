@@ -23,7 +23,7 @@
 	</resultMap>
 		
 	<delete id="delete" parameterType="PlaceCartDTO">
-		delete from PLACECART where pid = #{pid} and mid = #{mid}
+		delete from PLACECART where mid = #{mid} and pid=#{pid}
 	</delete>	
 		
 	<select id="midSelect" parameterType="String" resultMap="rs">

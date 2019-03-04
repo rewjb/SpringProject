@@ -29,9 +29,8 @@ public class PlaceCartDAO {
 	public List<PlaceCartDTO> selectAll() {
 		return session.selectList("PlaceCart.selectAll");
 	}
-	
-	public void delete(PlaceCartDTO dto) {
-		session.delete("PlaceCart.delete", dto);
+	public int delete(PlaceCartDTO placeCartDTO) {
+		return session.delete("PlaceCart.delete", placeCartDTO);
 	}
 	
 	public List<PlaceCartDTO> midSelect(String mid) {

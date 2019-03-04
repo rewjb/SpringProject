@@ -106,7 +106,7 @@
 <div class="col-12 pt-3">
 
   <fieldset>
-    <legend class="display-4" style="text-align: center;">여행지 등록 신청</legend>
+    <legend class="display-4" style="text-align: center; font-family: 'Do Hyeon', sans-serif;">여행지 등록 신청</legend>
 	<form method="post" enctype="multipart/form-data" action="imgTest.jsp" id="form">
 	    <hr>
 	    <div class="card border-secondary mb-3 margin-auto" style="max-width: 50rem;">
@@ -164,7 +164,7 @@
     
     <input type="submit" class="btn btn-primary">
     <a class="btn btn-sm btn-outline-secondary" href="Tag_Select">태그페이지</a>
-    <a class="btn btn-sm btn-outline-secondary" href="../joe/crawling">크롤링</a>
+    <a class="btn btn-sm btn-outline-secondary" href="atList">여행지 리스트</a>
     </form>
     <p class="pb-1">
   </fieldset>

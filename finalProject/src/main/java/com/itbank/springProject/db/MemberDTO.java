@@ -12,6 +12,28 @@ public class MemberDTO {
 	private String agegroup;	//9.age group	
 	private String rdate;		//10.Recent sign-in
 	
+	
+	
+	
+	public MemberDTO() {
+		super();
+	}
+
+	public MemberDTO(String mid, String mpw, String mname, String mprofile, String mtel, String maddr1, String maddr2,
+			String gender, String agegroup, String rdate) {
+		super();
+		this.mid = mid;
+		this.mpw = mpw;
+		this.mname = mname;
+		this.mprofile = mprofile;
+		this.mtel = mtel;
+		this.maddr1 = maddr1;
+		this.maddr2 = maddr2;
+		this.gender = gender;
+		this.agegroup = agegroup;
+		this.rdate = rdate;
+	}
+
 	public String getMid() {
 		return mid;
 	}

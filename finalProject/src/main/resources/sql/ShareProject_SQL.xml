@@ -20,5 +20,12 @@
 		SHAREPROJECT where mid = #{mid} and ptitle=#{ptitle}
 	</delete>
 
+	<select id="selectAllShareProjectByManyId" parameterType="java.util.List" resultType="ShareProjectDTO">
+		select * from SHAREPROJECT where 
+		<foreach collection="list" item="item">
+		mid=#{item.mid} and ptitle=#{item.ptitle} 
+		</foreach>
+	</select>
+	
 </mapper>
 

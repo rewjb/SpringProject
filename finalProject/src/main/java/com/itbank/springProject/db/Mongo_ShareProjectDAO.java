@@ -70,9 +70,9 @@ public class Mongo_ShareProjectDAO {
 	// 경로의 저장을 위한 stack
 	private Stack<String> stackID = new Stack<>();
 	private String space;
+	
 	public Map<String, String> createProjectTagMap(){
 		//작업
-		
 		HashMap<String, String> map = new HashMap<>();
 		MongoClient mongoClient = new MongoClient("35.190.134.214", 27017);
 		DB db = mongoClient.getDB("tag");
@@ -88,7 +88,6 @@ public class Mongo_ShareProjectDAO {
 		tag = (String) nowDoc.get("tag");
 		map.put(pMid_ptitle, tag);
 		}
-		
 		return map;
 	}
 

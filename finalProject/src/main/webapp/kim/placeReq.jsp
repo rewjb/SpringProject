@@ -164,7 +164,7 @@
     
     <input type="submit" class="btn btn-primary">
     <a class="btn btn-sm btn-outline-secondary" href="Tag_Select">태그페이지</a>
-    <a class="btn btn-sm btn-outline-secondary" href="atList">여행지 리스트</a>
+    <a class="btn btn-sm btn-outline-secondary" href="/springProject/joe/attractionsLIst.jsp">여행지 리스트</a>
     </form>
     <p class="pb-1">
   </fieldset>

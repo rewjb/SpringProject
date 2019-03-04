@@ -28,6 +28,7 @@ public class testmongo2 {
 	// 아이디1000000348101
 	// 아이디1000000354101
 	public static void main(String[] args) {
+		
 
 //		ServerAddress asd = new ServerAddress("34.73.155.96:27017");
 		

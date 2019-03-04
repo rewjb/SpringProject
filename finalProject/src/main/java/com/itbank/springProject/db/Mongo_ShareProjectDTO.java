@@ -11,6 +11,7 @@ public class Mongo_ShareProjectDTO {
 	private String distinction;
 	private int level;
 	
+	
 	public int getLevel() {
 		return level;
 	}

@@ -21,9 +21,9 @@ public class CommentController {
 
 	@RequestMapping("joe/review")
 	public String review(CommentDTO commentDTO, Model model) {
-		System.out.println("1번");
+//		System.out.println("1번");
 		dao.insert(commentDTO);
-		System.out.println("2번");
+//		System.out.println("2번");
 		List<CommentDTO> list = dao.selectAll();
 		model.addAttribute("list", list);
 		
@@ -31,9 +31,9 @@ public class CommentController {
 	}
 
 	@RequestMapping("joe/reviewAll")
-	public String reviewAll(Model model) {
+	public String reviewAll(Model model , @RequestParam("pid") String pid) {
 
-		List<CommentDTO> list = dao.selectAll();
+		List<CommentDTO> list = dao.selectPid(pid);
 		model.addAttribute("list", list);
 
 		return "joe/comment";
@@ -42,15 +42,14 @@ public class CommentController {
 	@RequestMapping("joe/review2")
 	public String reviewReview(@RequestParam("input") String bnum, CommentDTO commentDTO, Model model) {
 
-		System.out.println("컨트롤러왔다");
-
+		System.out.println("pid뭐가 넘어옴?" + commentDTO.getPid());
 		CommentDTO dto = dao.select(Integer.parseInt(bnum));
 
 		commentDTO.setParents(dto.getParents());
 		commentDTO.setDepth(dto.getDepth() + 1);
 		commentDTO.setBorder(dao.borderSelect(dto));
 
-		System.out.println("순서" + dao.borderSelect(dto));
+//		System.out.println("순서" + dao.borderSelect(dto));
 
 		dao.insertInsert(commentDTO);
 
@@ -65,8 +64,8 @@ public class CommentController {
 			Model model) {
 
 		CommentDTO dto = new CommentDTO();
-		System.out.println("번호 : " + bnum);
-		System.out.println("내용 : " + content);
+//		System.out.println("번호 : " + bnum);
+//		System.out.println("내용 : " + content);
 		dto.setBnum(Integer.parseInt(bnum));
 		dto.setContent(content);
 
@@ -83,8 +82,8 @@ public class CommentController {
 	public String reviewDelete(@RequestParam("bnum") String bnum, @RequestParam("parents") String parents,
 			Model model) {
 
-		System.out.println("번호"+bnum);
-		System.out.println("엄마"+parents);
+//		System.out.println("번호"+bnum);
+//		System.out.println("엄마"+parents);
 		CommentDTO dto = new CommentDTO();
 		dto.setParents(parents);
 		dto.setBnum(Integer.parseInt(bnum));

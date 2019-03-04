@@ -5,7 +5,7 @@
 <html>
 <head>
 <%
-session.setAttribute("mid", "123");
+session.setAttribute("mid", "null");
 %>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 <!--제이쿼리-->
@@ -20,7 +20,7 @@ session.setAttribute("mid", "123");
 
 function deleteCart(event) {
 	var deleteBtn = event.target;
-	alert(deleteBtn.value);
+// 	alert(deleteBtn.value);
 	
 	$.ajax({ 
 	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
@@ -52,7 +52,7 @@ function deleteCart(event) {
 }
 
 function cart(event) {
-	 
+	   
 	var cart = event.target;
 	if ($(cart).attr("class") == "btn btn-secondary my-2") {
 		$(cart).attr("class", "btn btn-primary my-2");	
@@ -121,7 +121,7 @@ $(function () {
 	}
   
 	if (page !="null") {
-		alert("2");
+// 		alert("2");
    $.ajax({ 
        url : "allList?page=" + '<%=request.getParameter("page") %>',
        Type : "POST",
@@ -143,7 +143,7 @@ $(function () {
 	}
    
    if (continent != "null" && city != "null"  && tag != "null") {
-	   alert("3");
+// 	   alert("3");
 	   $.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%> + "&continent=" + continent + "&city=" + city + "&category=" + tag,
 	         Type : "POST",
@@ -166,7 +166,7 @@ $(function () {
 	      });
 	   
 	}else if (continent != "null" && city != "null" && tag == "null") {
-		 alert("4");
+// 		 alert("4");
 $.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%> + "&continent=" + continent + "&city=" + city,
 	         Type : "POST",
@@ -188,7 +188,7 @@ $.ajax({
 	      });
 		 
 	}else if (continent != "null" && city == "null" && tag == "null") {
-		 alert("5");
+// 		 alert("5");
 		$.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%>+"&continent=" +continent,
 	         Type : "POST",
@@ -200,7 +200,7 @@ $.ajax({
             	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
             	         Type : "POST",
             	         success : function(result) {
-            	        	 alert(result[0].pid);
+//             	        	 alert(result[0].pid);
             	        	 for (var i = 0; i < result.length; i++) {
             	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
 							}
@@ -402,7 +402,7 @@ $(function () {
             <div style="overflow-x : auto; height: 80px; width: 1080px;" id = "tag">
             </div>
          </li>
-         <li><button id ="searchBtn"    class="btn btn-secondary my-2" style="text-align: center; width: 1080px;" onclick="tagSearch()">검색</button></li>
+         <li><button id ="searchBtn" class="btn btn-secondary my-2" style="text-align: center; width: 1080px;" onclick="tagSearch()">검색</button></li>
       </ul>
    </div>
    </nav>

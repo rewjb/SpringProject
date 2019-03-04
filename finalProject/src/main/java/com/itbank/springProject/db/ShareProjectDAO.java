@@ -23,6 +23,5 @@ public class ShareProjectDAO {
 	public int deleteOneShareProject(PlanDTO planDTO) {
 		return session.insert("ShareProject.deleteOneShareProject", planDTO);
 	}
-	
 
 }

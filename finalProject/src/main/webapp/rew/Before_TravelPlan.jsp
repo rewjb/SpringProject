@@ -13,7 +13,7 @@
 <input type="submit" value="여행계확짜기로 이동!"> 
 </form>
 
-</body> 
+</body>
 </html>
 
 

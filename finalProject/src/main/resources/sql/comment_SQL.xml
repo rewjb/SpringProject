@@ -35,7 +35,11 @@
 	<update id="commentUpdate" parameterType="ComDTO" >
 		UPDATE RIVIEW SET content = #{content}  WHERE bnum = #{bnum}
 	</update>
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> branch 'master' of https://github.com/rewjb/SpringProject.git
 	<resultMap type="ComDTO" id="rs">
 		<result property="pid" column="pid" />
 		<result property="bnum" column="bnum" />
@@ -60,6 +64,7 @@
 		SELECT * FROM RIVIEW WHERE parents = #{value}
 	</select>
 	
+	
 	<insert id="insert" parameterType="ComDTO">
 		<selectKey resultType="Int" keyProperty="bnum" order="BEFORE">
             SELECT NVL(MAX(bnum),0)+1 FROM RIVIEW
@@ -67,7 +72,7 @@
         INSERT INTO RIVIEW VALUES (#{pid}, #{bnum},null,#{content},SYSDATE,
                    <choose>
                        <when test="parents == null">#{bnum}, 0</when>
-                       <otherwise>#{parents}, #{depth}</otherwise>
+                       <otherwise>#{parents}, #{depth}, #{star}</otherwise>
                    </choose>
              ,#{border} )
 	</insert>
@@ -79,11 +84,8 @@
         <!-- <selectKey resultType="String" keyProperty="border,parents" order="BEFORE">
             SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents}
         </selectKey>  -->
-        
-		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum}, null , #{content},SYSDATE,#{parents},#{depth},#{border})
-	
+		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum}, null , #{content},SYSDATE,#{parents},#{depth},#{border},null)
 	</insert>
-
 
 	<delete id="delete1" parameterType ="Int">
 		DELETE FROM RIVIEW WHERE bnum = #{value}

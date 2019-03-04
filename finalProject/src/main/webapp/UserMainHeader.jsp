@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Do+Hyeon|Jua|Noto+Sans+KR|Stylish" rel="stylesheet">
 
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
@@ -17,20 +19,20 @@
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap-grid.min.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap-reboot.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap-reboot.min.css" />
-<link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap.css" />
+<link rel="stylesheet" type="tex	t/css" href="/springProject/resources/CSS/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap.min.css" />
 
 <!--Custom styles-->
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/blog.css" />
-<br>
-  <div class="container pb-3" style="background: white; border-radius: 1.0rem;">
-  <header class="blog-header py-4 rounded" style="background: linear-gradient(to bottom, #a6bddb, white)">
+  <div style="background: white; background: linear-gradient(to bottom, #ddfdff, white);">
+  <div class="container">
+  <header class="blog-header py-4 rounded">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
         <a class="text-muted pl-3" href="#">Subscribe</a>
       </div>
       <div class="col-4 text-center">
-        <a class="blog-header-logo text-dark" href="#">IT Tour</a>
+        <a class="blog-header-logo text-dark" href="#"><img src="/springProject/resources/IMAGE/logo4.png" width="250px"></a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
@@ -87,8 +89,8 @@
   </div>
 </div>
 </div>
-<p class="pb-1">
-      
+</div>
+      <br>
 
 
 

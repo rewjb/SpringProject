@@ -39,11 +39,11 @@
 <c:when test="${tempPage eq 0 or tempPage eq 1}">
 
 <c:choose>
-
+  
 <c:when test="${fn:length(list) le 12}"><!-- ge   =   <= -->
    <c:forEach items="${list}" var="list">
        <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <table style="width:100%;">
@@ -51,10 +51,10 @@
                   <td>
                   		<div>
                   			 <button class="btn btn-secondary my-2" onclick="cart(event)"value="${list.pid}" >장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                  			<a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p></a>
                   		</div>
                      
-                     <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
+                     <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p></a>
                   </td>
 <!--                   <td style="text-align: right; "></td> -->
                </tr>
@@ -71,26 +71,25 @@
 
 <c:forEach begin="1" end="12" items="${list}" var="list">
       <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <table style="width:100%;">
                <tr>
                   <td>
                   		<div>
-                  			 <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                  			 <button class="btn btn-secondary my-2" onclick="cart(event)"value="${list.pid}" >장바구니</button>
+                  			<a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p></a>
                   		</div>
                      
-                     <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
-                    
+                     <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p></a>
                   </td>
 <!--                   <td style="text-align: right; "></td> -->
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
              <input type="hidden" name="mid" value="123">
-      <input type="hidden" name="pid" value="${list.pid}">
+      <input type="hidden" name="pid" value="${list.pid}" >
             </form>
       </div>
       <!-- /.col-lg-4' -->
@@ -103,27 +102,26 @@
    <c:choose>
       <c:when test="${tempPage lt fn:length(list)/12}">
          <c:forEach begin="${((tempPage-1)*12)+1 }" end="${tempPage*12}" items="${list}" var="list">
-           <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+         <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <table style="width:100%;">
                <tr>
                   <td>
                   		<div>
-                  			 <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                  			 <button class="btn btn-secondary my-2" onclick="cart(event)"value="${list.pid}" >장바구니</button>
+                  			<a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p></a>
                   		</div>
                      
-                     <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
-                    
+                     <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p></a>
                   </td>
 <!--                   <td style="text-align: right; "></td> -->
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
              <input type="hidden" name="mid" value="123">
-      		<input type="hidden" name="pid" value="${list.pid}">
+      <input type="hidden" name="pid" value="${list.pid}" >
             </form>
       </div>
             <!-- /.col-lg-4' -->
@@ -131,27 +129,26 @@
       </c:when>
          <c:when test="${tempPage gt fn:length(list)/12}">
             <c:forEach begin="${(tempPage-1)*10 }" end="${(tempPage*12) + fn:length(list) % 12 }" items="${list}" var="list">
-            <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+        <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <table style="width:100%;">
                <tr>
                   <td>
                   		<div>
-                  			 <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                  			 <button class="btn btn-secondary my-2" onclick="cart(event)"value="${list.pid}" >장바구니</button>
+                  			<a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p></a>
                   		</div>
                      
-                     <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
-                    
+                     <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p></a>
                   </td>
 <!--                   <td style="text-align: right; "></td> -->
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
              <input type="hidden" name="mid" value="123">
-      		<input type="hidden" name="pid" value="${list.pid}">
+      <input type="hidden" name="pid" value="${list.pid}" >
             </form>
       </div>
             <!-- /.col-lg-4' -->

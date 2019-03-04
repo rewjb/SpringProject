@@ -48,11 +48,17 @@
 		<result property="parents" column="parents" />
 		<result property="depth" column="depth" />
 		<result property="border" column="border" />
+		<result property="star" column="star" />
 	</resultMap>
 
 	<select id="selectAll" resultMap="rs">
 		SELECT * FROM RIVIEW ORDER BY border ASC	
 	</select>
+	
+	<select id="selectPid" parameterType="String" resultMap="rs">
+		SELECT * FROM RIVIEW WHERE pid = #{value} ORDER BY border ASC	
+	</select>
+	
 	
 	<select id="selectParents" resultMap="rs" parameterType = "String">
 		SELECT * FROM RIVIEW WHERE parents = #{value}
@@ -78,7 +84,7 @@
             SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents}
         </selectKey>  -->
         
-		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum},null , #{content},SYSDATE,#{parents},#{depth},#{border})
+		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum}, null , #{content},SYSDATE,#{parents},#{depth},#{border})
 	
 	</insert>
 

@@ -12,9 +12,11 @@ public class TestClass {
 
 	public static void main(String[] args) {
 		
-		AttractionsDAO dao = new AttractionsDAO();
-		List<AttractionsDTO> list = dao.selectAll();
-		System.out.println(list.size());
+		MongoTest mt = new MongoTest();
+//		AttractionsDAO dao = new AttractionsDAO();
+//		List<AttractionsDTO> list = dao.selectAll();
+//		mt.mongoSelectAll();
+//		System.out.println(list.size());
 	}
 
 }

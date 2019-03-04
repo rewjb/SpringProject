@@ -25,7 +25,7 @@ a:hover {text-decoration: underline; color: black;}
 </style>
 
 </head>
-<body style="background-image: url('/springProject/resources/IMAGE/placeAdd/bg2.jpg1');">
+<body>
 <%@ include file="/UserMainHeader.jsp" %>
 <div class="container marketing" style="background-color: rgba(255,255,255,0.8); border-radius: 1.0rem;">
 <div class="col-12 pt-3 margin-auto">
@@ -34,15 +34,15 @@ a:hover {text-decoration: underline; color: black;}
 	<div class="pt-3 pb-3 margin-auto" style="background: #f0f7ed; border-radius: 1.0rem;">
 	<legend class="display-4" style="text-align: center; ">여행지 신청 리스트</legend>
 	 -->
-	<ol class="breadcrumb">
-	  <li class="breadcrumb-item active margin-auto h3">여행지 신청 리스트</li>
+	<ol class="breadcrumb" style="background-image: url('/springProject/resources/IMAGE/sky3.jpg')">
+	  <li class="breadcrumb-item active margin-auto h3" style="font-family: 'Noto Sans KR', sans-serif; color: white;">여행지 신청 리스트</li>
 	</ol>
 	</div>
 		<hr>
 		<div class="margin-auto" style="background-color: rgba(255,255,255,0.9); width: 1050px;">
 		<table class="table table-hover table-striped">
 		  <thead>
-		    <tr class="table-secondary">
+		    <tr style="background: linear-gradient(to bottom, #cecece, white);">
 		      <th scope="col" width="10%">No</th>
 		      <th scope="col" width="50%">Title</th>
 		      <th scope="col" width="20%">User</th>

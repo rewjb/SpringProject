@@ -36,9 +36,6 @@
 		UPDATE RIVIEW SET content = #{content}  WHERE bnum = #{bnum}
 	</update>
 	
-	
-	
-
 	<resultMap type="ComDTO" id="rs">
 		<result property="pid" column="pid" />
 		<result property="bnum" column="bnum" />
@@ -48,6 +45,7 @@
 		<result property="parents" column="parents" />
 		<result property="depth" column="depth" />
 		<result property="border" column="border" />
+		<result property="star" column="star" />
 	</resultMap>
 
 	<select id="selectAll" resultMap="rs">
@@ -63,6 +61,7 @@
 		SELECT * FROM RIVIEW WHERE parents = #{value}
 	</select>
 	
+	
 	<insert id="insert" parameterType="ComDTO">
 		<selectKey resultType="Int" keyProperty="bnum" order="BEFORE">
             SELECT NVL(MAX(bnum),0)+1 FROM RIVIEW
@@ -72,7 +71,7 @@
                        <when test="parents == null">#{bnum}, 0</when>
                        <otherwise>#{parents}, #{depth}</otherwise>
                    </choose>
-             ,#{border} )
+             ,#{border}, #{star} )
 	</insert>
 
 	<insert id="insertInsert" parameterType="ComDTO">
@@ -82,11 +81,8 @@
         <!-- <selectKey resultType="String" keyProperty="border,parents" order="BEFORE">
             SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents}
         </selectKey>  -->
-        
-		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum}, null , #{content},SYSDATE,#{parents},#{depth},#{border})
-	
+		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum}, null , #{content},SYSDATE,#{parents},#{depth},#{border},null)
 	</insert>
-
 
 	<delete id="delete1" parameterType ="Int">
 		DELETE FROM RIVIEW WHERE bnum = #{value}

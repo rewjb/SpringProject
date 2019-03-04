@@ -1,5 +1,6 @@
 package com.itbank.springProject.rew.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,10 +31,26 @@ import com.mongodb.MongoClient;
 @Controller
 public class R_PlanListController {
 	
+	@Autowired
+	@Qualifier("ShareProjectDAO")
+	private ShareProjectDAO shareProjectDAO;
+	
 	@RequestMapping("rew/startPlanList")
 	public void startPlanList(HttpSession session) {
-		String favor = "Tree/Building/Historicsite/Spring";
-		session.setAttribute("favor", favor);
+		String favor =  (String) session.getAttribute("favor");
+		List<ShareProjectDTO> list = new ArrayList<>();
+		
+//		<insert id="insertBatch2" parameterType="map">
+//		INSERT INTO test_book_backup(bookID, bookName, originPrice, registDate)
+//		VALUES
+//		<foreach item="testBook" index="index" collection="list" open="" separator="," close="">
+//			(#{testBook.bookID}, #{testBook.bookName}, #{testBook.originPrice}, NOW())
+//		</foreach>		
+//	</insert>
+		
+//		session.setAttribute("favor", favor);
+		
+		
 		
 	}
 	

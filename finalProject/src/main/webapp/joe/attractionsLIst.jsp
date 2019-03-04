@@ -5,7 +5,7 @@
 <html>
 <head>
 <%
-session.setAttribute("mid", "null");
+session.setAttribute("mid", "123");
 %>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 
@@ -94,7 +94,7 @@ function deleteCart(event) {
 	        		})//ajax끝
 	         }
 	      });
-}
+}  
 
 function cart(event) {
 	   
@@ -212,7 +212,7 @@ $(function () {
 	   
 	}else if (continent != "null" && city != "null" && tag == "null") {
 // 		 alert("4");
-$.ajax({ 
+		$.ajax({ 
 	         url : "pageList?page="+<%= request.getParameter("page")%> + "&continent=" + continent + "&city=" + city,
 	         Type : "POST",
 	         success : function(result) {
@@ -290,6 +290,7 @@ $(function () {
 		list[i].setAttribute("class", "btn btn-primary my-2");
 	   }
    }
+   
 
 	} else if (continent != "null" && city != "null" && tag == "null") {
 

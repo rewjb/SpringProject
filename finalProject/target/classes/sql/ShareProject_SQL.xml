@@ -4,19 +4,21 @@
 <mapper namespace="ShareProject">
 
 	<insert id="insertShareProject" parameterType="ShareProjectDTO">
-	insert into SHAREPROJECT values(
-	#{mid},
-	#{ptitle},
-	sysdate)
+		insert into
+		SHAREPROJECT values(
+		#{mid},
+		#{ptitle},
+		sysdate, #{img})
 	</insert>
-	
-	<select id="selectAllById" parameterType="String" resultType="String" >
-	select PTITLE from SHAREPROJECT where mid=#{value}
+
+	<select id="selectAllById" parameterType="String" resultType="String">
+		select PTITLE from SHAREPROJECT where mid=#{value}
 	</select>
-	
+
 	<delete id="deleteOneShareProject" parameterType="PlanDTO">
-	delete from SHAREPROJECT where mid = #{mid} and ptitle=#{ptitle}
+		delete from
+		SHAREPROJECT where mid = #{mid} and ptitle=#{ptitle}
 	</delete>
-	
+
 </mapper>
 

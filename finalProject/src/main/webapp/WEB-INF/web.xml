@@ -4,14 +4,27 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 
+   <!-- 디스패치 서블릿은 2개 이상 등록할 수 있다. -->
+   <!--  -->
+   <!-- 디스패치 서블릿은 2개 이상 등록할 수 있다. -->
+   <!-- 디스패치 서블릿은 2개 이상 등록할 수 있다. -->
+   <!-- 디스패치 서블릿은 2개 이상 등록할 수 있다. -->
+   <!-- 디스패치 서블릿은 2개 이상 등록할 수 있다. -->
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:contextConfigLocation.xml</param-value>
 	</context-param>
+<!-- 	ContextLoaderListener에 셋팅이 된 contextConfigLocation는 모든  -->
+<!-- 	DispatcherServlet에서 공유가ㅣ 가능 -->
+<!-- 	모든 DispatcherServlet이 공유를 하기위한 설정! 여러개 등록이 가능하다! ;과 ,를 통해서 .. ? -->
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+<!--  서버실행시 같이초기화 된다 -->
+<!-- 이때 contextConfigLocation를 설정하지않으면 applicationContext.xml으로 기본 셋팅이 된다. -->
+	
 
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -22,10 +35,19 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+<!-- 	DispatcherServlet은 두개 이상이 등록될 수 있다 -->
+<!-- 여기서 <servlet>내에 설정된 값은 해당  DispatcherServlet 안에서만 공유가 가능 -->
+<!-- 디스패치별로 스프링컨테이너가 따로존재  -->
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>appServlet</servlet-name> -->
+<!-- 		<url-pattern>/</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+<!--    하나의  DispatcherServlet에 2개의 url 패턴을 입력할 수 있다.-->
 
 </web-app>

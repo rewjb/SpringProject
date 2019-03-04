@@ -45,6 +45,7 @@
 		<result property="parents" column="parents" />
 		<result property="depth" column="depth" />
 		<result property="border" column="border" />
+		<result property="star" column="star" />
 	</resultMap>
 
 	<select id="selectAll" resultMap="rs">
@@ -68,9 +69,9 @@
         INSERT INTO RIVIEW VALUES (#{pid}, #{bnum},null,#{content},SYSDATE,
                    <choose>
                        <when test="parents == null">#{bnum}, 0</when>
-                       <otherwise>#{parents}, #{depth}, #{star}</otherwise>
+                       <otherwise>#{parents}, #{depth}</otherwise>
                    </choose>
-             ,#{border} )
+             ,#{border}, #{star} )
 	</insert>
 
 	<insert id="insertInsert" parameterType="ComDTO">

@@ -5,7 +5,7 @@
 <html>
 <head>
 <%
-session.setAttribute("mid", "null");
+session.setAttribute("mid", "123");
 %>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 <!--제이쿼리-->
@@ -26,7 +26,7 @@ h3 {
     1px 1px 0 #000;  
 }
 
-   </style>
+   </style>`
 
 <script type="text/javascript">
 

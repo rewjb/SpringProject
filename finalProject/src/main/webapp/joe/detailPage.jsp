@@ -9,7 +9,7 @@
  <% 
 	String pid = request.getParameter("pid"); 
     String mid = (String)session.getAttribute("mid");
-    System.out.println(pid);
+    System.out.println(mid);
 %> 
 <style type="text/css">
 ul {
@@ -29,7 +29,6 @@ li {
 <script type="text/javascript"
 	src="/springProject/resources/JS/jquery.min.js"></script>
 <script type="text/javascript">
-
 
 
 
@@ -107,9 +106,7 @@ function updateResult() {
 		}//success끝
 	})//ajax끝
 	}
-	
 	return false;
-	
 }
 
 
@@ -208,6 +205,13 @@ $(function() {
 					$("#replyList").empty();
 					 $("#replyList").append(result); 
 					 $('html, body').scrollTop( $(document).height() );
+					 $("#j_grade").attr("value","");
+					 $("#content").val("");
+					 for (var i = 1; i <= 5; i++) {
+							image = 'j_image' + i;
+							el = document.getElementById(image);
+							el.src = "/springProject/resources/IMAGE/star/unstar.png";
+						}
 				}//if문 끝
 			}//success끝
 		})//ajax끝

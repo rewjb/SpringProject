@@ -47,7 +47,7 @@ public class PlaceReqController {
 		for (int i = 0; i < list.size()/10 + 1; i++) {
 			page.add(i+1);
 		}
-				
+		
 		model.addAttribute("page", 1);
 		//게시글 리스트와 페이지 리스트는 세션에 세팅
 		session.setAttribute("req_list", list);

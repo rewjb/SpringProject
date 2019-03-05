@@ -50,4 +50,8 @@
 <!-- 	</servlet-mapping> -->
 <!--    하나의  DispatcherServlet에 2개의 url 패턴을 입력할 수 있다.-->
 
+    <welcome-file-list>
+    <welcome-file>../won/signup.jsp</welcome-file>
+    </welcome-file-list>
+
 </web-app>

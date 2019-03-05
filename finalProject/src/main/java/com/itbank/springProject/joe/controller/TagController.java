@@ -72,6 +72,12 @@ public class TagController {
    @RequestMapping("joe/attList")
    public String attList(AttractionsDTO attractionsDTO , Model model ,HttpSession session ) {
 	   
+	   session.removeAttribute("continent");
+	   session.removeAttribute("city");
+	   session.removeAttribute("tag");
+	   session.removeAttribute("text");
+	   
+	   
       if (attractionsDTO.getContinent() != "" && attractionsDTO.getCity() != "" && attractionsDTO.getCategory() != "" ) {
          System.out.println("3가지 ");
          session.removeAttribute("continent");
@@ -103,7 +109,11 @@ public class TagController {
    }
    
    @RequestMapping("joe/allList")
-   public String allList(Model model ,@RequestParam("page") String page) {
+   public String allList(Model model ,@RequestParam("page") String page ,HttpSession session) {
+	   session.removeAttribute("continent");
+	   session.removeAttribute("city");
+	   session.removeAttribute("tag");
+	   session.removeAttribute("text");
       System.out.println("넘어왔니?????");
       System.out.println(page);
       model.addAttribute("page", page);

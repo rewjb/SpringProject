@@ -10,11 +10,13 @@
 </head>
 <body>
 <!-- 테스트 하는 페이지 -->
+
+
 <%
-/* 	System.out.println("test.jsp");
-	String mid = request.getParameter("mid");
-	System.out.println(mid); */
+	String mid = (String)request.getAttribute("mid1");
+
 %>
+id : <%=mid %>
 
 <!-- 
 <a href="/WEB-INF/views/won/insertMember.jsp"> /WEB-INF/views/won/insertMember.jsp </a><br>

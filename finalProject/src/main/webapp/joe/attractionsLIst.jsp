@@ -8,6 +8,15 @@
 session.setAttribute("mid", "temp");
 %>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+
+<!--   <!-- Bootstrap core CSS --> 
+<!--   <link href="/springProject/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+<!--   <!-- Custom styles for this template --> 
+<!--   <link href="/springProject/resources/bootstrap/css/modern-business.css" rel="stylesheet"> -->
+<!--   <!-- Bootstrap core JavaScript --> 
+<!--   <script src="/springProject/resources/bootstrap/vendor/jquery/jquery.min.js"></script> -->
+<!--   <script src="/springProject/resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
       <style type="text/css">
@@ -15,7 +24,7 @@ session.setAttribute("mid", "temp");
    font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* img{ width: 300px;} */
+ img{ width: 300px;} 
 
 h3 {
     color: white;
@@ -26,7 +35,31 @@ h3 {
     1px 1px 0 #000;  
 }
 
-   </style>
+#div1 {
+position: relative;
+height:600px;
+width: 850px;
+text-align: center;
+vertical-align: middle;
+
+}
+
+#div1:after {
+	background-image: url('/springProject/resources/IMAGE/banner4.jpg');
+    top:0;
+    left:0;
+    position:absolute;
+    background-size:100%;
+    opacity:0.3!important;
+    filter:alpha(opacity=50);
+    z-index:-1;
+    content:"";
+    width: 100%;
+    height: 100%;
+    border-radius: 1.0rem;
+}
+
+</style>
 
 <script type="text/javascript">
 
@@ -110,7 +143,7 @@ $(function () {
    var page = "<%=request.getParameter("page") %>"
    
 	if (page=="null" ) {
-// 		alert("1");
+		alert("1");
       $.ajax({ 
          url : "allList?page=null" ,
          Type : "POST",
@@ -233,6 +266,25 @@ $(function () {
          }
       });
    }
+   
+   
+   if ('<%=session.getAttribute("text")%>' != 'null') {
+	   alert("설마");
+	   $.ajax({ 
+	         url : "search?text="+ '<%=session.getAttribute("text")%>' + "&page=" + '<%= request.getParameter("page")%>',
+	         Type : "POST",
+	         success : function(result) {
+	        	 $("#container").empty();
+	             $("#container").append(result);
+	         }
+	      }); 
+	
+}
+   
+   
+   
+   
+   
 })//ready 끝
  
 var arr = new Array();
@@ -376,32 +428,135 @@ $(function () {
 			}
 		});
 	}
+	
+	function enter() {//엔터키 입력시 동작함수
+		if (window.event.keyCode == 13) {
+			alert("dkss");
+			 $.ajax({
+					url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
+					Type : "POST",
+					success : function(result) {
+						
+						$("#container").empty();
+						$("#container").append(result);
+					}
+				});
+		}
+	}
+	
+	
+	
+	
+	function enterSearch() {//일반 검색 함수
+		
+    	   if ($("#search").val() != "") {
+    		   
+    		   var text = $("#search").val();
+//     		   alert(text);
+				 $.ajax({
+						url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
+						Type : "POST",
+						success : function(result) {
+							
+							$("#container").empty();
+							$("#container").append(result);
+						}
+					});
+				
+			}else{
+// 				alert("검색 내용을 입력해주세요");
+			}
+       }
+	
+	function search() {//검색버튼 클릭시 동작 함수
+		if ($("#search").val() != "") {
+			var text = $("#search").val();
+			 $.ajax({
+					url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
+					Type : "POST",
+					success : function(result) {
+						$("#container").empty();
+						$("#container").append(result);
+					}
+				});
+			
+		}else{
+// 			alert("검색 내용을 입력해주세요");
+		}
+		
+		
+	}
+	
+	
+	
 </script>
 </head>
 <body>
    <%@ include file="/UserMainHeader.jsp"%>
     <!--해더랑 리스트랑 공간  어차피  jstl for문을 통해서 구현할곳  -->
-   <div style="width: 100%; height: 100px;">
    
- 
-   
-   </div>
       <div style="margin-left: 50px; position: fixed;">
-				<h2>장바구니</h2>
+				<h2 style="font-family: 'Jua', sans-serif;">장바구니</h2>
 			</div>
 		<div style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;" id="cartTable">
 		
 		</div>
+   <div class = "container marketing" style="text-align: center;">
+   
+   	  <div id="div1" style="display: inline-block;"> 
+	  <h2 style="font-family: 'Jua', sans-serif; display: inline-block; margin-top: 16px; text-align: center;">너님이 좋아할만한 여행지</h2>
+	  <br>
+  <header style="display: inline-block;">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox" style="width: 700px; height: 500px;">
+        <div class="carousel-item active" style="width: 700px; height: 500px; background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(0).getMainImg()}')">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>${recommend.get(0).getTitle()}</h3>
+            <p>${recommend.get(0).getContent()}</p>
+          </div>
+        </div>
+        <div class="carousel-item" style="width: 700px; height: 500px; background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(1).getMainImg()}')">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>${recommend.get(1).getTitle()}</h3>
+            <p>${recommend.get(1).getContent()}</p>
+          </div>
+        </div>
+        <div class="carousel-item" style="width: 700px; height: 500px; background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(2).getMainImg()}')">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>${recommend.get(2).getTitle()}</h3>
+            <p>${recommend.get(2).getContent()}</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </header>
+	  </div>
+	</div>
+	  <br>
+	  
    <div class = "container marketing">
    <nav class="navbar navbar-dark bg-dark"> 
-   <button style="margin-left: 0;"  class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarsExample01" aria-controls="navbarsExample01"
-      aria-expanded="false" aria-label="Toggle navigation" >  
-      <span class="navbar-toggler-icon"></span><span class="navbar-brand" >조건검색</span>
-   </button>
-       <form class="form-inline my-2 my-md-0">
-    <span class="navbar-brand">검색</span><input class="form-control" type="text" placeholder="Search" aria-label="Search">
+   <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span><span class="navbar-brand" >조건검색</span>
+  </button>
+    <form class="form-inline my-2 my-md-0">
+    	<span class="navbar-brand">검색</span>
+    	<input class="form-control" type="text" placeholder="Search" aria-label="Search" id = "search" onkeyup="enterSearch()" onkeypress="enter()" style="margin-right: 0;">
     </form>
+		   <input class="btn btn-secondary my-2" type="button"  value="검색" onclick="search()"> 
    <div class="collapse navbar-collapse" id="navbarsExample01">
       <ul class="navbar-nav mr-auto">
          <li class="navbar-brand"><label>대륙</label> 
@@ -422,53 +577,9 @@ $(function () {
       </ul>
    </div>
    </nav>
-   
-   <div style="width: 500px; height: 500px; background: lightgrey;"></div>
-  
-<%-- 
-  <header style="display: inline-block;">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox" style="width: 900px; height: 700px;">
-        Slide One - Set the background image for this slide in the line below
-        <div class="carousel-item active" style="background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(0).getMainImg()}')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>${recommend.get(0).getTitle()}</h3>
-            <p>${recommend.get(0).getContent()}</p>
-          </div>
-        </div>
-        Slide Two - Set the background image for this slide in the line below
-        <div class="carousel-item" style="background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(1).getMainImg()}')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>${recommend.get(1).getTitle()}</h3>
-            <p>${recommend.get(1).getContent()}</p>
-          </div>
-        </div>
-        Slide Three - Set the background image for this slide in the line below
-        <div class="carousel-item" style="background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(2).getMainImg()}')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>${recommend.get(2).getTitle()}</h3>
-            <p>${recommend.get(2).getContent()}</p>
-          </div>
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-  </header>
- --%>
 </div>
   
+  <br>
    <!--추천에 의해 뿌려줄 리스트   -->
    <div class="container marketing" id = "container" >
    

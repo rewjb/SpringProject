@@ -9,8 +9,10 @@
  <% 
 	String pid = request.getParameter("pid"); 
     String mid = (String)session.getAttribute("mid");
-    System.out.println(pid);
+    System.out.println(mid);
+    System.out.println("pid"+ pid);
 %> 
+
 <style type="text/css">
 ul {
     list-style:none;
@@ -30,9 +32,6 @@ li {
 	src="/springProject/resources/JS/jquery.min.js"></script>
 <script type="text/javascript">
 
-
-
-
 function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
  	$("#updateDialog").css('display', 'none');
 	var num = "#" + bnum;
@@ -43,7 +42,6 @@ function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
 }
     
 function comment() {//대댓글 등록시 처리함수
-	
 	
 	if('<%=mid%>' != 'null'){
 	if ($("#content2").val() == "") {
@@ -107,11 +105,8 @@ function updateResult() {
 		}//success끝
 	})//ajax끝
 	}
-	
 	return false;
-	
 }
-
 
 function updateCancel() {
 	$("#content3").val("");	
@@ -127,12 +122,11 @@ function commentCancel() {
 	return false;
 }
 
-
 function deleteComment(bnum) {//댓글 삭제 함수
 	var num = "#" + bnum;
 	var data = $(num).serialize();//폼 아이디가 댓글번호와 같다
 	
-// 	alert(num);
+// alert(num);
 	$.ajax({
 		url : "reviewDelete",
 		Type : "POST",
@@ -166,7 +160,6 @@ $(function() {
 					if ('<%=mid%>' != 'null') {
 						$("#mid").val('<%=mid%>');						
 					}
-					
 				}//if문 끝
 			}//success끝
 		})//ajax끝
@@ -186,17 +179,24 @@ $(function() {
 	}
 	 time += 1; 
 	
+	 
 	$("#b1").click(function() {//댓글입력시 등록해주는 함수 
 		
 		if('<%=mid%>' != 'null'){
 			
+			var test = document.getElementById("content").value;
+			
+			if (test != "") {
+				alert("내용을 입력해주세요");
+				$("#content").focus();
+				document.getElementById("content").setSelectionRange(1, 1);	
+			}else{
+			
 			if ($("#j_grade").val()=="") {
 				alert("별점을 입력해주세요")
-			}
-			
-		if ($("#content").val() == "") {
-			alert("내용을 입력해주세요 ");
-		}else{
+			}else if ($("#content").val() == "") {
+				alert("내용을 입력해주세요 ");
+			}else{
 		
 		  var data = $("#comForm").serialize();
 		$.ajax({
@@ -208,11 +208,19 @@ $(function() {
 					$("#replyList").empty();
 					 $("#replyList").append(result); 
 					 $('html, body').scrollTop( $(document).height() );
+					 $("#j_grade").attr("value","");
+					 $("#content").val("");
+					 for (var i = 1; i <= 5; i++) {
+							image = 'j_image' + i;
+							el = document.getElementById(image);
+							el.src = "/springProject/resources/IMAGE/star/unstar.png";
+						}
 				}//if문 끝
 			}//success끝
 		})//ajax끝
 		
 		}//else문 끝
+		}
 		}else{
 			alert("로그인한 회원만 댓글을 입력할 수 있습니다.")
 		}
@@ -265,7 +273,6 @@ $(function() {
 			$("#cart").attr("class", "btn btn-secondary my-2");
 
 			var data = $("#form").serialize();
-		
 
 			$.ajax({
 				url : "cartDelete",
@@ -279,7 +286,6 @@ $(function() {
 		}
 		}else{
 			alert("로그인한 회원만 장바구니에 담을수 있습니다.")
-			
 		}
 	}
 	
@@ -372,7 +378,7 @@ $(function() {
 	<form id="form">
 		<div class="row featurette">
 			<div style="margin-left: 50px; position: fixed;">
-				<h2>장바구니</h2>
+				<h2 style="font-family: 'Jua', sans-serif;">장바구니</h2>
 			</div>
 
 			<div

@@ -37,7 +37,7 @@
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>
       </div>
     </div>
   </header>

@@ -21,8 +21,6 @@
 	
 	</select>
 
-
-
 	<update id="countUpdate" parameterType="Int">
 		UPDATE RIVIEW SET border = border+1  WHERE border <![CDATA[ >= ]]> #{border}
 	</update>
@@ -31,15 +29,10 @@
 		UPDATE RIVIEW SET border = border+1  WHERE pid = #{pid} AND border = #{border}
 	</update>
 	
-	
 	<update id="commentUpdate" parameterType="ComDTO" >
 		UPDATE RIVIEW SET content = #{content}  WHERE bnum = #{bnum}
 	</update>
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> branch 'master' of https://github.com/rewjb/SpringProject.git
 	<resultMap type="ComDTO" id="rs">
 		<result property="pid" column="pid" />
 		<result property="bnum" column="bnum" />

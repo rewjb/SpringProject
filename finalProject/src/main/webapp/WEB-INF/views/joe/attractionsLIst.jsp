@@ -4,6 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<a href="detailPage">asdsadsad</a>
+<!-- http://localhost:7777/springProject/WEB-INF/views/joe/detailPage.jsp -->
+<!-- http://localhost:7777/springProject/WEB-INF/views/joe/detailPage.jsp -->
+<!-- http://localhost:7777/springProject/WEB-INF/views/joe/cartList.jsp 여기 -->
+<!-- http://localhost:7777/springProject/joe/springProject/WEB-INF/views/joe/detailPage.jsp -->
 <%
 session.setAttribute("mid", "temp");
 %>

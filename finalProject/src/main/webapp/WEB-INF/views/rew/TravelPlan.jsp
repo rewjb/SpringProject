@@ -201,8 +201,8 @@ $('#loading').css('left',document.body.clientHeight/2);
     <div class="col-md-4" style="padding: 0px">
 
 				<!-- 프로젝트 목록 -->
-				<div id="projectList_container"
-					style="height: 40%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
+				<div id="projectList_container" 
+					style="height: 240px; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
 					
 					<table class="table table-striped" style="width: 100%;word-break:break-word;">
 						<thead>
@@ -244,7 +244,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 
 				<!-- 관광명소 장바구니 -->
 				<div
-					style="height: 60%; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
+					style="height: 360px; border: 5px ridge; overflow: scroll; overflow-x: hidden;">
 
 					<table class="table table-striped" style="width: 100%;word-break:break-word;border: 1px">
 						<thead>

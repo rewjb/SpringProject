@@ -30,6 +30,11 @@ public class TagController {
       return "joe/tag";
    }
    
+   @RequestMapping("joe/attractionsLIst")
+   public void startAttractionsLIstPage(){
+	   
+   }
+   
    @RequestMapping("joe/tagCity")
    public String tagCity(@RequestParam("tag") String city , Model model ) {
       

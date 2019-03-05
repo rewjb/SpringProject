@@ -1,5 +1,6 @@
 <!-- 
 회원가입 방법 선택하는 페이지
+
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
@@ -15,11 +16,16 @@
    content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v3.8.5">
 
-<title>logIn</title>
+<title>회원가입</title>
+<!-- 이메일  -->
 <script type="text/javascript" src="springProject/resources/JS/jquery.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 구글  -->
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+<script src="https://apis.google.com/js/api:client.js"></script>
+
 <script type="text/javascript">
-	
+//<!------------------------- body2-1 : 이메일 가입 관련 설정 ---------------------------->
 	$(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		
 	// 정규식을 변수에 할당
@@ -173,13 +179,15 @@
 							//성공시 설정
 							hasColor(name,2);		//success
 							f.text(''); 			//비워주기
-							$("#mname").val(result)	//전송폼에 값 세팅
+							$("#mname").val(result);	//전송폼에 값 세팅
+							$("#mprofile").val(
+								"/springProject/resources/IMAGE/LoginLogo/user.png");
+							$("img").attr("src", $("mprofile").val())
 						}//end success
 					});//end ajax
 				}//end if()
 			}//end if
 		});//end keyup()
-		
 		
 		//signup버튼 눌렀을때 동작하는 함수
 		$("#signupBtn").click(function() {
@@ -203,12 +211,20 @@
 				var f = $("#feedback-inputMname");
 				f.text('다시 입력해주세요')
 			} else {
-				var d = $("#hidden").serialize();
-				alert(d);
+				var form = $("#hidden");
+				
+                // 자바스크립트 객체를 배열에 담아줌
+                var formSerial = $(form).serializeArray();
+                var sendData = {};
+                for (var i = 0; i < formSerial.length; i++) {
+                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
+				}
+                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
+                alert(JSON.stringify(sendData));
 				$.ajax({
 					url : "insertMember",
-					type : "GET",
-					date : d,
+					type : "POST",
+					data : sendData,
 					success : function(result) {
 						alert(result);
 					}//end success
@@ -217,8 +233,12 @@
 			}//end if()
 		})//end click()
 	});
+	
+//<!------------------------- body2-1 : 이메일 가입 관련 설정 ---------------------------->
+   
 </script>
 <style type="text/css">
+/* -------전송하는 폼 설정 form id="hidden"------- */
 	.feedback{
 		text-align : left;
 		padding-left : 5px;
@@ -228,15 +248,90 @@
 	.form-group{
 		height: 27px;
 	}
+
+/* -------구글 로그인 버튼 설정-------------------- */
+#customBtn {
+	display: inline-block;
+	background: white;
+	color: #444;
+	width: 300px;
+	height: 40px;
+	border-radius: 5px;
+	border: thin solid #888;
+	white-space: nowrap;
+	vertical-align: top;
+}
+
+#customBtn:hover {
+	cursor: pointer;
+}
+
+span.icon {
+	background: url(/springProject/resources/IMAGE/LoginLogo/googleLogo.png);
+	display: inline-block;
+	vertical-align: middle;
+	width: 42px;
+	height: 42px;
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	background-position: 00% 50%;
+}
+
+span.buttonText {
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 42px;
+	padding-right: 42px;
+	font-size: 16px;
+	font-weight: bold;
+	/* Use the Roboto font that is loaded in the <head> */
+	font-family: 'Roboto', sans-serif;
+}
+
+.button {
+	height: 55px;
+	vertical-align: top;
+	padding-top: 10%;
+}
+
+/* -------페이스북 로그인 버튼 설정--------------------- */
+#authBtn {
+	display: inline-block;
+	color: #FFFFFF;
+	width: 300px;
+	height: 40px;
+	border-radius: 5px;
+	border: thin solid #888;
+	white-space: nowrap;
+	vertical-align: top;
+	background: url(/springProject/resources/IMAGE/LoginLogo/fbookLogo.png);
+	background-color: #3A559F;
+	background-size: 25px 25px;
+	background-repeat: no-repeat;
+	background-position: 5% 45%;
+	font-size: 16px;
+	font-family: 'Roboto', sans-serif;
+	text-align: right;
+	padding-right: 50px;
+}
+
+#authBtn:hover {
+	cursor: pointer;
+}
+
+#authBth {
+	display: inline-block;
+}
+
 </style> 
 
 </head>
 <body class="text-center">
-   <!-- header -->
-   <%@ include file="/won/loginHeader.jsp"%>
+   <!-- header : 회원가입 페이지는 헤더 모양이 달라서 다른 헤더를 사용 -->
+   <%@ include file="/won/signupHeader.jsp"%>
    <div id="signup">
-      <!-- 위쪽공간 -->
       <div style="text-align: center;">
+	     <!-- 위쪽공간 -->
          <!-- 가입방식 선택 -->
          <table style="width: 100%; text-align: center;">
             <tr>
@@ -245,109 +340,302 @@
                <td></td>
             </tr>
             <tr>
+              <td></td>
+              <td>
+				<div style="height: 150px;">
+<!------------------------- body1 : 실제 컨트롤러와 동작하는 공간-------------->
+					<form id="hidden">
+						<input type="hidden" id="mid" name="mid" class="hidden" placeholder="mid"><br>
+						<input type="hidden" id="mpw" name="mpw" class="hidden" placeholder="mpw"><br>
+						<input type="hidden" id="mname" name="mname" class="hidden" placeholder="mname"><br>
+						<input type="hidden" id="mprofile" name="mprofile" class="hidden" placeholder="mprofile"><br>
+					</form>
+<!------------------------- body1 : 실제 컨트롤러와 동작하는 공간 끝------------>
+				</div>
+               </td>
+               <td></td>
+            </tr>
+            <tr>
                <td></td>
                <td style="width: 300px;">
-                 <form id="EmForm" class="form-signin" style="width: 300px;">
-                    <!-- MID 아이디(이메일) 입력 폼 -->
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Email address" id="inputMid">
-	                    <div class="feedback" id="feedback-inputMid"></div>
-					</div>
+<!------------------------- body2 : 이메일 가입 설정 -------------------------->
+					<form id="EmForm" class="form-signin" style="width: 300px;">
+						<!-- MID 아이디(이메일) 입력 폼 -->
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Email address" id="inputMid">
+							<div class="feedback" id="feedback-inputMid"></div>
+						</div>
 
-					<div style="height: 5px"></div>
+						<div style="height: 5px"></div>
 
-                    <!-- MPW 비밀번호 입력 폼 -->
-					<div class="form-group">
-	                    <input type="password" id="inputMpw" class="form-control" placeholder="Password" required>
-	  					<div id="feedback-inputMpw" class="feedback"></div>
+						<!-- MPW 비밀번호 입력 폼 -->
+						<div class="form-group">
+							<input type="password" id="inputMpw" class="form-control"
+								placeholder="Password" required>
+							<div id="feedback-inputMpw" class="feedback"></div>
+						</div>
+						<div class="form-group">
+							<input type="password" id="inputConform" class="form-control"
+								placeholder="Password Conform" required>
+							<div id="feedback-inputMpw1" class="feedback"></div>
+						</div>
+
+						<div style="height: 5px"></div>
+
+						<!-- 이름 입력 폼 -->
+						<div class="form-group">
+							<input type="text" id="inputMname" class="form-control"
+								placeholder="UserName" required>
+							<div id="feedback-inputMname" class="feedback"
+								style="width: 100%;"></div>
+						</div>
+
+					</form> <!-- 이메일 회원가입 -->
+					<div style="height: 60px; vertical-align: top; padding-top: 10px">
+						<button class="btn btn-lg btn-secondary btn-block" type="button"
+							id="signupBtn" style="width: 300px;">회원가입</button>
+						<hr>
 					</div>
-					<div class="form-group">
-	                    <input type="password" id="inputConform" class="form-control" placeholder="Password Conform" required>
-	                    <div id="feedback-inputMpw1" class="feedback"></div>
-					</div>  
-					                  
-					<div style="height: 5px"></div>
+				</td>
+<!------------------------- body2 : 이메일 가입 끝 ---------------------------->
+               <td></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>
+<!------------------------- body3 : 구글 로그인 관련 ---------------------------->
+               	<!-- 구글 로그인 설정 -->
+				<!-- 구글 계정 연동하여 회원가입 -->
+				<script type="text/javascript">
+				var googleUser = {};
+
+				var startAppGG = function() {
+					gapi.load('auth2',function() {
+						// Retrieve the singleton for the GoogleAuth library and set up the client.
+						auth2 = gapi.auth2
+							.init({
+								client_id : '702698149904-d84keomrhgpc92u84qi1uobuugmnja3s.apps.googleusercontent.com',
+								cookiepolicy : 'single_host_origin',
+							// Request scopes in addition to 'profile' and 'email'
+							//scope: 'additional_scope'
+							});
+						attachSignin(document.getElementById('customBtn'));
+					});//end gapi.load()
+				};//end startApp
+
+				function attachSignin(element) {
+					console.log(element.id);
+					auth2.attachClickHandler(element, {}, function(googleUser) {
+						console.log("GOOGLE");
+						//mid(이메일)받아오기
+						var ggId = googleUser.getBasicProfile().getEmail()
+						console.log(ggId);
+						document.getElementById('mid').value = ggId;
+						//mname받아오기
+						var ggName = googleUser.getBasicProfile().getName(); 
+						console.log(ggName);
+						document.getElementById('mname').value = ggName;
+						//mprofile받아오기
+						var ggprofile = googleUser.getBasicProfile().getImageUrl(); 
+						console.log(ggprofile);
+						document.getElementById('mprofile').value = ggprofile;
+						//mpw세팅하기 : Google EXternal LOGIN
+						document.getElementById('mpw').value = "GgEXLOGIN";
+
+						//회원가입 진행 
+						var form = $("#hidden");
+		                //자바스크립트 객체를 배열에 담아줌
+		                var formSerial = $(form).serializeArray();
+		                var sendData = {};
+		                for (var i = 0; i < formSerial.length; i++) {
+		                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
+						}
+		                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
+		                alert(JSON.stringify(sendData));
+						$.ajax({
+							url : "insertMember",
+							type : "POST",
+							data : sendData,
+							success : function(result) {
+								alert(result);
+							}//end success
+						});//end ajax
+
+						 $("#hidden").on("submit", function(event) {
+						       event.preventDefault();
+						       // process form
+						    });
+
+					},function(error) {
+						alert(JSON.stringify(error, undefined, 2));
+					}); //attachClickHandler()
+				}//end function attachSignin() 
+				
+				var signupGG = function() {
+					var form = $("#hidden");
 					
-                    <!-- 이름 입력 폼 -->
-                    <div class="form-group">
-	                    <input type="text" id="inputMname" class="form-control" placeholder="UserName" required>
-	                    <div id="feedback-inputMname" class="feedback" style="width: 100%;"></div>
-                    </div>
+	                // 자바스크립트 객체를 배열에 담아줌
+	                var formSerial = $(form).serializeArray();
+	                var sendData = {};
+	                for (var i = 0; i < formSerial.length; i++) {
+	                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
+					}
+	                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
+	                alert(JSON.stringify(sendData));
+					$.ajax({
+						url : "insertMember",
+						type : "POST",
+						data : sendData,
+						success : function(result) {
+							alert(result);
+						}//end success
+					});//end ajax
+						
+				};//end ggsignup
+				
+				</script>
+				<!-- 구글 로그인 버튼 -->
+				<div id="gSignInWrapper" class="button">
+					<div id="customBtn" class="customGPlusSignIn">
+						<span class="icon"></span> <span class="buttonText"> Google로 로그인</span>
+					</div>
+					<script>
+				       startAppGG();
+				    </script>
+				</div>
+<!------------------------- body3 : 구글 로그인 관련 끝 ---------------------------->
+               </td>
+               <td></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>
+<!------------------------- body4 : 페이스북 로그인 관련 ---------------------------->
+                <!-- 페이스북 로그인 설정 --> 
+				<!-- 페이스북 계정을 통한 회원가입 -->
+				<script type="text/javascript">
+				   var check = 0;
+				   //로그인 상태 체크
+				   var checkLoginStatus = function(response) {
+				      console.log(response);
+				      /* statusChangeCallback(response); */
+				      if (response.status === 'connected') {
+				         //로그인 되었을때
+				         document.querySelector('#authBtn').value = 'Facebook으로 로그인';
+				         FB.api('/me',function(resp) {
+							console.log("FACEBOOK");
+				            //mid(이메일)받아오기
+				            console.log(resp.id);
+				            document.getElementById('mid').value = resp.id;
+				            //mpw세팅 : FaceBook EXternal LOGIN
+				            document.getElementById('mpw').value = "FBEXLOGIN"
+				            //mname받아오기
+				            console.log(resp.name);
+				            document.getElementById('mname').value = resp.name;
+				            //mprofile받아오기
+				            var profile = 'https://graph.facebook.com/'+ resp.id +'/picture?width=250&height=250>'
+				            console.log(profile);
+				            document.getElementById('mprofile').value = profile;
+				         });
+				      } else {
+				         //로그인 안되어 있을때
+				         document.querySelector('#authBtn').value = 'Facebook 으로 로그인';
+				      }
+				   }
 
-				</form>
-                  
-                  <!-- 이메일 회원가입 -->
-                  <%@ include file="loginEm.jsp" %>
-                  <div style="height: 60px; vertical-align: top; padding-top: 10px">
-                     <button class="btn btn-lg btn-secondary btn-block" type="button"
-                        id="signupBtn" style="width: 300px;">Sign up</button>
-                     <hr>
-                  </div>
-               </td>
-               <td></td>
-            </tr>
-            <tr>
-               <td></td>
-               <td>
-                  <!-- 구글 로그인 설정 --> <%@ include file="/won/loginGG.jsp"%>
-                  <!-- 구글 계정을 통한 회원가입 -->
-                  <div id="gSignInWrapper" class="button">
-                     <div id="customBtn" class="customGPlusSignIn">
-                        <span class="icon"></span> <span class="buttonText">
-                        Login with Google</span>
-                     </div>
-                     <script>
-                        startAppGG();
-                     </script>
-                  </div>
-               </td>
-               <td></td>
-            </tr>
-            <tr>
-               <td></td>
-               <td>
-                  <!-- 페이스북 로그인 설정 --> <%@ include file="/won/loginFB.jsp"%>
-                  <!-- 페이스북 계정을 통한 회원가입 -->
-                  <div style="height: 20px;"></div> 
-                  <input type="button" id="authBtn" value="checking..." 
-                  onclick="
-                     if(this.value === 'Login with Facebook'){
+				   //SDK함수 초기화
+				   window.fbAsyncInit = function() {
+				      FB.init({
+				         appId : '767168977001948',
+				         cookie : true, // enable cookies to allow the server to access 
+				         // the session
+				         xfbml : true, // parse social plugins on this page
+				         version : 'v3.2' // The Graph API version to use for the call
+				      });
+
+				      // Now that we've initialized the JavaScript SDK, we call 
+				      // FB.getLoginStatus().  This function gets the state of the
+				      // person visiting this page and can return one of three states to
+				      // the callback you provide.  They can be:
+				      //
+				      // 1. Logged into your app ('connected')
+				      // 2. Logged into Facebook, but not your app ('not_authorized')
+				      // 3. Not logged into Facebook and can't tell if they are logged into
+				      //    your app or not.
+				      //
+				      // These three cases are handled in the callback function.
+
+				      FB.getLoginStatus(checkLoginStatus);
+				   };
+				   
+				   //페이스북의 SDK를 가져오기
+				   // Load the SDK asynchronously 
+				   (function(d, s, id) {
+				      var js, fjs = d.getElementsByTagName(s)[0];
+				      if (d.getElementById(id))
+				         return;
+				      js = d.createElement(s);
+				      js.id = id;
+				      js.src = "https://connect.facebook.net/en_US/sdk.js";
+				      fjs.parentNode.insertBefore(js, fjs);
+				   }(document, 'script', 'facebook-jssdk'));
+				   
+				   //페이스북의 SDK를 가져오기
+				   // Load the SDK asynchronously 
+				   (function(d, s, id) {
+				      var js, fjs = d.getElementsByTagName(s)[0];
+				      if (d.getElementById(id))
+				         return;
+				      js = d.createElement(s);
+				      js.id = id;
+				      js.src = "https://connect.facebook.net/en_US/sdk.js";
+				      fjs.parentNode.insertBefore(js, fjs);
+				   }(document, 'script', 'facebook-jssdk'));
+				   
+				</script>
+				<!-- 페이스북 로그인 버튼 -->
+				<div style="height: 20px;"></div> 
+				<input type="button" id="authBtn" value="Facebook Login"
+				 onclick="
+                     if(this.value === 'Facebook 으로 로그인'){
                         //now logout
+                        alert('no!');
                         FB.login(function(res){
                            console.log('login =>',res);
                            checkLoginStatus(res);
                         });
                      }else{
                         //now login
-                        FB.logout(function(res){
-                           console.log('logout =>',res);
-                           checkLoginStatus(res);
-                        });
-                     }
+                        alert('oh!');                        
+                     }//end if
+                     
+                     var form = $('#hidden');
+ 					
+					 // 자바스크립트 객체를 배열에 담아줌
+					  var formSerial = $(form).serializeArray(); 
+					  var sendData = {}; 
+					  for (var i = 0; i < formSerial.length; i++) { 
+					  	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value); 
+					  } 
+					 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환  
+					  alert(JSON.stringify(sendData)); 
+					  $.ajax({ 
+						  	url : 'insertMember', 
+						  	type : 'POST', 
+						  	data : sendData, 
+						  	success : function(result) { 
+						  		alert(result); 
+					  		}//end success 
+					  });//end ajax
                   ">
+<!------------------------- body4 : 페이스북 로그인 관련 끝---------------------------->
                </td>
                <td></td>
             </tr>
             <tr>
                <td></td>
                <td style="height: 100px"></td>
-               <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>
-				<div style="height: 150px;">
-                    <!-- 외부 로그인 성공시 데이터를 담아놨다가 넘겨주는 공간 -->
-						<form id="hidden">
-							<input type="text" id="mid" name="mid" class="hidden"><br>
-							<input type="text" id="mpw" name="mpw" class="hidden"><br>
-							<input type="text" id="mname" name="mname" class="hidden"><br>
-							<input type="text" id="mprofile" name="mprofile" class="hidden"
-								value="/springProject/resources/IMAGE/LoginLogo/user.png"><br>
-							<img id="imgTest" src="/springProject/resources/IMAGE/LoginLogo/user.png" style="width: 100px">
-						</form>
-					</div>
-               </td>
                <td></td>
             </tr>
          </table>

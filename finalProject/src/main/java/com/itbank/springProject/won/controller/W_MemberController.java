@@ -20,17 +20,24 @@ public class W_MemberController{
 	@Qualifier("MemberDAO")
 	private MemberDAO memberDAO;
 	
+	@Autowired
+	@Qualifier("worker")
+	private W_MemberWorker worker;
+	
 	//회원가입
 	@RequestMapping("won/insertMember")
 	@ResponseBody
 	public String insertMember(MemberDTO memberDTO){
- 		System.out.println(memberDTO.getMid());
- 		System.out.println(memberDTO.getMpw());
- 		System.out.println(memberDTO.getMname());
- 		System.out.println(memberDTO.getMprofile());
- 		System.out.println(memberDTO.getMaddr1());
- 		System.out.println(memberDTO.getMaddr2());
- 		System.out.println(memberDTO.getMtel());
+		memberDTO = worker.settingBasicInfo(memberDTO);
+ 		System.out.print(memberDTO.getMid()+",");
+ 		System.out.print(memberDTO.getMpw()+",");
+ 		System.out.print(memberDTO.getMname()+",");
+ 		System.out.print(memberDTO.getMprofile()+",");
+ 		System.out.print(memberDTO.getMtel()+",");
+ 		System.out.print(memberDTO.getMaddr1()+"-");
+ 		System.out.print(memberDTO.getMaddr2()+",");
+ 		System.out.print(memberDTO.getGender()+",");
+ 		System.out.println(memberDTO.getRdate());
 		try {
 			//insert성공시 insertM으로
 			memberDAO.insert(memberDTO);

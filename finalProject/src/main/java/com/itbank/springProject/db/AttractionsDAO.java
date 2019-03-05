@@ -50,4 +50,13 @@ public class AttractionsDAO {//관광명소 DAO
 		return session.selectOne("attractions.selectImg", id);
 	}
 	
+	
+	public List<AttractionsDTO> searchSelect(String text) {
+		return session.selectList("attractions.searchSelect", text);
+	}
+	
+	
+	
+	
+	
 }

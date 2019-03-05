@@ -220,13 +220,13 @@
                 	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
 				}
                 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-                alert(JSON.stringify(sendData));
+                console.log(JSON.stringify(sendData));
 				$.ajax({
 					url : "insertMember",
 					type : "POST",
 					data : sendData,
 					success : function(result) {
-						alert(result);
+						console.log(result+'--1:실패,0:성공');
 					}//end success
 				});//end ajax
 				
@@ -451,13 +451,13 @@ span.buttonText {
 		                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
 						}
 		                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-		                alert(JSON.stringify(sendData));
+		                console.log(JSON.stringify(sendData));
 						$.ajax({
 							url : "insertMember",
 							type : "POST",
 							data : sendData,
 							success : function(result) {
-								alert(result);
+								console.log(result);
 							}//end success
 						});//end ajax
 
@@ -467,7 +467,7 @@ span.buttonText {
 						    });
 
 					},function(error) {
-						alert(JSON.stringify(error, undefined, 2));
+						console.log(JSON.stringify(error, undefined, 2));
 					}); //attachClickHandler()
 				}//end function attachSignin() 
 				
@@ -481,13 +481,13 @@ span.buttonText {
 	                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
 					}
 	                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-	                alert(JSON.stringify(sendData));
+	                console.log(JSON.stringify(sendData));
 					$.ajax({
 						url : "insertMember",
 						type : "POST",
 						data : sendData,
 						success : function(result) {
-							alert(result);
+							console.log(result+'--1:실패,0:성공');
 						}//end success
 					});//end ajax
 						
@@ -599,14 +599,14 @@ span.buttonText {
 				 onclick="
                      if(this.value === 'Facebook 으로 로그인'){
                         //now logout
-                        alert('no!');
+                        console.log('no!');
                         FB.login(function(res){
                            console.log('login =>',res);
                            checkLoginStatus(res);
                         });
                      }else{
                         //now login
-                        alert('oh!');                        
+                        console.log('oh!');                        
                      }//end if
                      
                      var form = $('#hidden');
@@ -618,13 +618,13 @@ span.buttonText {
 					  	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value); 
 					  } 
 					 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환  
-					  alert(JSON.stringify(sendData)); 
+					  console.log(JSON.stringify(sendData)); 
 					  $.ajax({ 
 						  	url : 'insertMember', 
 						  	type : 'POST', 
 						  	data : sendData, 
 						  	success : function(result) { 
-						  		alert(result); 
+						  		console.log(result+'--1:실패,0:성공'); 
 					  		}//end success 
 					  });//end ajax
                   ">

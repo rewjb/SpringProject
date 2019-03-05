@@ -1,6 +1,5 @@
 <!-- 
 로그인 방법 선택하는 페이지
-
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>

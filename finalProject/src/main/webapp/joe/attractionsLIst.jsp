@@ -578,7 +578,7 @@ $(function () {
    </div>
    </nav>
 </div>
-  
+    
   <br>
    <!--추천에 의해 뿌려줄 리스트   -->
    <div class="container marketing" id = "container" >

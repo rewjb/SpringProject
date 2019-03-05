@@ -43,7 +43,7 @@
 <c:when test="${fn:length(list) le 12}"><!-- ge   =   <= -->
    <c:forEach items="${list}" var="list">
        <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <table style="width:100%;">
@@ -71,7 +71,7 @@
 
 <c:forEach begin="1" end="12" items="${list}" var="list">
       <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <table style="width:100%;">
@@ -104,7 +104,7 @@
       <c:when test="${tempPage le fn:length(list)/12}">
          <c:forEach begin="${((tempPage-1)*12)+1 }" end="${tempPage*12}" items="${list}" var="list">
            <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <table style="width:100%;">

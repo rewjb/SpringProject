@@ -9,13 +9,13 @@ session.setAttribute("mid", "123");
 %>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
-  <link href="/springProject/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="/springProject/resources/bootstrap/css/modern-business.css" rel="stylesheet">
-  <!-- Bootstrap core JavaScript -->
-  <script src="/springProject/resources/bootstrap/vendor/jquery/jquery.min.js"></script>
-  <script src="/springProject/resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--   <!-- Bootstrap core CSS --> 
+<!--   <link href="/springProject/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+<!--   <!-- Custom styles for this template --> 
+<!--   <link href="/springProject/resources/bootstrap/css/modern-business.css" rel="stylesheet"> -->
+<!--   <!-- Bootstrap core JavaScript --> 
+<!--   <script src="/springProject/resources/bootstrap/vendor/jquery/jquery.min.js"></script> -->
+<!--   <script src="/springProject/resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
@@ -143,7 +143,7 @@ $(function () {
    var page = "<%=request.getParameter("page") %>"
    
 	if (page=="null" ) {
-// 		alert("1");
+		alert("1");
       $.ajax({ 
          url : "allList?page=null" ,
          Type : "POST",
@@ -266,6 +266,25 @@ $(function () {
          }
       });
    }
+   
+   
+   if ('<%=session.getAttribute("text")%>' != 'null') {
+	   alert("설마");
+	   $.ajax({ 
+	         url : "search?text="+ '<%=session.getAttribute("text")%>' + "&page=" + '<%= request.getParameter("page")%>',
+	         Type : "POST",
+	         success : function(result) {
+	        	 $("#container").empty();
+	             $("#container").append(result);
+	         }
+	      }); 
+	
+}
+   
+   
+   
+   
+   
 })//ready 끝
  
 var arr = new Array();
@@ -290,7 +309,6 @@ $(function () {
 		list[i].setAttribute("class", "btn btn-primary my-2");
 	   }
    }
-   
 
 	} else if (continent != "null" && city != "null" && tag == "null") {
 
@@ -410,15 +428,75 @@ $(function () {
 			}
 		});
 	}
+	
+	function enter() {//엔터키 입력시 동작함수
+		if (window.event.keyCode == 13) {
+			alert("dkss");
+			 $.ajax({
+					url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
+					Type : "POST",
+					success : function(result) {
+						
+						$("#container").empty();
+						$("#container").append(result);
+					}
+				});
+		}
+	}
+	
+	
+	
+	
+	function enterSearch() {//일반 검색 함수
+		
+    	   if ($("#search").val() != "") {
+    		   
+    		   var text = $("#search").val();
+//     		   alert(text);
+				 $.ajax({
+						url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
+						Type : "POST",
+						success : function(result) {
+							
+							$("#container").empty();
+							$("#container").append(result);
+						}
+					});
+				
+			}else{
+// 				alert("검색 내용을 입력해주세요");
+			}
+       }
+	
+	function search() {//검색버튼 클릭시 동작 함수
+		if ($("#search").val() != "") {
+			var text = $("#search").val();
+			 $.ajax({
+					url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
+					Type : "POST",
+					success : function(result) {
+						$("#container").empty();
+						$("#container").append(result);
+					}
+				});
+			
+		}else{
+// 			alert("검색 내용을 입력해주세요");
+		}
+		
+		
+	}
+	
+	
+	
 </script>
 </head>
 <body>
    <%@ include file="/UserMainHeader.jsp"%>
     <!--해더랑 리스트랑 공간  어차피  jstl for문을 통해서 구현할곳  -->
    
-   </div>
       <div style="margin-left: 50px; position: fixed;">
-				<h2>장바구니</h2>
+				<h2 style="font-family: 'Jua', sans-serif;">장바구니</h2>
 			</div>
 		<div style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;" id="cartTable">
 		
@@ -468,16 +546,17 @@ $(function () {
 	  </div>
 	</div>
 	  <br>
+	  
    <div class = "container marketing">
    <nav class="navbar navbar-dark bg-dark"> 
-   <button style="margin-left: 0;"  class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarsExample01" aria-controls="navbarsExample01"
-      aria-expanded="false" aria-label="Toggle navigation" >  
-      <span class="navbar-toggler-icon"></span><span class="navbar-brand" >조건검색</span>
-   </button>
-       <form class="form-inline my-2 my-md-0">
-    <span class="navbar-brand">검색</span><input class="form-control" type="text" placeholder="Search" aria-label="Search">
+   <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span><span class="navbar-brand" >조건검색</span>
+  </button>
+    <form class="form-inline my-2 my-md-0">
+    	<span class="navbar-brand">검색</span>
+    	<input class="form-control" type="text" placeholder="Search" aria-label="Search" id = "search" onkeyup="enterSearch()" onkeypress="enter()" style="margin-right: 0;">
     </form>
+		   <input class="btn btn-secondary my-2" type="button"  value="검색" onclick="search()"> 
    <div class="collapse navbar-collapse" id="navbarsExample01">
       <ul class="navbar-nav mr-auto">
          <li class="navbar-brand"><label>대륙</label> 
@@ -498,8 +577,6 @@ $(function () {
       </ul>
    </div>
    </nav>
-   
-
 </div>
   
   <br>

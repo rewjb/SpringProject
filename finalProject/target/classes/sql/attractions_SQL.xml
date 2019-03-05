@@ -28,7 +28,9 @@
 		SELECT * FROM ATTRACTIONS WHERE continent = #{continent} 
 	</select>
   
-  
+  	<select id="searchSelect" parameterType="String" resultMap="rs">
+  		SELECT * FROM ATTRACTIONS WHERE contentElements LIKE '%'||#{value}||'%'
+  	</select>
   
   
   

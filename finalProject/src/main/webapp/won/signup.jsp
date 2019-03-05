@@ -322,7 +322,6 @@ span.buttonText {
 #authBth {
 	display: inline-block;
 }
-
 </style> 
 
 </head>

@@ -44,17 +44,7 @@
 							
 							var form = $("#form").serialize();
 							alert(form)
-														
-			                /* // 자바스크립트 객체를 배열에 담아줌
-			                var formSerial = $(form).serializeArray();
-			                console.log("size :"+ formSerial.length);	
-			                var sendData = {};
-			                for (var i = 0; i < formSerial.length; i++) {
-			                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
-							}
-			                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-			                alert(JSON.stringify(sendData));
-			                */
+			               
 							$.ajax({
 								url : "insertMember",
 								type : "POST",
@@ -64,8 +54,7 @@
 								}//end success
 							});//end ajax
 							
-							$("#append").append("<h4>"+mid+"-"+mpw+"-"+mname+"-"+mprofile+"<h4>");
-							$("#append").append("<h4>"+gender+"-"+maddr1+"-"+maddr2+"-"+mtel+"-"+agegroup+"-"+rdate+"<h4>");
+							$("#append").append("<h6>"+mid+"-"+mpw+"-"+mname+"-"+mprofile+"-"+gender+"-"+maddr1+"-"+maddr2+"-"+mtel+"-"+agegroup+"-"+rdate+"<h6>");
 							
 							
 						})//end list.each

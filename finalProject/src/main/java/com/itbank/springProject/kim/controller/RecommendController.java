@@ -71,7 +71,7 @@ public class RecommendController {
 		}
 		//완성된 선택사진리스트 모델객체로 전송
 		model.addAttribute("ranImgs", ranImgs);
-		return "kim/tagSelect";
+		return "won/signup";
 	}
 	
 	@RequestMapping("kim/Tag_Select_Submit")

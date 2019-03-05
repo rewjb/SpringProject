@@ -14,7 +14,7 @@
    </style>
 <%
   ArrayList list2 = (ArrayList)request.getAttribute("list");
-	System.out.println(list2.size());
+   System.out.println(list2.size());
    int tempPage = 0;
    if ( request.getAttribute("page") == null || request.getAttribute("page").equals("null") || Integer.valueOf((String)request.getAttribute("page")) > (list2.size()/12)+1) {
       System.out.println(request.getAttribute("page") + "null일때");
@@ -49,10 +49,10 @@
             <table style="width:100%;">
                <tr>
                   <td>
-                  		<div>
-                  			 <button class="btn btn-secondary my-2" onclick="cart(event)"value="${list.pid}" >장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
-                  		</div>
+                        <div>
+                            <button class="btn btn-secondary my-2" onclick="cart(event)"value="${list.pid}" >장바구니</button>
+                           <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                        </div>
                      
                      <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
                   </td>
@@ -60,7 +60,7 @@
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
-             <input type="hidden" name="mid" value="123">
+             <input type="hidden" name="mid" value="<%=session.getAttribute("mid") %>">
       <input type="hidden" name="pid" value="${list.pid}" >
             </form>
       </div>
@@ -77,10 +77,10 @@
             <table style="width:100%;">
                <tr>
                   <td>
-                  		<div>
-                  			 <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
-                  		</div>
+                        <div>
+                            <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
+                           <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                        </div>
                      
                      <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
                     
@@ -89,7 +89,7 @@
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
-             <input type="hidden" name="mid" value="123">
+             <input type="hidden" name="mid" value="<%=session.getAttribute("mid") %>">
       <input type="hidden" name="pid" value="${list.pid}">
             </form>
       </div>
@@ -110,10 +110,10 @@
             <table style="width:100%;">
                <tr>
                   <td>
-                  		<div>
-                  			 <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
-                  		</div>
+                        <div>
+                            <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
+                           <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                        </div>
                      
                      <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
                     
@@ -122,8 +122,8 @@
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
-             <input type="hidden" name="mid" value="123">
-      		<input type="hidden" name="pid" value="${list.pid}">
+             <input type="hidden" name="mid" value="<%=session.getAttribute("mid") %>">
+            <input type="hidden" name="pid" value="${list.pid}">
             </form>
       </div>
             <!-- /.col-lg-4' -->
@@ -138,10 +138,10 @@
             <table style="width:100%;">
                <tr>
                   <td>
-                  		<div>
-                  			 <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
-                  			<p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
-                  		</div>
+                        <div>
+                            <button class="btn btn-secondary my-2" onclick="cart(event)" value="${list.pid}">장바구니</button>
+                           <p style="font-family: 'Noto Sans KR', sans-serif; font-size: 18px; text-align: left; width: 70%; float:left; margin-bottom:0; line-height:38px; height:38px;">${list.title} </p>
+                        </div>
                      
                      <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
                     
@@ -150,8 +150,8 @@
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
-             <input type="hidden" name="mid" value="123">
-      		<input type="hidden" name="pid" value="${list.pid}">
+             <input type="hidden" name="mid" value="<%=session.getAttribute("mid") %>">
+            <input type="hidden" name="pid" value="${list.pid}">
             </form>
       </div>
             <!-- /.col-lg-4' -->
@@ -180,12 +180,12 @@
 
 <script type="text/javascript">
 
-	
+   
 
-	$(function() {
-		var firstBtn = document.getElementById("firstA");
-		var secondBtn = document.getElementById("firstB");
-		var thirdBtn = document.getElementById("firstC");
+   $(function() {
+      var firstBtn = document.getElementById("firstA");
+      var secondBtn = document.getElementById("firstB");
+      var thirdBtn = document.getElementById("firstC");
 <%if(list2.size() == 0){
       
    }else{%>

@@ -49,7 +49,7 @@ public class R_PlanController {
 	public String insertShareProject(@RequestParam("ptitle") String ptitle ,HttpSession session) {
 		
 		HashMap<String, String> map = new HashMap<>();
-		MongoClient mongoClient = new MongoClient("35.190.134.214", 27017);
+		MongoClient mongoClient = new MongoClient("34.73.189.101", 27017);
 		DB db = mongoClient.getDB("tag");
 		// 컬렉션 가져오기
 		DBCollection coll = db.getCollection("place");
@@ -101,7 +101,11 @@ public class R_PlanController {
 	}
 
 	@RequestMapping("rew/TravelPlan")
-	public void cartSelectAll(@RequestParam("mid") String mid, Model model) {
+	public void cartSelectAll(Model model , HttpSession session) {
+		session.setAttribute("mid", "temp");
+		
+		
+		String mid = (String) session.getAttribute("mid");
 		model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
 		model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
 		model.addAttribute("projectShare_list", shareProjectDAO.selectAllShareProjectById(mid));

@@ -129,28 +129,35 @@ public class W_MemberController{
 		return mname; 
 	}
 	
-	//로그인을 위한 확인
+	//로그인 확인 (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)
 	@RequestMapping("won/login")
-	public String selectIdPw(MemberDTO dto,	HttpSession session,
-			@RequestParam("mid") String mid,
-			@RequestParam("mpw") String mpw){
+	public String selectIdPw(MemberDTO dto,	HttpSession session){
 		try {
 			MemberDTO mdto = memberDAO.select(dto);
-			//pw springProject - 외부로그인, 그외 : 비밀번호 확인
-			if(mpw.equals("springProject")){
-				System.out.println("외부로그인 성공");
-			}else if(mpw.equals(mdto.getMpw())){
-				System.out.println("로그인 성공");
+			//로그인 실패시
+			if(mdto == null){
+				//아이디가 존재하지 않는경우
+				System.out.println("아이디가 존재하지 않습니다.");
+				return "1";
+			}else{
+				//아이디가 존재하는 경우
+				//입력받은 비밀번호와 아이디로 검색한 비밀번호가 일치하는지 확인
+				if(mdto.getMpw() == dto.getMpw() || 
+						mdto.getMpw().equals(dto.getMpw())){
+					//일치하는 경우
+					System.out.println("로그인 성공");
+					return "0";
+				}else{
+					//일치하지 않는 경우
+					System.out.println("비밀번호가 일치하지 않습니다");
+					return "2";
+				}
 			}
-			//로그인 성공시 id를 세션에 넣어줌
-			session.setAttribute("mid", mdto.getMid());
-			return "won/login";
-			
 		} catch (Exception e) {
 			//실패시 로그인 페이지로 돌아감
 			e.printStackTrace();
 			System.out.println("select실패");
-			return "redirect:login.jsp";
+			return "-1";
 		}
 	}//end selectIdPw
 	

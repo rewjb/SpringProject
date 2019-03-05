@@ -37,10 +37,11 @@ function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
 	var num = "#" + bnum;
 	$(num).after($("#replyDialog").css('display', 'block'));
 	$("#input").val(bnum);//댓글번호로 컨트롤러가서 select로 찾아서 대댓글을 등록함 
+	 $('html, body').scrollTop( $(document).height() );
 	
 	return false;
 }
-    
+    `
 function comment() {//대댓글 등록시 처리함수
 	
 	if('<%=mid%>' != 'null'){
@@ -57,6 +58,7 @@ function comment() {//대댓글 등록시 처리함수
 		success : function (result) {
 			$("#content2").val("");
 			 $("#temp").after($("#replyDialog").css('display', 'none'));
+			 $("#temp").after($("#updateDialog").css('display', 'none'));
 			if (result != null) {
 				$("#replyList").empty();
 				 $("#replyList").append(result); 
@@ -77,8 +79,9 @@ function Update(bnum) {//댓글의 수정버튼 클릭시 다이얼로그 창 �
 // 	alert(num);	
 	$("#updateDialog").css('display', 'block');
 	$(num).after($("#updateDialog"));
-	$("#replyDialog").css('display', 'none');
+ 	$("#replyDialog").css('display', 'none');
 	$("#input2").val(bnum);//댓글번호로 컨트롤러가서 select로 찾아서 대댓글을 등록함
+	 $('html, body').scrollTop( $(document).height() );
 	
 	return false;
 }
@@ -97,6 +100,7 @@ function updateResult() {
 		success : function (result) {
 			$("#content3").val("");	
 			 $("#temp").after($("#updateDialog").css('display', 'none'));
+			 $("#temp").after($("#replyDialog").css('display', 'none'));
 			if (result != null) {
 				$("#replyList").empty();
 				 $("#replyList").append(result); 
@@ -178,15 +182,14 @@ $(function() {
 		})//ajax끝
 	}
 	 time += 1; 
-	
 	 
 	$("#b1").click(function() {//댓글입력시 등록해주는 함수 
 		
 		if('<%=mid%>' != 'null'){
 			
 			var test = document.getElementById("content").value;
-			
-			if (test != "") {
+			alert(test); 
+			if (test == "") {
 				alert("내용을 입력해주세요");
 				$("#content").focus();
 				document.getElementById("content").setSelectionRange(1, 1);	
@@ -194,8 +197,8 @@ $(function() {
 			
 			if ($("#j_grade").val()=="") {
 				alert("별점을 입력해주세요")
-			}else if ($("#content").val() == "") {
-				alert("내용을 입력해주세요 ");
+ 			}else if ($("#content").val() == "") {
+				alert("내용을 입력해주세요2 ");
 			}else{
 		
 		  var data = $("#comForm").serialize();
@@ -205,6 +208,8 @@ $(function() {
 			data : data,
 			success : function(result) {
 				if (result != null) {
+					$("#temp").after($("#updateDialog").css('display', 'none'));
+					 $("#temp").after($("#replyDialog").css('display', 'none'));
 					$("#replyList").empty();
 					 $("#replyList").append(result); 
 					 $('html, body').scrollTop( $(document).height() );
@@ -427,7 +432,7 @@ $(function() {
     	<input type="hidden" name = "star" id = "j_grade" value ="">
         <textarea name="content" id = "content" rows="3" cols="60" maxlength="500" placeholder="댓글을 달아주세요."></textarea>
     </form>
-		<input type="button" value="등록" id = "b1">
+		<input class="btn btn-secondary my-2" type="button" value="등록" id = "b1">
 </div>	
 
 <div id = "temp"></div>
@@ -442,10 +447,10 @@ $(function() {
         <input type="hidden" name="pid" id = "cPid" value=""> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input" name = "input">
-        <input type="hidden" name="mid" ><br>
+        <input type="hidden" name="mid" value="<%=session.getAttribute("mid")%>" ><br>
         <textarea name="content" id = "content2" rows="3" cols="60" maxlength="500"></textarea>
-        <a href="#" id ="onclick" onclick="return comment()">등록</a>
-        <a href="#" onclick="return commentCancel()">취소</a>
+        <button class="btn btn-secondary my-2" id ="onclick" onclick="return comment()">등록</button>
+        <button class="btn btn-secondary my-2" onclick="return commentCancel()">취소</button>
     </form>
 </div>  
 
@@ -454,10 +459,10 @@ $(function() {
         <input type="hidden" name="pid" value="id"> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input2" name = "input2">
-        작성자: <input type="hidden" name="id"><br>
+        <input type="hidden" name="mid" value="<%=session.getAttribute("mid")%>"><br>
         <textarea name="content" id  = "content3" rows="3" cols="60" maxlength="500"></textarea>
-        <a href="#" onclick="return updateResult()">수정</a>
-        <a href="#" onclick="return updateCancel()">취소</a>
+        <button class="btn btn-secondary my-2" onclick="return updateResult()">수정</button>
+        <button class="btn btn-secondary my-2" onclick="return updateCancel()">취소</button>
     </form>
 </div>  
 	

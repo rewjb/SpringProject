@@ -55,21 +55,6 @@
 	<select id="selectAll" resultMap="rs">
 		SELECT * FROM ATTRACTIONS
 	</select>
-
-	<!--
-
-	<update id="updateSomething" parameterType="#modelname">
-		UPDATE tablename1
-		SET
-		columnname1=#{param1}
-		WHERE
-		columnname2 = #{param2}
-	</update>
-
-	<delete id="deleteSomething" parameterType="int">
-		DELETE FROM tablename1 WHERE
-		columnname1 = #{param1}
-	</delete> -->
 	
 	<select id="selectImg" parameterType="String" resultType="attrDTO">
 		SELECT * FROM ATTRACTIONS WHERE MAINIMG = #{value}

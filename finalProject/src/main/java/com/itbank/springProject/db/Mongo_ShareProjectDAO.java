@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import javax.print.Doc;
@@ -27,6 +28,7 @@ import com.itbank.springProject.rew.controller.mongoDB_delete;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -57,7 +59,7 @@ public class Mongo_ShareProjectDAO {
 
 	// private MongoTemplate mongoTemplate;
 
-	private MongoClient mongoClient = new MongoClient("localhost", 27017);
+	private MongoClient mongoClient = new MongoClient("35.190.134.214", 27017);
 
 	private MongoDatabase tagDB = mongoClient.getDatabase("tag");
 
@@ -68,20 +70,30 @@ public class Mongo_ShareProjectDAO {
 	// 경로의 저장을 위한 stack
 	private Stack<String> stackID = new Stack<>();
 	private String space;
+	
+	public Map<String, String> createProjectTagMap(){
+		//작업
+		HashMap<String, String> map = new HashMap<>();
+		MongoClient mongoClient = new MongoClient("35.190.134.214", 27017);
+		DB db = mongoClient.getDB("tag");
+		// 컬렉션 가져오기
+		DBCollection coll = db.getCollection("shareProject");
+		DBCursor cursor = coll.find();
+		String tag = "";
+		String pMid_ptitle = "";  
+		DBObject nowDoc;
+		while (cursor.hasNext()) {
+		nowDoc = cursor.next();
+		pMid_ptitle =  nowDoc.get("pMid")+"/"+nowDoc.get("ptitle");
+		tag = (String) nowDoc.get("tag");
+		map.put(pMid_ptitle, tag);
+		}
+		return map;
+	}
 
-	public void createProjectInMongo(ShareProjectDTO shareDTO, HashMap<String, String> map, List<PlanDTO> list) {
+	public void createProjectInMongo(ShareProjectDTO shareDTO, String  insertTag) {
 		// commentColl.deleteMany(new Document());
 		// 잠시 삭제
-
-		String insertTag = "";
-		
-		commentColl.deleteMany(new Document());
-
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println("키="+list.get(i).getMainImg()+"/태그="+map.get(list.get(i).getMainImg()));
-			insertTag += map.get(list.get(i).getMainImg());
-		}
-		
 		Document newDocument = new Document();
 		newDocument.append("pMid", shareDTO.getMid());
 		newDocument.append("ptitle", shareDTO.getPtitle());

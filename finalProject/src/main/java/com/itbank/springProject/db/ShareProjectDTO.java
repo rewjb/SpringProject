@@ -5,6 +5,16 @@ public class ShareProjectDTO {
 	private String mid;
 	private String ptitle;
 	private String reg_date;
+	private String img;
+	
+	
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 
 	public String getMid() {
 		return mid;

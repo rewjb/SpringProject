@@ -20,9 +20,12 @@ public class ShareProjectDAO {
 		return session.selectList("ShareProject.selectAllById",mid);
 	}
 	
+	public List<ShareProjectDTO> selectAllShareProjectByManyId(List<ShareProjectDTO> list) {
+		return session.selectList("ShareProject.selectAllShareProjectByManyId",list);
+	}
+	
 	public int deleteOneShareProject(PlanDTO planDTO) {
 		return session.insert("ShareProject.deleteOneShareProject", planDTO);
 	}
-	
 
 }

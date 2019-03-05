@@ -78,8 +78,14 @@ public class CommentDAO {
 	
 	
 	public List<CommentDTO> selectAll() {
-		return session.selectList("review.selectAll");
+		return session.selectList("review.selectAll" );
 	}
+	
+	public List<CommentDTO>  selectPid(String pid) {
+		
+		return session.selectList("review.selectPid" ,  pid);
+	}
+	
 	
 	
 	public void delete(CommentDTO dto) {
@@ -89,7 +95,6 @@ public class CommentDAO {
 	public void deleteOne(int bnum) {
 		session.delete("review.delete1", bnum);
 	}
-	
 	
 	
 }

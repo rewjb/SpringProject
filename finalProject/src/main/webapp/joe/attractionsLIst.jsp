@@ -144,6 +144,9 @@ $(function () {
    
 	if (page=="null" ) {
 		alert("1");
+		
+		
+		
       $.ajax({ 
          url : "allList?page=null" ,
          Type : "POST",

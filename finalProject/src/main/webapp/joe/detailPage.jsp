@@ -41,7 +41,6 @@ function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
 	
 	return false;
 }
-    `
 function comment() {//대댓글 등록시 처리함수
 	
 	if('<%=mid%>' != 'null'){
@@ -423,11 +422,11 @@ $(function() {
     <form id="comForm" name="form" method="post" >
         <input type="hidden" name="pid" id = "firstId" value="" > <!-- 각 게시물의 고유아이디가 들어간다. -->
         <ul>
-        	<li><IMG style="width: 30px; height: 30px;" id=j_image1 onmouseover= "mouseIn(1)"  onmouseout="mouseOut(1)" onclick=clicked(1) src="/springProject/resources/IMAGE/star/unstar.png"></li>
-   			<li><IMG style="width: 30px; height: 30px;" id=j_image2 onmouseover= "mouseIn(2)"  onmouseout="mouseOut(2)" onclick=clicked(2) src="/springProject/resources/IMAGE/star/unstar.png"></li>
-    		<li><IMG style="width: 30px; height: 30px;" id=j_image3 onmouseover= "mouseIn(3)"  onmouseout="mouseOut(3)" onclick=clicked(3) src="/springProject/resources/IMAGE/star/unstar.png"></li>
-    		<li><IMG style="width: 30px; height: 30px;" id=j_image4 onmouseover= "mouseIn(4)"  onmouseout="mouseOut(4)" onclick=clicked(4) src="/springProject/resources/IMAGE/star/unstar.png"></li>
-    		<li><IMG style="width: 30px; height: 30px;" id=j_image5 onmouseover= "mouseIn(5)"  onmouseout="mouseOut(5)" onclick=clicked(5) src="/springProject/resources/IMAGE/star/unstar.png"></li>
+        	<li><IMG style="width: 30px; height: 30px;" id=j_image1 onmouseover= "mouseIn(1)"  onmouseout="mouseOut(1)" onclick="clicked(1)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
+   			<li><IMG style="width: 30px; height: 30px;" id=j_image2 onmouseover= "mouseIn(2)"  onmouseout="mouseOut(2)" onclick="clicked(2)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
+    		<li><IMG style="width: 30px; height: 30px;" id=j_image3 onmouseover= "mouseIn(3)"  onmouseout="mouseOut(3)" onclick="clicked(3)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
+    		<li><IMG style="width: 30px; height: 30px;" id=j_image4 onmouseover= "mouseIn(4)"  onmouseout="mouseOut(4)" onclick="clicked(4)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
+    		<li><IMG style="width: 30px; height: 30px;" id=j_image5 onmouseover= "mouseIn(5)"  onmouseout="mouseOut(5)" onclick="clicked(5)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
     	</ul>
     	<input type="hidden" name = "star" id = "j_grade" value ="">
         <textarea name="content" id = "content" rows="3" cols="60" maxlength="500" placeholder="댓글을 달아주세요."></textarea>

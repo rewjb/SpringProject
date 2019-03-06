@@ -145,7 +145,8 @@ public class W_MemberController{
 				if(mdto.getMpw() == dto.getMpw() || 
 						mdto.getMpw().equals(dto.getMpw())){
 					//일치하는 경우
-					System.out.println("로그인 성공");
+					System.out.println("controller : 로그인 성공");
+					session.setAttribute("mid", mdto.getMid());
 					return "0";
 				}else{
 					//일치하지 않는 경우

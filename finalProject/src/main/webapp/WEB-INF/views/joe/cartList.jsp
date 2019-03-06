@@ -17,8 +17,8 @@
 <form alt='${list.pid }'>
 		<img
 			src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg }"
-			width="150" height="150"><br> <label>${list.title }</label>
+			width="50" height="150"><br> <label>${list.title }</label>
 </form>
-			<button value ='${list.pid}' onclick="deleteCart(event)">삭제</button>
+			<button class="btn btn-primary my-2" value ='${list.pid}' onclick="deleteCart(event)">삭제</button>
 </c:forEach>
 </c:if>

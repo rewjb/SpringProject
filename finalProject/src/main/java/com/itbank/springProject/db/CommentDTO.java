@@ -4,7 +4,7 @@ public class CommentDTO {
 
 	private String pid;//관관명소 아이디
 	private int bnum;//댓글넘버
-	private String id;//작성자 아이디
+	private String mid;//작성자 아이디
 	private String content;//작성내용
 	private String bdate;//작성시간
 	private String parents;//부모
@@ -18,12 +18,12 @@ public class CommentDTO {
 	}
 
 
-	public CommentDTO(String pid, int bnum, String id, String content, String bdate, String parents, int depth,
+	public CommentDTO(String pid, int bnum, String mid, String content, String bdate, String parents, int depth,
 			int border, int star) {//매개변수가 존재하는 생성자
 		super();
 		this.pid = pid;
 		this.bnum = bnum;
-		this.id = id;
+		this.mid = mid;
 		this.content = content;
 		this.bdate = bdate;
 		this.parents = parents;
@@ -53,13 +53,13 @@ public class CommentDTO {
 	}
 
 
-	public String getId() {
-		return id;
+	public String getMid() {
+		return mid;
 	}
 
 
-	public void setId(String id) {
-		this.id = id;
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 
 
@@ -121,7 +121,5 @@ public class CommentDTO {
 	public void setStar(int star) {
 		this.star = star;
 	}
-	
-	
 	
 }//CommentDTO 끝

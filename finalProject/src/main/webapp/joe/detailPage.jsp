@@ -424,7 +424,7 @@ $(function() {
    <br>
    <div style="border: 1px solid; width: 600px; padding: 5px; margin-left: auto; margin-right: auto;">
     <form id="comForm" name="form" method="post" >
-        <input type="hidden" name="pid" id = "firstId" value="" > <!-- 각 게시물의 고유아이디가 들어간다. -->
+        <input type="hidden" name="pid" id = "firstId" value="<%=pid%>" > <!-- 각 게시물의 고유아이디가 들어간다. -->
         <ul>
            <li><IMG style="width: 30px; height: 30px;" id=j_image1 onmouseover= "mouseIn(1)"  onmouseout="mouseOut(1)" onclick="clicked(1)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
             <li><IMG style="width: 30px; height: 30px;" id=j_image2 onmouseover= "mouseIn(2)"  onmouseout="mouseOut(2)" onclick="clicked(2)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
@@ -433,6 +433,7 @@ $(function() {
           <li><IMG style="width: 30px; height: 30px;" id=j_image5 onmouseover= "mouseIn(5)"  onmouseout="mouseOut(5)" onclick="clicked(5)" src="/springProject/resources/IMAGE/star/unstar.png"></li>
        </ul>
        <input type="hidden" name = "star" id = "j_grade" value ="">
+       <input type="hidden" name="mid" value="<%=mid%>"> 
         <textarea name="content" id = "content" rows="3" cols="60" maxlength="500" placeholder="댓글을 달아주세요."></textarea>
     </form>
       <input class="btn btn-secondary my-2" type="button" value="등록" id = "b1">
@@ -450,7 +451,7 @@ $(function() {
         <input type="hidden" name="pid" id = "cPid" value=""> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input" name = "input">
-        <input type="hidden" name="mid" value="<%=session.getAttribute("mid")%>" ><br>
+        <input type="hidden" name="mid" value="<%=mid%>" ><br>
         <textarea name="content" id = "content2" rows="3" cols="60" maxlength="500"></textarea>
         <button class="btn btn-secondary my-2" id ="onclick" onclick="return comment()">등록</button>
         <button class="btn btn-secondary my-2" onclick="return commentCancel()">취소</button>
@@ -462,7 +463,7 @@ $(function() {
         <input type="hidden" name="pid" value="id"> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input2" name = "input2">
-        <input type="hidden" name="mid" value="<%=session.getAttribute("mid")%>"><br>
+        <input type="hidden" name="mid" value="<%=mid%>"><br>
         <textarea name="content" id  = "content3" rows="3" cols="60" maxlength="500"></textarea>
         <button class="btn btn-secondary my-2" onclick="return updateResult()">수정</button>
         <button class="btn btn-secondary my-2" onclick="return updateCancel()">취소</button>

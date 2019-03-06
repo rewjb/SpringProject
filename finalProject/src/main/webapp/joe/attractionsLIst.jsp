@@ -148,7 +148,8 @@ $(function () {
          Type : "POST",
          success : function(result) {
                $("#container").append(result);
-               
+               var offset = $("#div").offset();
+		        $('html, body').animate({scrollTop : offset.top}, 400);
                if ( '<%= session.getAttribute("mid") %>' != "null") {
             		 $.ajax({ 
             	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
@@ -171,6 +172,8 @@ $(function () {
        Type : "POST",
        success : function(result) {
              $("#container").append(result);
+             var offset = $("#div").offset();
+		        $('html, body').animate({scrollTop : offset.top}, 400);
              if ( '<%= session.getAttribute("mid") %>' != "null") {
         		 $.ajax({ 
         	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
@@ -194,6 +197,8 @@ $(function () {
 	         success : function(result) {
 	        	 $("#container").empty();
 	               $("#container").append(result);
+	               var offset = $("#div").offset();
+			        $('html, body').animate({scrollTop : offset.top}, 400);
 	               if ( '<%= session.getAttribute("mid") %>' != "null") {
 	            		 $.ajax({ 
 	            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
@@ -217,6 +222,8 @@ $(function () {
 	         success : function(result) {
 	        	 $("#container").empty();
 	             $("#container").append(result);
+	             var offset = $("#div").offset();
+			        $('html, body').animate({scrollTop : offset.top}, 400);
 	             if ( '<%= session.getAttribute("mid") %>' != "null") {
             		 $.ajax({ 
             	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
@@ -239,6 +246,8 @@ $(function () {
 	         success : function(result) {
 	        	 $("#container").empty();
 	             $("#container").append(result);
+	             var offset = $("#div").offset();
+			        $('html, body').animate({scrollTop : offset.top}, 400);
 	             if ( '<%= session.getAttribute("mid") %>' != "null") {
             		 $.ajax({ 
             	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
@@ -274,9 +283,22 @@ $(function () {
 	         success : function(result) {
 	        	 $("#container").empty();
 	             $("#container").append(result);
+	             var offset = $("#div").offset();
+			        $('html, body').animate({scrollTop : offset.top}, 400);
+	             if ( '<%= session.getAttribute("mid") %>' != "null") {
+            		 $.ajax({ 
+            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+            	         Type : "POST",
+            	         success : function(result) {
+            	        	 for (var i = 0; i < result.length; i++) {
+            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+							}
+            	         }
+            	      });
+            	   }
 	         }
 	      }); 
-}
+	}
    
 })//ready 끝
  
@@ -424,57 +446,85 @@ $(function () {
 	
 	function enter() {//엔터키 입력시 동작함수
 		if (window.event.keyCode == 13) {
-			 $.ajax({
-					url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
-					Type : "POST",
-					success : function(result) {
-						
-						$("#container").empty();
-						$("#container").append(result);
-					}
-				});
-		}
-	}
-	
-	
-// 	function enterSearch() {//일반 검색 함수
-		
-//     	   if ($("#search").val() != "") {
-    		   
-//     		   var text = $("#search").val();
-// 				 $.ajax({
-<%-- 						url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>', --%>
-// 						Type : "POST",
-// 						success : function(result) {
-							
-// 							$("#container").empty();
-// 							$("#container").append(result);
-// 						}
-// 					});
-				
-// 			}else{
-// 			}
-//        }
-	
-	function search() {//검색버튼 클릭시 동작 함수
-		if ($("#search").val() != "") {
 			var text = $("#search").val();
+			  var trimStr = $.trim(text) ;
+			  if (trimStr.length != 0) {
 			 $.ajax({
-					url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
+					url : "search?text="+text + "&page=null",
 					Type : "POST",
 					success : function(result) {
 						$("#container").empty();
 						$("#container").append(result);
+						var offset = $("#div").offset();
+				        $('html, body').animate({scrollTop : offset.top}, 400);
+						    if ( '<%= session.getAttribute("mid") %>' != "null") {
+			            		 $.ajax({ 
+			            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+			            	         Type : "POST",
+			            	         success : function(result) {
+			            	        	 for (var i = 0; i < result.length; i++) {
+			            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+										}
+			            	         }
+			            	      });
+			            	   }
 					}
 				});
-			
-		}else{
-// 			alert("검색 내용을 입력해주세요");
+			  }else{
+				  alert("검색 내용을 입력해주세요");
+			  }
 		}
-		
-		
+	}
+	function search() {//검색버튼 클릭시 동작 함수
+			var text = $("#search").val();
+			var trimStr = $.trim(text) ;
+			if (trimStr.length != 0) {
+			 $.ajax({
+					url : "search?text="+text + "&page=null",
+					Type : "POST",
+					success : function(result) {
+						$("#container").empty();
+						$("#container").append(result);
+						var offset = $("#div").offset();
+				        $('html, body').animate({scrollTop : offset.top}, 400);
+					     if ( '<%= session.getAttribute("mid") %>' != "null") {
+		            		 $.ajax({ 
+		            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
+		            	         Type : "POST",
+		            	         success : function(result) {
+		            	        	 for (var i = 0; i < result.length; i++) {
+		            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
+									}
+		            	         }
+		            	      });
+		            	   }
+					}
+				});
+		}else{
+			alert("검색 내용을 입력해주세요");
+		}
 	}
 	
+	function reset() {
+		
+		 $.ajax({ 
+	         url : "reset",
+	         Type : "POST",
+	         success : function(result) {
+	     			//현재 주소를 가져온다.
+					var renewURL = location.href;
+					//현재 주소 중 page 부분이 있다면 날려버린다.
+					renewURL = renewURL.replace(/\?page=([0-9]+)/ig, '');
+
+					//새로 부여될 페이지 번호를 할당한다.
+					// page는 ajax에서 넘기는 page 번호를 변수로 할당해주거나 할당된 변수로 변경
+					//페이지 갱신 실행!
+					history.pushState(null, null, renewURL);
+	        	
+					location.reload();//페이지 새로고침
+				}
+	      });
+	}
 	
 	
 </script>
@@ -535,26 +585,25 @@ $(function () {
 	</div>
 	  <br>
 	  
-   <div class = "container marketing">
+   <div class = "container marketing" id = "div">
    <nav class="navbar navbar-dark bg-dark"> 
    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span><span class="navbar-brand" >조건검색</span>
   </button>
-    <form class="form-inline my-2 my-md-0">
+    <div class="form-inline my-2 my-md-0">
     	<span class="navbar-brand">검색</span>
     	<input class="form-control" type="text" placeholder="Search" aria-label="Search" id = "search" onkeypress="enter()" style="margin-right: 0;">
-    </form>
-		   <input class="btn btn-secondary my-2" type="button"  value="검색" onclick="search()"> 
+		   <input class="btn btn-secondary my-2" type="button"  value="검색" onclick="search()" style="margin-left: 10px;"> 
+   <input class="btn btn-secondary my-2" type="button"  value="초기화" onclick="reset()" style="margin-left: 10px;"> 
+    </div>
    <div class="collapse navbar-collapse" id="navbarsExample01">
       <ul class="navbar-nav mr-auto">
          <li class="navbar-brand"><label>대륙</label> 
             <div style="height: 80px; width: 1080px; overflow : auto;" id = "continentList">  
-            
             </div>  
          </li>
          <li class="navbar-brand"><label>도시</label>
              <div style="overflow-x : auto; height: 80px; width: 1080px;" id = "city">
-             
              </div>
          </li>
          <li class="navbar-brand"><label>태그</label>
@@ -566,12 +615,9 @@ $(function () {
    </div>
    </nav>
 </div>
-    
   <br>
-   <!--추천에 의해 뿌려줄 리스트   -->
+   <!--  모든 리스트   -->
    <div class="container marketing" id = "container" >
-   
    </div>
-      
    </body>
 </html>

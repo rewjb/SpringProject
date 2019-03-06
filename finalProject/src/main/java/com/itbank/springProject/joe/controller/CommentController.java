@@ -22,6 +22,13 @@ public class CommentController {
 	@RequestMapping("joe/review")
 	public String review(CommentDTO commentDTO, Model model) {
 //		System.out.println("1번");
+		
+		System.out.println("dto 출력");
+		System.out.println(commentDTO.getMid());
+		System.out.println(commentDTO.getPid());
+		System.out.println(commentDTO.getStar());
+		
+		
 		dao.insert(commentDTO);
 //		System.out.println("2번");
 		List<CommentDTO> list = dao.selectAll();

@@ -26,7 +26,6 @@
 <script src="https://apis.google.com/js/api:client.js"></script>
 
 <script type="text/javascript">
-
 //<!------------------------- body2-1 : 이메일 로그인 관련 설정 ---------------------------->
 	$(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		

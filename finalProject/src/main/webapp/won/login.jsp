@@ -8,17 +8,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
-<meta name="viewport"
-   content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author"
-   content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-<meta name="generator" content="Jekyll v3.8.5">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+<!-- <meta name="description" content=""> -->
+<!-- <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors"> -->
+<!-- <meta name="generator" content="Jekyll v3.8.5"> -->
 
 <title>로그인</title>
-<!-- 이메일  -->
-<script type="text/javascript" src="springProject/resources/JS/jquery.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- header -->
+<%@ include file="/UserMainHeader.jsp"%>
+
 <!-- 구글  -->
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 <script src="https://apis.google.com/js/api:client.js"></script>
@@ -85,7 +83,7 @@
 					}
 				}//end success
 			});//end ajax
-		})//end click()
+		})//end #loginBtn click()
 	});
 	
 //<!------------------------- body2-1 : 이메일 가입 관련 설정 ---------------------------->
@@ -187,8 +185,6 @@ span.buttonText {
 
 </head>
 <body class="text-center">
-   <!-- header -->
-   <%@ include file="/UserMainHeader.jsp"%>
    <div id="login">
       <div style="text-align: center;">
 	     <!-- 위쪽공간 -->
@@ -205,8 +201,8 @@ span.buttonText {
 				<div style="height: 150px;">
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간-------------->
 					<form id="hidden">
-						<input type="text" id="mid" name="mid" class="hidden" placeholder="mid"><br>
-						<input type="text" id="mpw" name="mpw" class="hidden" placeholder="mpw"><br>
+						<input type="hidden" id="mid" name="mid" class="hidden" placeholder="mid"><br>
+						<input type="hidden" id="mpw" name="mpw" class="hidden" placeholder="mpw"><br>
 					</form>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간 끝------------>
 				</div>

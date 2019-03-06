@@ -35,133 +35,33 @@ import oracle.sql.DATE;
 
 public class testmongo2 {
 
-	// 아이디1000000212101
-	// 아이디1000000348101
-	// 아이디1000000354101
-	testmongo2() {
-		String userTagText = "Chinesearchitecture/Japanesearchitecture/Holyplaces/Placeofworship";
-		String userTagArray[] = userTagText.split("/");
-
-		ArrayList<tagPool> shareProjectList = new ArrayList<>();
-
-		//작업
-		HashMap<String, String> map = new HashMap<>();
-		MongoClient mongoClient = new MongoClient("34.73.189.101", 27017);
-		DB db = mongoClient.getDB("tag");
-		// 컬렉션 가져오기
-		DBCollection coll = db.getCollection("shareProject");
-		DBCursor cursor = coll.find();
-		String tag = "";
-		String pMid_ptitle = "";
-		DBObject nowDoc;
-
-		while (cursor.hasNext()) {
-			nowDoc = cursor.next();
-			pMid_ptitle = nowDoc.get("pMid") + "/" + nowDoc.get("ptitle");
-			tag = (String) nowDoc.get("tag");
-			map.put(pMid_ptitle, tag);
-		}
-
-		tagPool inputTag = null;
-		int temp = 0;
-		Set key = map.keySet();
-		Iterator<String> iter = key.iterator();
-		String strKey = null;
-
-		for (int i = 0; i < key.size(); i++) {
-			strKey = iter.next();
-			temp = 0;
-			for (int j = 0; j < userTagArray.length; j++) {
-				if (map.get(strKey).contains(userTagArray[i])) {
-					++temp;
-				}
-			}
-			inputTag = new tagPool();
-			inputTag.setProjectInfo(strKey);
-			inputTag.setCount(i);//원래 temp 들어감
-			shareProjectList.add(inputTag);
-		}
-
-		//		for (int i = 0; i < shareProjectList.size(); i++) {
-		//			System.out.print("정보="+shareProjectList.get(i).getProjectInfo()+"\t");
-		//			System.out.println("카운트="+shareProjectList.get(i).getCount());
-		//		}확인용 메서드
-
-		for (int i = 0; i < shareProjectList.size(); i++) {
-			for (int j = i; j < shareProjectList.size(); j++) {
-				if (shareProjectList.get(j).getCount() > shareProjectList.get(i).getCount()) {
-					inputTag = shareProjectList.get(j);
-					shareProjectList.add(j, shareProjectList.get(i));
-					shareProjectList.remove(j + 1);
-					shareProjectList.add(i, inputTag);
-					shareProjectList.remove(i + 1);
-				}
-			}
-		} // 정렬 for문! 선택정렬임
-
-		//		for (int i = 0; i < shareProjectList.size(); i++) {
-		//			System.out.print("정보="+shareProjectList.get(i).getProjectInfo()+"\t");
-		//			System.out.println("카운트="+shareProjectList.get(i).getCount());
-		//		}확인용
-
-	}
-
-	//임시 내부 DTO
-	class tagPool {
-
-		private String ProjectInfo;
-		private int count;
-
-		public String getProjectInfo() {
-			return ProjectInfo;
-		}
-
-		public void setProjectInfo(String projectInfo) {
-			ProjectInfo = projectInfo;
-		}
-
-		public int getCount() {
-			return count;
-		}
-
-		public void setCount(int count) {
-			this.count = count;
-		}
-	}
 
 	public static void main(String[] args) {
 
+		
 		MongoClient mongoClient = new MongoClient("34.73.189.101", 27017);
 
 		MongoDatabase tagDB = mongoClient.getDatabase("tag");
 
 		MongoCollection<Document> commentColl = tagDB.getCollection("shareProject");
+		
+		
+		commentColl.deleteMany(new Document());
 
-		Document temp = new Document("reg_date", -1);
+		Document temp = new Document();
 		temp.append("star", -1);
 
-		System.out.println(temp.toJson());
-		System.out.println(new Document("$sort", temp).toJson());
-
 		MongoCursor<Document> cursor = commentColl.find().sort(temp).iterator();
+		
+		while (cursor.hasNext()) {
+			System.out.println(cursor.next().toJson());
+		}
+		
+		
 		
 		List<ShareProjectDTO> shareList = new ArrayList<>();
 		
 		ShareProjectDTO dto=null;
-		
-		while (cursor.hasNext()) {
-			temp = cursor.next();
-			dto = new ShareProjectDTO();
-			dto.setMid(temp.getString("pMid"));
-			dto.setPtitle(temp.getString("ptitle"));
-			
-			shareList.add(dto);
-		}
-		
-		
-		for (int i = 0; i < shareList.size(); i++) {
-			System.out.println(shareList.get(i).getPtitle());
-		}
 		
 
 	}

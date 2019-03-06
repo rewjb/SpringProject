@@ -20,7 +20,7 @@
       <div style="display: inline-block;">
 			<c:forEach items="${favorProjectList}" var="favorProjectList" varStatus="Index">
 				<c:choose>
-					<c:when test="${Index.index != 3}">
+					<c:when test="${Index.index < 3}">
 						<div id="carouselExampleFade" alt="recommend_component"
 							style="width: 350px; float: left; padding: 10px"
 							class="carousel slide carousel-fade" data-ride="carousel">
@@ -32,13 +32,13 @@
 								 <c:choose>
 								 <c:when test="${index.index==0}">
 								<div class="carousel-item active" style="z-index: 1">
-									<img style="width: 100%;"
+									<img style="height: 261px;"
 										src="/springProject/resources/IMAGE/attractionsImg/${imgNum}">
 								</div>
 								 </c:when>
 								 	<c:otherwise>
 								<div class="carousel-item" style="z-index: 1">
-									<img style="width: 100%;"
+									<img style="height: 261px;"
 										src="/springProject/resources/IMAGE/attractionsImg/${imgNum}">
 								</div> 
 					                </c:otherwise>
@@ -79,13 +79,13 @@
 										<c:choose>
 											<c:when test="${index.index==0}">
 												<div class="carousel-item active">
-													<img style="width: 100%;"
+													<img style="height: 261px;"
 														src="/springProject/resources/IMAGE/attractionsImg/${imgNum}">
 												</div>
 											</c:when>
 											<c:otherwise>
 												<div class="carousel-item">
-													<img style="width: 100%;"
+													<img style="height: 261px;"
 														src="/springProject/resources/IMAGE/attractionsImg/${imgNum}">
 												</div>
 											</c:otherwise>

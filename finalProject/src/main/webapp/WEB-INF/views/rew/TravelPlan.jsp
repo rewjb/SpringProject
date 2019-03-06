@@ -142,8 +142,13 @@
 
 </head>
 <body>
-<%@ include file="/UserMainHeader.jsp" %>
+<!-- 세션이 없으면 메인페이지로 다시 이동 -->
+<script type="text/javascript">
 
+var session 
+
+</script>
+<%@ include file="/UserMainHeader.jsp" %>
 <!-- 	<div class="spinner-border"  id="loading" role="status" style="position:relative;z-index: 1">  -->
 <!-- 		<span class="sr-only">Loading...</span> -->
 <!-- 	</div> -->
@@ -1108,32 +1113,45 @@ $('#loading').css('left',document.body.clientHeight/2);
   <h3 class="my-4">Popular projects</h3>
 
   <div class="row">
+  
+			<c:forEach items="${allProjectListBystar}" var="allProjectListBystar"
+				varStatus="Index">
+				<c:choose>
+					<c:when test="${Index.index < 4}">
+						<div class="carousel slide carousel-fade col-md-3 col-sm-6 mb-4"
+							id="carouselExampleFade" data-ride="carousel"
+							style="text-align: center;">
+							<div class="carousel-inner">
+								<c:set var="text" value="${allProjectListBystar.img}" />
+								<c:set var="img" value="${fn:split(text,'/')}" />
+								<c:forEach var="imgNum" items="${img}" varStatus="index">
 
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-             <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
+									<c:choose>
+										<c:when test="${index.index==0}">
+											<div class="carousel-item active" style="text-align: center;">
+												<img style="height: 153px; width: 225px"
+													src="/springProject/resources/IMAGE/attractionsImg/${imgNum}">
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="carousel-item" style="text-align: center;">
+												<img style="height: 153px; width: 225px"
+													src="/springProject/resources/IMAGE/attractionsImg/${imgNum}">
+											</div>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</div>
+							 <span class="btn btn-secondary"
+								style="font-size:13px; background-color: rgba(0, 0, 0, 0.6);">${allProjectListBystar.ptitle}</span>
+						</div>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-  </div>
+		</div>
   <!-- /.row -->
 
 </div>

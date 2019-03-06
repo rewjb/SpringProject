@@ -128,7 +128,7 @@ public class W_MemberController{
 		}
 		return mname; 
 	}
-	
+		
 	//로그인 확인 (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)
 	@RequestMapping("won/login")
 	public String selectIdPw(MemberDTO dto,	HttpSession session){
@@ -145,7 +145,8 @@ public class W_MemberController{
 				if(mdto.getMpw() == dto.getMpw() || 
 						mdto.getMpw().equals(dto.getMpw())){
 					//일치하는 경우
-					System.out.println("로그인 성공");
+					System.out.println("controller : 로그인 성공");
+					session.setAttribute("mid", mdto.getMid());
 					return "0";
 				}else{
 					//일치하지 않는 경우

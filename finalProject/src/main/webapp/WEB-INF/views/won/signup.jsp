@@ -1,6 +1,5 @@
 <!-- 
 회원가입 방법 선택하는 페이지
-
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
@@ -256,7 +255,7 @@
    
    $(function(){
  
-	<!--------------------------------- 슬라이드 코드 start ------------------------------------------>
+<!--------------------------------- 슬라이드 코드 start ------------------------------------------>
 	var num = 0;
     var time = 500;
     var idx = idx2 = 0;
@@ -333,7 +332,7 @@
 		height: 27px;
 	}
 
-/* -------구글 로그인 버튼 설정-------------------- */
+/* -------구글로 회원가입  버튼 설정-------------------- */
 #customBtn {
 	display: inline-block;
 	background: white;
@@ -378,7 +377,7 @@ span.buttonText {
 	padding-top: 10%;
 }
 
-/* -------페이스북 로그인 버튼 설정--------------------- */
+/* -------페이스북으로 회원가입 버튼 설정--------------------- */
 #authBtn {
 	display: inline-block;
 	color: #FFFFFF;
@@ -545,7 +544,6 @@ body {
 
 </head>
 <body>
-   <!-- header : 회원가입 페이지는 헤더 모양이 달라서 다른 헤더를 사용 -->
 <ul id="slider">
 	<li style="width: 1300px;">
 	 <div class="container">
@@ -559,7 +557,6 @@ body {
             <h5 class="card-title text-center"><a href="../kim/Tag_Select">Register</a></h5>
                <div id="signup">
       <div style="text-align: center;">
-	     <!-- 위쪽공간 -->
          <!-- 가입방식 선택 -->
          <table style="width: 100%; text-align: center;">
             <tr>
@@ -632,8 +629,7 @@ body {
             <tr>
                <td></td>
                <td>
-<!------------------------- body3 : 구글 로그인 관련 ---------------------------->
-               	<!-- 구글 로그인 설정 -->
+<!------------------------- body3 : 구글로 회원가입  관련 ---------------------------->
 				<!-- 구글 계정 연동하여 회원가입 -->
 				<script type="text/javascript">
 				var googleUser = {};
@@ -700,47 +696,24 @@ body {
 					}); //attachClickHandler()
 				}//end function attachSignin() 
 				
-				var signupGG = function() {
-					var form = $("#hidden");
-					
-	                // 자바스크립트 객체를 배열에 담아줌
-	                var formSerial = $(form).serializeArray();
-	                var sendData = {};
-	                for (var i = 0; i < formSerial.length; i++) {
-	                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
-					}
-	                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-	                console.log(JSON.stringify(sendData));
-					$.ajax({
-						url : "insertMember",
-						type : "POST",
-						data : sendData,
-						success : function(result) {
-							console.log(result+'--1:실패,0:성공');
-						}//end success
-					});//end ajax
-						
-				};//end ggsignup
-				
 				</script>
-				<!-- 구글 로그인 버튼 -->
+				<!-- 구글로 회원가입 버튼 -->
 				<div id="gSignInWrapper" class="button">
 					<div id="customBtn" class="customGPlusSignIn">
-						<span class="icon"></span> <span class="buttonText"> Google로 로그인</span>
+						<span class="icon"></span> <span class="buttonText"> Google로 가입하기 </span>
 					</div>
 					<script>
 				       startAppGG();
 				    </script>
 				</div>
-<!------------------------- body3 : 구글 로그인 관련 끝 ---------------------------->
+<!------------------------- body3 : 구글로 회원가입 관련 끝 ---------------------------->
                </td>
                <td></td>
             </tr>
             <tr>
                <td></td>
                <td>
-<!------------------------- body4 : 페이스북 로그인 관련 ---------------------------->
-                <!-- 페이스북 로그인 설정 --> 
+<!------------------------- body4 : 페이스북으로 회원가입 관련 ---------------------------->
 				<!-- 페이스북 계정을 통한 회원가입 -->
 				<script type="text/javascript">
 				   var check = 0;
@@ -750,7 +723,7 @@ body {
 				      /* statusChangeCallback(response); */
 				      if (response.status === 'connected') {
 				         //로그인 되었을때
-				         document.querySelector('#authBtn').value = 'Facebook으로 로그인';
+				         document.querySelector('#authBtn').value = 'Facebook으로 가입하기';
 				         FB.api('/me',function(resp) {
 							console.log("FACEBOOK");
 				            //mid(이메일)받아오기
@@ -768,7 +741,7 @@ body {
 				         });
 				      } else {
 				         //로그인 안되어 있을때
-				         document.querySelector('#authBtn').value = 'Facebook 으로 로그인';
+				         document.querySelector('#authBtn').value = 'Facebook 으로 가입하기';
 				      }
 				   }
 
@@ -822,11 +795,11 @@ body {
 				   }(document, 'script', 'facebook-jssdk'));
 				   
 				</script>
-				<!-- 페이스북 로그인 버튼 -->
+				<!-- 페이스북으로 회원가입 버튼 -->
 				<div style="height: 20px;"></div> 
 				<input type="button" id="authBtn" value="Facebook Login"
 				 onclick="
-                     if(this.value === 'Facebook 으로 로그인'){
+                     if(this.value === 'Facebook 으로 가입하기'){
                         //now logout
                         console.log('no!');
                         FB.login(function(res){
@@ -857,7 +830,7 @@ body {
 					  		}//end success 
 					  });//end ajax
                   ">
-<!------------------------- body4 : 페이스북 로그인 관련 끝---------------------------->
+<!------------------------- body4 : 페이스북으로 회원가입 관련 끝---------------------------->
                </td>
                <td></td>
             </tr>

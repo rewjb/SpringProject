@@ -3,26 +3,32 @@
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
-<!-- <meta name="description" content=""> -->
-<!-- <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors"> -->
-<!-- <meta name="generator" content="Jekyll v3.8.5"> -->
+<meta name="viewport"
+   content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author"
+   content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Jekyll v3.8.5">
 
 <title>로그인</title>
 <!-- header -->
 <%@ include file="/UserMainHeader.jsp"%>
-
+<!-- 이메일  -->
+<script type="text/javascript" src="springProject/resources/JS/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- 구글  -->
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 <script src="https://apis.google.com/js/api:client.js"></script>
 
 <script type="text/javascript">
-//<!------------------------- body2-1 : 이메일 가입 관련 설정 ---------------------------->
+
+//<!------------------------- body2-1 : 이메일 로그인 관련 설정 ---------------------------->
 	$(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		
 		//식을 간단하게 하기 위해 변수에 담아주기
@@ -85,18 +91,23 @@
 			});//end ajax
 		})//end #loginBtn click()
 	});
-	
-//<!------------------------- body2-1 : 이메일 가입 관련 설정 ---------------------------->
-   
+//<!------------------------- body2-1 : 이메일 로그인 관련 설정 ---------------------------->
 </script>
+
 <style type="text/css">
-/* 로그인 폼 테두리 */
-	.rounded {
-	  background: silver;
-	  height: 50px; width: 200px;
-	  border-radius: 5px;
-	}
-	
+/* -------로그인 div 스타일------------- */
+.rounded1 {
+  background-color: #bdf;
+  border:2px solid #1bf;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:50px;
+  padding-bottom:70px;
+  line-height: 1em;
+  border-radius:0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+}
 /* -------전송하는 폼 설정 form id="hidden"------- */
 	.feedback{
 		text-align : left;
@@ -108,7 +119,7 @@
 		height: 27px;
 	}
 
-/* -------구글 로그인 버튼 설정-------------------- */
+/* -------구글로 로그인  버튼 설정-------------------- */
 #customBtn {
 	display: inline-block;
 	background: white;
@@ -153,7 +164,7 @@ span.buttonText {
 	padding-top: 10%;
 }
 
-/* -------페이스북 로그인 버튼 설정--------------------- */
+/* -------페이스북으로 로그인 버튼 설정--------------------- */
 #authBtn {
 	display: inline-block;
 	color: #FFFFFF;
@@ -184,21 +195,19 @@ span.buttonText {
 </style> 
 
 </head>
-<body class="text-center">
-   <div id="login">
+<body>
       <div style="text-align: center;">
-	     <!-- 위쪽공간 -->
-         <!-- 로그인 방식 선택 -->
+         <!-- 로그인방식 선택 -->
          <table style="width: 100%; text-align: center;">
             <tr>
-               <td></td>
+               <td style="height: 100px"></td>
                <td></td>
                <td></td>
             </tr>
             <tr>
               <td></td>
               <td>
-				<div style="height: 150px;">
+				<div>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간-------------->
 					<form id="hidden">
 						<input type="hidden" id="mid" name="mid" class="hidden" placeholder="mid"><br>
@@ -211,8 +220,11 @@ span.buttonText {
             </tr>
             <tr>
                <td></td>
-               <td style="width: 300px;">
-<!------------------------- body2 : 이메일 가입 설정 -------------------------->
+               <td style="width: 300px;" >
+               	<div class="rounded1">
+               		<p>로그인</p>
+               		<p>계정 사용 </p>
+<!------------------------- body2 : 이메일 로그인 설정 -------------------------->
 					<form id="EmForm" class="form-signin" style="width: 300px;">
 						<!-- MID 아이디(이메일) 입력 폼 -->
 						<div class="form-group">
@@ -239,15 +251,8 @@ span.buttonText {
 							id="loginBtn" style="width: 300px;">로그인</button>
 						<hr>
 					</div>
-				</td>
-<!------------------------- body2 : 이메일 가입 끝 ---------------------------->
-               <td></td>
-            </tr>
-            <tr>
-               <td></td>
-               <td>
-<!------------------------- body3 : 구글 로그인 관련 ---------------------------->
-               	<!-- 구글 로그인 설정 -->
+<!------------------------- body2 : 이메일 로그인 끝 ---------------------------->
+<!------------------------- body3 : 구글로 로그인  관련 ---------------------------->
 				<!-- 구글 계정 연동하여 로그인 -->
 				<script type="text/javascript">
 				var googleUser = {};
@@ -306,37 +311,6 @@ span.buttonText {
 					}); //attachClickHandler()
 				}//end function attachSignin() 
 				
-				var loginGG = function() {
-					var form = $("#hidden");
-					
-	                // 자바스크립트 객체를 배열에 담아줌
-	                var formSerial = $(form).serializeArray();
-	                var sendData = {};
-	                for (var i = 0; i < formSerial.length; i++) {
-	                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
-					}
-	                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-	                console.log(JSON.stringify(sendData));
-					$.ajax({
-						url : "login",
-						type : "POST",
-						data : sendData,
-						success : function(result) {
-							console.log(result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
-							if(result == "0"){
-								//로그인 성공 - 세션 등록 후 메인으로 이동
-								alert("로그인 성공");
-							} else {
-								//로그인 실패
-								alert("아이디, 비밀번호를 확인해주세요.<br>문제가 계속되면 관리자에게 문의해주세요.<br>xx-xxxx-xxxx");
-								id.text()="";
-								pw.text()="";
-							}
-						}//end success
-					});//end ajax
-						
-				};//end gglogin
-				
 				</script>
 				<!-- 구글 로그인 버튼 -->
 				<div id="gSignInWrapper" class="button">
@@ -347,13 +321,120 @@ span.buttonText {
 				       startAppGG();
 				    </script>
 				</div>
-<!------------------------- body3 : 구글 로그인 관련 끝 ---------------------------->
-               </td>
-               <td></td>
-            </tr>
-            <tr>
-               <td></td>
-               <td></td>
+<!------------------------- body3 : 구글로 로그인 관련 끝 ---------------------------->
+<!------------------------- body4 : 페이스북으로 로그인 관련 ---------------------------->
+				<!-- 페이스북 계정을 통한 로그인 -->
+				<script type="text/javascript">
+				   var check = 0;
+				   //로그인 상태 체크
+				   var checkLoginStatus = function(response) {
+				      console.log(response);
+				      /* statusChangeCallback(response); */
+				      if (response.status === 'connected') {
+				         //로그인 되었을때
+				         document.querySelector('#authBtn').value = 'Facebook으로 로그인하기';
+				         FB.api('/me',function(resp) {
+							console.log("FACEBOOK");
+				            //mid(이메일)받아오기
+				            console.log(resp.id);
+				            document.getElementById('mid').value = resp.id;
+				            //mpw세팅 : FaceBook EXternal LOGIN
+				            document.getElementById('mpw').value = "FBEXLOGIN"
+				         });
+				      } else {
+				         //로그인 안되어 있을때
+				         document.querySelector('#authBtn').value = 'Facebook 으로 로그인하기';
+				      }
+				   }
+
+				   //SDK함수 초기화
+				   window.fbAsyncInit = function() {
+				      FB.init({
+				         appId : '767168977001948',
+				         cookie : true, // enable cookies to allow the server to access 
+				         // the session
+				         xfbml : true, // parse social plugins on this page
+				         version : 'v3.2' // The Graph API version to use for the call
+				      });
+
+				      // Now that we've initialized the JavaScript SDK, we call 
+				      // FB.getLoginStatus().  This function gets the state of the
+				      // person visiting this page and can return one of three states to
+				      // the callback you provide.  They can be:
+				      //
+				      // 1. Logged into your app ('connected')
+				      // 2. Logged into Facebook, but not your app ('not_authorized')
+				      // 3. Not logged into Facebook and can't tell if they are logged into
+				      //    your app or not.
+				      //
+				      // These three cases are handled in the callback function.
+
+				      FB.getLoginStatus(checkLoginStatus);
+				   };
+				   
+				   //페이스북의 SDK를 가져오기
+				   // Load the SDK asynchronously 
+				   (function(d, s, id) {
+				      var js, fjs = d.getElementsByTagName(s)[0];
+				      if (d.getElementById(id))
+				         return;
+				      js = d.createElement(s);
+				      js.id = id;
+				      js.src = "https://connect.facebook.net/en_US/sdk.js";
+				      fjs.parentNode.insertBefore(js, fjs);
+				   }(document, 'script', 'facebook-jssdk'));
+				   
+				   //페이스북의 SDK를 가져오기
+				   // Load the SDK asynchronously 
+				   (function(d, s, id) {
+				      var js, fjs = d.getElementsByTagName(s)[0];
+				      if (d.getElementById(id))
+				         return;
+				      js = d.createElement(s);
+				      js.id = id;
+				      js.src = "https://connect.facebook.net/en_US/sdk.js";
+				      fjs.parentNode.insertBefore(js, fjs);
+				   }(document, 'script', 'facebook-jssdk'));
+				   
+				</script>
+				<!-- 페이스북으로 로그인 버튼 -->
+				<div style="height: 20px;"></div> 
+				<input type="button" id="authBtn" value="Facebook Login"
+				 onclick="
+                     if(this.value === 'Facebook 으로 로그인하기'){
+                        //now logout
+                        console.log('no!');
+                        FB.login(function(res){
+                           console.log('login =>',res);
+                           checkLoginStatus(res);
+                        });
+                     }else{
+                        //now login
+                        console.log('oh!');                        
+                     }//end if
+                     
+                     var form = $('#hidden');
+ 					
+					 // 자바스크립트 객체를 배열에 담아줌
+					  var formSerial = $(form).serializeArray(); 
+					  var sendData = {}; 
+					  for (var i = 0; i < formSerial.length; i++) { 
+					  	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value); 
+					  } 
+					 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환  
+					  console.log(JSON.stringify(sendData)); 
+					  $.ajax({ 
+						  	url : 'login', 
+						  	type : 'POST', 
+						  	data : sendData, 
+						  	success : function(result) { 
+						  		console.log(result+'--1:실패,0:성공'); 
+					  		}//end success 
+					  });//end ajax
+                  ">
+<!------------------------- body4 : 페이스북으로 로그인 관련 끝---------------------------->
+					</div>
+				</td>
                <td></td>
             </tr>
             <tr>
@@ -363,9 +444,7 @@ span.buttonText {
             </tr>
          </table>
       </div>
-   </div>
-   <!-- footer -->
-   <%@ include file="/UserMainFooter.jsp"%>
-
+<!-- footer -->
+<%@ include file="/UserMainFooter.jsp"%>
 </body>
 </html>

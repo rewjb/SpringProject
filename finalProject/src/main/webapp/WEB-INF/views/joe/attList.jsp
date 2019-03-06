@@ -69,7 +69,7 @@
 </c:when>
 <c:when test="${fn:length(list) gt 12}">
 
-<c:forEach begin="1" end="12" items="${list}" var="list">
+<c:forEach begin="0" end="11" items="${list}" var="list">
       <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
          <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
@@ -102,7 +102,7 @@
 <c:when test="${tempPage gt 1}">
    <c:choose>
       <c:when test="${tempPage le fn:length(list)/12}">
-         <c:forEach begin="${((tempPage-1)*12)+1 }" end="${tempPage*12}" items="${list}" var="list">
+         <c:forEach begin="${((tempPage-1)*12)}" end="${tempPage*12-1}" items="${list}" var="list">
            <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
          <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
@@ -130,7 +130,7 @@
          </c:forEach>
       </c:when>
          <c:when test="${tempPage gt fn:length(list)/12  && fn:length(list)%12 gt 0 }">
-            <c:forEach begin="${(tempPage-1)*12+1 }" end="${(tempPage-1)*12+ (fn:length(list)%12)+1}" items="${list}" var="list">
+            <c:forEach begin="${(tempPage-1)*12 }"  items="${list}" var="list">
         <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
          <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}"><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"

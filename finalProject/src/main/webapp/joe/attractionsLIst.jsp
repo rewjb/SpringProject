@@ -19,7 +19,7 @@ session.setAttribute("mid", "123");
 
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
-      <style type="text/css">
+<style type="text/css">
 {
    font-family: 'Noto Sans KR', sans-serif;
 }
@@ -57,6 +57,14 @@ vertical-align: middle;
     width: 100%;
     height: 100%;
     border-radius: 1.0rem;
+}
+    
+.carousel-item {
+	width: auto;
+	height: 100%;
+	max-width: 700px; 
+	max-height: 500px;
+	background-size: cover;
 }
 
 </style>
@@ -143,7 +151,6 @@ $(function () {
    var page = "<%=request.getParameter("page") %>"
    
 	if (page=="null" ) {
-		alert("1");
       $.ajax({ 
          url : "allList?page=null" ,
          Type : "POST",
@@ -514,19 +521,19 @@ $(function () {
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner" role="listbox" style="width: 700px; height: 500px;">
-        <div class="carousel-item active" style="width: 700px; height: 500px; background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(0).getMainImg()}')">
+        <div class="carousel-item active" style="background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(0).getMainImg()}')">
           <div class="carousel-caption d-none d-md-block">
             <h3>${recommend.get(0).getTitle()}</h3>
             <p>${recommend.get(0).getContent()}</p>
           </div>
         </div>
-        <div class="carousel-item" style="width: 700px; height: 500px; background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(1).getMainImg()}')">
+        <div class="carousel-item" style="background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(1).getMainImg()}')">
           <div class="carousel-caption d-none d-md-block">
             <h3>${recommend.get(1).getTitle()}</h3>
             <p>${recommend.get(1).getContent()}</p>
           </div>
         </div>
-        <div class="carousel-item" style="width: 700px; height: 500px; background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(2).getMainImg()}')">
+        <div class="carousel-item" style="background-image: url('/springProject/resources/IMAGE/attractionsImg/${recommend.get(2).getMainImg()}')">
           <div class="carousel-caption d-none d-md-block">
             <h3>${recommend.get(2).getTitle()}</h3>
             <p>${recommend.get(2).getContent()}</p>

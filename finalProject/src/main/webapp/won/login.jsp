@@ -93,9 +93,22 @@
 	});
 	
 //<!------------------------- body2-1 : 이메일 로그인 관련 설정 ---------------------------->
-   
 </script>
+
 <style type="text/css">
+/* -------로그인 div 스타일------------- */
+.rounded1 {
+  background-color: #bdf;
+  border:2px solid #1bf;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:50px;
+  padding-bottom:70px;
+  line-height: 1em;
+  border-radius:0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+}
 /* -------전송하는 폼 설정 form id="hidden"------- */
 	.feedback{
 		text-align : left;
@@ -184,23 +197,11 @@ span.buttonText {
 
 </head>
 <body>
-<ul id="slider">
-	<li style="width: 1300px;">
-	 <div class="container">
-    <div class="row">
-      <div class="col-lg-10 col-xl-9 mx-auto">
-        <div class="card card-signin flex-row my-5">
-          <div class="card-img-left d-none d-md-flex" style="height: 750px; weight: 400px;">
-             <!-- Background image for card set in CSS! -->
-          </div>
-          <div class="card-body">
-            <h5 class="card-title text-center"><a href="../kim/Tag_Select">Register</a></h5>
-               <div id="signup">
       <div style="text-align: center;">
          <!-- 로그인방식 선택 -->
          <table style="width: 100%; text-align: center;">
             <tr>
-               <td></td>
+               <td style="height: 100px"></td>
                <td></td>
                <td></td>
             </tr>
@@ -220,7 +221,10 @@ span.buttonText {
             </tr>
             <tr>
                <td></td>
-               <td style="width: 300px;">
+               <td style="width: 300px;" >
+               	<div class="rounded1">
+               		<p>로그인</p>
+               		<p>계정 사용 </p>
 <!------------------------- body2 : 이메일 로그인 설정 -------------------------->
 					<form id="EmForm" class="form-signin" style="width: 300px;">
 						<!-- MID 아이디(이메일) 입력 폼 -->
@@ -249,12 +253,6 @@ span.buttonText {
 						<hr>
 					</div>
 <!------------------------- body2 : 이메일 로그인 끝 ---------------------------->
-				</td>
-               <td></td>
-            </tr>
-            <tr>
-               <td></td>
-               <td>
 <!------------------------- body3 : 구글로 로그인  관련 ---------------------------->
 				<!-- 구글 계정 연동하여 로그인 -->
 				<script type="text/javascript">
@@ -325,12 +323,6 @@ span.buttonText {
 				    </script>
 				</div>
 <!------------------------- body3 : 구글로 로그인 관련 끝 ---------------------------->
-               </td>
-               <td></td>
-            </tr>
-            <tr>
-               <td></td>
-               <td>
 <!------------------------- body4 : 페이스북으로 로그인 관련 ---------------------------->
 				<!-- 페이스북 계정을 통한 로그인 -->
 				<script type="text/javascript">
@@ -442,68 +434,18 @@ span.buttonText {
 					  });//end ajax
                   ">
 <!------------------------- body4 : 페이스북으로 로그인 관련 끝---------------------------->
-               </td>
+					</div>
+				</td>
                <td></td>
             </tr>
             <tr>
                <td></td>
-               <td style="height: 100px"></td>
+               <td style="height: 150px"></td>
                <td></td>
             </tr>
          </table>
       </div>
-   </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-	</li>
-	
-	<li style="width: 1300px;">
-		 <div class="container">
-    <div class="row">
-      <div class="col-lg-10 col-xl-9 mx-auto">
-        <div class="card card-signin flex-row my-5">
-			<div class="card-body" style="background: white; margin: auto;">
-				
-				<div class="jumbotron pt-5">
-				  <h1 class="display-4">선호 여행지 선택</h1><br>
-				  <p class="lead">마음에 드는 여행지들을 선택하면 취향에 맞는 여행지를 추천 받을 수 있습니다!</p>
-				  <hr class="my-4">
-				  <p>*선택한 여행지는 추후 수정가능합니다.</p><br>
-				  <a class="btn btn-primary btn-lg next" href="#" role="button">시작</a>&nbsp;&nbsp;
-				  <a href="#">다음에 할래요.</a>
-				</div>
-				
-			</div>
-			</div>
-			</div>
-			</div>
-			</div>
-	</li>
-    <c:forEach begin="1" end="3" varStatus="status"> 
-    <!-- 슬라이드 -->
-    <li>
-	<p class="pt-5">
-    <table style="border-spacing: 5px; border-collapse: separate;"> 
-    	<tr>
-    		<td><img src="/springProject/resources/IMAGE/attractionsImg/${ranImgs[status.count*4-4]}" class="next"></td>
-    		<td><img src="/springProject/resources/IMAGE/attractionsImg/${ranImgs[status.count*4-3]}" class="next"></td>
-    	</tr>
-    	<tr>
-    		<td><img src="/springProject/resources/IMAGE/attractionsImg/${ranImgs[status.count*4-2]}" class="next"></td>
-    		<td><img src="/springProject/resources/IMAGE/attractionsImg/${ranImgs[status.count*4-1]}" class="next"></td>
-    	</tr>
-    </table>
-	</li>
-    </c:forEach>
-</ul>
-
-<form id="form" action="Tag_Select_Submit">	
-<div id="tag">
-</div>
-</form>
-
+<!-- footer -->
+<%@ include file="/UserMainFooter.jsp"%>
 </body>
 </html>

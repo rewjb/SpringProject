@@ -12,11 +12,9 @@ public class CommentDTO {
 	private int border;//순서
 	private int star;//별점
 	
-	
 	public CommentDTO() {//기본생성자
 		super();
 	}
-
 
 	public CommentDTO(String pid, int bnum, String mid, String content, String bdate, String parents, int depth,
 			int border, int star) {//매개변수가 존재하는 생성자

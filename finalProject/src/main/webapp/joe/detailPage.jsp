@@ -76,7 +76,7 @@ function comment() {//대댓글 등록시 처리함수
 
 function Update(bnum,id) {//댓글의 수정버튼 클릭시 다이얼로그 창 띄우는 함수
    
-   if (id == <%=session.getAttribute("mid") %> ) {
+   if (id == '<%=session.getAttribute("mid") %>' ) {
    var num = "#" + bnum;
    $("#updateDialog").css('display', 'block');
    $(num).after($("#updateDialog"));
@@ -129,7 +129,7 @@ function commentCancel() {
 }
 
 function deleteComment(bnum,id) {//댓글 삭제 함수
-   if (id == <%=session.getAttribute("mid") %> ) {
+   if (id == '<%=session.getAttribute("mid") %>' ) {
    var num = "#" + bnum;
    var data = $(num).serialize();//폼 아이디가 댓글번호와 같다
    

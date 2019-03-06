@@ -39,7 +39,7 @@ public class CommentController {
 
 	@RequestMapping("joe/reviewAll")
 	public String reviewAll(Model model , @RequestParam("pid") String pid) {
-
+		System.out.println("pid" + pid);
 		List<CommentDTO> list = dao.selectPid(pid);
 		model.addAttribute("list", list);
 

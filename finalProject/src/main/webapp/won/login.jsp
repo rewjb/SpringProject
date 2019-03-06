@@ -225,7 +225,7 @@ span.buttonText {
                		<p>로그인</p>
                		<p>계정 사용 </p>
 <!------------------------- body2 : 이메일 로그인 설정 -------------------------->
-					<form id="EmForm" class="form-signin" style="width: 300px;">
+					<form id="lEmForm" class="form-signin" style="width: 300px;">
 						<!-- MID 아이디(이메일) 입력 폼 -->
 						<div class="form-group">
 							<input type="text" class="form-control"

@@ -15,7 +15,7 @@
 <meta name="author"
    content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v3.8.5">
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Serif" rel="stylesheet">
 
 <title>회원가입</title>
 <!-- 이메일  -->
@@ -565,7 +565,9 @@ body {
   background-color: #3b5998;
 }
 
-
+.card-body h5 {
+  font-family: 'Noto Serif', serif;
+}
 
 </style> 
 
@@ -585,35 +587,222 @@ body {
              <!-- Background image for card set in CSS! -->
           </div>
           <div class="card-body">
-            <h5 class="card-title text-center">Register</h5>
+          	<div style="height: 100px;"></div>
+            <h5 class="card-title text-center">Login</h5>
             <div class="form-signin">
-              <div class="form-label-group">
-                <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
-                <label for="inputUserame">Username</label>
-              </div>
-
-              <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
-                <label for="inputEmail">Email address</label>
-              </div>
               
-              <hr>
+                     <div class="rounded1">
+<!------------------------- body2 : 이메일 로그인 설정 -------------------------->
+					<form id="EmForm" class="form-signin" style="width: 300px;">
+						<!-- MID 아이디(이메일) 입력 폼 -->
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="Email address" id="inputMid">
+							<div class="feedback" id="feedback-inputMid"></div>
+						</div>
 
-              <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <label for="inputPassword">Password</label>
-              </div>
+						<div style="height: 5px"></div>
+
+						<!-- MPW 비밀번호 입력 폼 -->
+						<div class="form-group">
+							<input type="password" id="inputMpw" class="form-control"
+								placeholder="Password" required>
+							<div id="feedback-inputMpw" class="feedback"></div>
+						</div>
+						
+						<div style="height: 5px"></div>
+
+					</form> 
+					<!-- 이메일 로그인 -->
+					<div style="height: 60px; vertical-align: top; padding-top: 10px">
+						<button class="btn btn-lg btn-secondary btn-block" type="button"
+							id="loginBtn" style="width: 300px;">로그인</button>
+						<hr>
+					</div>
+<!------------------------- body2 : 이메일 로그인 끝 ---------------------------->
+<!------------------------- body3 : 구글로 로그인  관련 ---------------------------->
+				<!-- 구글 계정 연동하여 로그인 -->
+				<script type="text/javascript">
+				var googleUser = {};
+
+				var startAppGG = function() {
+					gapi.load('auth2',function() {
+						// Retrieve the singleton for the GoogleAuth library and set up the client.
+						auth2 = gapi.auth2
+							.init({
+								client_id : '702698149904-d84keomrhgpc92u84qi1uobuugmnja3s.apps.googleusercontent.com',
+								cookiepolicy : 'single_host_origin',
+							// Request scopes in addition to 'profile' and 'email'
+							//scope: 'additional_scope'
+							});
+						attachSignin(document.getElementById('customBtn'));
+					});//end gapi.load()
+				};//end startApp
+
+				function attachSignin(element) {
+					console.log(element.id);
+					auth2.attachClickHandler(element, {}, function(googleUser) {
+						console.log("GOOGLE");
+						//mid(이메일)받아오기
+						var ggId = googleUser.getBasicProfile().getEmail()
+						console.log(ggId);
+						document.getElementById('mid').value = ggId;
+						//mpw세팅하기 : Google EXternal LOGIN
+						document.getElementById('mpw').value = "GgEXLOGIN";
+
+						//로그인 진행 
+						var form = $("#hidden");
+		                //자바스크립트 객체를 배열에 담아줌
+		                var formSerial = $(form).serializeArray();
+		                var sendData = {};
+		                for (var i = 0; i < formSerial.length; i++) {
+		                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
+						}
+		                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
+		                console.log(JSON.stringify(sendData));
+						$.ajax({
+							url : "/springProject/won/login",
+							type : "POST",
+							data : sendData,
+							success : function(result) {
+								console.log(result);
+							}//end success
+						});//end ajax
+
+						 $("#hidden").on("submit", function(event) {
+						       event.preventDefault();
+						       // process form
+						    });
+
+					},function(error) {
+						console.log(JSON.stringify(error, undefined, 2));
+					}); //attachClickHandler()
+				}//end function attachSignin() 
+				
+				</script>
+				<!-- 구글 로그인 버튼 -->
+				<div id="gSignInWrapper" class="button">
+					<div id="customBtn" class="customGPlusSignIn">
+						<span class="icon"></span> <span class="buttonText"> Google로 로그인</span>
+					</div>
+					<script>
+				       startAppGG();
+				    </script>
+				</div>
+<!------------------------- body3 : 구글로 로그인 관련 끝 ---------------------------->
+<!------------------------- body4 : 페이스북으로 로그인 관련 ---------------------------->
+				<!-- 페이스북 계정을 통한 로그인 -->
+				<script type="text/javascript">
+				   var check = 0;
+				   //로그인 상태 체크
+				   var checkLoginStatus = function(response) {
+				      console.log(response);
+				      /* statusChangeCallback(response); */
+				      if (response.status === 'connected') {
+				         //로그인 되었을때
+				         document.querySelector('#authBtn').value = 'Facebook으로 로그인하기';
+				         FB.api('/me',function(resp) {
+							console.log("FACEBOOK");
+				            //mid(이메일)받아오기
+				            console.log(resp.id);
+				            document.getElementById('mid').value = resp.id;
+				            //mpw세팅 : FaceBook EXternal LOGIN
+				            document.getElementById('mpw').value = "FBEXLOGIN"
+				         });
+				      } else {
+				         //로그인 안되어 있을때
+				         document.querySelector('#authBtn').value = 'Facebook 으로 로그인하기';
+				      }
+				   }
+
+				   //SDK함수 초기화
+				   window.fbAsyncInit = function() {
+				      FB.init({
+				         appId : '767168977001948',
+				         cookie : true, // enable cookies to allow the server to access 
+				         // the session
+				         xfbml : true, // parse social plugins on this page
+				         version : 'v3.2' // The Graph API version to use for the call
+				      });
+
+				      // Now that we've initialized the JavaScript SDK, we call 
+				      // FB.getLoginStatus().  This function gets the state of the
+				      // person visiting this page and can return one of three states to
+				      // the callback you provide.  They can be:
+				      //
+				      // 1. Logged into your app ('connected')
+				      // 2. Logged into Facebook, but not your app ('not_authorized')
+				      // 3. Not logged into Facebook and can't tell if they are logged into
+				      //    your app or not.
+				      //
+				      // These three cases are handled in the callback function.
+
+				      FB.getLoginStatus(checkLoginStatus);
+				   };
+				   
+				   //페이스북의 SDK를 가져오기
+				   // Load the SDK asynchronously 
+				   (function(d, s, id) {
+				      var js, fjs = d.getElementsByTagName(s)[0];
+				      if (d.getElementById(id))
+				         return;
+				      js = d.createElement(s);
+				      js.id = id;
+				      js.src = "https://connect.facebook.net/en_US/sdk.js";
+				      fjs.parentNode.insertBefore(js, fjs);
+				   }(document, 'script', 'facebook-jssdk'));
+				   
+				   //페이스북의 SDK를 가져오기
+				   // Load the SDK asynchronously 
+				   (function(d, s, id) {
+				      var js, fjs = d.getElementsByTagName(s)[0];
+				      if (d.getElementById(id))
+				         return;
+				      js = d.createElement(s);
+				      js.id = id;
+				      js.src = "https://connect.facebook.net/en_US/sdk.js";
+				      fjs.parentNode.insertBefore(js, fjs);
+				   }(document, 'script', 'facebook-jssdk'));
+				   
+				</script>
+				<!-- 페이스북으로 로그인 버튼 -->
+				<div style="height: 20px;"></div> 
+				<input type="button" id="authBtn" value="Facebook Login"
+				 onclick="
+                     if(this.value === 'Facebook 으로 로그인하기'){
+                        //now logout
+                        console.log('no!');
+                        FB.login(function(res){
+                           console.log('login =>',res);
+                           checkLoginStatus(res);
+                        });
+                     }else{
+                        //now login
+                        console.log('oh!');                        
+                     }//end if
+                     
+                     var form = $('#hidden');
+ 					
+					 // 자바스크립트 객체를 배열에 담아줌
+					  var formSerial = $(form).serializeArray(); 
+					  var sendData = {}; 
+					  for (var i = 0; i < formSerial.length; i++) { 
+					  	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value); 
+					  } 
+					 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환  
+					  console.log(JSON.stringify(sendData)); 
+					  $.ajax({ 
+						  	url : '/springProject/won/login', 
+						  	type : 'POST', 
+						  	data : sendData, 
+						  	success : function(result) { 
+						  		console.log(result+'--1:실패,0:성공'); 
+					  		}//end success 
+					  });//end ajax
+                  ">
+<!------------------------- body4 : 페이스북으로 로그인 관련 끝---------------------------->
+					</div>
               
-              <div class="form-label-group">
-                <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
-                <label for="inputConfirmPassword">Confirm password</label>
-              </div>
-
-              <button class="btn btn-lg btn-primary btn-block text-uppercase next" type="button">Register</button>
-              <a class="d-block text-center mt-2 small" href="#">Sign In</a>
-              <hr class="my-4">
-              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
-              <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook</button>
             </div>
           </div>
         </div>

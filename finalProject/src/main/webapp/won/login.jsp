@@ -72,7 +72,7 @@
             //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
             console.log("sendData : "+JSON.stringify(sendData));
 			$.ajax({
-				url : "login",
+				url : "/springProject/won/login",
 				type : "POST",
 				data : sendData,
 				success : function(result) {
@@ -80,13 +80,14 @@
 					console.log(result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
 					if(result == "0"){
 						//로그인 성공 - 세션 등록 후 메인으로 이동
-						alert("로그인 성공");
+						alert('<%=session.getAttribute("mid")%>님 환영합니다.');
+						location.href="/springProject/main.jsp"
 					} else {
 						//로그인 실패
 						alert("아이디, 비밀번호를 확인해주세요.<br>문제가 계속되면 관리자에게 문의해주세요.<br>xx-xxxx-xxxx");
 						id.text()="";
 						pw.text()="";
-					}
+					}//end innerIF
 				}//end success
 			});//end ajax
 		})//end #loginBtn click()
@@ -97,8 +98,7 @@
 <style type="text/css">
 /* -------로그인 div 스타일------------- */
 .rounded1 {
-  background-color: #bdf;
-  border:2px solid #1bf;
+  border:1px solid #7c7c7c;
   padding-left:20px;
   padding-right:20px;
   padding-top:50px;
@@ -210,8 +210,8 @@ span.buttonText {
 				<div>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간-------------->
 					<form id="hidden">
-						<input type="hidden" id="mid" name="mid" class="hidden" placeholder="mid"><br>
-						<input type="hidden" id="mpw" name="mpw" class="hidden" placeholder="mpw"><br>
+						<input type="text" id="mid" name="mid" class="hidden" placeholder="mid"><br>
+						<input type="text" id="mpw" name="mpw" class="hidden" placeholder="mpw"><br>
 					</form>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간 끝------------>
 				</div>
@@ -293,7 +293,7 @@ span.buttonText {
 		                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
 		                console.log(JSON.stringify(sendData));
 						$.ajax({
-							url : "login",
+							url : "/springProject/won/login",
 							type : "POST",
 							data : sendData,
 							success : function(result) {
@@ -424,7 +424,7 @@ span.buttonText {
 					 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환  
 					  console.log(JSON.stringify(sendData)); 
 					  $.ajax({ 
-						  	url : 'login', 
+						  	url : '/springProject/won/login', 
 						  	type : 'POST', 
 						  	data : sendData, 
 						  	success : function(result) { 

@@ -143,10 +143,6 @@ $(function () {
    var page = "<%=request.getParameter("page") %>"
    
 	if (page=="null" ) {
-		alert("1");
-		
-		
-		
       $.ajax({ 
          url : "allList?page=null" ,
          Type : "POST",
@@ -272,7 +268,6 @@ $(function () {
    
    
    if ('<%=session.getAttribute("text")%>' != 'null') {
-	   alert("설마");
 	   $.ajax({ 
 	         url : "search?text="+ '<%=session.getAttribute("text")%>' + "&page=" + '<%= request.getParameter("page")%>',
 	         Type : "POST",
@@ -281,12 +276,7 @@ $(function () {
 	             $("#container").append(result);
 	         }
 	      }); 
-	
 }
-   
-   
-   
-   
    
 })//ready 끝
  
@@ -434,7 +424,6 @@ $(function () {
 	
 	function enter() {//엔터키 입력시 동작함수
 		if (window.event.keyCode == 13) {
-			alert("dkss");
 			 $.ajax({
 					url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
 					Type : "POST",
@@ -448,28 +437,24 @@ $(function () {
 	}
 	
 	
-	
-	
-	function enterSearch() {//일반 검색 함수
+// 	function enterSearch() {//일반 검색 함수
 		
-    	   if ($("#search").val() != "") {
+//     	   if ($("#search").val() != "") {
     		   
-    		   var text = $("#search").val();
-//     		   alert(text);
-				 $.ajax({
-						url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>',
-						Type : "POST",
-						success : function(result) {
+//     		   var text = $("#search").val();
+// 				 $.ajax({
+<%-- 						url : "search?text="+text + "&page=" + '<%= request.getParameter("page")%>', --%>
+// 						Type : "POST",
+// 						success : function(result) {
 							
-							$("#container").empty();
-							$("#container").append(result);
-						}
-					});
+// 							$("#container").empty();
+// 							$("#container").append(result);
+// 						}
+// 					});
 				
-			}else{
-// 				alert("검색 내용을 입력해주세요");
-			}
-       }
+// 			}else{
+// 			}
+//        }
 	
 	function search() {//검색버튼 클릭시 동작 함수
 		if ($("#search").val() != "") {
@@ -557,7 +542,7 @@ $(function () {
   </button>
     <form class="form-inline my-2 my-md-0">
     	<span class="navbar-brand">검색</span>
-    	<input class="form-control" type="text" placeholder="Search" aria-label="Search" id = "search" onkeyup="enterSearch()" onkeypress="enter()" style="margin-right: 0;">
+    	<input class="form-control" type="text" placeholder="Search" aria-label="Search" id = "search" onkeypress="enter()" style="margin-right: 0;">
     </form>
 		   <input class="btn btn-secondary my-2" type="button"  value="검색" onclick="search()"> 
    <div class="collapse navbar-collapse" id="navbarsExample01">

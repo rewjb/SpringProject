@@ -1,5 +1,6 @@
 package com.itbank.springProject.rew.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,12 +43,14 @@ public class R_PlanController {
 	@Qualifier("ShareProjectDAO")
 	private ShareProjectDAO shareProjectDAO;
 
-	Mongo_ShareProjectDAO mongo_ShareProjectDAO = new Mongo_ShareProjectDAO();
+	@Autowired
+	@Qualifier("Mongo_ShareProjectDAO")
+	Mongo_ShareProjectDAO mongo_ShareProjectDAO;
 
 	@RequestMapping("rew/insertShareProject")
 	@ResponseBody
-	public String insertShareProject(@RequestParam("ptitle") String ptitle ,HttpSession session) {
-		
+	public String insertShareProject(@RequestParam("ptitle") String ptitle, HttpSession session) {
+
 		HashMap<String, String> map = new HashMap<>();
 		MongoClient mongoClient = new MongoClient("34.73.189.101", 27017);
 		DB db = mongoClient.getDB("tag");
@@ -59,34 +62,35 @@ public class R_PlanController {
 			String val = cursor.next().toString().replaceAll("\"", "").replaceAll("}", "");
 			String val2 = val.substring(val.indexOf(",") + 1).replaceAll(" ", "");
 			String[] valRs = val2.split(":");
-			map.put(valRs[0] + ".jpg", valRs[1]);}
-		
+			map.put(valRs[0] + ".jpg", valRs[1]);
+		}
+
 		String check = "good";
 
 		ShareProjectDTO shareProjectDTO = new ShareProjectDTO();
 		shareProjectDTO.setMid("temp");
 		shareProjectDTO.setPtitle(ptitle);
-		
+
 		List<PlanDTO> list = planDAO.selectAllPid(shareProjectDTO);
-		
+
 		String insertTag = "";
 		String insertTotaImg = "";
 
 		for (int i = 0; i < list.size(); i++) {
 			if (map.containsKey(list.get(i).getMainImg())) {
-						insertTotaImg += list.get(i).getMainImg()+"/";
-						insertTag += map.get(list.get(i).getMainImg());
+				insertTotaImg += list.get(i).getMainImg() + "/";
+				insertTag += map.get(list.get(i).getMainImg());
 			}
 		}
-		
+
 		shareProjectDTO.setImg(insertTotaImg);
-		
+
 		if (shareProjectDAO.insertShareProject(shareProjectDTO) != 1) {
 			// 공유 실패
 			check = "bad";
 		} else {
 			// 공유 성공
-			mongo_ShareProjectDAO.createProjectInMongo(shareProjectDTO,insertTag);
+			mongo_ShareProjectDAO.createProjectInMongo(shareProjectDTO, insertTag);
 		}
 		return check;
 	}
@@ -101,14 +105,26 @@ public class R_PlanController {
 	}
 
 	@RequestMapping("rew/TravelPlan")
-	public void cartSelectAll(Model model , HttpSession session) {
+	public void cartSelectAll(Model model, HttpSession session) {
 		session.setAttribute("mid", "temp");
-		
-		
+
+		List<ShareProjectDTO> allSearchTextList = mongo_ShareProjectDAO.getProjectByStar();
+
+		List<ShareProjectDTO> allProjectList = new ArrayList<ShareProjectDTO>();
+
+		for (int i = 0; i < allSearchTextList.size(); i++) {
+			allProjectList.add(shareProjectDAO.selectAllShareProjectByManyIdStar(allSearchTextList.get(i)));
+		}
+
+		for (int i = 0; i < allProjectList.size(); i++) {
+			System.out.println(allProjectList.get(i).getPtitle());
+		}
+
 		String mid = (String) session.getAttribute("mid");
 		model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
 		model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
 		model.addAttribute("projectShare_list", shareProjectDAO.selectAllShareProjectById(mid));
+		model.addAttribute("allProjectListBystar" , allProjectList);
 	}
 
 	@RequestMapping("rew/projcetDataSave")
@@ -146,6 +162,7 @@ public class R_PlanController {
 		planDTO.setPtitle(ptitle);
 		planDAO.deleteProjectData(planDTO);
 		shareProjectDAO.deleteOneShareProject(planDTO);
+		mongo_ShareProjectDAO.deleteProject(planDTO);
 		return "";
 	}
 

@@ -41,7 +41,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.sun.org.apache.xalan.internal.xsltc.dom.ArrayNodeListIterator;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
@@ -73,15 +75,38 @@ public class Mongo_ShareProjectDAO {
 	// 경로의 저장을 위한 stack
 	private Stack<String> stackID = new Stack<>();
 	private String space;
-	
-	public long deleteProject(PlanDTO planDTO){
+
+	public List<ShareProjectDTO> getProjectByStar() {
+
+		Document temp = new Document("star", -1);
+
+		MongoCursor<Document> cursor = commentColl.find().sort(temp).iterator();
+
+		List<ShareProjectDTO> shareList = new ArrayList<>();
+
+		ShareProjectDTO dto = null;
+
+		while (cursor.hasNext()) {
+			temp = cursor.next();
+			dto = new ShareProjectDTO();
+			dto.setMid(temp.getString("pMid"));
+			dto.setPtitle(temp.getString("ptitle"));
+
+			shareList.add(dto);
+		}
 		
-//		new Document("$and", findOptionList)
-//		
-//		commentColl.deleteOne(new Document( , ));
-//		
-		
-		return 0;
+		return shareList;
+
+	}
+
+	public long deleteProject(PlanDTO planDTO) {
+		List<Document> list = new ArrayList<>();
+		Document insert1 = new Document("pMid", planDTO.getMid());
+		Document insert2 = new Document("ptitle", planDTO.getPtitle());
+		list.add(insert1);
+		list.add(insert2);
+		DeleteResult result = commentColl.deleteOne(new Document("$and", list));
+		return result.getDeletedCount();
 	}
 
 	public List<ShareProjectDTO> sortByDateStar() {
@@ -93,23 +118,23 @@ public class Mongo_ShareProjectDAO {
 		System.out.println(new Document("$sort", temp).toJson());
 
 		MongoCursor<Document> cursor = commentColl.find().sort(temp).iterator();
-		
+
 		List<ShareProjectDTO> shareList = new ArrayList<>();
-		
-		ShareProjectDTO dto=null;
-		
+
+		ShareProjectDTO dto = null;
+
 		while (cursor.hasNext()) {
 			temp = cursor.next();
 			dto = new ShareProjectDTO();
 			dto.setMid(temp.getString("pMid"));
 			dto.setPtitle(temp.getString("ptitle"));
-			
+
 			shareList.add(dto);
 		}
-		
+
 		return shareList;
 	}//sortDateStar 메서드 종료
-	
+
 	public Map<String, String> createProjectTagMap() {
 		//작업
 		HashMap<String, String> map = new HashMap<>();
@@ -128,7 +153,6 @@ public class Mongo_ShareProjectDAO {
 		}
 		return map;
 	}
-	
 
 	public List<TagPoolDTO> returnShareProjectRank(String userTagText, Map<String, String> map) {
 		String userTagArray[] = userTagText.split("/");
@@ -140,10 +164,11 @@ public class Mongo_ShareProjectDAO {
 		Set key = map.keySet();
 		Iterator<String> iter = key.iterator();
 		String strKey = null;
-
-		for (int i = 0; i < key.size(); i++) {
+        System.out.println("오류 전전 길이 "+key.size());
+		for (int i = 0; i < key.size()-1; i++) {
 			strKey = iter.next();
 			temp = 0;
+			System.out.println("오류전 길이"+userTagArray.length);
 			for (int j = 0; j < userTagArray.length; j++) {
 				if (map.get(strKey).contains(userTagArray[i])) {
 					++temp;
@@ -157,7 +182,6 @@ public class Mongo_ShareProjectDAO {
 			shareProjectList.add(inputTag);
 		}
 
-
 		for (int i = 0; i < shareProjectList.size(); i++) {
 			for (int j = i; j < shareProjectList.size(); j++) {
 				if (shareProjectList.get(j).getCount() > shareProjectList.get(i).getCount()) {
@@ -169,7 +193,6 @@ public class Mongo_ShareProjectDAO {
 				}
 			}
 		} // 정렬 for문! 선택정렬임
-
 
 		return shareProjectList;
 

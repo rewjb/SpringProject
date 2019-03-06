@@ -86,23 +86,24 @@ public class W_MemberController{
 	//회원가입시 아이디 중복확인
 	@RequestMapping("won/checkMid")
 	@ResponseBody
-	public String checkMid(@RequestParam("mid") String mid, MemberDTO dto){
-		System.out.println("아이디 중복확인 mid:"+ mid);
-		System.out.println("아이디 중복확인 dto:"+ dto.getMid());
-		try {
-			dto.setMid(mid);
-			MemberDTO mdto = memberDAO.select(dto);
-			if(mdto == null || mdto.getMid().equals("")){
-				System.out.println("존재하지 않는 아이디! 가입 가능합니다!");
-			}else{
-				System.out.println("존재하는 아이디! 가입 불가능!");
-			}
-			
-		} catch (Exception e) {
-			//실패시 회원가입 페이지로 돌아감
-			e.printStackTrace();
-			System.out.println("select실패");
-		}
+	public String checkMid(@RequestParam("mid") String mid){
+		System.out.println(mid);
+//		System.out.println("아이디 중복확인 mid:"+ mid);
+//		System.out.println("아이디 중복확인 dto:"+ dto.getMid());
+//		try {
+//			dto.setMid(mid);
+//			MemberDTO mdto = memberDAO.select(dto);
+//			if(mdto == null || mdto.getMid().equals("")){
+//				System.out.println("존재하지 않는 아이디! 가입 가능합니다!");
+//			}else{
+//				System.out.println("존재하는 아이디! 가입 불가능!");
+//			}
+//			
+//		} catch (Exception e) {
+//			//실패시 회원가입 페이지로 돌아감
+//			e.printStackTrace();
+//			System.out.println("select실패");
+//		}
 		return mid; 
 	}
 	
@@ -177,5 +178,10 @@ public class W_MemberController{
 		}
 		return "won/selectM";
 	}//end selectMember();
+	
+	@RequestMapping("won/myPage")
+	public void myPage() {
+		
+	}
 	
 }

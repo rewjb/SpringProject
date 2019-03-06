@@ -40,6 +40,8 @@
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>
+        &nbsp;     
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/login.jsp">Login</a>
       </div>
     </div>
   </header>
@@ -52,7 +54,7 @@
          여행정보
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
-      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="/springProject/joe/attractionsLIst">관광명소 보기</a>
       <a class="dropdown-item" href="#">Dropdown link</a>
     </div>
   </div>
@@ -63,8 +65,7 @@
          여행계획
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="width: 100%">
-      <a class="dropdown-item" href="#">여행계획 세우기</a>
-      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="/springProject/rew/TravelPlan">여행계획 세우기</a>
     </div>
   </div>
   

@@ -8,9 +8,7 @@
 </head>
 <body>   
  
-<form action="TravelPlan">
-<input type="hidden" name="mid" value="temp">
-<input type="hidden" name="ptitle" value="111">
+<form action="planList">
 <input type="submit" value="여행계확짜기로 이동!"> 
 </form>
 

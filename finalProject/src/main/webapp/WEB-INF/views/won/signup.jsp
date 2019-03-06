@@ -1,6 +1,5 @@
 <!-- 
 회원가입 방법 선택하는 페이지
-
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
@@ -275,7 +274,7 @@
    
    $(function(){
  
-	<!--------------------------------- 슬라이드 코드 start ------------------------------------------>
+<!--------------------------------- 슬라이드 코드 start ------------------------------------------>
 	var num = 0;
     var time = 500;
     var idx = idx2 = 0;
@@ -353,7 +352,7 @@
 		height: 27px;
 	}
 
-/* -------구글 로그인 버튼 설정-------------------- */
+/* -------구글로 회원가입  버튼 설정-------------------- */
 #customBtn {
 	display: inline-block;
 	background: white;
@@ -398,7 +397,7 @@ span.buttonText {
 	padding-top: 10%;
 }
 
-/* -------페이스북 로그인 버튼 설정--------------------- */
+/* -------페이스북으로 회원가입 버튼 설정--------------------- */
 #authBtn {
 	display: inline-block;
 	color: #FFFFFF;
@@ -582,6 +581,7 @@ body {
                <div id="signup">
       <div>
 	     <!-- 위쪽공간 -->
+      <div style="text-align: center;">
          <!-- 가입방식 선택 -->
          <table style="width: 100%;">
             <tr>
@@ -654,8 +654,7 @@ body {
             <tr>
                <td></td>
                <td>
-<!------------------------- body3 : 구글 로그인 관련 ---------------------------->
-               	<!-- 구글 로그인 설정 -->
+<!------------------------- body3 : 구글로 회원가입  관련 ---------------------------->
 				<!-- 구글 계정 연동하여 회원가입 -->
 				<script type="text/javascript">
 				var googleUser = {};
@@ -745,26 +744,24 @@ body {
 					});//end ajax
 						
 				};//end ggsignup
-				
 				</script>
-				<!-- 구글 로그인 버튼 -->
+				<!-- 구글로 회원가입 버튼 -->
 				<div id="gSignInWrapper" class="button">
 					<div id="customBtn" class="customGPlusSignIn">
-						<span class="icon"></span> <span class="buttonText"> Google로 로그인</span>
+						<span class="icon"></span> <span class="buttonText"> Google로 가입하기 </span>
 					</div>
 					<script>
 				       startAppGG();
 				    </script>
 				</div>
-<!------------------------- body3 : 구글 로그인 관련 끝 ---------------------------->
+<!------------------------- body3 : 구글로 회원가입 관련 끝 ---------------------------->
                </td>
                <td></td>
             </tr>
             <tr>
                <td></td>
                <td>
-<!------------------------- body4 : 페이스북 로그인 관련 ---------------------------->
-                <!-- 페이스북 로그인 설정 --> 
+<!------------------------- body4 : 페이스북으로 회원가입 관련 ---------------------------->
 				<!-- 페이스북 계정을 통한 회원가입 -->
 				<script type="text/javascript">
 				   var check = 0;
@@ -774,7 +771,7 @@ body {
 				      /* statusChangeCallback(response); */
 				      if (response.status === 'connected') {
 				         //로그인 되었을때
-				         document.querySelector('#authBtn').value = 'Facebook으로 로그인';
+				         document.querySelector('#authBtn').value = 'Facebook으로 가입하기';
 				         FB.api('/me',function(resp) {
 							console.log("FACEBOOK");
 				            //mid(이메일)받아오기
@@ -792,7 +789,7 @@ body {
 				         });
 				      } else {
 				         //로그인 안되어 있을때
-				         document.querySelector('#authBtn').value = 'Facebook 으로 로그인';
+				         document.querySelector('#authBtn').value = 'Facebook 으로 가입하기';
 				      }
 				   }
 
@@ -846,11 +843,11 @@ body {
 				   }(document, 'script', 'facebook-jssdk'));
 				   
 				</script>
-				<!-- 페이스북 로그인 버튼 -->
+				<!-- 페이스북으로 회원가입 버튼 -->
 				<div style="height: 20px;"></div> 
 				<input type="button" id="authBtn" value="Facebook Login"
 				 onclick="
-                     if(this.value === 'Facebook 으로 로그인'){
+                     if(this.value === 'Facebook 으로 가입하기'){
                         //now logout
                         console.log('no!');
                         FB.login(function(res){
@@ -884,7 +881,7 @@ body {
 					  		}//end success 
 					  });//end ajax
                   ">
-<!------------------------- body4 : 페이스북 로그인 관련 끝---------------------------->
+<!------------------------- body4 : 페이스북으로 회원가입 관련 끝---------------------------->
                </td>
                <td></td>
             </tr>

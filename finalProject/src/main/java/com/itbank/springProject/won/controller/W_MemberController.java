@@ -128,7 +128,7 @@ public class W_MemberController{
 		}
 		return mname; 
 	}
-	
+		
 	//로그인 확인 (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)
 	@RequestMapping("won/login")
 	public String selectIdPw(MemberDTO dto,	HttpSession session){

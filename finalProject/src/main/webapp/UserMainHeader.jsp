@@ -39,7 +39,7 @@
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>
         &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="#">Login</a>
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/login.jsp">Login</a>
       </div>
     </div>
   </header>

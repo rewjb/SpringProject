@@ -83,10 +83,8 @@ public class RecommendController {
 	
 	@RequestMapping("kim/Tag_Select_Submit")
 	public String subm(@RequestParam("tag1") String tag1, @RequestParam("tag2") String tag2, 
-			@RequestParam("tag3") String tag3, HttpSession session) {
-		
-
-		
+			@RequestParam("tag3") String tag3, @RequestParam("id") String id, HttpSession session) {
+				
 		//세션의 전체 태그리스트 가져옴
 		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
 		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");
@@ -108,6 +106,8 @@ public class RecommendController {
 
 		tags = tags.substring(0, tags.length()-1);
 		System.out.println("결과 : " + tags);
+		id =  id.replace('.', '/');
+		dao1.mongoInsert(id, tags);
 		
 		//테스트용 유저선호도 세션등록
 		session.setAttribute("favor", tags);
@@ -149,10 +149,10 @@ public class RecommendController {
 			result[i] = point;
 		}
 		
-		//정렬 전의 값 확인
-		for (int i = 0; i < result.length; i++) {
-			System.out.println(sortedList.get(i).getMainImg() + " : " + result[i]);
-		}
+//		//정렬 전의 값 확인
+//		for (int i = 0; i < result.length; i++) {
+//			System.out.println(sortedList.get(i).getMainImg() + " : " + result[i]);
+//		}
 				
 		//정렬을 위한 인덱스 temp와 장소명 sTemp를 선언
 		int temp = 0;
@@ -175,11 +175,11 @@ public class RecommendController {
 			}
 		}
 		
-		System.out.println("==========정럴 후=========");
-		//정렬 후의 값 확인
-		for (int i = 0; i < result.length; i++) {
-			System.out.println(sortedList.get(i).getMainImg() + " : " + result[i]);
-		}
+//		System.out.println("==========정럴 후=========");
+//		//정렬 후의 값 확인
+//		for (int i = 0; i < result.length; i++) {
+//			System.out.println(sortedList.get(i).getMainImg() + " : " + result[i]);
+//		}
 		
 		//결과를 모델객체로 반환
 		session.setAttribute("recommend", sortedList);

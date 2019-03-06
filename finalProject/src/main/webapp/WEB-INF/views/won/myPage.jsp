@@ -3,6 +3,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<style>
+
+.inputDiv {
+display: inline-block;
+width: 150px;
+text-align: center;
+}
+.inputDiv2 {
+display: inline-block;
+width: 500px;
+}
+
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
@@ -16,27 +31,13 @@
 <div>
 
 <form action="placeReq">
-
+   
     <div class="form-group">
-      <label for="exampleSelect2">도시</label>
-		<input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+    	<div class="inputDiv">이름</div>
+    	<div class="inputDiv2">
+    	<input type="text" class="form-control" id="city" name="city" placeholder="Enter city"></div>
     </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">여행지 명</label>
-      <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">주소</label>
-      <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
-    </div>
-    <div class="form-group">
-      <label for="exampleTextarea">소개</label>
-      <textarea class="form-control" id="content" name="content" rows="2" placeholder="Enter intro"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="exampleTextarea">설명</label>
-      <textarea class="form-control" id="contentElements" name="contentElements" rows="5" placeholder="Enter explaination"></textarea>
-    </div>
+ 
     
     <input type="hidden" id="mainImg" name="mainImg" value="123">
     <input type="hidden" id="userId" name="userId" value="유저아이디">

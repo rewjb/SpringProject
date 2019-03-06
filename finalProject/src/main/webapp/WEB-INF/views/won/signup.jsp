@@ -15,6 +15,7 @@
 <meta name="author"
    content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Jekyll v3.8.5">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
 
 <title>회원가입</title>
 <!-- 이메일  -->
@@ -59,6 +60,11 @@
 		var pw = $('#inputMpw');
 		var cf = $("#inputConform"); //비밀번호 확인
 		var name = $('#inputMname');
+		
+		var idCheck = 0;
+		var pwCheck = 0;
+		var cfCheck = 0;
+		var nameCheck = 0;
 
 		//유효성 결과에 따라 다른 클래스(input style)에 포함시켜주는 함수
 		function hasColor(input,v){
@@ -79,8 +85,9 @@
 		
 		//ID유효성 : #inputMid에서 onkeyup 이벤트가 발생시
  		id.keyup(function() {
+ 			idCheck = 0;
  			//feedback div : 피드백 내용을 모여주는 div
- 			var f = $("#feedback-inputMid");
+ 			var f = $("#feedback-inputMid"); 
  			//유효성 검사
  			if (id.val().length == 0) {	// 입력 값이 없을 때
  				//기본설정
@@ -99,13 +106,15 @@
  				} else { //유효성 검사 통과 후 중복 아이디 확인
  					var mid = id.val();
  					$.ajax({
- 						url : "checkMid?mid=" + mid,
+ 						url : "/springProject/won/checkMid?mid=" + mid,
  						type : "POST",
  						success : function(result) {
 							//성공시 설정
 		 					hasColor(id,2);			//success
 		 					f.text(''); 			//비워주기
 							$("#mid").val(result);	//전송폼에 값 세팅
+							
+							idCheck = 1;
  						}//end success
  					});//end ajax
  				}//end if()
@@ -115,6 +124,7 @@
  		
 		//pw유효성 : #inputMpw에서 onkeyup 이벤트가 발생시
 		pw.keyup(function() {
+			pwCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
 			var f = $("#feedback-inputMpw"); 
 			//유효성 검사
@@ -139,12 +149,14 @@
 					//성공시 설정
 					hasColor(pw,2);		//success
 					f.text('');			//비워주기
+					pwCheck = 1;
 				}//end if()
 			}//end if
 		});//end keyup()
 		
 		//pw일치확인 : #inputConform에서 onkeyup 이벤트가 발생시
 		cf.keyup(function() {
+			cfCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
 			var f = $("#feedback-inputMpw1"); 
 			//유효성 검사
@@ -161,12 +173,14 @@
 				hasColor(cf,2)			//success
 				f.text('');				//비워주기
 				$("#mpw").val(pw.val());//전송폼에 값 세팅
+				cfCheck = 1;
 			}//end if()
 		});//end keyup()
 		 
 			 
 		//name유효성 : #inputMname에서 onkeyup 이벤트가 발생시
 		name.keyup(function() {
+			nameCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
 			var f = $("#feedback-inputMname"); 
 			//유효성 검사
@@ -190,7 +204,7 @@
 				} else {
 					var mname = name.val();
 					$.ajax({
-						url : "checkMname?mname=" + mname,
+						url : "/springProject/won/checkMname?mname=" + mname,
 						type : "POST",
 						success : function(result) {
 							//성공시 설정
@@ -200,54 +214,59 @@
 							$("#mprofile").val(
 								"/springProject/resources/IMAGE/LoginLogo/user.png");
 							$("img").attr("src", $("mprofile").val())
+							nameCheck = 1;
 						}//end success
 					});//end ajax
 				}//end if()
 			}//end if
 		});//end keyup()
+
 		
 		//signup버튼 눌렀을때 동작하는 함수
 		$("#signupBtn").click(function() {
-			if($("#mid").val() != id.val()) { // 아이디(이메일) 입력폼과 전송폼 일치여부 확인
-				//문제시 설정
- 				hasColor(id, 1);		//danger
- 				id.focus();				//id 입력폼으로 이동
- 	 			var f = $("#feedback-inputMid");
-				f.text('다시 입력해주세요')	//알림 띄워줌
-			} else if($("#mpw").val() != pw.val()){ // 비밀번호 입력폼과 전송폼이 일치하는지 확인
-				//문제시 설정
- 				hasColor(pw,1);		//danger
- 				pw.focus();			//pw 입력폼으로 이동
- 				cf.val("");			//pw 확인폼 지워줌	
- 	 			var f = $("#feedback-inputMpw1");
-				f.text('다시 입력해주세요')	//알림 띄워줌
-			} else if($("#mname").val() != name.val()){
-				//문제시 설정
-				hasColor(name,1);	//danger
-				name.focus();		//name 입력폼으로 이동
-				var f = $("#feedback-inputMname");
-				f.text('다시 입력해주세요')
-			} else {
-				var form = $("#hidden");
+			if(idCheck + pwCheck + cfCheck + nameCheck == 4) {
 				
-                // 자바스크립트 객체를 배열에 담아줌
-                var formSerial = $(form).serializeArray();
-                var sendData = {};
-                for (var i = 0; i < formSerial.length; i++) {
-                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
-				}
-                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-                console.log(JSON.stringify(sendData));
-				$.ajax({
-					url : "insertMember",
-					type : "POST",
-					data : sendData,
-					success : function(result) {
-						console.log(result+'--1:실패,0:성공');
-					}//end success
-				});//end ajax
-				
-			}//end if()
+				if($("#mid").val() != id.val()) { // 아이디(이메일) 입력폼과 전송폼 일치여부 확인
+					//문제시 설정
+	 				hasColor(id, 1);		//danger
+	 				id.focus();				//id 입력폼으로 이동
+	 	 			var f = $("#feedback-inputMid");
+					f.text('다시 입력해주세요')	//알림 띄워줌
+				} else if($("#mpw").val() != pw.val()){ // 비밀번호 입력폼과 전송폼이 일치하는지 확인
+					//문제시 설정
+	 				hasColor(pw,1);		//danger
+	 				pw.focus();			//pw 입력폼으로 이동
+	 				cf.val("");			//pw 확인폼 지워줌	
+	 	 			var f = $("#feedback-inputMpw1");
+					f.text('다시 입력해주세요')	//알림 띄워줌
+				} else if($("#mname").val() != name.val()){
+					//문제시 설정
+					hasColor(name,1);	//danger
+					name.focus();		//name 입력폼으로 이동
+					var f = $("#feedback-inputMname");
+					f.text('다시 입력해주세요')
+				} else {
+					var form = $("#hidden");
+					
+	                // 자바스크립트 객체를 배열에 담아줌
+	                var formSerial = $(form).serializeArray();
+	                var sendData = {};
+	                for (var i = 0; i < formSerial.length; i++) {
+	                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
+					}
+	                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
+	                console.log(JSON.stringify(sendData));
+					$.ajax({
+						url : "/springProject/won/insertMember",
+						type : "POST",
+						data : sendData,
+						success : function(result) {
+							console.log(result+'--1:실패,0:성공');
+						}//end success
+					});//end ajax					
+				}//end if()
+				$("#hdnBtn").trigger("click");
+			}
 		})//end click()
 	});
 	
@@ -303,7 +322,8 @@
             });
             $("#slider li:eq("+idx2+")").css("display", "block").animate({ left: "-="+slide_width+"px" }, time);
             idx = idx2;
-        }
+        }            
+        
     });   
     <!--------------------------------- 슬라이드 코드 end ------------------------------------------>
 	
@@ -544,9 +564,12 @@ body {
 
 </head>
 <body>
+<%@ include file="/won/signupHeader.jsp"%> 
+   <!-- header : 회원가입 페이지는 헤더 모양이 달라서 다른 헤더를 사용 -->
+   <button id="hdnBtn" class="next" style="visibility: hidden;"></button>
 <ul id="slider">
 	<li style="width: 1300px;">
-	 <div class="container">
+	 <div class="container" id="joinBtn">
     <div class="row">
       <div class="col-lg-10 col-xl-9 mx-auto">
         <div class="card card-signin flex-row my-5">
@@ -554,11 +577,13 @@ body {
              <!-- Background image for card set in CSS! -->
           </div>
           <div class="card-body">
-            <h5 class="card-title text-center"><a href="../kim/Tag_Select">Register</a></h5>
+            <h5 class="card-title text-center">Register</h5>
                <div id="signup">
+      <div>
+	     <!-- 위쪽공간 -->
       <div style="text-align: center;">
          <!-- 가입방식 선택 -->
-         <table style="width: 100%; text-align: center;">
+         <table style="width: 100%;">
             <tr>
                <td></td>
                <td></td>
@@ -585,7 +610,7 @@ body {
                <td style="width: 300px;">
 <!------------------------- body2 : 이메일 가입 설정 -------------------------->
 					<form id="EmForm" class="form-signin" style="width: 300px;">
-						<!-- MID 아이디(이메일) 입력 폼 -->
+ 					<!-- MID 아이디(이메일) 입력 폼 -->
 						<div class="form-group">
 							<input type="text" class="form-control"
 								placeholder="Email address" id="inputMid">
@@ -618,7 +643,7 @@ body {
 
 					</form> <!-- 이메일 회원가입 -->
 					<div style="height: 60px; vertical-align: top; padding-top: 10px">
-						<button class="btn btn-lg btn-secondary btn-block next" type="button"
+						<button class="btn btn-lg btn-secondary btn-block" type="button" alt="false"
 							id="signupBtn" style="width: 300px;">회원가입</button>
 						<hr>
 					</div>
@@ -678,11 +703,12 @@ body {
 		                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
 		                console.log(JSON.stringify(sendData));
 						$.ajax({
-							url : "insertMember",
+							url : "/springProject/won/insertMember",
 							type : "POST",
 							data : sendData,
 							success : function(result) {
 								console.log(result);
+								$("#hdnBtn").trigger("click");
 							}//end success
 						});//end ajax
 
@@ -690,12 +716,34 @@ body {
 						       event.preventDefault();
 						       // process form
 						    });
+						
 
 					},function(error) {
 						console.log(JSON.stringify(error, undefined, 2));
 					}); //attachClickHandler()
 				}//end function attachSignin() 
 				
+				var signupGG = function() {
+					var form = $("#hidden");
+					
+	                // 자바스크립트 객체를 배열에 담아줌
+	                var formSerial = $(form).serializeArray();
+	                var sendData = {};
+	                for (var i = 0; i < formSerial.length; i++) {
+	                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
+					}
+	                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
+	                console.log(JSON.stringify(sendData));
+					$.ajax({
+						url : "/springProject/won/insertMember",
+						type : "POST",
+						data : sendData,
+						success : function(result) {
+							console.log(result+'--1:실패,0:성공');
+						}//end success
+					});//end ajax
+						
+				};//end ggsignup
 				</script>
 				<!-- 구글로 회원가입 버튼 -->
 				<div id="gSignInWrapper" class="button">
@@ -822,11 +870,14 @@ body {
 					 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환  
 					  console.log(JSON.stringify(sendData)); 
 					  $.ajax({ 
-						  	url : 'insertMember', 
+						  	url : '/springProject/won/insertMember', 
 						  	type : 'POST', 
 						  	data : sendData, 
 						  	success : function(result) { 
 						  		console.log(result+'--1:실패,0:성공'); 
+						  		if(result==0){
+						  			$('#hdnBtn').trigger('click');
+						  		}
 					  		}//end success 
 					  });//end ajax
                   ">
@@ -836,7 +887,7 @@ body {
             </tr>
             <tr>
                <td></td>
-               <td style="height: 100px"></td>
+               <td style="height: 100px"></td> 
                <td></td>
             </tr>
          </table>
@@ -857,12 +908,12 @@ body {
 			<div class="card-body" style="background: white; margin: auto;">
 				
 				<div class="jumbotron pt-5">
-				  <h1 class="display-4">선호 여행지 선택</h1><br>
+				  <h1 class="display-4" style="font-family: 'Noto Sans KR', sans-serif;">선호 여행지 선택</h1><br>
 				  <p class="lead">마음에 드는 여행지들을 선택하면 취향에 맞는 여행지를 추천 받을 수 있습니다!</p>
 				  <hr class="my-4">
 				  <p>*선택한 여행지는 추후 수정가능합니다.</p><br>
 				  <a class="btn btn-primary btn-lg next" href="#" role="button">시작</a>&nbsp;&nbsp;
-				  <a href="#">다음에 할래요.</a>
+				  <a href="Tag_Select_Submit2">다음에 할래요.</a>
 				</div>
 				
 			</div>

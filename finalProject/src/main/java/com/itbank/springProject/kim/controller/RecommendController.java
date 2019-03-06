@@ -74,9 +74,18 @@ public class RecommendController {
 		return "won/signup";
 	}
 	
+	@RequestMapping("kim/Tag_Select_Submit2")
+	public String subm2(HttpSession session) {		
+		session.setAttribute("favor",
+				"Archaeologicalsite/Ruins/Historicsite/Tourism/Mayacivilization/Village/Grass/Tree/Vacation/House/Water/Aquarium/Sky/Fun/Leisure/Night/Sea/Vacation/World/Silhouette/City/Townsquare/Plaza/Publicspace/Town/Humansettlement/Building/Landmark/Basilica/Architecture");
+		return "redirect:recommend";
+	}
+	
 	@RequestMapping("kim/Tag_Select_Submit")
 	public String subm(@RequestParam("tag1") String tag1, @RequestParam("tag2") String tag2, 
 			@RequestParam("tag3") String tag3, HttpSession session) {
+		
+
 		
 		//세션의 전체 태그리스트 가져옴
 		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
@@ -178,8 +187,7 @@ public class RecommendController {
 	}
 	
 	@RequestMapping("kim/atList")
-	public String atList() {
-		
+	public String atList() {		
 		return "kim/recommend";
 	}
 }

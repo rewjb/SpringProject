@@ -127,7 +127,7 @@ function commentCancel() {
    $("#replyDialog").css('display', 'none');
    return false;
 }
-
+  
 function deleteComment(bnum,id) {//댓글 삭제 함수
    if (id == '<%=session.getAttribute("mid") %>' ) {
    var num = "#" + bnum;

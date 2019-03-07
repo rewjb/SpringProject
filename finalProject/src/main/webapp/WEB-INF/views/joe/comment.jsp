@@ -5,7 +5,10 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
     
+  <% ArrayList list = (ArrayList)request.getAttribute("list");
+   System.out.println("리스트 사이즈 몇????"+list.size());
   
+  %>
 <%--   
 <!--jstl안될때  -->
 <div>

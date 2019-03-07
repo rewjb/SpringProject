@@ -104,7 +104,7 @@ function updateResult() {
    var data = $("#updateForm").serialize();
    //alert(data);
    $.ajax({
-      url : "reviewUpdate",
+      url : "reviewUpdate" ,
       Type : "POST",
       data : data,
       success : function (result) {
@@ -140,7 +140,7 @@ function deleteComment(bnum,id) {//댓글 삭제 함수
    var data = $(num).serialize();//폼 아이디가 댓글번호와 같다
    
    $.ajax({
-      url : "reviewDelete",
+      url : "reviewDelete?pid=" + <%=pid%>,
       Type : "POST",
       data : data,
       success : function (result) {
@@ -191,7 +191,7 @@ $(function() {
                $("#cPid").val('<%=pid%>');
                $("#firstId").val('<%=pid%>');
                $("#star").text( "★"+ result.star);
-               
+               alert(result.star);
 //                $("#cart").val()
                if ('<%=mid%>' != 'null') {
                   $("#mid").val('<%=mid%>');                  
@@ -491,7 +491,7 @@ $(function() {
 
  <div class="jumbotron mt-3" id="updateDialog" style="width: 45%; display:none; margin-left: auto; margin-right: auto;">
     <form id= "updateForm"  method="post">
-        <input type="hidden" name="pid" value="id"> 
+        <input type="hidden" name="pid" value="<%=pid%>"> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input2" name = "input2">
         <input type="hidden" name="mid" value="<%=mid%>"><br>

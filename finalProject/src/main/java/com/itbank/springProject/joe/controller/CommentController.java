@@ -88,29 +88,34 @@ public class CommentController {
 
 		dao.insertInsert(commentDTO);
 
-		List<CommentDTO> list = dao.selectAll();
+		List<CommentDTO> list = dao.selectPid(commentDTO.getPid());
 		model.addAttribute("list", list);
 
 		return "joe/comment";
 	}
 
 	@RequestMapping("joe/reviewUpdate")
-	public String reviewUpdate(@RequestParam("input2") String bnum, @RequestParam("content") String content,
+	public String reviewUpdate(@RequestParam("input2") String bnum, @RequestParam("content") String content, @RequestParam("pid") String pid,
 			Model model ,HttpServletResponse response) {
 		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
-
+		
+		System.out.println("pid"+pid);
+		System.out.println("bnum"+bnum);
+		System.out.println("content"+content);
+		
 		CommentDTO dto = new CommentDTO();
 //		System.out.println("번호 : " + bnum);
 //		System.out.println("내용 : " + content);
+		dto.setPid(pid);
 		dto.setBnum(Integer.parseInt(bnum));
 		dto.setContent(content);
 
 		dao.update(dto);
 
-		List<CommentDTO> list = dao.selectAll();
+		List<CommentDTO> list = dao.selectPid(pid);
 		model.addAttribute("list", list);
 
 		return "joe/comment";
@@ -118,7 +123,7 @@ public class CommentController {
 	}
 
 	@RequestMapping("joe/reviewDelete")
-	public String reviewDelete(@RequestParam("bnum") String bnum, @RequestParam("parents") String parents,
+	public String reviewDelete(@RequestParam("bnum") String bnum, @RequestParam("parents") String parents,@RequestParam("pid") String pid,
 			Model model ,HttpServletResponse response) {
 		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -137,7 +142,7 @@ public class CommentController {
 			dao.deleteOne(Integer.parseInt(bnum));
 		}
 
-		List<CommentDTO> list = dao.selectAll();
+		List<CommentDTO> list = dao.selectPid(pid);
 		model.addAttribute("list", list);
 
 		return "joe/comment";

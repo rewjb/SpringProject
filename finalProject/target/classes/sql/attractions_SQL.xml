@@ -32,8 +32,6 @@
   		SELECT * FROM ATTRACTIONS WHERE contentElements LIKE '%'||#{value}||'%'
   	</select>
   
-  
-  
 	<resultMap type="attrDTO" id="rs">
 		<result property="continent" column="continent" />
 		<result property="city" column="city" />
@@ -46,10 +44,11 @@
 		<result property="longitude" column="longitude" />
 		<result property="latitude" column="latitude" />
 		<result property="category" column="category" />
+		<result property="star" column="star" />
 	</resultMap>
 		
 	<insert id="insert" parameterType="attrDTO">
-		insert into ATTRACTIONS values(#{continent},#{city},#{pid},#{mainImg},#{title},#{content},#{contentElements},#{findWay},#{longitude},#{latitude},#{category})
+		insert into ATTRACTIONS values(#{continent},#{city},#{pid},#{mainImg},#{title},#{content},#{contentElements},#{findWay},#{longitude},#{latitude},#{category},null)
 	</insert>
 		
 	<select id="selectAll" resultMap="rs">
@@ -59,5 +58,10 @@
 	<select id="selectImg" parameterType="String" resultType="attrDTO">
 		SELECT * FROM ATTRACTIONS WHERE MAINIMG = #{value}
 	</select>
+
+	<update id="starUpdate" parameterType="attrDTO">
+		update ATTRACTIONS set star = #{star} where pid = #{pid}
+	</update>
+
 
 </mapper>

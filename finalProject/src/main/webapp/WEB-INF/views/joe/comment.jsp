@@ -37,7 +37,7 @@ CommentDTO dto;
 <div id="replyList"> 
     <c:forEach  items="${list}" var="list">
        <div class="jumbotron mt-3" id="replyItem<c:out value="${list.bnum}"/>" 
-             style="border: 2px solid gray; width: 600px; height: auto; padding: 10px; margin-top: 5px; top:0; bottom:400px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block"> 
+             style="border: 2px solid gray; width: 600px; height: auto; padding: 10px; margin-top: 5px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block"> 
        <form id="<c:out value="${list.bnum}"/>">
              <c:set var="star" value="${list.star}" />
              <c:forEach begin="1"  end="${star}" >

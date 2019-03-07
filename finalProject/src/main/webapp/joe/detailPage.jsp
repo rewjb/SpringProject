@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
+<!-- <meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT"> -->
 <title>Insert title here</title>
 
  <% 
@@ -36,10 +36,14 @@ li {
 
 function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
     $("#updateDialog").css('display', 'none');
-   var num = "#" + bnum;
-   $(num).after($("#replyDialog").css('display', 'block'));
+//    var num = "#" + bnum;
+   $("#replyItem"+bnum).after($("#replyDialog").css('display', 'block'));
    $("#input").val(bnum);//댓글번호로 컨트롤러가서 select로 찾아서 대댓글을 등록함 
-    $('html, body').scrollTop( $(document).height() );
+   
+   var offset = $("#replyItem" + bnum).offset();
+   $('html, body').animate({scrollTop : offset.top}, 400);
+   
+//    $('html, body').scrollTop( $(document).height() );
    
    return false;
    
@@ -78,12 +82,13 @@ function comment() {//대댓글 등록시 처리함수
 function Update(bnum,id) {//댓글의 수정버튼 클릭시 다이얼로그 창 띄우는 함수
    
    if (id == '<%=session.getAttribute("mid") %>' ) {
-   var num = "#" + bnum;
    $("#updateDialog").css('display', 'block');
-   $(num).after($("#updateDialog"));
+   $("#replyItem"+bnum).after($("#updateDialog"));
     $("#replyDialog").css('display', 'none');
    $("#input2").val(bnum);//댓글번호로 컨트롤러가서 select로 찾아서 대댓글을 등록함
-   $('html, body').scrollTop( $(document).height() );
+   var offset = $("#replyItem" + bnum).offset();
+   $('html, body').animate({scrollTop : offset.top}, 400);
+//    $('html, body').scrollTop( $(document).height() );
    
    return false;
    }else{
@@ -161,9 +166,10 @@ function deleteCart(event) {
 	        			url : "cartDelete?pid="+deleteBtn.value + "&mid=" + '<%=mid%>',
 	        			Type : "POST",
 	        			success : function(result) {
+	        				if (deleteBtn.value == <%= pid%>) {
 	        				$("#cart").attr("class","btn btn-secondary my-2");
+							}
 	        				$("#cartTable").empty();
-	        				alert(result);
 	        				$("#cartTable").append(result);
 	        		     
 	        			}//success끝
@@ -184,6 +190,8 @@ $(function() {
                $("#img").attr("src" ,"/springProject/resources/IMAGE/attractionsImg/"+result.mainImg);
                $("#cPid").val('<%=pid%>');
                $("#firstId").val('<%=pid%>');
+               $("#star").text( "★"+ result.star);
+               
 //                $("#cart").val()
                if ('<%=mid%>' != 'null') {
                   $("#mid").val('<%=mid%>');                  
@@ -263,11 +271,19 @@ $(function() {
                if (result != null) {
                   $("#cartTable").append(result);
 
-                  if ($("form[alt="+<%=pid%>+"]")) {
-                     $("#cart").attr("class", "btn btn-primary my-2");
-                  } else  {
-                     $("#cart").attr("class", "btn btn-secondary my-2");
-                  }
+                  $.ajax({
+                      url : "midCart?mid="+'<%=mid%>',
+                      Type : "POST",
+                      success : function(result) {
+                    	  for (var i = 0; i < result.length; i++) {
+							if (result[i].pid==<%=pid %>) {//현재페이지의 pid가 장바구니에도 있을경우
+								$("#cart").attr("class", "btn btn-primary my-2");
+							}else{
+								  $("#cart").attr("class", "btn btn-secondary my-2");
+							}
+						}//for문
+                      }
+                  })
                }
             }//success끝
          })//ajax끝
@@ -417,7 +433,7 @@ $(function() {
    </form>
    <div class="col-md-5" style="margin-left: auto; margin-right: auto;">
       <button class="btn btn-secondary my-2" onclick="cart()" id="cart" >장바구니</button>
-      <h2 class="featurette-heading">★별점</h2>
+      <h2 class="featurette-heading" id = "star"></h2>
    </div>
    <hr class="featurette-divider">
    <br>
@@ -460,25 +476,26 @@ $(function() {
 </div>
 
 
- <div class="jumbotron mt-3" id="replyDialog" style="width: 99%; display:none">
+<div class="jumbotron mt-3" id="replyDialog" style="width: 45%; display:none; margin-left: auto; margin-right: auto;">
     <form id= "formSecond"  method="post">
         <input type="hidden" name="pid" id = "cPid" value=""> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input" name = "input">
         <input type="hidden" name="mid" value="<%=mid%>" ><br>
-        <textarea name="content" id = "content2" rows="3" cols="60" maxlength="500"></textarea>
+        <textarea class="form-control" name="content" id = "content2" rows="3" cols="60" maxlength="500"></textarea>
         <button class="btn btn-secondary my-2" id ="onclick" onclick="return comment()">등록</button>
         <button class="btn btn-secondary my-2" onclick="return commentCancel()">취소</button>
     </form>
 </div>  
 
- <div class="jumbotron mt-3" id="updateDialog" style="width: 99%; display:none">
+
+ <div class="jumbotron mt-3" id="updateDialog" style="width: 45%; display:none; margin-left: auto; margin-right: auto;">
     <form id= "updateForm"  method="post">
         <input type="hidden" name="pid" value="id"> 
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input2" name = "input2">
         <input type="hidden" name="mid" value="<%=mid%>"><br>
-        <textarea name="content" id  = "content3" rows="3" cols="60" maxlength="500"></textarea>
+        <textarea class="form-control" name="content" id  = "content3" rows="3" cols="60" maxlength="500"></textarea>
         <button class="btn btn-secondary my-2" onclick="return updateResult()">수정</button>
         <button class="btn btn-secondary my-2" onclick="return updateCancel()">취소</button>
     </form>

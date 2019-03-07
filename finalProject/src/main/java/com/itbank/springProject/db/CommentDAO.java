@@ -47,6 +47,11 @@ public class CommentDAO {
 		return session.selectList("review.selectParents", parents);
 	}
 	
+	public double starAvgSelect(String pid) {
+		
+		return session.selectOne("review.starAvgSelect", pid);
+	}
+	
 	
 	
 	

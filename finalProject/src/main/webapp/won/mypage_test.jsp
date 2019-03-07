@@ -57,46 +57,7 @@
 				input.attr("class","form-control");
 			}//end if
 		}//end function hasColor()
-		
-		//ID유효성 : #inputMid에서 onkeyup 이벤트가 발생시
-		id.keyup(function() {
-			idCheck = 0;
-			//feedback div : 피드백 내용을 모여주는 div
-			var f = $("#feedback-inputMid"); 
-			//유효성 검사
-			if (id.val().length == 0) {	// 입력 값이 없을 때
-				//기본설정
-				hasColor(id,0);			//default
-				f.text(''); 			//비워주기
-			} else if (id.val().length > 30) { //기준보다 입력값이 길때 
-				//문제시 설정
-				hasColor(id, 1);		//danger
-				f.text('너무 길어요.');		//feedback div에 문자 출력
-			} else { 
-				// 길이가 적당할때 - 유효성 검사
-				if (!re_email.test(id.val())) { // 아이디(이메일) 검사
-					//문제시 설정
-	 				hasColor(id, 1);	//danger
-					f.text('spring@abc.com 유효한 메일 주소를 입력해주세요.')
-				} else { //유효성 검사 통과 후 중복 아이디 확인
-					var mid = id.val();
-					$.ajax({
-						url : "/springProject/won/checkMid?mid=" + mid,
-						type : "POST",
-						success : function(result) {
-							//성공시 설정
-		 					hasColor(id,2);			//success
-		 					f.text(''); 			//비워주기
-							$("#mid").val(result);	//전송폼에 값 세팅
-							
-							idCheck = 1;
-						}//end success
-					});//end ajax
-				}//end if()
-			}//end if
-		});//end keyup()
-		
-		
+					
 		//pw유효성 : #inputMpw에서 onkeyup 이벤트가 발생시
 		pw.keyup(function() {
 			pwCheck = 0;
@@ -150,53 +111,8 @@
 				$("#mpw").val(pw.val());//전송폼에 값 세팅
 				cfCheck = 1;
 			}//end if()
-		});//end keyup()
-		 
-			 
-		//name유효성 : #inputMname에서 onkeyup 이벤트가 발생시
-		name.keyup(function() {
-			nameCheck = 0;
-			//feedback div : 피드백 내용을 모여주는 div
-			var f = $("#feedback-inputMname"); 
-			//유효성 검사
-			if (name.val().length == 0) {	// 입력 값이 없을 때
-				//기본설정
-				hasColor(name,0);			//default
-				f.text(''); 				//비워주기
-			} else if(name.val().length < 3){
-				//문제시 설정
-				hasColor(name,1);			//danger
-				f.text('3자 이상 입력해주세요')	//문제에 대한 안내 출력
-			} else if (name.val().length > 16) { 
-				//문제시 설정
-				hasColor(name,1);			//danger
-				f.text('16자 이내로 입력해주세요'); //문제에 대한 안내 출력
-			} else { // 길이가 적당할때 - 유효성 검사
-				if (!re_name.test(name.val())) { // 이름 검사
-					//문제시 설정
-					hasColor(name,1);
-					f.text('영문 대소문자와 숫자를 사용하여 3~16자 사이로 만들어주세요.')
-				} else {
-					var mname = name.val();
-					$.ajax({
-						url : "/springProject/won/checkMname?mname=" + mname,
-						type : "POST",
-						success : function(result) {
-							//성공시 설정
-							hasColor(name,2);		//success
-							f.text(''); 			//비워주기
-							$("#mname").val(result);	//전송폼에 값 세팅
-							$("#mprofile").val(
-								"/springProject/resources/IMAGE/LoginLogo/user.png");
-							$("img").attr("src", $("mprofile").val())
-							nameCheck = 1;
-						}//end success
-					});//end ajax
-				}//end if()
-			}//end if
-		});//end keyup()
-
-		
+		});//end keyup()			 
+			
 		//signup버튼 눌렀을때 동작하는 함수
 		$("#signupBtn").click(function() {
 			if(idCheck + pwCheck + cfCheck + nameCheck == 4) {
@@ -276,14 +192,12 @@
       <div class="col-lg-9">
 
         <div>
-        <legend class="display-4" style="text-align: center; font-family: 'Do Hyeon', sans-serif;">승인대기중인 여행지</legend>
-        <hr style="width: 80%;">
+        <legend class="display-4" style="text-align: center; font-family: 'Do Hyeon', sans-serif;">내정보 수정</legend>
+        <hr style="width: 90%;">
     		<!-- 폼 전체 담아놓는 div -->
 			<div style="padding-left: 5%; padding-right: 5%">
-<!-- 				공간 만들기 위한 div -->
-<!-- 				<div style="height: 30px;"> -->
-<!-- 				</div> -->
 				<form class="needs-validation" novalidate action="insertMember.do">
+					<!-- mid, mname줄 바꿔서 정렬 -->
 <!-- 					column1. mid 부분 div : 수정 불가 -->
 <!-- 					<div class="mb-3"> -->
 <!-- 						<label for="mid">ID <span class="text-muted"></span></label> -->
@@ -300,15 +214,16 @@
 <!-- 						</div> -->
 <!-- 					</div> -->
 
+					<!-- mid, mname 한줄에 정렬 -->
 					<!-- column1. mid : 수정 불가 -->
 					<div class="row">
 						<div class="col-md-6 mb-3">
-							<label for="mid">ID <span class="text-muted"></span></label>
+							<label for="mid"><span class="text-muted"> ID </span></label>
 						<input type="text" class="form-control" id="mid" name="mid"	value="" readonly="readonly">
 						</div>
-						<div class="col-md-6 mb-3">
-							<label for="username">user-name</label>
 					<!-- column3. mname : 수정 불가 -->
+						<div class="col-md-6 mb-3">
+							<label for="username"><span class="text-muted"> user-name </span></label>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text">@</span>
@@ -321,12 +236,12 @@
 					<!-- column2. mpw부분   -->
 					<div class="row">
 						<div class="col-md-6 mb-3">
-							<label for="password">PASSWORD</label> 
+							<label for="password"><span class="text-muted"> PASSWORD </span></label> 
 							<input type="password" id="inputMpw" class="form-control" placeholder="Password" required>
 							<div id="feedback-inputMpw" class="feedback"></div>
 						</div>
 						<div class="col-md-6 mb-3">
-							<label for="passwordC">CONFIRM</label> 
+							<label for="passwordC"><span class="text-muted"> CONFIRM </span></label> 
 							<input type="password" id="inputConform" class="form-control" placeholder="Password Conform" required>
 							<div id="feedback-inputMpw1" class="feedback"></div>
 						</div>
@@ -334,20 +249,22 @@
 
 					
 					<!-- column4. 프로필 사진 입력부분 -->
-					<div class="mb-3">
-						<label for="mprofile">profile picture<span class="text-muted"></span></label> 
-						<input type="text" class="form-control" name="mprofile" placeholder="your profile picture" style="height: 45px">
+					<div class="row">
+						<label for="mprofile"><span class="text-muted">profile picture</span></label><br> 
+						<input type="file" class="form-control" id= mprofile name="mprofile" style="height: 45px; width: 60%">
+						<img id="mprofile_img" src="/springProject/resources/IMAGE/LoginLogo/user.png"
+						style="width: 50px; height: 50px;">
 					</div>
 					
 					<!-- 기본정보 : 필수입력 / 추가정보 : 선택입력 구분해주는 선-->
-					<br><hr class="mb-4" style=""><br>
+					<br><hr class="mb-4" style="">
 					
 					<!-- column5.전화번호 입력부분 -->
 					<div class="mb-3">
-					<label for="tel">phone <span class="text-muted"></span></label> 
+					<label for="tel"><span class="text-muted">phone</span></label> 
 					<input type="number" class="form-control" name="mtel" placeholder="01012345678">
 					<div class="invalid-feedback"></div>
-					</div><br>
+					</div>
 					
 					<!-- column6,column7. 주소 입력부분 1,2 -->
 					<div class="mb-3">
@@ -357,7 +274,7 @@
 					<div class="mb-3">
 						<label for="address2">Address<span class="text-muted">(Optional)</span></label>
 						<input type="text" class="form-control" name="maddr2" placeholder="벽산디지털밸리 5차">
-					</div><br>
+					</div>
 
 					<!-- column8. 성별선택 -->
 					<div class="d-block my-3">
@@ -367,7 +284,7 @@
 							<option value="male">Male</option>
 							<option value="female">Female</option>
 						</select>
-					</div><br>
+					</div>
 					
 					<!-- column9. 연령대 -->
 					<div class="d-block my-3">
@@ -379,12 +296,12 @@
 							<option value="6070">60~70대</option>
 							<option value="80">80대~</option>
 						</select>
-					</div><br><br>
+					</div><br>
 
 					<hr class="mb-4">
 					
 					<!-- column10. 날자 -->
-					<input type="hidden" name="rdate" value="SYSDATE">
+					<input type="hidden" name="rdate" value="">
 
 					<!-- 수정 / 삭제 버튼 -->
 					<button style="width: 100px" class="btn btn-primary btn-lg btn-block" type="submit">수정</button>

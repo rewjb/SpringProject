@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
 <%
 session.setAttribute("mid", "temp");
 %>
@@ -70,6 +71,9 @@ vertical-align: middle;
 </style>
 
 <script type="text/javascript">
+
+
+
 
 function deleteCart(event) {
 	var deleteBtn = event.target;
@@ -144,7 +148,11 @@ function cart(event) {
 	}		
 }
 
+
+
 $(function () {
+	
+	
    var continent = "<%=session.getAttribute("continent") %>"
    var city = "<%=session.getAttribute("city") %>"
    var tag = "<%=session.getAttribute("tag") %>"
@@ -164,6 +172,7 @@ $(function () {
             	         Type : "POST",
             	         success : function(result) {
             	        	 for (var i = 0; i < result.length; i++) {
+            	        		 alert(result[i].pid);
             	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
 							}
             	         }
@@ -277,6 +286,7 @@ $(function () {
          url : "midCartList?mid="+ '<%= session.getAttribute("mid") %>',
          Type : "POST",
          success : function(result) {
+        	 alert(result);
         	 $("#cartTable").empty();
              $("#cartTable").append(result);
          }
@@ -317,6 +327,7 @@ var count2  = 0;
 $(function () {
 	
    if (count2 == 0) {
+	   
       for (var i = 0; i < arr.length; i++) {
          $("#continentList").append($("<button name = '1' class='btn btn-secondary my-2' onclick = 'continent(event)'>" + arr[i] +  "</button>"));  
       }
@@ -427,6 +438,8 @@ $(function () {
 			success : function(result) {
 				$("#container").empty();
 				$("#container").append(result);
+				var offset = $("#div").offset();
+		        $('html, body').animate({scrollTop : offset.top}, 400);
 			      if ( '<%= session.getAttribute("mid") %>' != "null") {
 	            		 $.ajax({ 
 	            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',

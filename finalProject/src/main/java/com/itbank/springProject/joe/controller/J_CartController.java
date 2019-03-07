@@ -2,13 +2,12 @@ package com.itbank.springProject.joe.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -93,7 +92,11 @@ public class J_CartController {
 	
 	@RequestMapping("joe/midCart")
 	@ResponseBody
-	public List<PlaceCartDTO> midCart(PlaceCartDTO placeCartDTO) {
+	public List<PlaceCartDTO> midCart(PlaceCartDTO placeCartDTO,HttpServletResponse response) {
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
 		return placeCartDAO.midSelect(placeCartDTO.getMid());
 	}
 	
@@ -101,8 +104,13 @@ public class J_CartController {
 	
 	
 	@RequestMapping("joe/cartDelete")
-	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
-		
+	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model,HttpServletResponse response) {
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
+
+
 		System.out.println(placeCartDTO.getPid());
 		
 		

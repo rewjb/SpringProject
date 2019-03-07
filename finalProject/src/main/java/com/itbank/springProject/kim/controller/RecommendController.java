@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,14 @@ public class RecommendController {
 	AttractionsDAO dao2;
 	
 	@RequestMapping("kim/Tag_Select")
-	public String move(HttpSession session, Model model){
+	public String move(HttpSession session, Model model, HttpServletRequest req){
+		
+		
+		System.out.println("change파라메터 : " + req.getParameter("change"));
+		
+		if(req.getParameter("change") != null){
+			model.addAttribute("change", "t");
+		}
 		
 		//전체 태그 리스트 불러오기
 		HashMap<String, String> list = dao1.mongoSelectAll();		
@@ -131,6 +139,10 @@ public class RecommendController {
 				tags += list.get(val) + "/";
 			}			
 		}
+		
+		if(id == null) {
+			id = (String) session.getAttribute("mid");
+		}
 
 		tags = tags.substring(0, tags.length()-1);
 		System.out.println("결과 : " + tags);
@@ -218,4 +230,5 @@ public class RecommendController {
 	public String atList() {		
 		return "kim/recommend";
 	}
+	
 }

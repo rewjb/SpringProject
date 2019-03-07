@@ -38,7 +38,6 @@
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap-reboot.min.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap.min.css" />
-
 <!--Custom styles-->
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/blog.css" />
 <script type="text/javascript">
@@ -51,7 +50,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 	var pw_l = $('#login_inputMpw');
 	
 	//ID유효성 : #login_inputMid에서 onkeyup 이벤트가 발생시
-		id_l.keyup(function() {
+		id_l.keydown(function() {
 			//feedback div : 피드백 내용을 모여주는 div
 			var f = $("#login_feedback-inputMid");
 			//유효성 검사
@@ -62,6 +61,9 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 				if (re_email.test(id_l.val())) { // 아이디(이메일) 검사
 					f.text(''); 				//비워주기
 				$("#login_mid").val(id_l.val());	//전송폼에 값 세팅
+				$("#login_inputMid").blur(function() {
+					$("#login_mid").val(id_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
+				})
 				}//end if()
 			}//end if()
 		});//end keyup()
@@ -72,6 +74,9 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		var f = $("#login_feedback-inputMpw");
 		f.text('');				//비워주기
 		$("#login_mpw").val(pw_l.val());//전송폼에 값 세팅
+		$("#login_inputMpw").blur(function() {
+			$("#login_mpw").val(pw_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
+		})
 	});//end keyup()
 		 
 	//login버튼 눌렀을때 동작하는 함수
@@ -180,6 +185,10 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		 					f.text(''); 			//비워주기
 							$("#mid").val(result);	//전송폼에 값 세팅
 							
+							$(id).blur(function() {
+								$("#mid").val(result);	//태그를 벗어날 때 전송폼에 값 세팅
+							})
+							
 							idCheck = 1;
  						}//end success
  					});//end ajax
@@ -240,6 +249,10 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 				f.text('');				//비워주기
 				$("#mpw").val(pw.val());//전송폼에 값 세팅
 				cfCheck = 1;
+				
+				$(cf).blur(function() {
+					$("#mpw").val(pw.val());	//태그를 벗어날 때 전송폼에 값 세팅
+				})
 			}//end if()
 		});//end keyup()
 		 
@@ -248,7 +261,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		name.keyup(function() {
 			nameCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
-			var f = $("#feedback-inputMname"); 
+			var f = $("#feedback-inputMname");
 			//유효성 검사
 			if (name.val().length == 0) {	// 입력 값이 없을 때
 				//기본설정
@@ -281,6 +294,10 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 								"/springProject/resources/IMAGE/LoginLogo/user.png");
 							$("img").attr("src", $("mprofile").val())
 							nameCheck = 1;
+							
+							$(name).blur(function() {
+								$("#mname").val(result);	//태그를 벗어날 때 전송폼에 값 세팅
+							})						
 						}//end success
 					});//end ajax
 				}//end if()
@@ -342,11 +359,17 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
    $(function(){
  
 <!--------------------------------- 슬라이드 코드 start ------------------------------------------>
-
-/* 	if(true) {
-		$("ul").children().eq(1).remove();
-		num++;
-	} */
+	
+	var ch_val = "<c:out value='${change}' />";
+	
+	alert(ch_val); 
+	//태그수정으로 왔을 시
+ 	if(ch_val != null) {
+		$("#li1").remove();
+		$("#li2").remove();
+		$("#li3").remove();
+		num ++;
+	}
 	
 	var num = 0;
     var time = 500;
@@ -542,6 +565,13 @@ body {
   background-size: cover;
 }
 
+.card-signin .card-img-left2 {
+  width: 550px;
+  /* Link to your background image using in the property below! */
+  background: scroll center url('/springProject/resources/IMAGE/signup2.jpg');
+  background-size: cover;
+}
+
 .card-signin .card-body {
   padding: 5rem;
 }
@@ -709,7 +739,6 @@ span.buttonText {
 	display: inline-block;
 
 </style> 
-
 </head>
 <body>
 <%@ include file="/won/signupHeader.jsp"%> 
@@ -717,7 +746,7 @@ span.buttonText {
    <button id="hdnBtn" class="next" style="visibility: hidden;"></button>
 <ul id="slider">
 
-	<li style="width: 1300px;">
+	<li style="width: 1300px;" id="li1">
 	 <div class="container">
     <div class="row">
       <div class="col-lg-10 col-xl-9 mx-auto">
@@ -764,6 +793,7 @@ span.buttonText {
 						<button class="btn btn-lg btn-secondary btn-block" type="button"
 							id="login_loginBtn" style="width: 300px;">로그인</button>
 					</div>
+					<div style="height: 3px;"></div>
 					<div><button class="btn btn-lg btn-secondary btn-block next">회원가입</button></div>
 					<hr>
 <!------------------------- body2 : 이메일 로그인 끝 ---------------------------->
@@ -828,7 +858,7 @@ span.buttonText {
 				
 				</script>
 				<!-- 구글 로그인 버튼 -->
-				<div id="login_gSignInWrapper" class="button">
+				<div id="login_gSignInWrapper">
 					<div id="login_customBtn" class="customGPlusSignIn">
 						<span class="icon"></span> <span class="buttonText"> Google로 로그인</span>
 					</div>
@@ -913,7 +943,7 @@ span.buttonText {
 				   
 				</script>
 				<!-- 페이스북으로 로그인 버튼 -->
-				<div style="height: 20px;"></div> 
+				<div style="height: 5px;"></div> 
 				<input type="button" id="login_authBtn" value="Facebook Login"
 				 onclick="
                      if(this.value === 'Facebook 으로 로그인하기'){
@@ -957,12 +987,12 @@ span.buttonText {
     </div>
 	</li>
 
-	<li style="width: 1300px;">
+	<li style="width: 1300px;" id="li2">
 	 <div class="container" id="joinBtn">
     <div class="row">
       <div class="col-lg-10 col-xl-9 mx-auto">
         <div class="card card-signin flex-row my-5">
-          <div class="card-img-left d-none d-md-flex" style="height: 750px; weight: 400px;">
+          <div class="card-img-left2 d-none d-md-flex" style="height: 750px; weight: 400px;">
              <!-- Background image for card set in CSS! -->
           </div>
           <div class="card-body">
@@ -1289,7 +1319,7 @@ span.buttonText {
   </div>
 	</li>
 	
-	<li style="width: 1300px;">
+	<li style="width: 1300px;" id="li3">
 		 <div class="container">
     <div class="row">
       <div class="col-lg-10 col-xl-9 mx-auto">
@@ -1327,6 +1357,7 @@ span.buttonText {
     </table>
 	</li>
     </c:forEach>
+    
 </ul>
 
 <form id="form" action="Tag_Select_Submit">	

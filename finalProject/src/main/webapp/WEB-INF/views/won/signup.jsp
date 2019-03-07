@@ -763,8 +763,10 @@ span.buttonText {
 					<div style="height: 60px; vertical-align: top; padding-top: 10px">
 						<button class="btn btn-lg btn-secondary btn-block" type="button"
 							id="login_loginBtn" style="width: 300px;">로그인</button>
+						<div style="height: 10px;"></div>
+						<button class="btn btn-lg btn-secondary btn-block next">회원가입</button>
 					</div>
-					<div><button class="btn btn-lg btn-secondary btn-block next">회원가입</button></div>
+					<div></div>
 					<hr>
 <!------------------------- body2 : 이메일 로그인 끝 ---------------------------->
 <!------------------------- body3 : 구글로 로그인  관련 ---------------------------->

@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
 <title>Insert title here</title>
 
  <% 
@@ -152,9 +153,25 @@ function deleteComment(bnum,id) {//댓글 삭제 함수
    }
 }
 
-var time = 0;
+function deleteCart(event) {
+	var deleteBtn = event.target;
+// 	alert(deleteBtn.value);
+	  
+	        	 $.ajax({
+	        			url : "cartDelete?pid="+deleteBtn.value + "&mid=" + '<%=mid%>',
+	        			Type : "POST",
+	        			success : function(result) {
+	        				$("#cart").attr("class","btn btn-secondary my-2");
+	        				$("#cartTable").empty();
+	        				alert(result);
+	        				$("#cartTable").append(result);
+	        		     
+	        			}//success끝
+	        		})//ajax끝
+	         }
 
 $(function() {
+	
    if ('<%=pid%>' != 'null') {
       $.ajax({
          url : "selectPid?pid=" + '<%=pid%>',
@@ -167,6 +184,7 @@ $(function() {
                $("#img").attr("src" ,"/springProject/resources/IMAGE/attractionsImg/"+result.mainImg);
                $("#cPid").val('<%=pid%>');
                $("#firstId").val('<%=pid%>');
+//                $("#cart").val()
                if ('<%=mid%>' != 'null') {
                   $("#mid").val('<%=mid%>');                  
                }
@@ -175,18 +193,18 @@ $(function() {
       })//ajax끝
    }
    
-    if (time==0) {//최초실행시 댓글 리스트 보여주는 조건문
+    if ('<%=pid%>' != 'null') {//최초실행시 댓글 리스트 보여주는 조건문
       $.ajax({
          url : "reviewAll?pid="+'<%=pid%>',
          Type : "POST",
          success : function(result) {
             if (result != null) {
+            	$("#replyList").empty();
                $("#replyList").append(result);
             }//if문 끝
          }//success끝
       })//ajax끝
    }
-    time += 1; 
     
    $("#b1").click(function() {//댓글입력시 등록해주는 함수 
       
@@ -235,27 +253,25 @@ $(function() {
    })//click끝
 })//ready끝
 
-   var time = 0;
    $(function() {
 
-      if (time == 0) {//최초실행시 장바구니 리스트 보여주는 조건문
+      if ('<%=mid%>' != 'null') {//최초실행시 장바구니 리스트 보여주는 조건문
          $.ajax({
-            url : "cartList",
+            url : "midCartList?mid="+'<%=mid%>',
             Type : "POST",
             success : function(result) {
                if (result != null) {
                   $("#cartTable").append(result);
 
-                  if ($("#" +'<%=pid%>').find('label').text() != '') {
+                  if ($("form[alt="+<%=pid%>+"]")) {
                      $("#cart").attr("class", "btn btn-primary my-2");
-                  } else if ($("#" +'<%=pid%>').find('label').text() == '') {
+                  } else  {
                      $("#cart").attr("class", "btn btn-secondary my-2");
                   }
                }
             }//success끝
          })//ajax끝
       }
-      time += 1;
    })
 
    function cart() {
@@ -383,15 +399,13 @@ $(function() {
 </head>
 <body>
    <%@ include file="/UserMainHeader.jsp"%>
+         <div style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;"
+            id="cartTable"></div>
    <form id="form">
       <div class="row featurette">
          <div style="margin-left: 50px; position: fixed;">
             <h2 style="font-family: 'Jua', sans-serif;">장바구니</h2>
          </div>
-
-         <div
-            style="width: 180px; height: 500px; margin-left: 40px; margin-top: 65px; position: fixed; overflow: auto;"
-            id="cartTable"></div>
 
          <input type="hidden" value="" name="pid" id ="pid"> 
          <input type="hidden" value="" name="mid" id = "mid">
@@ -402,7 +416,7 @@ $(function() {
       </div>  
    </form>
    <div class="col-md-5" style="margin-left: auto; margin-right: auto;">
-      <button class="btn btn-secondary my-2" onclick="cart()" id="cart">장바구니</button>
+      <button class="btn btn-secondary my-2" onclick="cart()" id="cart" >장바구니</button>
       <h2 class="featurette-heading">★별점</h2>
    </div>
    <hr class="featurette-divider">
@@ -422,7 +436,7 @@ $(function() {
    <br>
    <br>
    <br>
-   <div style="border: 1px solid; width: 600px; padding: 5px; margin-left: auto; margin-right: auto;">
+   <div class="jumbotron mt-3" style="border: 1px solid; width: 600px; padding: 5px; margin-left: auto; margin-right: auto;">
     <form id="comForm" name="form" method="post" >
         <input type="hidden" name="pid" id = "firstId" value="<%=pid%>" > <!-- 각 게시물의 고유아이디가 들어간다. -->
         <ul>
@@ -446,7 +460,7 @@ $(function() {
 </div>
 
 
- <div id="replyDialog" style="width: 99%; display:none">
+ <div class="jumbotron mt-3" id="replyDialog" style="width: 99%; display:none">
     <form id= "formSecond"  method="post">
         <input type="hidden" name="pid" id = "cPid" value=""> 
         <input type="hidden" name="parents"> 
@@ -458,7 +472,7 @@ $(function() {
     </form>
 </div>  
 
- <div id="updateDialog" style="width: 99%; display:none">
+ <div class="jumbotron mt-3" id="updateDialog" style="width: 99%; display:none">
     <form id= "updateForm"  method="post">
         <input type="hidden" name="pid" value="id"> 
         <input type="hidden" name="parents"> 

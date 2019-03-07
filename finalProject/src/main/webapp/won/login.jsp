@@ -33,8 +33,8 @@
 		var id_l = $('#login_inputMid');
 		var pw_l = $('#login_inputMpw');
 		
-		//ID유효성 : #login_inputMid에서 onkeyup 이벤트가 발생시
- 		id_l.keyup(function() {
+		//ID유효성 : #login_inputMid에서 onfocusout 이벤트가 발생시
+ 		id_l.focusout(function() {
  			//feedback div : 피드백 내용을 모여주는 div
  			var f = $("#login_feedback-inputMid");
  			//유효성 검사
@@ -47,15 +47,15 @@
 					$("#login_mid").val(id_l.val());	//전송폼에 값 세팅
  				}//end if()
  			}//end if()
- 		});//end keyup()
+ 		});//end focusout()
 		
  		
-		//pw유효성 : #login_inputMpw에서 onkeyup 이벤트가 발생시
-		pw_l.keyup(function() {
+		//pw유효성 : #login_inputMpw에서 onfocusout 이벤트가 발생시
+		pw_l.focusout(function() {
 			var f = $("#login_feedback-inputMpw");
 			f.text('');				//비워주기
 			$("#login_mpw").val(pw_l.val());//전송폼에 값 세팅
-		});//end keyup()
+		});//end focusout()
 			 
 		//login버튼 눌렀을때 동작하는 함수
 		$("#login_loginBtn").click(function() {

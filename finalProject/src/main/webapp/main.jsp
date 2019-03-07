@@ -112,8 +112,7 @@ height: 50px;
   		$(".cityListLayer").mouseleave(function() {
   			$("#cityList").css("display", "block");
   			$(".cityListLayer").css("display", "none");		  			
-  		})	
-  		
+  		})	  		
   	})
 
   </script>
@@ -374,8 +373,7 @@ height: 50px;
 			</div>
 		</div>
 	</div>
-	  
-	  
+	  	  
 	  <br>
 	  <div id="div1">
 	  <h2 style="font-family: 'Jua', sans-serif; display: inline-block; margin-top: 27px;">인기 여행지 TOP3</h2>

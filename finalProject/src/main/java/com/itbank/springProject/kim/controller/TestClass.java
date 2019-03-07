@@ -15,7 +15,8 @@ public class TestClass {
 		MongoTest mt = new MongoTest();
 //		AttractionsDAO dao = new AttractionsDAO();
 //		List<AttractionsDTO> list = dao.selectAll();
-//		mt.mongoSelectAll();
+//		mt.mongoInsert("erkltj43rt", "wqer/werewt/tr.tr");
+		mt.mongoSelectAll();
 //		System.out.println(list.size());
 	}
 

@@ -2,13 +2,12 @@ package com.itbank.springProject.joe.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -42,7 +41,11 @@ public class J_CartController {
 	
 	
 	@RequestMapping("joe/cartInsert")
-	public String cartInsert(PlaceCartDTO placeCartDTO ,Model model) {
+	public String cartInsert(PlaceCartDTO placeCartDTO ,Model model ,HttpServletResponse response) {
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
 		System.out.println(placeCartDTO.getPid());
 		System.out.println(placeCartDTO.getMid());
 		
@@ -62,7 +65,11 @@ public class J_CartController {
 	
 	
 	@RequestMapping("joe/cartList")
-	public String cartList(Model model) {
+	public String cartList(Model model ,HttpServletResponse response) {
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
 		System.out.println("리스트 보여줄라고 넘어왔니");
 		ArrayList<PlaceCartDTO> list = (ArrayList)placeCartDAO.selectAll();
 		ArrayList<AttractionsDTO> attList = new ArrayList<>();
@@ -76,7 +83,11 @@ public class J_CartController {
 		return "joe/cartList";
 	}
 	@RequestMapping("joe/midCartList")
-	public String midCartList(PlaceCartDTO placeCartDTO,Model model) {
+	public String midCartList(PlaceCartDTO placeCartDTO,Model model ,HttpServletResponse response) {
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
 		
 		ArrayList<PlaceCartDTO> list = 	(ArrayList<PlaceCartDTO>)placeCartDAO.midSelect(placeCartDTO.getMid());
 		ArrayList<AttractionsDTO> attList = new ArrayList<>();
@@ -93,7 +104,11 @@ public class J_CartController {
 	
 	@RequestMapping("joe/midCart")
 	@ResponseBody
-	public List<PlaceCartDTO> midCart(PlaceCartDTO placeCartDTO) {
+	public List<PlaceCartDTO> midCart(PlaceCartDTO placeCartDTO,HttpServletResponse response) {
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
 		return placeCartDAO.midSelect(placeCartDTO.getMid());
 	}
 	
@@ -101,8 +116,13 @@ public class J_CartController {
 	
 	
 	@RequestMapping("joe/cartDelete")
-	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model) {
-		
+	public String cartDelete(PlaceCartDTO placeCartDTO ,Model model,HttpServletResponse response) {
+		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
+		response.setHeader("Pragma", "no-cache");
+
+
 		System.out.println(placeCartDTO.getPid());
 		
 		
@@ -196,7 +216,7 @@ public class J_CartController {
 	                           ,element5.get(y).select("div.thumb_wrap div.thumb div.in div.thumb_img img")
 	                           .attr("src"),
 	                     element5.get(y).select("div.info strong.title").text(),
-	                     element5.get(y).select("div.info p").text(),
+	                     element5.get(y).select("div.info p"),
 	                     element5.get(y).select("a").attr("href"), element.get(i).select("h1").text(),
 	                     element2.get(j).text(),element5.get(y).select("div.category").text())).toString());
 	                     
@@ -245,7 +265,7 @@ public class J_CartController {
 		return null;
 	}
 	
-	 public StringBuffer jsonResult(String id,String elementsFisrt, String title, String content, String element, String continent,
+	 public StringBuffer jsonResult(String id,String elementsFisrt, String title, Elements content, String element, String continent,
 	         String city,String category) throws Exception {
 	      
 	      StringBuffer buffer = new StringBuffer();
@@ -253,6 +273,7 @@ public class J_CartController {
 	      Document document = Jsoup.connect("http://www.tourtips.com" + element).get();
 	      Elements nameElements = document.select("div.cnt_info");
 	      Elements contentElements = document.select("div.cnt_reason");
+	      
 	      
 	      buffer.append("{\n");
 	      buffer.append("\"대륙\":" + "\"" + continent + "\",\n");
@@ -264,7 +285,9 @@ public class J_CartController {
 	      }
 	      buffer.append("\"메인이미지\":" + "\"" + elementsFisrt + "\",\n");
 	      buffer.append("\"명소이름\":" + "\"" + title + "\",\n");
-	      buffer.append("\"명소설명\":" + "\"" + content + "\",\n");
+	      if (!content.equals("")) {
+	      buffer.append("\"명소설명\":" + "\"" + content.select("p").text().replaceAll(content.select("p.star").text(), "")+ "\",\n");
+	  	}
 	      buffer.append("\"명소상세설명\":" + "\"" + contentElements.text().replaceAll("\"", "") + "\",\n");
 	      buffer.append("\"길찾기\":" + "\"" + nameElements.select("li.howto a").attr("href") + "\",\n");
 	      if (nameElements.select("li.howto a").attr("href") != "") {
@@ -285,7 +308,7 @@ public class J_CartController {
 
 		 int check = 0;
 		 
-         File outputFile = new File("C:\\Users\\user\\git\\SpringProject2\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
+         File outputFile = new File("C:\\Users\\user\\git\\SpringProject\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
          try {
         	if (outputFile.isFile()) {
 				check +=1;

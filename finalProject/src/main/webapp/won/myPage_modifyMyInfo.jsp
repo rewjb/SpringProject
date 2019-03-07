@@ -24,7 +24,6 @@
 </style>
 </head>
 <body>
-
 	
 	<div class="container">
 		<!-- 전체 div -->

@@ -33,29 +33,25 @@ CommentDTO dto;
         </div><br/>
 </form>
 <%} %>
-  
 </div>   --%>
-
 <div id="replyList"> 
     <c:forEach  items="${list}" var="list">
-       <div id="replyItem<c:out value="${list.bnum}"/>" 
-             style="border: 1px solid gray; width: 600px; padding: 5px; margin-top: 5px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block"> 
+       <div class="jumbotron mt-3" id="replyItem<c:out value="${list.bnum}"/>" 
+             style="border: 2px solid gray; width: 600px; height: auto; padding: 10px; margin-top: 5px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block"> 
        <form id="<c:out value="${list.bnum}"/>">
-
              <c:set var="star" value="${list.star}" />
              <c:forEach begin="1"  end="${star}" >
          <img style="width: 30px; height: 30px;" src="/springProject/resources/IMAGE/star/star.png">  
              </c:forEach>
-         
-             <input type="hidden" name= "bnum"value="<c:out value="${list.bnum}"/>">
+            <input type="hidden" name= "bnum"value="<c:out value="${list.bnum}"/>">
             <input type="hidden" name= "parents" value="<c:out value="${list.parents}"/>">
-            <input type="hidden" name= "mid" value="<c:out value="${list.id}"/>">
-            <c:out value="${list.id}"/> <c:out value="${list.bdate}"/>
+            <input type="hidden" name= "mid" value="<c:out value="${list.mid}"/>">
+            <c:out value="${list.mid}"/> <c:out value="${list.bdate}"/>
             <br/>
             <div id="reply<c:out value="${list.bnum}"/>"><c:out value="${list.content}"/></div>
         </form>
-            <button style="margin-right: 0;" class="btn btn-secondary my-2" onclick="return deleteComment('<c:out value="${list.bnum}"/>','<c:out value="${list.id}"/>')">삭제</button>
-            <button style="margin-right: 0;" class="btn btn-secondary my-2" onclick="return Update('<c:out value="${list.bnum}"/>','<c:out value="${list.id}"/>')">수정</button>
+            <button style="margin-right: 0;" class="btn btn-secondary my-2" onclick="return deleteComment('<c:out value="${list.bnum}"/>','<c:out value="${list.mid}"/>')">삭제</button>
+            <button style="margin-right: 0;" class="btn btn-secondary my-2" onclick="return Update('<c:out value="${list.bnum}"/>','<c:out value="${list.mid}"/>')">수정</button>
             <button style="margin-right: 0;" class="btn btn-secondary my-2" onclick="return Reply('<c:out value="${list.bnum}"/>')">댓글</button>
         </div><br/>
     </c:forEach>

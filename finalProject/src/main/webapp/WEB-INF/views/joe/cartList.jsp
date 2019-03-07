@@ -7,18 +7,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
+<%ArrayList list = (ArrayList)request.getAttribute("list"); 
+	System.out.println("사이즈 몇이야 : "+ list.size());
+
+%>
+
 <c:set var="list" value="${list}"/>
-
-
 <c:if test="${fn:length(list) ne 0}">
 
 <c:forEach items="${list}" var="list">
 
-<form alt='${list.pid }'>
+<form alt='${list.pid }' >
 		<img
 			src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg }"
-			width="150" height="150"><br> <label>${list.title }</label>
+			style="width: 150px; height: 130px;"><br> <label>${list.title }</label>
 </form>
-			<button value ='${list.pid}' onclick="deleteCart(event)">삭제</button>
+			<button class="btn btn-primary my-2" value ='${list.pid}' onclick="deleteCart(event)">삭제</button>
+			<hr>
 </c:forEach>
 </c:if>

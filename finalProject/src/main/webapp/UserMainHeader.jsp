@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<%
+	if(session.getAttribute("recommend") == null) {
+		response.sendRedirect("/springProject/kim/Tag_Select_Submit2");		
+	}
+%>
+
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Do+Hyeon|Jua|Noto+Sans+KR|Stylish" rel="stylesheet">
 
@@ -19,7 +25,7 @@
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap-grid.min.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap-reboot.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap-reboot.min.css" />
-<link rel="stylesheet" type="tex	t/css" href="/springProject/resources/CSS/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/springProject/resources/CSS/bootstrap.min.css" />
 
 <!--Custom styles-->
@@ -32,9 +38,12 @@
         <a class="text-muted pl-3" href="#">Subscribe</a>
       </div>
       <div class="col-4 text-center">
-        <a class="blog-header-logo text-dark" href="#"><img src="/springProject/resources/IMAGE/logo4.png" width="250px"></a>
+        <a class="blog-header-logo text-dark" href="/springProject/main.jsp">
+        <img src="/springProject/resources/IMAGE/logo4.png" width="250px"></a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/myPage">MyPage</a>
+        &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>

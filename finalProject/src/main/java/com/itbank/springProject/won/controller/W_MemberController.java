@@ -131,9 +131,11 @@ public class W_MemberController{
 		
 	//로그인 확인 (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)
 	@RequestMapping("won/login")
-	public String selectIdPw(MemberDTO dto,	HttpSession session){
+	@ResponseBody
+	public String selectIdPw(MemberDTO memberDTO, HttpSession session){
+		System.out.println("login!! 잘 찾아왔어!!!");
 		try {
-			MemberDTO mdto = memberDAO.select(dto);
+			MemberDTO mdto = memberDAO.select(memberDTO);
 			//로그인 실패시
 			if(mdto == null){
 				//아이디가 존재하지 않는경우
@@ -142,11 +144,12 @@ public class W_MemberController{
 			}else{
 				//아이디가 존재하는 경우
 				//입력받은 비밀번호와 아이디로 검색한 비밀번호가 일치하는지 확인
-				if(mdto.getMpw() == dto.getMpw() || 
-						mdto.getMpw().equals(dto.getMpw())){
-					//일치하는 경우
-					System.out.println("controller : 로그인 성공");
-					session.setAttribute("mid", mdto.getMid());
+				if(mdto.getMpw() == memberDTO.getMpw() || 
+						mdto.getMpw().equals(memberDTO.getMpw())){
+					//일치하는 경우 - 세션에 아이디를 넣어줌!
+					System.out.println("controller : 로그인 성공"+memberDTO.getMid());
+					session.setAttribute("mid", memberDTO.getMid());
+					System.out.println(session.getAttribute("mid"));
 					return "0";
 				}else{
 					//일치하지 않는 경우
@@ -159,11 +162,12 @@ public class W_MemberController{
 			e.printStackTrace();
 			System.out.println("select실패");
 			return "-1";
-		}
+		}//end try~catch
 	}//end selectIdPw
 	
 	//마이페이지에 정보수정 페이지에 필요한 개인정보 검색
 	@RequestMapping("won/selectMember")
+	@ResponseBody
 	public String selectMember(Model model, MemberDTO dto,
 			@RequestParam("mid") String mid){
 		try {
@@ -177,5 +181,10 @@ public class W_MemberController{
 		}
 		return "won/selectM";
 	}//end selectMember();
+	
+	@RequestMapping("won/myPage")
+	public void myPage() {
+		
+	}
 	
 }

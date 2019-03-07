@@ -55,7 +55,9 @@ public class AttractionsDAO {//관광명소 DAO
 		return session.selectList("attractions.searchSelect", text);
 	}
 	
-	
+	public void starUpdate(AttractionsDTO dto) {
+		session.update("attractions.starUpdate", dto);
+	}
 	
 	
 	

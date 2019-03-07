@@ -115,16 +115,13 @@ public class R_PlanController {
 		for (int i = 0; i < allSearchTextList.size(); i++) {
 			allProjectList.add(shareProjectDAO.selectAllShareProjectByManyIdStar(allSearchTextList.get(i)));
 		}
-
-		for (int i = 0; i < allProjectList.size(); i++) {
-			System.out.println(allProjectList.get(i).getPtitle());
-		}
-
+		
 		String mid = (String) session.getAttribute("mid");
 		model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
 		model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
 		model.addAttribute("projectShare_list", shareProjectDAO.selectAllShareProjectById(mid));
 		model.addAttribute("allProjectListBystar" , allProjectList);
+		
 	}
 
 	@RequestMapping("rew/projcetDataSave")

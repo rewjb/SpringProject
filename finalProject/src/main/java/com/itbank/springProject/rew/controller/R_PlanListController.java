@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +32,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
+import com.sun.org.glassfish.external.statistics.impl.StatsImpl;
 
 @Controller
 public class R_PlanListController {
@@ -42,10 +46,16 @@ public class R_PlanListController {
 	Mongo_ShareProjectDAO mongoShareDAO;
 
 	@RequestMapping("rew/planList")
-	public void startPlanList(HttpSession session, Model model) {
+	public void startPlanList(HttpSession session, Model model , @RequestParam("page") int page) {
+		
+		
 		String temp = "Chinesearchitecture/Japanesearchitecture/Holyplaces/Placeofworship";
 		session.setAttribute("favor", temp);
 		//위에는 가정
+		
+		int showCount = 6;
+		//보여주고자 하는 수량
+		
 
 		String favor = (String) session.getAttribute("favor");
 		List<ShareProjectDTO> favorProjectList = shareProjectDAO.selectAllShareProjectByManyId(mongoShareDAO.returnShareProjectRank(favor, mongoShareDAO.createProjectTagMap()));
@@ -54,18 +64,26 @@ public class R_PlanListController {
 		
 		List<ShareProjectDTO> allProjectList =  new ArrayList<ShareProjectDTO>();
 		
+		int startIndex = showCount*(page-1);
+		//첫번째 인덱스
+		double tempLastPage = (double)allSearchTextList.size()/showCount;
+		int lastPage =  (int)Math.ceil(tempLastPage);
 		
-		for (int i = 0; i < allSearchTextList.size(); i++) {
+		//마지막 페이지
+		
+		for (int i = startIndex; i < startIndex+showCount; i++) {
+			if (i == allSearchTextList.size()) {
+				break;
+			}
 			allProjectList.add(shareProjectDAO.selectAllShareProjectByManyIdStar(allSearchTextList.get(i)));
 		}
 		
-		for (int i = 0; i < allProjectList.size(); i++) {
-			System.out.println(allProjectList.get(i).getPtitle());
-		}
 		
-
 		model.addAttribute("favorProjectList", favorProjectList);
 		model.addAttribute("allProjectList", allProjectList);
+		model.addAttribute("page", page);
+		model.addAttribute("lastPage", lastPage);
+		
 
 	}
 

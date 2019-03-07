@@ -17,8 +17,8 @@ public class PlanDTO {
 	private String way;
 	private String mainImg;
 	private String detail;
-	private int num;
-	private int distance;
+	private String num;
+	private String distance;
 	
 	
 	public String getPid() {
@@ -37,11 +37,11 @@ public class PlanDTO {
 		this.detail = detail;
 	}
 
-	public int getDistance() {
+	public String getDistance() {
 		return distance;
 	}
 
-	public void setDistance(int distance) {
+	public void setDistance(String distance) {
 		this.distance = distance;
 	}
 
@@ -109,16 +109,16 @@ public class PlanDTO {
 		this.mainImg = mainImg;
 	}
 
-	public int getNum() {
+	public String getNum() {
 		return num;
 	}
 
-	public void setNum(int num) {
+	public void setNum(String num) {
 		this.num = num;
 	}
 
 	public PlanDTO(String mid, String ptitle, String title, String content, String latitude, String longitude,
-			String way, String mainImg, int num) {
+			String way, String mainImg, String num) {
 		super();
 		this.mid = mid;
 		this.ptitle = ptitle;

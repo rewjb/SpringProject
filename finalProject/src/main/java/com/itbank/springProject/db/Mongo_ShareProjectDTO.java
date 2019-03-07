@@ -7,11 +7,18 @@ public class Mongo_ShareProjectDTO {
 	private String ptitle;
 	private String content;
 	private int starValue;
+	private int beforeStar;
 	private String reg_date;
 	private String distinction;
 	private int level;
 	
 	
+	public int getBeforeStar() {
+		return beforeStar;
+	}
+	public void setBeforeStar(int beforeStar) {
+		this.beforeStar = beforeStar;
+	}
 	public int getLevel() {
 		return level;
 	}
@@ -73,6 +80,7 @@ public class Mongo_ShareProjectDTO {
 		outPut.append("/ reg_date="+reg_date);
 		outPut.append("/ distinction="+distinction);
 		outPut.append("/ level="+level);
+		outPut.append("/ beforeStar="+beforeStar);
 		outPut.append("]");
 		return outPut.toString();
 	}

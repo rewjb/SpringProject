@@ -36,14 +36,12 @@ public class R_PlanDetailController {
 	Mongo_ShareProjectDAO mongoShareDAO;
 
 	@RequestMapping("rew/DetailPlan")
-	public void getDetailPlanInfo(@RequestParam("mid") String mid, @RequestParam("ptitle") String ptitle , Model model) {
-		PlanDTO planDTO = new PlanDTO();
-		planDTO.setMid(mid);
-		planDTO.setPtitle(ptitle);
+	public void getDetailPlanInfo(PlanDTO planDTO , Model model , @RequestParam("star") String star) {
 		model.addAttribute("planDetail_list" , planDAO.selectAllById(planDTO));
-		model.addAttribute("mid", mid);
-		model.addAttribute("ptitle", ptitle);
+		model.addAttribute("mid", planDTO.getMid());
+		model.addAttribute("ptitle", planDTO.getPtitle());
 		model.addAttribute("cart_list", placeCartDAO.selectCartAll("temp"));
+		model.addAttribute("star", star);
 	}
 	
 	@RequestMapping("rew/getCommentInfoAjax")
@@ -58,7 +56,6 @@ public class R_PlanDetailController {
 		
 		mongoDTO.setMid("temp");
 		mongoDTO.setLevel(1);
-		System.out.println(mongoDTO.getPtitle());
 		Document result = mongoShareDAO.insertComment(mongoDTO);
 		return result;
 	}
@@ -67,7 +64,6 @@ public class R_PlanDetailController {
 	@ResponseBody
 	public Document setBodyCommentInfoAjax(Mongo_ShareProjectDTO mongoDTO) {
 		mongoDTO.setMid("임시 아이디!");
-		System.out.println(mongoDTO);
 		Document result = mongoShareDAO.insertComment(mongoDTO);
 		return result;
 	}
@@ -82,9 +78,6 @@ public class R_PlanDetailController {
 	@RequestMapping("rew/setDeleteCommentAjax")
 	@ResponseBody
 	public String setDeleteCommentAjax(Mongo_ShareProjectDTO mongoDTO , @RequestParam("dist") String dist) {
-		
-		System.out.println(mongoDTO);
-		System.out.println(dist);
 		return mongoShareDAO.deleteComment(mongoDTO,dist);
 	}
 	

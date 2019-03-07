@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <%
-	if(session.getAttribute("favor") == null) {
+	if(session.getAttribute("recommend") == null) {
 		response.sendRedirect("/springProject/kim/Tag_Select_Submit2");		
 	}
 %>

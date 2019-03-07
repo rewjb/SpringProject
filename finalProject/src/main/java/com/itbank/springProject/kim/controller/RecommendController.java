@@ -75,7 +75,34 @@ public class RecommendController {
 	}
 	
 	@RequestMapping("kim/Tag_Select_Submit2")
-	public String subm2(HttpSession session) {		
+	public String subm2(HttpSession session) {
+		
+		//세션의 전체 태그리스트 가져옴
+		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
+		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");
+		
+		if(list == null || sortedList == null) {
+			
+			//전체 태그 리스트 불러오기
+			HashMap<String, String> tlist = dao1.mongoSelectAll();		
+			List<String> keyList = dao1.sortByValue(tlist);
+			List<AttractionsDTO> allList = dao2.selectAll();
+			
+			//map을 DTO형태로 가
+			List<AttractionsDTO> daoList = new ArrayList<>();
+			for (int i = 0; i < keyList.size(); i++) {
+				daoList.add(i, allList.get(i));
+			}	
+			
+			//불러온 리스트 세션에 세팅
+			session.setAttribute("place_map", tlist);
+			session.setAttribute("place_list", daoList);
+			
+			//다시 세팅
+			list = tlist;
+			sortedList = daoList;
+		}
+		
 		session.setAttribute("favor",
 				"Archaeologicalsite/Ruins/Historicsite/Tourism/Mayacivilization/Village/Grass/Tree/Vacation/House/Water/Aquarium/Sky/Fun/Leisure/Night/Sea/Vacation/World/Silhouette/City/Townsquare/Plaza/Publicspace/Town/Humansettlement/Building/Landmark/Basilica/Architecture");
 		return "redirect:recommend";
@@ -87,7 +114,8 @@ public class RecommendController {
 				
 		//세션의 전체 태그리스트 가져옴
 		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
-		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");
+		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");			
+		
 		
 		//사용자가 선택한 사진들의 파일명 변수에 대입
 		tag1 = tag1.substring(tag1.lastIndexOf("/")+1);
@@ -175,11 +203,11 @@ public class RecommendController {
 			}
 		}
 		
-//		System.out.println("==========정럴 후=========");
-//		//정렬 후의 값 확인
-//		for (int i = 0; i < result.length; i++) {
-//			System.out.println(sortedList.get(i).getMainImg() + " : " + result[i]);
-//		}
+		System.out.println("==========정럴 후=========");
+		//정렬 후의 값 확인
+		for (int i = 0; i < 5; i++) {
+			System.out.println(sortedList.get(i).getMainImg() + " : " + result[i]);
+		}
 		
 		//결과를 모델객체로 반환
 		session.setAttribute("recommend", sortedList);

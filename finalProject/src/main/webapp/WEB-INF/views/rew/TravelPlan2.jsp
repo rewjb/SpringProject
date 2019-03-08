@@ -444,6 +444,8 @@ $('#loading').css('left',document.body.clientHeight/2);
 					type : 'post',
 					dataType : "text",//반환받을 데이터 타입 선택
 					success : function(result, confirm) {
+						     alert('성고응ㄴ 하니 ?');
+							alert(result);
 						if (result == 'good') {
 							alert('공유가 완료되었습니다.');
 							var projectList_container = $('#projectList_container').find('td[alt=Project-Content]');  
@@ -563,6 +565,8 @@ $('#loading').css('left',document.body.clientHeight/2);
 						}
 					}//success끝
 				})//ajax끝
+				
+						
 
 					} else {
 						alert('여행계획을 저장할 수 없습니다. \n 다음 항목을 체크해주세요\n1.여행공정의 내용을 채워주세요\n2.공유중인 프로젝트는 수정할 수 없습니다. ');
@@ -1112,7 +1116,7 @@ $('#loading').css('left',document.body.clientHeight/2);
   <!-- /.계획 툴 -->
 
   <!-- Related Projects Row -->
-  <h3 >Popular projects</h3>
+  <h3 class="my-4">Popular projects</h3>
 
   <div class="row">
   
@@ -1123,12 +1127,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 						<div class="carousel slide carousel-fade col-md-3 col-sm-6 mb-4"
 							id="carouselExampleFade" data-ride="carousel"
 							style="text-align: center;">
-							<a href="/springProject/rew/DetailPlan?mid=${allProjectListBystar.mid}&ptitle=${allProjectListBystar.ptitle}&star=${allProjectListBystar.star}">
 							<div class="carousel-inner">
-							 <div style="display: inline-block;background-color: rgba(0, 0, 0, 0.6);position: relative;z-index: 2;color: white;">
-							 <img alt="" style="width: 25px" src="/springProject/resources/IMAGE/star/star_on.png">
-							 ${allProjectListBystar.star}
-							 </div>
 								<c:set var="text" value="${allProjectListBystar.img}" />
 								<c:set var="img" value="${fn:split(text,'/')}" />
 								<c:forEach var="imgNum" items="${img}" varStatus="index">
@@ -1151,7 +1150,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 							</div>
 							 <span class="btn btn-secondary"
 								style="font-size:13px; background-color: rgba(0, 0, 0, 0.6);">${allProjectListBystar.ptitle}</span>
-							</a>	
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -1448,6 +1446,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 		marker.setPosition(end);
 		marker.setVisible(true);
 		
+
 		infowindowContent.children['place-name'].textContent = front_title;
 		infowindowContent.children['place-address'].textContent = front_content;
 		infowindow.open(map, marker);

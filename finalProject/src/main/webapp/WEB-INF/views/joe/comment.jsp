@@ -5,7 +5,10 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
     
+  <% ArrayList list = (ArrayList)request.getAttribute("list");
+   System.out.println("리스트 사이즈 몇????"+list.size());
   
+  %>
 <%--   
 <!--jstl안될때  -->
 <div>
@@ -37,7 +40,7 @@ CommentDTO dto;
 <div id="replyList"> 
     <c:forEach  items="${list}" var="list">
        <div class="jumbotron mt-3" id="replyItem<c:out value="${list.bnum}"/>" 
-             style="border: 2px solid gray; width: 600px; height: auto; padding: 10px; margin-top: 5px; top:0; bottom:400px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block"> 
+             style="border: 2px solid gray; width: 600px; height: auto; padding: 10px; margin-top: 5px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block"> 
        <form id="<c:out value="${list.bnum}"/>">
              <c:set var="star" value="${list.star}" />
              <c:forEach begin="1"  end="${star}" >

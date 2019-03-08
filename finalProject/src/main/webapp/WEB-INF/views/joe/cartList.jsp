@@ -8,7 +8,7 @@
 
 
 <%ArrayList list = (ArrayList)request.getAttribute("list"); 
-	System.out.println("사이즈 몇이야 : "+ list.size());
+// 	System.out.println("사이즈 몇이야 : "+ list.size());
 
 %>
 

@@ -4,11 +4,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
 <%
 session.setAttribute("mid", "temp");
 %>
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">	
 
 <!--   <!-- Bootstrap core CSS --> 
 <!--   <link href="/springProject/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -21,11 +20,12 @@ session.setAttribute("mid", "temp");
 <!--제이쿼리-->
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 <style type="text/css">
+
 {
    font-family: 'Noto Sans KR', sans-serif;
 }
 
- img{ width: 300px;} 
+img{ width: 300px;} 
 
 h3 {
     color: white;
@@ -72,8 +72,11 @@ vertical-align: middle;
 
 <script type="text/javascript">
 
-
-
+// window.onload = function () {
+// 	if (window.performance.navigation.type==2) {
+// 		window.location.reload();
+// 	}
+// }
 
 function deleteCart(event) {
 	var deleteBtn = event.target;
@@ -108,7 +111,7 @@ function deleteCart(event) {
 	      });
 }  
 
-function cart(event) {
+function cart(event) {//장바구니 버튼 클릭시 
 	   
 	var cart = event.target;
 	if ($(cart).attr("class") == "btn btn-secondary my-2") {
@@ -148,10 +151,7 @@ function cart(event) {
 	}		
 }
 
-
-
-$(function () {
-	
+$(document).ready(function start() {
 	
    var continent = "<%=session.getAttribute("continent") %>"
    var city = "<%=session.getAttribute("city") %>"
@@ -172,7 +172,7 @@ $(function () {
             	         Type : "POST",
             	         success : function(result) {
             	        	 for (var i = 0; i < result.length; i++) {
-            	        		 alert(result[i].pid);
+//             	        		 alert(result[i].pid);
             	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
 							}
             	         }
@@ -227,7 +227,6 @@ $(function () {
 	            	         }
 	            	      });
 	            	   }
-	            
 	         }
 	      });
 	   
@@ -286,7 +285,7 @@ $(function () {
          url : "midCartList?mid="+ '<%= session.getAttribute("mid") %>',
          Type : "POST",
          success : function(result) {
-        	 alert(result);
+//         	 alert(result);
         	 $("#cartTable").empty();
              $("#cartTable").append(result);
          }
@@ -335,16 +334,43 @@ $(function () {
   var continent = "<%=session.getAttribute("continent") %>"
   var city = "<%=session.getAttribute("city") %>"
   var tag = "<%=session.getAttribute("tag") %>"
-   if (continent != "null" && city == "null" && tag == "null") {
-  		 var list = new Array();
-		list = document.getElementsByName("1");
-   for (var i = 0; i < list.length; i++) {
-	   if (list[i].innerHTML == continent) {
-		list[i].setAttribute("class", "btn btn-primary my-2");
-	   }
-   }
+  
+//   alert(continent);
+//   alert(city);
+//   alert(tag);
+  
+	if (continent != "null" && city == "null" && tag == "null") {
+			var list = new Array();
+			list = document.getElementsByName("1");
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].innerHTML == continent) {
+					list[i].setAttribute("class", "btn btn-primary my-2");
+				}
+			}
 
-	} else if (continent != "null" && city != "null" && tag == "null") {
+		} else if (continent != "null" && city != "null" && tag == "null") {
+			$.ajax({
+				url : "tagCon",
+				Type : "POST",
+				data : "tag=" + continent,
+				success : function(result) {
+					$("#city").append(result);
+					var list = new Array();
+					list = document.getElementsByName("1");
+					for (var i = 0; i < list.length; i++) {
+						if (list[i].innerHTML == continent) {
+							list[i].setAttribute("class",
+									"btn btn-primary my-2");
+						}
+					}
+					list = document.getElementsByName("2");
+
+					for (var i = 0; i < array.length; i++) {
+						list[i].setAttribute("class", "btn btn-primary my-2");
+					}
+
+				}
+			});
 
 		} else if (continent != "null" && city != "null" && tag != "null") {
 
@@ -439,8 +465,10 @@ $(function () {
 				$("#container").empty();
 				$("#container").append(result);
 				var offset = $("#div").offset();
-		        $('html, body').animate({scrollTop : offset.top}, 400);
-			      if ( '<%= session.getAttribute("mid") %>' != "null") {
+				$('html, body').animate({scrollTop : offset.top}, 400);
+					
+				
+				if ('<%=session.getAttribute("mid")%>' != "null"){
 	            		 $.ajax({ 
 	            	         url : "midCart?mid="+ '<%= session.getAttribute("mid") %>',
 	            	         Type : "POST",
@@ -448,7 +476,7 @@ $(function () {
 	            	        	 for (var i = 0; i < result.length; i++) {
 	            	        		$("button[value="+result[i].pid+"]").attr("class","btn btn-primary my-2");
 								}
-	            	         }
+	            	         }  
 	            	      });
 	            	   }
 				//현재 주소를 가져온다.

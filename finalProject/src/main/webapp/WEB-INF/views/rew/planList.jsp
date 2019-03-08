@@ -11,7 +11,21 @@
 </style>
 </head>
 <body>
-<%@ include file="/UserMainHeader.jsp"%>
+	<script type="text/javascript">
+	
+	window.onload = function() { 
+
+		if (window.performance.navigation.type==2) {
+			 window.location.reload();
+			}
+	}
+
+
+</script>
+
+
+<%-- /springProject/rew/DetailPlan?mid=${allProjectListBystar.mid}&ptitle=${allProjectListBystar.ptitle}&star=${allProjectListBystar.star} --%>
+	<%@ include file="/UserMainHeader.jsp"%>
 
   <section class="jumbotron text-center" style="padding: 10px;  height: 350px;" >
     <div id="recommendDiv" class="container" style="display: inline-block;text-align: center;">
@@ -19,6 +33,7 @@
       
       <div style="display: inline-block;">
 			<c:forEach items="${favorProjectList}" var="favorProjectList" varStatus="Index">
+					<a href="/springProject/rew/DetailPlan?mid=${favorProjectList.mid}&ptitle=${favorProjectList.ptitle}&star=${favorProjectList.star}">
 				<c:choose>
 					<c:when test="${Index.index < 3}">
 						<div id="carouselExampleFade" alt="recommend_component"
@@ -53,6 +68,7 @@
 
 					</c:otherwise>
 				</c:choose>
+				</a>
 			</c:forEach>
 	</div>
 	</div>
@@ -63,10 +79,9 @@
       <div class="row">
       
 <!--       allProjectList -->
-
-      
        <c:forEach items="${allProjectList}" var="allProjectList" varStatus="Index">
          <div class="col-md-4">
+       
           <div class="card mb-4 shadow-sm">
 						<!-- 슬라이드           -->
 						<div id="carouselExampleFade" alt="temp" style="height: 261px"
@@ -95,16 +110,22 @@
 						</div>
 						<!-- /.슬라이드           -->
             <div class="card-body">
-              <p class="card-text">${allProjectList.ptitle}</p>
+              <p class="card-text" style="display: inline-block;">${allProjectList.ptitle}</p>
+              <div style="float: right;display: inline-block;background: gray;color: white;">
+              <img alt="" style="width: 25px;" src="/springProject/resources/IMAGE/star/star_on.png">
+              ${allProjectList.star}
+              </div>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">상세</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <a href="/springProject/rew/DetailPlan?mid=${allProjectList.mid}&ptitle=${allProjectList.ptitle}&star=${allProjectList.star}">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">상세보기</button>
+                </a>
                 </div>
                   <small class="text-muted"><span>${allProjectList.mid}</span>이 작성</small>
               </div>
             </div>
           </div>
+       
         </div>
        </c:forEach>
         
@@ -112,9 +133,34 @@
     </div>
   </div>
 
+   <div style="text-align: center;">
+	<div style="display: inline-block;">
+		<nav aria-label="Page navigation example">
+		<ul class="pagination" alt="page">
+			<li class="page-item"><a class="page-link" alt="pagePrev" href="/springProject/rew/planList?page=${page-1}">${page-1}</a></li>
+			<li class="page-item"><a class="page-link" alt="pageNow"href="#">${page}</a></li>
+			<li class="page-item"><a class="page-link" alt="pageNext"href="/springProject/rew/planList?page=${page+1}">${page+1}</a></li>
+		</ul>
+		</nav>
+	</div>
+   </div>
+
+	<script type="text/javascript">
+  
+  
+  $(document).ready(function() {
+	  
+	 var pageNow = ${page};
+	 
+	 if (pageNow==1) {
+		 $('a[alt=pagePrev]').parent('li').css('display','none');
+	 }
+	 if ((pageNow)== ${lastPage}) {
+		 $('a[alt=pageNext]').parent('li').css('display','none');
+	 }
+  })
+  </script>
 
 
-
-		
 </body>
 </html>

@@ -7,8 +7,15 @@ public class ShareProjectDTO {
 	private String reg_date;
 	private String img;
 	
+	private String star;
+	//별점을 갖고오기 위한 변수 
 	
-	
+	public String getStar() {
+		return star;
+	}
+	public void setStar(String string) {
+		this.star = string;
+	}
 	public String getImg() {
 		return img;
 	}
@@ -50,5 +57,10 @@ public class ShareProjectDTO {
 	public ShareProjectDTO() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+	
+	
 
 }

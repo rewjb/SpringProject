@@ -58,7 +58,7 @@
       </div>
     </div>
   </header>
-
+  
   <div class="btn-group" role="group" aria-label="Basic example" style="width: 100% ;">
   
   <!--여행정보 버튼-->

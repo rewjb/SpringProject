@@ -1,3 +1,32 @@
+/*회원에 관련된 동작들이 담겨있는 컨트롤러
+*--------------insert-----------------*
+*회원가입 
+*@insertMember -> insertMember():String
+*
+*--------------update-----------------*
+*정보수정 
+*@updateMember -> updateMember():String
+*
+*--------------delete-----------------*
+*회원탈퇴
+*@deleteMember -> deleteMember():String
+*
+*--------------select-----------------*
+*id중복여부 체크
+*@checkMid -> checkMid():String
+*name중복여부 체크
+*@checkMname -> checkMname():String
+*마이페이지에 띄워줄 내 정보 가져오기
+*@selectMember -> selectMember():String
+*로그인
+*@login -> selectIdPw():String
+*
+*----------------etc-------------------*
+*로그아웃
+*@logout -> logout():String
+*
+*/
+
 package com.itbank.springProject.won.controller;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +52,9 @@ public class W_MemberController{
 	@Autowired
 	@Qualifier("worker")
 	private W_MemberWorker worker;
+	
+	
+//------------------------insert------------------------------------
 	
 	//회원가입
 	@RequestMapping("won/insertMember")
@@ -51,6 +83,8 @@ public class W_MemberController{
 		}
 	}//end insertMember()
 	
+//------------------------update------------------------------------
+	
 	//정보수정
 	@RequestMapping("won/updateMember")
 	@ResponseBody
@@ -72,21 +106,28 @@ public class W_MemberController{
 		}
 	}//end updateMember()
 	
+//------------------------delete------------------------------------
+	
 	//회원탈퇴
 	@RequestMapping("won/deleteMember")
-	public String deleteMember(@RequestParam("mid") String mid,
-			MemberDTO dto){
+	public String deleteMember(MemberDTO memberDTO,
+			Model model,HttpSession session){
 		try {
-			//삭제 진행
-			dto.setMid(mid);
-			memberDAO.delete(dto);
-			return "won/deleteM";
+			//회원탈퇴 성공시 : 세션 삭제 후 탈퇴 성공 알림 띄워주고 메인페이지로 이동
+			session.removeAttribute("mid");
+			memberDAO.delete(memberDTO);
+			System.out.println("deleteMember 성공");
+			return "redirect:/won/deleteMember.jsp";
 		} catch (Exception e) {
+			//정보수정 실패시 : 정보수정 하기 전 데이터를 가지고 마이페이지로 돌아감
 			e.printStackTrace();
+			model.addAttribute("memberDTO", memberDTO);
 			System.out.println("deleteMember 실패");
-			return "redirect:mypage.jsp";
+			return "won/mypage";
 		}
 	}//end deleteMember()
+	
+//------------------------select------------------------------------
 	
 	//회원가입시 아이디 중복확인
 	@RequestMapping("won/checkMid")
@@ -133,65 +174,11 @@ public class W_MemberController{
 		}
 		return mname; 
 	}
-		
-	//로그인 확인 (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)
-	@RequestMapping("won/login")
-	@ResponseBody
-	public String selectIdPw(MemberDTO memberDTO, HttpSession session){
-		System.out.println("login!! 잘 찾아왔어!!!");
-		try {
-			MemberDTO mdto = memberDAO.select(memberDTO);
-			//로그인 실패시
-			if(mdto == null){
-				//아이디가 존재하지 않는경우
-				System.out.println("아이디가 존재하지 않습니다.");
-				return "1";
-			}else{
-				//아이디가 존재하는 경우
-				//입력받은 비밀번호와 아이디로 검색한 비밀번호가 일치하는지 확인
-				if(mdto.getMpw() == memberDTO.getMpw() || 
-						mdto.getMpw().equals(memberDTO.getMpw())){
-					//일치하는 경우 - 세션에 아이디를 넣어줌!
-					System.out.println("controller : 로그인 성공"+memberDTO.getMid());
-					session.setAttribute("mid", memberDTO.getMid());
-					//최근 접속일자 수정해줌
-					mdto=worker.settingBasicInfo(mdto); //최근접속일 세팅
-					memberDAO.updateDate(mdto);			//최근접속일 수정
-					System.out.println(session.getAttribute("mid"));
-					return "0";
-				}else{
-					//일치하지 않는 경우
-					System.out.println("비밀번호가 일치하지 않습니다");
-					return "2";
-				}
-			}
-		} catch (Exception e) {
-			//실패시 로그인 페이지로 돌아감
-			e.printStackTrace();
-			System.out.println("select실패");
-			return "-1";
-		}//end try~catch
-	}//end selectIdPw
-	
-	//로그아웃하는 컨트롤러
-	@RequestMapping("won/logout")
-	public String logout(HttpSession session){
-		//삭제할 mid확인
-		System.out.println(session.getAttribute("mid"));
-		session.removeAttribute("mid");
-		//삭제되었는지 확인
-		System.out.println(session.getAttribute("mid"));
-		return "redirect:/won/logout.jsp";
-	}
 	
 	//마이페이지에 정보수정 페이지에 필요한 개인정보 검색
 	@RequestMapping("won/selectMember")
 	public String selectMember(Model model, MemberDTO dto,
-		//코드 합치기 전에 임시로 세션에 넣어놓은 mid, 이후 삭제해야함---
 			HttpSession session){
-		String id = "hanna@whitehouse.gov";
-		session.setAttribute("mid", id);
-		//-------------------------------------------
 		try {
 			String mid = (String)session.getAttribute("mid");
 			dto.setMid(mid);
@@ -214,6 +201,56 @@ public class W_MemberController{
 		}
 		return "won/mypage";
 	}//end selectMember();
-
 	
-}
+	// 로그인 확인 (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)
+	@RequestMapping("won/login")
+	@ResponseBody
+	public String selectIdPw(MemberDTO memberDTO, HttpSession session) {
+		System.out.println("login!! 잘 찾아왔어!!!");
+		try {
+			MemberDTO mdto = memberDAO.select(memberDTO);
+			// 로그인 실패시
+			if (mdto == null) {
+				// 아이디가 존재하지 않는경우
+				System.out.println("아이디가 존재하지 않습니다.");
+				return "1";
+			} else {
+				// 아이디가 존재하는 경우
+				// 입력받은 비밀번호와 아이디로 검색한 비밀번호가 일치하는지 확인
+				if (mdto.getMpw() == memberDTO.getMpw() || mdto.getMpw().equals(memberDTO.getMpw())) {
+					// 일치하는 경우 - 세션에 아이디를 넣어줌!
+					System.out.println("controller : 로그인 성공" + memberDTO.getMid());
+					session.setAttribute("mid", memberDTO.getMid());
+					// 최근 접속일자 수정해줌
+					mdto = worker.settingBasicInfo(mdto); // 최근접속일 세팅
+					memberDAO.updateDate(mdto); // 최근접속일 수정
+					System.out.println(session.getAttribute("mid"));
+					return "0";
+				} else {
+					// 일치하지 않는 경우
+					System.out.println("비밀번호가 일치하지 않습니다");
+					return "2";
+				}
+			}
+		} catch (Exception e) {
+			// 실패시 로그인 페이지로 돌아감
+			e.printStackTrace();
+			System.out.println("select실패");
+			return "-1";
+		} // end try~catch
+	}// end selectIdPw
+
+//------------------------etc------------------------------------
+	
+	// 로그아웃하는 컨트롤러
+	@RequestMapping("won/logout")
+	public String logout(HttpSession session) {
+		// 삭제할 mid확인
+		System.out.println(session.getAttribute("mid"));
+		session.removeAttribute("mid");
+		// 삭제되었는지 확인
+		System.out.println(session.getAttribute("mid"));
+		return "redirect:/won/logout.jsp";
+	}//end logout
+	
+}//end class

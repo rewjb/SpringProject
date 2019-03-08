@@ -44,6 +44,8 @@
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/myPage">MyPage</a>
         &nbsp;     
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/selectMember">MyPage2</a>
+        &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>
@@ -61,15 +63,15 @@
          여행정보
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
-      <a class="dropdown-item" href="/springProject/joe/attractionsLIst.jsp">관광명소 보기</a>
-      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="/springProject/joe/attractionsLIst">관광명소 보기</a>
+      <a class="dropdown-item" href="/springProject/rew/planList?page=1">여행계획서 보기</a>
     </div>
   </div>
   
   <!--여행계획 버튼-->
   <div class="btn-group" role="group" style="width: 25%">
     <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         여행계획
+         여행계획서
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="width: 100%">
       <a class="dropdown-item" href="/springProject/rew/TravelPlan">여행계획 세우기</a>

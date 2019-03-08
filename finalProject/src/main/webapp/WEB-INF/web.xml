@@ -13,7 +13,10 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:contextConfigLocation.xml</param-value>
+		<param-value>
+		classpath:contextConfigLocation.xml,
+		classpath:contextConfigLocation_mongo.xml
+		</param-value>
 	</context-param>
 <!-- 	ContextLoaderListener에 셋팅이 된 contextConfigLocation는 모든  -->
 <!-- 	DispatcherServlet에서 공유가ㅣ 가능 -->

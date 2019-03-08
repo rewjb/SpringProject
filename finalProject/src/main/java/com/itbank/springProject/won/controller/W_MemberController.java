@@ -85,25 +85,37 @@ public class W_MemberController{
 	
 //------------------------update------------------------------------
 	
-	//정보수정
+	//정보수정 (0 : 성공 / 1 : 실패)
 	@RequestMapping("won/updateMember")
 	@ResponseBody
 	public String updateMember(MemberDTO memberDTO,Model model){
-		try {
-			//정보수정 성공시 : 정보수정 성공한 데이터를 마이페이지에서 확인해줌
-			memberDAO.update(memberDTO);
-			MemberDTO mdto = memberDAO.select(memberDTO);
-			//성공시 업데이트 성공한 dto를 모델에 담아서 마이페이지로 보내줌 
-			model.addAttribute("memberDTO", mdto);
-			System.out.println("updateMember 성공");
-			return "won/mypage";
-		} catch (Exception e) {
-			//정보수정 실패시 : 정보수정 하기 전 데이터를 가지고 마이페이지로 돌아감
-			e.printStackTrace();
-			model.addAttribute("memberDTO", memberDTO);
-			System.out.println("updateMember 실패");
-			return "won/mypage";
-		}
+		System.out.println(memberDTO.getMid());
+		System.out.println(memberDTO.getMpw());
+		System.out.println(memberDTO.getMname());
+		System.out.println(memberDTO.getMprofile());
+		System.out.println(memberDTO.getMaddr1());
+		System.out.println(memberDTO.getMaddr2());
+		System.out.println(memberDTO.getMtel());
+		System.out.println(memberDTO.getGender());
+		System.out.println(memberDTO.getAgegroup());
+		System.out.println(memberDTO.getRdate());
+		
+		return "1";
+//		try {
+//			//정보수정 성공시 : 정보수정 성공한 데이터를 마이페이지에서 확인해줌
+//			memberDAO.update(memberDTO);
+//			MemberDTO mdto = memberDAO.select(memberDTO);
+//			//성공시 업데이트 성공한 dto를 모델에 담아서 마이페이지로 보내줌 
+//			model.addAttribute("memberDTO", mdto);
+//			System.out.println("updateMember 성공");
+//			return "0";
+//		} catch (Exception e) {
+//			//정보수정 실패시 : 정보수정 하기 전 데이터를 가지고 마이페이지로 돌아감
+//			e.printStackTrace();
+//			model.addAttribute("memberDTO", memberDTO);
+//			System.out.println("updateMember 실패");
+//			return "1";
+//		}
 	}//end updateMember()
 	
 //------------------------delete------------------------------------

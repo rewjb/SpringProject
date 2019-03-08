@@ -66,15 +66,7 @@ public class W_MemberController{
 	@ResponseBody
 	public String insertMember(MemberDTO memberDTO){
 		memberDTO = worker.settingBasicInfo(memberDTO);
- 		System.out.print(memberDTO.getMid()+",");
- 		System.out.print(memberDTO.getMpw()+",");
- 		System.out.print(memberDTO.getMname()+",");
- 		System.out.print(memberDTO.getMprofile()+",");
- 		System.out.print(memberDTO.getMtel()+",");
- 		System.out.print(memberDTO.getMaddr1()+"-");
- 		System.out.print(memberDTO.getMaddr2()+",");
- 		System.out.print(memberDTO.getGender()+",");
- 		System.out.println(memberDTO.getRdate());
+ 		
 		try {
 			//insert성공시 insertM으로
 			memberDAO.insert(memberDTO);

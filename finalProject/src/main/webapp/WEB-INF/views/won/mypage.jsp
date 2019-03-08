@@ -232,7 +232,7 @@
                 	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
 				}
                 //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-                console.log(JSON.stringify(sendData));
+                console.log('update:'+JSON.stringify(sendData));
 				$.ajax({
 					url : "/springProject/won/updateMember",
 					type : "POST",

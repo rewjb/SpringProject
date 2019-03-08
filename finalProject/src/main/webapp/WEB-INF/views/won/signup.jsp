@@ -75,6 +75,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		f.text('');				//비워주기
 		$("#login_mpw").val(pw_l.val());//전송폼에 값 세팅
 		$("#login_inputMpw").blur(function() {
+			$("#login_mid").val(id_l.val());	//태그를 벗어날 때 id전송폼에 값 세팅
 			$("#login_mpw").val(pw_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
 		})
 	});//end keyup()
@@ -96,15 +97,14 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 			type : "POST",
 			data : sendData,
 			success : function(result) {
-				alert(result);
-				console.log(result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
+				console.log('일반로그인'+result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
 				if(result == "0"){
 					//로그인 성공 - 세션 등록 후 메인으로 이동
-					alert('<%=session.getAttribute("mid")%>님 환영합니다.');
+					alert(id_l.val()+'님 환영합니다.');
 					location.href="/springProject/main.jsp"
 				} else {
 					//로그인 실패
-					alert("아이디, 비밀번호를 확인해주세요.<br>문제가 계속되면 관리자에게 문의해주세요.<br>xx-xxxx-xxxx");
+					alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
 					id_l.text()="";
 					pw_l.text()="";
 				}//end innerIF
@@ -421,7 +421,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
         }            
         
     });   
-    <!--------------------------------- 슬라이드 코드 end ------------------------------------------>
+//<!--------------------------------- 슬라이드 코드 end ------------------------------------------>
 	
 	<!-- 이미지에 마우스 오버 효과 -->
     $("img").hover( 
@@ -732,8 +732,8 @@ body {
           		<div>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간-------------->
 					<form id="login_hidden">
-						<input type="hidden" id="login_mid" name="mid" class="hidden" placeholder="mid"><br>
-						<input type="hidden" id="login_mpw" name="mpw" class="hidden" placeholder="mpw"><br>
+						<input type="text" id="login_mid" name="mid" class="hidden" placeholder="mid"><br>
+						<input type="text" id="login_mpw" name="mpw" class="hidden" placeholder="mpw"><br>
 					</form>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간 끝------------>
 				</div>
@@ -818,6 +818,8 @@ body {
 							data : sendData,
 							success : function(result) {
 								console.log(result);
+								alert($("#login_mid").val()+'님 환영합니다.');
+								location.href="/springProject/main.jsp"
 							}//end success
 						});//end ajax
 
@@ -949,6 +951,8 @@ body {
 						  	data : sendData, 
 						  	success : function(result) { 
 						  		console.log(result+'--1:실패,0:성공'); 
+								alert($('#login_mid').val()+'님 환영합니다.');
+								location.href='/springProject/main.jsp'
 					  		}//end success 
 					  });//end ajax
                   ">
@@ -1102,6 +1106,7 @@ body {
 							data : sendData,
 							success : function(result) {
 								console.log(result);
+								alert($("#mid").val()+'님 가입성공!');
 								$("#hdnBtn").trigger("click");
 							}//end success
 						});//end ajax
@@ -1116,28 +1121,7 @@ body {
 						console.log(JSON.stringify(error, undefined, 2));
 					}); //attachClickHandler()
 				}//end function attachSignin() 
-				
-				var signupGG = function() {
-					var form = $("#hidden");
-					
-	                // 자바스크립트 객체를 배열에 담아줌
-	                var formSerial = $(form).serializeArray();
-	                var sendData = {};
-	                for (var i = 0; i < formSerial.length; i++) {
-	                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
-					}
-	                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-	                console.log(JSON.stringify(sendData));
-					$.ajax({
-						url : "/springProject/won/insertMember",
-						type : "POST",
-						data : sendData,
-						success : function(result) {
-							console.log(result+'--1:실패,0:성공');
-						}//end success
-					});//end ajax
 						
-				};//end ggsignup
 				</script>
 				<!-- 구글로 회원가입 버튼 -->
 				<div id="gSignInWrapper" class="button">
@@ -1269,7 +1253,9 @@ body {
 						  	data : sendData, 
 						  	success : function(result) { 
 						  		console.log(result+'--1:실패,0:성공'); 
+						  		alert($('#mid').val()+'님 가입성공!');
 						  		if(result==0){
+						  			
 						  			$('#hdnBtn').trigger('click');
 						  		}
 					  		}//end success 

@@ -96,8 +96,8 @@ function Update(bnum,id) {//댓글의 수정버튼 클릭시 다이얼로그 창
    }
 }
 
-function updateResult() {
-   if ($("#content3").val() == "") {
+function updateResult() {//최종 수정 버튼 클릭시 
+   if ($("#content3").val() == "") {//내용을 입력 안했을때
       alert("내용을 입력해주세요")
    }else{
    //alert("여기는오나")
@@ -122,13 +122,13 @@ function updateResult() {
    return false;
 }
 
-function updateCancel() {
+function updateCancel() {//수정창 취소 눌렀을때 
    $("#content3").val("");   
    $("#updateDialog").css('display', 'none');
    return false;
 }
 
-function commentCancel() {
+function commentCancel() {//대댓글창 취소 눌렀을때
    $("#content2").val("");
    $("#replyDialog").css('display', 'none');
    return false;
@@ -158,7 +158,7 @@ function deleteComment(bnum,id) {//댓글 삭제 함수
    }
 }
 
-function deleteCart(event) {
+function deleteCart(event) {//장바구니란에 삭제버튼 클릭시
 	var deleteBtn = event.target;
 // 	alert(deleteBtn.value);
 	  
@@ -178,7 +178,7 @@ function deleteCart(event) {
 
 $(function() {
 	
-   if ('<%=pid%>' != 'null') {
+   if ('<%=pid%>' != 'null') {//상품 아이디가 존재할경우
       $.ajax({
          url : "selectPid?pid=" + '<%=pid%>',
          Type : "POST",
@@ -216,7 +216,7 @@ $(function() {
     
    $("#b1").click(function() {//댓글입력시 등록해주는 함수 
       
-      if('<%=mid%>' != 'null'){
+      if('<%=mid%>' != 'null'){//로그인한 사용자였을경우만 댓글 입력가능
          
          var test = document.getElementById("content").value;
          var trimStr = $.trim(test) ;
@@ -290,16 +290,16 @@ $(function() {
       }
    })
 
-   function cart() {
+   function cart() {//장바구니 버튼 클릭시 
 
-      if ('<%=mid%>' != 'null') {
+      if ('<%=mid%>' != 'null') {//로그인한 회원만 장바구니 등록가능
       
       if ($("#cart").attr("class") == "btn btn-secondary my-2") {
          $("#cart").attr("class", "btn btn-primary my-2");
 
          var data = $("#form").serialize();
 //          alert(data);
-         $.ajax({
+         $.ajax({//장바구니 등록시 Ajax
             url : "cartInsert",
             Type : "POST",
             data : data,
@@ -314,7 +314,7 @@ $(function() {
 
          var data = $("#form").serialize();
 
-         $.ajax({
+         $.ajax({//장바구니 삭제시 Ajax
             url : "cartDelete",
             Type : "POST",
             data : data,
@@ -332,11 +332,11 @@ $(function() {
    
    //별점 기능
    var locked = 0;
-   function mouseIn(imagenr) {
+   function mouseIn(imagenr) {//마우스가 별점이미지 위로 올라왔을때 
       var image;
       var el;
 
-      if (document.getElementById('j_grade').value != "") {
+      if (document.getElementById('j_grade').value != "") {// 별점을 선택하지 않았을때 
          for (var i = 1; i <= 5; i++) {
             image = 'j_image' + i;
             el = document.getElementById(image);
@@ -362,7 +362,7 @@ $(function() {
       }
    }
 
-   function trueClick(imagenr) {
+   function trueClick(imagenr) {//별점을 선택하였을때 표시
       for (var i = 1; i <= 5; i++) {
          image = 'j_image' + i;
          el = document.getElementById(image);
@@ -375,7 +375,7 @@ $(function() {
       }
    }
 
-   function mouseOut(imagenr) {
+   function mouseOut(imagenr) {//마우스가 별점 밖으로 나갔을때
 
       if (locked) {
          locked = 0;
@@ -404,7 +404,7 @@ $(function() {
       }
    }
 
-   function clicked(imagenr) {
+   function clicked(imagenr) {//별점클릭시 
       document.getElementById("j_grade").value = imagenr;
       trueClick(imagenr);
       locked = 1;
@@ -475,7 +475,7 @@ $(function() {
 
 </div>
 
-
+<!-- 대댓글을 입력 할 수 있는 다이얼로그창 평소에는 display:none;상태 -->
 <div class="jumbotron mt-3" id="replyDialog" style="width: 45%; display:none; margin-left: auto; margin-right: auto;">
     <form id= "formSecond"  method="post">
         <input type="hidden" name="pid" id = "cPid" value=""> 
@@ -488,7 +488,7 @@ $(function() {
     </form>
 </div>  
 
-
+<!-- 수정 할 수 있는 다이얼로그창 평소에는 display:none;상태 -->
  <div class="jumbotron mt-3" id="updateDialog" style="width: 45%; display:none; margin-left: auto; margin-right: auto;">
     <form id= "updateForm"  method="post">
         <input type="hidden" name="pid" value="<%=pid%>"> 

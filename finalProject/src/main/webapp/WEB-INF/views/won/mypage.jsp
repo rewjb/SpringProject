@@ -25,7 +25,7 @@
 //<!------------------------- 개인정보 수정 ---------------------------->
 	$(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		
-		
+		$(window).load(setInfo());
 		
 	// 정규식을 변수에 할당
 	// 변수 이름을 're_'로 정한것은 'Reguar Expression'의 머릿글자
@@ -45,6 +45,24 @@
 		
 		var pwCheck = 0;
 		var cfCheck = 0;
+		
+		//페이지에 정보를 뿌려주는 함수
+		function setInfo() {
+			$("#mid").val('${memberDTO.mid}');
+			$("#mpw").val('${memberDTO.mpw}');
+			$("#mname").val('${memberDTO.mname}');
+			$("#mprofile").val('${memberDTO.mprofile}');
+			$("#mprofileImg").attr('src','${memberDTO.mprofile}');
+			$("#mtel").val('${memberDTO.mtel}');
+			$("#maddr1").val('${memberDTO.maddr1}');
+			$("#maddr2").val('${memberDTO.maddr2}');
+			$("#gender").val('${memberDTO.gender}');
+			$("#agegroup").val('${memberDTO.agegroup}');
+			$("#rdate").val('${memberDTO.rdate}');
+		}
+		
+		setInfo();
+		
 		
 		//유효성 결과에 따라 다른 클래스(input style)에 포함시켜주는 함수-----------------------------------
 		function hasColor(input,v){
@@ -161,13 +179,9 @@
 		      }
 		      
 		//gender에 관계된 설정----------------------------------------------------------------------
-		if(g.val() == 'F'){
-			gSelected(2);
-		}else if(g.val() =='M'){
-			gSelected(1);
-		}else{
-			gSelected(0);
-		}
+		if(g.val() == 'F'){gSelected(2);}
+		else if(g.val() =='M'){gSelected(1);}
+		else{				gSelected(0);}
 		
 		function gSelected(index) {
 			//gender값에 따라서 selected항목 설정해주는 함수
@@ -183,23 +197,14 @@
 		})
 		      
 		//agegroup에 관계된 설정--------------------------------------------------------------------
-		if(ag.val() == '10s'){
-			agSelected(1);
-		}else if(ag.val() =='20s'){
-			agSelected(1);
-		}else if(ag.val() =='30s'){
-			agSelected(2);
-		}else if(ag.val() =='40s'){
-			agSelected(3);
-		}else if(ag.val() =='50s'){
-			agSelected(4);
-		}else if(ag.val() =='60s'){
-			agSelected(5);
-		}else if(ag.val() =='70s'){
-			agSelected(6);
-		}else{
-			agSelected(7);	//80대 이상
-		}
+		if(ag.val() == '10s'){agSelected(0);}
+		else if(ag.val() =='20s'){agSelected(1);}
+		else if(ag.val() =='30s'){agSelected(2);}
+		else if(ag.val() =='40s'){agSelected(3);}
+		else if(ag.val() =='50s'){agSelected(4);}
+		else if(ag.val() =='60s'){agSelected(5);}
+		else if(ag.val() =='70s'){agSelected(6);}
+		else{					agSelected(7);}	//80대 이상
 		
 		//agegroup값에 따라서 selected항목 설정해주는 함수
 		function agSelected(index) {
@@ -239,6 +244,14 @@
 					data : sendData,
 					success : function(result) {
 						console.log(result+'--1:실패,0:성공');
+						if(result=="0"){
+							alert("수정성공!");
+							setInfo();
+						}else{
+							alert("다시 시도해주세요.")
+						}
+						
+						setInfo();
 					}//end success
 				});//end ajax					
 			}//end if()
@@ -246,25 +259,24 @@
 		
 		//deleteBtn버튼 눌렀을때 동작하는 함수-------------------------------------------------------
 		$("#deleteBtn").click(function() {
-			if(pwCheck + cfCheck == 2) {
-				var form = $("#infoForm");
-				
-                // 자바스크립트 객체를 배열에 담아줌
-                var formSerial = $(form).serializeArray();
-                var sendData = {};
-                for (var i = 0; i < formSerial.length; i++) {
-                	sendData[formSerial[i].name] = decodeURIComponent(formSerial[i].value);
-				}
-                //stringify : JavaScript 값이나 객체를 JSON 문자열로 변환 
-                console.log(JSON.stringify(sendData));
+			var cfPw = prompt( '비밀번호를 한번 더 입력해주세요.', '' );
+			var mpw = $("#mpw").val();
+			if(mpw==cfPw) {
 				$.ajax({
 					url : "/springProject/won/deleteMember",
 					type : "POST",
-					data : sendData,
 					success : function(result) {
 						console.log(result+'--1:실패,0:성공');
+						if(result==0){
+							alert("탈퇴가 정상적으로 처리되었습니다. 이용해주셔서 감사합니다.");
+							location.href="/springProject/main.jsp"
+						}else{
+							alert("정상적으로 처리되지 않았습니다. 다시 시도해주세요.")
+						}//end inner_if()
 					}//end success
 				});//end ajax					
+			}else{
+				alert("비밀번호가 다릅니다.");
 			}//end if()
 		})//end #deleteBtn.click()
 	});
@@ -319,25 +331,28 @@
 							<!-- column1. mid 부분 div : 수정 불가 -->
 							<div class="mb-3" >
 								<label for="mid"><span class="text-muted"> ID </span></label>
-								<input type="text"id="mid" name="mid" class="form-control" value="${memberDTO.mid}" readonly="readonly">
+								<input type="text" id="mid" name="mid" class="form-control" value="" readonly="readonly">
 							</div>
 							<!-- column2. mname : 수정 불가 -->
 							<div class="mb-2" >
 								<label for="mname"><span class="text-muted"> user-name </span></label>
-								<input type="text" id="mname" name="mname" class="form-control" value="${memberDTO.mname}" readonly="readonly">
+								<input type="text" id="mname" name="mname" class="form-control" value="" readonly="readonly">
 							</div>
 							<!-- column3. 프로필 사진 입력부분 -->
+							<!-- 컨트롤러와 동작하는 hidden #mprofile이 있고 사용자에게 보이는부분(#inputFile, #mprofileImg)이 따로 존재함 -->
 							<div class="mb-3">
 								<label for="mprofile"><span class="text-muted">profile picture</span></label><br>
-								<input type="file" class="form-control" id="mprofile" name="mprofile" style="height: 45px; 
+								<input type="file" class="form-control" id="inputFile" style="height: 45px; 
 								vertical-align: middle;">
+								
+								<input type="hidden" id="mprofile" name="mprofile" value="" class="hidden">
 							</div>
 						</td>
 						<td style= "vertical-align: bottom;">
 							<!-- column3. 프로필 사진 미리보기 -->
 							<div class="mb-3" style="text-align: center;">
 								<img id="mprofileImg" style="width: 60%; height: 60%;"
-									src="${memberDTO.mprofile}">
+									src="">
 							</div>
 						</td>
 					</tr>
@@ -347,12 +362,12 @@
 					<tr>
 						<td style="vertical-align: top; width: 45%; padding-right: 1%;">
 							<!-- column4. mpw부분   -->
-							<!-- 컨트롤러와 동작하는 hidden mpw가 있고 사용자에게 보이는부분이 따로 존재함 -->
+							<!-- 컨트롤러와 동작하는 hidden #mpw가 있고 사용자에게 보이는부분(#inputMpw,#cf)이 따로 존재함 -->
 							<label for="password"><span class="text-muted">	PASSWORD </span></label> 
 							<div class="form-group" style="width:100%;">
-								<input type="text" id="inputMpw" name="inputMpw" class="form-control" required>
+								<input type="text" id="inputMpw" class="form-control" required>
 								<div id="feedback-mpw" class="feedback"></div>
-								<input type="text" id="mpw" value="${memberDTO.mpw}" class="hidden">
+								<input type="hidden" id="mpw" name="mpw" value="" class="hidden">
 							</div>
 						</td>
 						<td style="vertical-align: top; width: 45%;">
@@ -375,7 +390,7 @@
 						<div class="form-group">
 							<label for="mtel"><span class="text-muted">phone</span></label> 
 							<input type="text" id="mtel"name="mtel" class="form-control" 
-							placeholder="01012345678" value="${memberDTO.mtel}">
+							placeholder="01012345678" value="">
 							<div id="feedback-tel" class="feedback"></div>
 						</div>
 					</td>
@@ -386,11 +401,11 @@
 				<div class="mb-3">
 					<label for="address"><span class="text-muted">Address</span></label> 
 					<input type="text" id="maddr1" name="maddr1" class="form-control" 
-					placeholder="서울시 금천구 벚꽃로 244" value="${memberDTO.maddr1}">
+					placeholder="서울시 금천구 벚꽃로 244" value="">
 				</div>
 				<div class="mb-3">
 					<input type="text" id="maddr2" name="maddr2" class="form-control" 
-					placeholder="벽산디지털밸리 5차" value="${memberDTO.maddr2}">
+					placeholder="벽산디지털밸리 5차" value="">
 				</div>
 				
 				<br><hr class="mb-4">
@@ -405,14 +420,14 @@
 								<option value="M">Male</option>
 								<option value="F">Female</option>
 							</select>
-							<input type="text" id="gender" name="gender" value="${memberDTO.gender}" class="hidden">
+							<input type="hidden" id="gender" name="gender" value="${memberDTO.gender}" class="hidden">
 						</div>
 					</div>
 					<!-- column9. 연령대 -->
 					<div class="col-md-6 mb-3">
 						<div class="d-block my-3">
 							<label for="ageGroup"><span class="text-muted">ageGroup</span></label>
-							<select class="custom-select d-block w-100" id="agegroupSelector" name="agegroupSelector" style="width: 100px;">
+							<select class="custom-select d-block w-100" id="agegroupSelector" style="width: 100px;">
 								<option value="10s">10대</option>
 								<option value="20s" selected="selected">20대</option>
 								<option value="30s">30대</option>
@@ -422,7 +437,7 @@
 								<option value="70s">70대</option>
 								<option value="80s">80대 이상</option>
 							</select>
-							<input type="text" id="agegroup" name="agegroup" value="${memberDTO.agegroup}" class="hidden">
+							<input type="hidden" id="agegroup" name="agegroup" value="" class="hidden">
 						</div>
 					</div>
 				</div>
@@ -431,7 +446,7 @@
 				<hr class="mb-4"><br>
 				
 				<!-- column10. 최근 로그인한 날자 -->
-				<input type="hidden" name="rdate" value="">
+				<input type="hidden" name="rdate" value="" class="hidden">
 				
 				<!-- 수정 / 삭제 버튼 -->
 				<div class="row">

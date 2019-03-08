@@ -4,7 +4,7 @@
     
     
     
-<c:forEach  items="${tagList}" var="list">   
+<c:forEach  items="${tagList}" var="list"><!-- 도시를 선택햇을때 선호태그 뿌리는 곳  -->   
 <button class = "btn btn-secondary my-2" onclick = 'city(event)' name = "2">
 ${list.city}
 </button>

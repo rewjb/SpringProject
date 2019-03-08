@@ -9,6 +9,9 @@
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>
 <script type="text/javascript">
 
+
+
+/* 크롤링 시작 */
 $(function() {
 		$.ajax({
 			url : "crawling",

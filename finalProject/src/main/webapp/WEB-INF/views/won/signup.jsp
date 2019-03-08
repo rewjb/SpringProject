@@ -362,9 +362,9 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 	
 	var ch_val = "<c:out value='${change}' />";
 	
-	alert(ch_val); 
 	//태그수정으로 왔을 시
- 	if(ch_val != null) {
+ 	if(ch_val == "t") {
+		alert(ch_val); 
 		$("#li1").remove();
 		$("#li2").remove();
 		$("#li3").remove();
@@ -473,7 +473,7 @@ span.icon {
 	height: 42px;
 	background-size: 20px 20px;
 	background-repeat: no-repeat;
-	background-position: 00% 50%;
+	background-position: 50% 50%;
 }
 
 span.buttonText {
@@ -682,33 +682,7 @@ body {
 	cursor: pointer;
 }
 
-span.icon {
-	background: url(/springProject/resources/IMAGE/LoginLogo/googleLogo.png);
-	display: inline-block;
-	vertical-align: middle;
-	width: 42px;
-	height: 42px;
-	background-size: 20px 20px;
-	background-repeat: no-repeat;
-	background-position: 00% 50%;
-}
 
-span.buttonText {
-	display: inline-block;
-	vertical-align: middle;
-	padding-left: 42px;
-	padding-right: 42px;
-	font-size: 16px;
-	font-weight: bold;
-	/* Use the Roboto font that is loaded in the <head> */
-	font-family: 'Roboto', sans-serif;
-}
-
-.button {
-	height: 55px;
-	vertical-align: top;
-	padding-top: 10%;
-}
 
 /* -------페이스북으로 로그인 버튼 설정--------------------- */
 #login_authBtn {
@@ -793,7 +767,6 @@ span.buttonText {
 						<button class="btn btn-lg btn-secondary btn-block" type="button"
 							id="login_loginBtn" style="width: 300px;">로그인</button>
 						<div style="height: 10px;"></div>
-						<button class="btn btn-lg btn-secondary btn-block next">회원가입</button>
 					</div>
 					<div style="height: 3px;"></div>
 					<div><button class="btn btn-lg btn-secondary btn-block next">회원가입</button></div>

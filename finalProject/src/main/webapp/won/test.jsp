@@ -9,6 +9,27 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="springProject/resources/JS/jquery.min.js"></script>
 <script src="//code.jquery.com/jquery.min.js"></script> <!-- 제이쿼리 1.x 최신 버전 로드 -->
+<!--[if lt IE 9]>
+	<script src="https://bestvpn.org/wp-content/themes/focusblog/js/html5/dist/html5shiv.js"></script>
+	<script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+	<!--[if IE 8]>
+	<link rel="stylesheet" type="text/css" href="https://bestvpn.org/wp-content/themes/focusblog/css/ie8.css"/>
+	<![endif]-->
+	<!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="https://bestvpn.org/wp-content/themes/focusblog/css/ie7.css"/>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+
+	
+			
+<!-- All in One SEO Pack 2.10.1 by Michael Torbert of Semper Fi Web Designob_start_detected [-1,-1] -->
+<!-- /all in one seo pack -->
+<link rel="dns-prefetch" href="//a.optmnstr.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//s.w.org">
+		<script type="text/javascript" src="https://wr.iljmp.com/track/click?product=9&amp;url=https%3A%2F%2Fbestvpn.org%2Fhtml5demos%2Ffile-api-simple%2F&amp;user_agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F72.0.3626.121%20Safari%2F537.36&amp;screen=1920x1080x24&amp;identity=&amp;rand=40" async=""></script><script async="" src="//load.sumo.com/" data-sumo-site-id="8cd63400cd3141008697a600833b7300510e4b00219cc0003c1d6600bee9b400" data-sumo-platform="wordpress"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="https://wr.iljmp.com/improvely.js" async="">
 <script>
 // input file 이미지 미리보기 함수
 function previewImage(targetObj, previewId) {
@@ -92,7 +113,27 @@ function previewImage(targetObj, previewId) {
         }
     }
 }
-// // input file 이미지 미리보기 함수
+
+function readURL(input) {
+	 
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+ 
+        reader.onload = function (e) {
+            $('#image_section').attr('src', e.target.result);
+        }
+ 
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+ 
+
+
+
+
+
+
+
 // function previewImage(targetObj, previewId) {
  
 //     var ext = $(targetObj).val().split('.').pop().toLowerCase();
@@ -184,8 +225,51 @@ function previewImage(targetObj, previewId) {
 <input id="ex_file" type="file" onchange="previewImage(this, 'user_upload_img');">
 
 
+<form id="form">
+    <input type='file' id="imgInput" />
+    <img id="image_section" src="#" alt="your image" />
+</form>
 
 
+
+<article>
+  <p id="status" class="success">File API &amp; FileReader available</p>
+  <p><input type="file"></p>
+  <p>Select an image from your machine to read the contents of the file without using a server</p>
+  <div id="holder"><img src=""></div>
+</article>
+<script>
+var upload = document.getElementsByTagName('input')[0],
+    holder = document.getElementById('holder'),
+    state = document.getElementById('status');
+
+if (typeof window.FileReader === 'undefined') {
+  state.className = 'fail';
+} else {
+  state.className = 'success';
+  state.innerHTML = 'File API & FileReader available';
+}
+ 
+upload.onchange = function (e) {
+  e.preventDefault();
+
+  var file = upload.files[0],
+      reader = new FileReader();
+  reader.onload = function (event) {
+    var img = new Image();
+    img.src = event.target.result;
+    // note: no onload required since we've got the dataurl...I think! :)
+    if (img.width > 560) { // holder width
+      img.width = 560;
+    }
+    holder.innerHTML = '';
+    holder.appendChild(img);
+  };
+  reader.readAsDataURL(file);
+
+  return false;
+};
+</script>
 <%
 	String mid = (String)request.getAttribute("mid1");
 

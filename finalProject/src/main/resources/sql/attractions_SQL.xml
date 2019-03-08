@@ -48,7 +48,7 @@
 	</resultMap>
 		
 	<insert id="insert" parameterType="attrDTO">
-		insert into ATTRACTIONS values(#{continent},#{city},#{pid},#{mainImg},#{title},#{content},#{contentElements},#{findWay},#{longitude},#{latitude},#{category},null)
+		insert into ATTRACTIONS values(#{continent},#{city},#{pid},#{mainImg},#{title},#{content},#{contentElements},#{findWay},#{longitude},#{latitude},#{category},#{star})
 	</insert>
 		
 	<select id="selectAll" resultMap="rs">

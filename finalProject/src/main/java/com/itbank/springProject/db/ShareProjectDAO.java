@@ -26,7 +26,10 @@ public class ShareProjectDAO {
 	
 	public ShareProjectDTO selectAllShareProjectByManyIdStar(ShareProjectDTO dto) {
 		ShareProjectDTO returnDto = session.selectOne("ShareProject.selectAllShareProjectByManyIdStar",dto);
+		if (dto.getStar()!=null) {
 			returnDto.setStar(dto.getStar());
+		}
+			
 		return returnDto;
 	}
 	

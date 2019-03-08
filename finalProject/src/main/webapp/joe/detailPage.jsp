@@ -8,10 +8,10 @@
 <title>Insert title here</title>
 
  <% 
-   String pid = request.getParameter("pid"); 
-    String mid = (String)session.getAttribute("mid");
-    System.out.println("mid : " + mid);
-    System.out.println("pid : " + pid);
+   String pid = request.getParameter("pid"); //상세페이지를 넘어올때 갖고오는 관광명소 (상품) 아이디값
+    String mid = (String)session.getAttribute("mid"); // 로그인을 하였을경우 갖고오는 회원 아이디값
+//     System.out.println("mid : " + mid);
+//     System.out.println("pid : " + pid);
 %> 
 
 <style type="text/css">
@@ -51,7 +51,7 @@ function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
 function comment() {//대댓글 등록시 처리함수
    
    if('<%=mid%>' != 'null'){
-   if ($("#content2").val() == "") {
+   if ($("#content2").val() == "") {//내용입력란이 빈칸이면
       alert("내용을 입력해주세요")
    }else{
    //alert("여기는오나")

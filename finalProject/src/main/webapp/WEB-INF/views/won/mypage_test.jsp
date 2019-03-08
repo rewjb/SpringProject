@@ -38,11 +38,15 @@
 		var pw = $('#inputMpw');
 		var cf = $('#cf'); //비밀번호 확인
 		var tel = $('#mtel');
+		var g = $("#gender");
+		var gs = $("#genderSelector");	//gender select태그
+		var ag = $("#agegroup");
+		var ags = $("#agegroupSelector");	//agegroup select태그
 		
 		var pwCheck = 0;
 		var cfCheck = 0;
 		
-		//유효성 결과에 따라 다른 클래스(input style)에 포함시켜주는 함수
+		//유효성 결과에 따라 다른 클래스(input style)에 포함시켜주는 함수-----------------------------------
 		function hasColor(input,v){
 			if(v==2){ //success
 				input.parent().attr("class","form-group has-success");
@@ -59,7 +63,7 @@
 			}//end if
 		}//end function hasColor()
 					
-		//pw유효성 : #mpw에서 keyup 이벤트가 발생시
+		//pw유효성 : #mpw에서 keyup 이벤트가 발생시---------------------------------------------------
 		pw.keyup(function() {
 			pwCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
@@ -104,17 +108,17 @@
 			} else if(cf.val() != pw.val()){
 				//문제시 설정
 				hasColor(cf,1);			//danger
-				f.text('비밀번호가 일치하지 않습니다.') //문제에 대한 안내 출력
+				f.text('비밀번호가 일치하지 않습니다.'); //문제에 대한 안내 출력
 			} else { // 비밀번호가 일치할때\
 				//성공시 설정
-				hasColor(cf,2)			//success
+				hasColor(cf,2);			//success
 				f.text('');				//비워주기
-				$("#mpw").val()
+				$("#mpw").val(cf.val());
 				cfCheck = 1;
 			}//end if()
 		});//end keyup()	
 		
-		//tel유효성 검사 : # 에서 keyup이벤트 발생시
+		//tel유효성 검사 : # 에서 keyup이벤트 발생시-------------------------------------------------------------------
 		tel.keyup(function() {
 			//feedback div : 피드백 내용을 모여주는 div
 			var f = $("#feedback-tel"); 
@@ -138,7 +142,7 @@
 			}//end if()
 		})//end keyup()
 		
-		//이미지 업로드시 미리보기
+		//mprofile에 관계된 설정 이미지 업로드시 미리보기---------------------------------------------------------------
 		/* FileReader 라는 Javascript 객체로 이미지 미리보기를 할 수 있다.*/
 		$(function() {
 		          $("#mprofile").on('change', function(){
@@ -155,8 +159,68 @@
 		            reader.readAsDataURL(input.files[0]);
 		          }
 		      }
+		      
+		//gender에 관계된 설정----------------------------------------------------------------------
+		if(g.val() == 'F'){
+			gSelected(2);
+		}else if(g.val() =='M'){
+			gSelected(1);
+		}else{
+			gSelected(0);
+		}
+		
+		function gSelected(index) {
+			//gender값에 따라서 selected항목 설정해주는 함수
+			gs.find("option:eq(0)").prop("selected", false);
+			gs.find("option:eq(1)").prop("selected", false);
+			gs.find("option:eq(2)").prop("selected", false);
 			
-		//updateBtn버튼 눌렀을때 동작하는 함수
+			gs.find("option:eq("+index+")").prop("selected",true);
+		}
+		//genderSelector의 선택여부에 따라 input #gender에 값을 넣어주는 함수
+		gs.change(function() {
+			g.val(gs.val());
+		})
+		      
+		//agegroup에 관계된 설정--------------------------------------------------------------------
+		if(ag.val() == '10s'){
+			agSelected(1);
+		}else if(ag.val() =='20s'){
+			agSelected(1);
+		}else if(ag.val() =='30s'){
+			agSelected(2);
+		}else if(ag.val() =='40s'){
+			agSelected(3);
+		}else if(ag.val() =='50s'){
+			agSelected(4);
+		}else if(ag.val() =='60s'){
+			agSelected(5);
+		}else if(ag.val() =='70s'){
+			agSelected(6);
+		}else{
+			agSelected(7);	//80대 이상
+		}
+		
+		//agegroup값에 따라서 selected항목 설정해주는 함수
+		function agSelected(index) {
+			ags.find("option:eq(0)").prop("selected", false);	//10s
+			ags.find("option:eq(1)").prop("selected", false);	//20s
+			ags.find("option:eq(2)").prop("selected", false);	//30s
+			ags.find("option:eq(3)").prop("selected", false);	//40s
+			ags.find("option:eq(4)").prop("selected", false);	//50s
+			ags.find("option:eq(5)").prop("selected", false);	//60s
+			ags.find("option:eq(6)").prop("selected", false);	//70s
+			ags.find("option:eq(7)").prop("selected", false);	//80s~
+			
+			ags.find("option:eq("+index+")").prop("selected",true);
+		}
+		//agegroupSelector의 선택여부에 따라 input #agegroup에 값을 넣어주는 함수
+		ags.change(function() {
+			ag.val(ags.val());
+		})
+		      
+			
+		//updateBtn버튼 눌렀을때 동작하는 함수--------------------------------------------------------
 		$("#updateBtn").click(function() {
 			if(pwCheck + cfCheck == 2) {
 				var form = $("#infoForm");
@@ -174,14 +238,13 @@
 					type : "POST",
 					data : sendData,
 					success : function(result) {
-// 						$("#id").attr("value", $("#mid").val());
 						console.log(result+'--1:실패,0:성공');
 					}//end success
 				});//end ajax					
 			}//end if()
 		})//end #updateBtn.click()
 		
-		//deleteBtn버튼 눌렀을때 동작하는 함수
+		//deleteBtn버튼 눌렀을때 동작하는 함수-------------------------------------------------------
 		$("#deleteBtn").click(function() {
 			if(pwCheck + cfCheck == 2) {
 				var form = $("#infoForm");
@@ -199,7 +262,6 @@
 					type : "POST",
 					data : sendData,
 					success : function(result) {
-						$("#id").attr("value", $("#mid").val());
 						console.log(result+'--1:실패,0:성공');
 					}//end success
 				});//end ajax					
@@ -290,7 +352,7 @@
 							<div class="form-group" style="width:100%;">
 								<input type="text" id="inputMpw" name="inputMpw" class="form-control" required>
 								<div id="feedback-mpw" class="feedback"></div>
-								<input type="text" id="mpw" value="${memberDTO.mpw}">
+								<input type="text" id="mpw" value="${memberDTO.mpw}" class="hidden">
 							</div>
 						</td>
 						<td style="vertical-align: top; width: 45%;">
@@ -312,7 +374,8 @@
 					<td style="width: 40%; height: 100px; vertical-align: top;">
 						<div class="form-group">
 							<label for="mtel"><span class="text-muted">phone</span></label> 
-							<input type="text" id="mtel"name="mtel" class="form-control" placeholder="01012345678">
+							<input type="text" id="mtel"name="mtel" class="form-control" 
+							placeholder="01012345678" value="${memberDTO.mtel}">
 							<div id="feedback-tel" class="feedback"></div>
 						</div>
 					</td>
@@ -322,10 +385,12 @@
 				<!-- column6,column7. 주소 입력부분 1,2 -->
 				<div class="mb-3">
 					<label for="address"><span class="text-muted">Address</span></label> 
-					<input type="text" id="maddr1" name="maddr1" class="form-control" placeholder="서울시 금천구 벚꽃로 244">
+					<input type="text" id="maddr1" name="maddr1" class="form-control" 
+					placeholder="서울시 금천구 벚꽃로 244" value="${memberDTO.maddr1}">
 				</div>
 				<div class="mb-3">
-					<input type="text" id="maddr2" name="maddr2" class="form-control" placeholder="벽산디지털밸리 5차">
+					<input type="text" id="maddr2" name="maddr2" class="form-control" 
+					placeholder="벽산디지털밸리 5차" value="${memberDTO.maddr2}">
 				</div>
 				
 				<br><hr class="mb-4">
@@ -334,19 +399,20 @@
 					<!-- column8. 성별선택 -->
 					<div class="col-md-6 mb-3">
 						<div class="d-block my-3">
-							<label for="gender"><span class="text-muted">gender</span></label> 
-							<select class="custom-select d-block w-100" id="gender" name="gender" style="width: 100px;">
-								<option value="OTHER" selected="selected">OTHER</option>
+							<label for="gender"><span class="text-muted">gender</span></label>
+							<select class="custom-select d-block w-100" id="genderSelector" style="width: 100px;">
+								<option value="OTHER">OTHER</option>
 								<option value="M">Male</option>
 								<option value="F">Female</option>
 							</select>
+							<input type="text" id="gender" name="gender" value="${memberDTO.gender}" class="hidden">
 						</div>
 					</div>
 					<!-- column9. 연령대 -->
 					<div class="col-md-6 mb-3">
 						<div class="d-block my-3">
 							<label for="ageGroup"><span class="text-muted">ageGroup</span></label>
-							<select class="custom-select d-block w-100" id="agegroup" name="agegroup" style="width: 100px;">
+							<select class="custom-select d-block w-100" id="agegroupSelector" name="agegroupSelector" style="width: 100px;">
 								<option value="10s">10대</option>
 								<option value="20s" selected="selected">20대</option>
 								<option value="30s">30대</option>
@@ -354,8 +420,9 @@
 								<option value="50s">50대</option>
 								<option value="60s">60대</option>
 								<option value="70s">70대</option>
-								<option value="80s">80대~</option>
+								<option value="80s">80대 이상</option>
 							</select>
+							<input type="text" id="agegroup" name="agegroup" value="${memberDTO.agegroup}" class="hidden">
 						</div>
 					</div>
 				</div>

@@ -54,20 +54,22 @@ public class W_MemberController{
 	//정보수정
 	@RequestMapping("won/updateMember")
 	@ResponseBody
-	public String updateMember(MemberDTO memberDTO){
-		System.out.println("통신");
-		return "통신";
-//		try {
-//			//정보수정 성공시 : 정보수정 성공한 데이터를 마이페이지에서 확인해줌
-//			memberDAO.update(memberDTO);
-//			System.out.println("updateMember 성공");
-//			return "won/updateM";
-//		} catch (Exception e) {
-//			//정보수정 실패시 : 정보수정 하기 전 데이터가 있는 마이페이지로 돌아감
-//			e.printStackTrace();
-//			System.out.println("updateMember 실패");
-//			return "redirect:mypage.jsp";
-//		}
+	public String updateMember(MemberDTO memberDTO,Model model){
+		try {
+			//정보수정 성공시 : 정보수정 성공한 데이터를 마이페이지에서 확인해줌
+			memberDAO.update(memberDTO);
+			MemberDTO mdto = memberDAO.select(memberDTO);
+			//성공시 업데이트 성공한 dto를 모델에 담아서 마이페이지로 보내줌 
+			model.addAttribute("memberDTO", mdto);
+			System.out.println("updateMember 성공");
+			return "won/mypage_test";
+		} catch (Exception e) {
+			//정보수정 실패시 : 정보수정 하기 전 데이터를 가지고 마이페이지로 돌아감
+			e.printStackTrace();
+			model.addAttribute("memberDTO", memberDTO);
+			System.out.println("updateMember 실패");
+			return "won/mypage_test";
+		}
 	}//end updateMember()
 	
 	//회원탈퇴

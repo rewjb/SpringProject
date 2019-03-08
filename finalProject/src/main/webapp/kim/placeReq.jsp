@@ -92,6 +92,12 @@
 				})				
 				return false;
 			})			
+			
+			
+			$("#submit").click(function() {
+				$("#contentsForm").submit();	
+				alert("누름");
+			})
 		})
 		
 		
@@ -127,7 +133,7 @@
 		<hr>
 	</form>
     
-<form action="placeReq">
+<form action="placeReq" id="contentsForm" class="asd">
     <div class="form-group">
       <label for="exampleSelect1">대륙</label>
       <select class="form-control" id="continent" name="continent">
@@ -162,7 +168,7 @@
     <input type="hidden" id="mainImg" name="mainImg" value="123">
     <input type="hidden" id="userId" name="userId" value="유저아이디">
     
-    <input type="submit" class="btn btn-primary">
+    <button type="button" class="btn btn-primary" id="submit">제출</button>
     <a class="btn btn-sm btn-outline-secondary" href="Tag_Select">태그페이지</a>
     <a class="btn btn-sm btn-outline-secondary" href="/springProject/joe/attractionsLIst.jsp">여행지 리스트</a>
     </form>

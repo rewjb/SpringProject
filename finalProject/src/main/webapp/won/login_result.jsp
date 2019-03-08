@@ -79,7 +79,7 @@
 					if(result == "0"){
 						//로그인 성공 - 세션 등록 후 메인으로 이동
 						alert('<%=session.getAttribute("mid")%>님 환영합니다.');
-						location.href="/springProject/loginresult.jsp"
+						location.href="/springProject/main.jsp"
 					} else {
 						//로그인 실패
 						alert("아이디, 비밀번호를 확인해주세요.<br>문제가 계속되면 관리자에게 문의해주세요.<br>xx-xxxx-xxxx");

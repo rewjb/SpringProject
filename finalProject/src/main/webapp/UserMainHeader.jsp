@@ -42,15 +42,19 @@
         <img src="/springProject/resources/IMAGE/logo4.png" width="250px"></a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/myPage">MyPage</a>
-        &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/selectMember">MyPage2</a>
-        &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
-        &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>
-        &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/login.jsp">Login</a>
+		<!-- session에 mid의 존재유무에 따라 버튼을 다르게 띄워줌 -->
+		<%if(session.getAttribute("mid")==null){ %>     
+	        <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Login / SignUp</a>
+		<%}else{ %>     
+	        &nbsp;
+	        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/selectMember">mypage</a>
+	        &nbsp;     
+        	<a class="btn btn-sm btn-outline-secondary" href="/springProject/won/logout">Logout</a>
+	        <%if(session.getAttribute("mid").equals("admin@admin.com")) {%>
+	        &nbsp;
+	        <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
+	        <%} %>
+		<%} %>
       </div>
     </div>
   </header>
@@ -63,7 +67,7 @@
          여행정보
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
-      <a class="dropdown-item" href="/springProject/joe/attractionsLIst.jsp">관광명소 보기</a>
+      <a class="dropdown-item" href="/springProject/joe/attractionsList.jsp">관광명소 보기</a>
       <a class="dropdown-item" href="/springProject/rew/planList?page=1">여행계획서 보기</a>
     </div>
   </div>

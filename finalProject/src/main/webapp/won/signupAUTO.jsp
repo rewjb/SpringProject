@@ -1,3 +1,4 @@
+<!-- 멤버 데이터들 DB로 입력해주는 페이지, 사이트랑 직접적인 상관은 없음 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

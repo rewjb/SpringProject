@@ -155,9 +155,9 @@
   <div class="col-3">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#totalCommentDiv" role="tab" aria-controls="v-pills-home" aria-selected="true">전체댓글</a>
-      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#privateCommentDiv" role="tab" aria-controls="v-pills-profile" aria-selected="false">내 댓글</a>
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#relatedReviewDiv" role="tab" aria-controls="v-pills-messages" aria-selected="false">관련리뷰</a>
-      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#makeReviewDiv" role="tab" aria-controls="v-pills-settings" aria-selected="false">리뷰 작성하기</a>
+<!--       <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#privateCommentDiv" role="tab" aria-controls="v-pills-profile" aria-selected="false">내 댓글</a> -->
+<!--       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#relatedReviewDiv" role="tab" aria-controls="v-pills-messages" aria-selected="false">관련리뷰</a> -->
+<!--       <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#makeReviewDiv" role="tab" aria-controls="v-pills-settings" aria-selected="false">리뷰 작성하기</a> -->
     </div>
   </div>
   <div class="col-9">
@@ -248,6 +248,8 @@
 <!-- /.구글 맵이 들어있는 모달 -->
 
 <script type="text/javascript">
+
+    var session = '${sessionScope.mid}';
    
 	var totalComment;
 
@@ -456,6 +458,12 @@
 	// 최초 댓글 입력
 	function headCommentInsert() {
 		//작업중
+		
+		if (session =='') {
+			alert('로그인을 먼저 해주세요!');
+		}else {
+			
+		
 
 		var text = $('#totalCommentDiv_head').find('textarea').val();
 		$('#totalCommentDiv_head').find('textarea').val('');
@@ -487,11 +495,19 @@
 				alert('댓글등록 오류발생!');
 			}
 		});
+		
+		}
 	}
 	// ...최초 댓글 입력
 
 	// 댓글에 답글 달기!
 	function showLinkAddComment(button) {
+		
+		if (session =='') {
+			alert('로그인을 먼저 해주세요!');
+		} else {
+
+		
 
 		var table = $(button).parents('table');
 		var td = $(table).find('td')[0];
@@ -500,11 +516,20 @@
 		$('table[alt=addForm]').remove();
 		var temp = insertFormComment(width);
 		$(table).after(temp);
+		
+		}
 	}
 	// ...댓글에 답글 달기!
 
 	// 댓글-답글-등록
 	function bodyCommentInsert(button) {
+		
+		if (session =='') {
+			alert('로그인을 먼저 해주세요');
+			
+		}else {
+			
+		
 
 		var parentTable = $(button).parents('table');
 		var prevTable = $(button).parents('table').prev();
@@ -550,6 +575,8 @@
 				alert('댓글로딩에 오류 발생!');
 			}
 		});
+		
+		}
 	}
 	// ...댓글-답글-등록
 
@@ -596,6 +623,11 @@
 
 	//댓글 수정
 	function updateTextarea(button) {
+		
+		if (session =='') {
+			alert('로그인을 먼저 해주세요!');
+		}else {
+		
 
 		if ($(button).text() == '수정') {
 
@@ -648,11 +680,19 @@
 				}
 			});
 		}
+		}
 	}
 	// ...댓글 수정
 
 	// 댓글 삭제
 	function deleteComment(button) {
+		
+		if (session == '') {
+		alert('로그인을 먼저 해주세요!');	
+		}else {
+			
+		
+		
 		var temp = confirm('정말로 삭제하시겠습니까?');
 
 		if (temp == true) {
@@ -728,6 +768,7 @@
 							alert('댓글삭제에 오류 발생!');
 						}
 					});
+		}
 		}
 	}
 	// ...댓글 삭제

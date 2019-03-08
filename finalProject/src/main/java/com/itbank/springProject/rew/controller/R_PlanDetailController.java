@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,11 +38,13 @@ public class R_PlanDetailController {
 	Mongo_ShareProjectDAO mongoShareDAO;
 
 	@RequestMapping("rew/DetailPlan")
-	public void getDetailPlanInfo(PlanDTO planDTO , Model model , @RequestParam("star") String star) {
+	public void getDetailPlanInfo(PlanDTO planDTO , Model model , @RequestParam("star") String star , HttpSession session) {
+		if (session.getAttribute("mid")!=null) {
+			model.addAttribute("cart_list", placeCartDAO.selectCartAll((String)session.getAttribute("mid")));
+		}
 		model.addAttribute("planDetail_list" , planDAO.selectAllById(planDTO));
 		model.addAttribute("mid", planDTO.getMid());
 		model.addAttribute("ptitle", planDTO.getPtitle());
-		model.addAttribute("cart_list", placeCartDAO.selectCartAll("temp"));
 		model.addAttribute("star", star);
 	}
 	
@@ -52,9 +56,9 @@ public class R_PlanDetailController {
 	
 	@RequestMapping("rew/setHeadCommentInfoAjax")
 	@ResponseBody
-	public Document setHeadCommentInfoAjax(Mongo_ShareProjectDTO mongoDTO) {
+	public Document setHeadCommentInfoAjax(Mongo_ShareProjectDTO mongoDTO,HttpSession session) {
 		
-		mongoDTO.setMid("temp");
+		mongoDTO.setMid((String)session.getAttribute("mid"));
 		mongoDTO.setLevel(1);
 		Document result = mongoShareDAO.insertComment(mongoDTO);
 		return result;
@@ -62,16 +66,16 @@ public class R_PlanDetailController {
 	
 	@RequestMapping("rew/setBodyCommentInfoAjax")
 	@ResponseBody
-	public Document setBodyCommentInfoAjax(Mongo_ShareProjectDTO mongoDTO) {
-		mongoDTO.setMid("임시 아이디!");
+	public Document setBodyCommentInfoAjax(Mongo_ShareProjectDTO mongoDTO , HttpSession session) {
+		mongoDTO.setMid((String)session.getAttribute("mid"));
 		Document result = mongoShareDAO.insertComment(mongoDTO);
 		return result;
 	}
 	
 	@RequestMapping("rew/setBodyCommentInfoUpdateAjax")
 	@ResponseBody
-	public String setBodyCommentInfoUpdateAjax(Mongo_ShareProjectDTO mongoDTO) {
-		mongoDTO.setMid("임시 아이디!");
+	public String setBodyCommentInfoUpdateAjax(Mongo_ShareProjectDTO mongoDTO, HttpSession session) {
+		mongoDTO.setMid((String)session.getAttribute("mid"));
 		return mongoShareDAO.updateComment(mongoDTO);
 	}
 	

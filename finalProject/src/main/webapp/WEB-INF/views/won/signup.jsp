@@ -49,7 +49,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 	var id_l = $('#login_inputMid');
 	var pw_l = $('#login_inputMpw');
 	
-	//ID유효성 : #login_inputMid에서 onkeyup 이벤트가 발생시
+	//ID유효성 : #login_inputMid에서 keyup 이벤트가 발생시
 		id_l.keydown(function() {
 			//feedback div : 피드백 내용을 모여주는 div
 			var f = $("#login_feedback-inputMid");
@@ -69,7 +69,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		});//end keyup()
 	
 		
-	//pw유효성 : #login_inputMpw에서 onkeyup 이벤트가 발생시
+	//pw유효성 : #login_inputMpw에서 keyup 이벤트가 발생시
 	pw_l.keyup(function() {
 		var f = $("#login_feedback-inputMpw");
 		f.text('');				//비워주기
@@ -154,7 +154,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 			}//end if
 		}//end function hasColor()
 		
-		//ID유효성 : #inputMid에서 onkeyup 이벤트가 발생시
+		//ID유효성 : #inputMid에서 keyup 이벤트가 발생시
  		id.keyup(function() {
  			idCheck = 0;
  			//feedback div : 피드백 내용을 모여주는 div
@@ -197,7 +197,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
  		});//end keyup()
 		
  		
-		//pw유효성 : #inputMpw에서 onkeyup 이벤트가 발생시
+		//pw유효성 : #inputMpw에서 keyup 이벤트가 발생시
 		pw.keyup(function() {
 			pwCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
@@ -229,7 +229,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 			}//end if
 		});//end keyup()
 		
-		//pw일치확인 : #inputConform에서 onkeyup 이벤트가 발생시
+		//pw일치확인 : #inputConform에서 keyup 이벤트가 발생시
 		cf.keyup(function() {
 			cfCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
@@ -257,7 +257,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		});//end keyup()
 		 
 			 
-		//name유효성 : #inputMname에서 onkeyup 이벤트가 발생시
+		//name유효성 : #inputMname에서 keyup 이벤트가 발생시
 		name.keyup(function() {
 			nameCheck = 0;
 			//feedback div : 피드백 내용을 모여주는 div
@@ -437,7 +437,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
    
 </script>
 <style type="text/css">
-/* -------전송하는 폼 설정 form id="hidden"------- */
+/* -------feedback div설정------- */
 	.feedback{
 		text-align : left;
 		padding-left : 5px;
@@ -795,12 +795,8 @@ span.buttonText {
 						<div style="height: 10px;"></div>
 						<button class="btn btn-lg btn-secondary btn-block next">회원가입</button>
 					</div>
-<<<<<<< HEAD
-					<div></div>
-=======
 					<div style="height: 3px;"></div>
 					<div><button class="btn btn-lg btn-secondary btn-block next">회원가입</button></div>
->>>>>>> branch 'master' of https://github.com/rewjb/SpringProject.git
 					<hr>
 <!------------------------- body2 : 이메일 로그인 끝 ---------------------------->
 <!------------------------- body3 : 구글로 로그인  관련 ---------------------------->

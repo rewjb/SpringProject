@@ -44,6 +44,8 @@
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/myPage">MyPage</a>
         &nbsp;     
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/selectMember">MyPage2</a>
+        &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>

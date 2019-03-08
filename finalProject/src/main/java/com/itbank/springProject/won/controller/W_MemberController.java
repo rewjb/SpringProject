@@ -53,18 +53,21 @@ public class W_MemberController{
 	
 	//정보수정
 	@RequestMapping("won/updateMember")
+	@ResponseBody
 	public String updateMember(MemberDTO memberDTO){
-		try {
-			//정보수정 성공시 : 정보수정 성공한 데이터를 마이페이지에서 확인해줌
-			memberDAO.update(memberDTO);
-			System.out.println("updateMember 성공");
-			return "won/updateM";
-		} catch (Exception e) {
-			//정보수정 실패시 : 정보수정 하기 전 데이터가 있는 마이페이지로 돌아감
-			e.printStackTrace();
-			System.out.println("updateMember 실패");
-			return "redirect:mypage.jsp";
-		}
+		System.out.println("통신");
+		return "통신";
+//		try {
+//			//정보수정 성공시 : 정보수정 성공한 데이터를 마이페이지에서 확인해줌
+//			memberDAO.update(memberDTO);
+//			System.out.println("updateMember 성공");
+//			return "won/updateM";
+//		} catch (Exception e) {
+//			//정보수정 실패시 : 정보수정 하기 전 데이터가 있는 마이페이지로 돌아감
+//			e.printStackTrace();
+//			System.out.println("updateMember 실패");
+//			return "redirect:mypage.jsp";
+//		}
 	}//end updateMember()
 	
 	//회원탈퇴
@@ -149,6 +152,9 @@ public class W_MemberController{
 					//일치하는 경우 - 세션에 아이디를 넣어줌!
 					System.out.println("controller : 로그인 성공"+memberDTO.getMid());
 					session.setAttribute("mid", memberDTO.getMid());
+					//최근 접속일자 수정해줌
+					mdto=worker.settingBasicInfo(mdto); //최근접속일 세팅
+					memberDAO.updateDate(mdto);			//최근접속일 수정
 					System.out.println(session.getAttribute("mid"));
 					return "0";
 				}else{
@@ -167,19 +173,33 @@ public class W_MemberController{
 	
 	//마이페이지에 정보수정 페이지에 필요한 개인정보 검색
 	@RequestMapping("won/selectMember")
-	@ResponseBody
 	public String selectMember(Model model, MemberDTO dto,
-			@RequestParam("mid") String mid){
+		//코드 합치기 전에 임시로 세션에 넣어놓은 mid, 이후 삭제해야함---
+			HttpSession session){
+//		String id = "hanna@whitehouse.gov";
+//		session.setAttribute("mid", id);
+		//-------------------------------------------
 		try {
+			String mid = (String)session.getAttribute("mid");
 			dto.setMid(mid);
 			MemberDTO mdto = memberDAO.select(dto);
+			System.out.println(mdto.getMid());
+			System.out.println(mdto.getMpw());
+			System.out.println(mdto.getMname());
+			System.out.println(mdto.getMprofile());
+			System.out.println(mdto.getMtel());
+			System.out.println(mdto.getMaddr1());
+			System.out.println(mdto.getMaddr2());
+			System.out.println(mdto.getGender());
+			System.out.println(mdto.getAgegroup());
+			System.out.println(mdto.getRdate());
 			model.addAttribute("memberDTO", mdto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("select실패");
-			return "won/home";
+			return "redirect:/main.jsp";
 		}
-		return "won/selectM";
+		return "won/mypage_test";
 	}//end selectMember();
 	
 	@RequestMapping("won/myPage")

@@ -1325,7 +1325,6 @@ body {
     </div>
   </div>
 	</li>
-	
 	<li style="width: 1300px;" id="li3">
 		 <div class="container">
     <div class="row">

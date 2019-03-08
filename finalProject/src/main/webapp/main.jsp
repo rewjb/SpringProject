@@ -14,7 +14,6 @@ position: relative;
 height:90px;
 text-align: center;
 vertical-align: middle;
-
 }
 
 #div1:after {

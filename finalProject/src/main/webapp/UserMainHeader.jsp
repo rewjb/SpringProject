@@ -67,7 +67,7 @@
          여행정보
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
-      <a class="dropdown-item" href="/springProject/joe/attractionsList.jsp">관광명소 보기</a>
+      <a class="dropdown-item" href="/springProject/joe/attractionsLIst.jsp">관광명소 보기</a>
       <a class="dropdown-item" href="/springProject/rew/planList?page=1">여행계획서 보기</a>
     </div>
   </div>

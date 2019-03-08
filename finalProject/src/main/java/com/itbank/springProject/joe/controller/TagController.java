@@ -61,13 +61,13 @@ public class TagController {
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
 
-		System.out.println("카테" + attractionsDTO.getCategory());
-		System.out.println("도시" + attractionsDTO.getCity());
-		System.out.println("대륙" + attractionsDTO.getContinent());
+//		System.out.println("카테" + attractionsDTO.getCategory());
+//		System.out.println("도시" + attractionsDTO.getCity());
+//		System.out.println("대륙" + attractionsDTO.getContinent());
 
 		if (attractionsDTO.getContinent() != null && attractionsDTO.getCity() != null
 				&& attractionsDTO.getCategory() != null) {
-			System.out.println("3가지 page ");
+//			System.out.println("3가지 page ");
 			model.addAttribute("page", page);
 			model.addAttribute("list", attractionsDAO.selectThree(attractionsDTO));
 		} else if (attractionsDTO.getContinent() != null && attractionsDTO.getCity() != null
@@ -98,7 +98,7 @@ public class TagController {
 
 		if (attractionsDTO.getContinent() != "" && attractionsDTO.getCity() != ""
 				&& attractionsDTO.getCategory() != "") {
-			System.out.println("3가지 ");
+//			System.out.println("3가지 ");
 			session.removeAttribute("continent");
 			session.removeAttribute("city");
 			session.removeAttribute("tag");
@@ -123,9 +123,9 @@ public class TagController {
 			model.addAttribute("list", attractionsDAO.selectFirst(attractionsDTO));
 		}
 
-		System.out.println("태그" + attractionsDTO.getCategory());
-		System.out.println("도시" + attractionsDTO.getCity());
-		System.out.println("대륙" + attractionsDTO.getContinent());
+//		System.out.println("태그" + attractionsDTO.getCategory());
+//		System.out.println("도시" + attractionsDTO.getCity());
+//		System.out.println("대륙" + attractionsDTO.getContinent());
 		return "joe/attList";
 	}
 
@@ -141,8 +141,8 @@ public class TagController {
 		session.removeAttribute("city");
 		session.removeAttribute("tag");
 		session.removeAttribute("text");
-		System.out.println("넘어왔니?????");
-		System.out.println(page);
+//		System.out.println("넘어왔니?????");
+//		System.out.println(page);
 		model.addAttribute("page", page);
 		model.addAttribute("list", attractionsDAO.selectAll());
 		return "joe/attList";

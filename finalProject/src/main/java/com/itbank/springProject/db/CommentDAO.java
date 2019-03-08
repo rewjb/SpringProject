@@ -37,12 +37,12 @@ public class CommentDAO {
 	}
 	
 	
-	public CommentDTO select(int bnum) {
-		return session.selectOne("review.select", bnum);
+	public CommentDTO select(CommentDTO dto) {//댓글 번호를 통한 
+		return session.selectOne("review.select", dto);
 	}
 	
-	public List<CommentDTO> selectParents(String parents) {
-		return session.selectList("review.selectParents", parents);
+	public List<CommentDTO> selectParents(CommentDTO dto) {
+		return session.selectList("review.selectParents", dto);
 	}
 	
 	public double starAvgSelect(String pid) {
@@ -60,7 +60,7 @@ public class CommentDAO {
 //		System.out.println("깊이"+dto.getDepth());
 //		System.out.println("부모"+dto.getParents());
 //		System.out.println("내용"+dto.getContent());
-		session.update("review.countUpdate",dto.getBorder());//댓글들의 순서 업데이트
+		session.update("review.countUpdate",dto);//댓글들의 순서 업데이트
 //		System.out.println("유주빈");
 		session.insert("review.insertInsert", dto);//대댓글 삽입
 //		System.out.println("조광재");
@@ -85,13 +85,12 @@ public class CommentDAO {
 	}
 	
 	
-	
 	public void delete(CommentDTO dto) {
 		session.delete("review.delete2", dto);
 	}
 	
-	public void deleteOne(int bnum) {
-		session.delete("review.delete1", bnum);
+	public void deleteOne(CommentDTO dto) {
+		session.delete("review.delete1", dto);
 	}
 	
 	

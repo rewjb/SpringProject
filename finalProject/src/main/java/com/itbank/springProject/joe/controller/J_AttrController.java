@@ -29,7 +29,7 @@ public class J_AttrController {
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
 		
-		System.out.println(pid);
+//		System.out.println(pid);
 		
 		
 		return attractionsDAO.select(pid);

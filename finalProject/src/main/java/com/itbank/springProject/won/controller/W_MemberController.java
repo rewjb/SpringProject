@@ -178,8 +178,8 @@ public class W_MemberController{
 	public String selectMember(Model model, MemberDTO dto,
 		//코드 합치기 전에 임시로 세션에 넣어놓은 mid, 이후 삭제해야함---
 			HttpSession session){
-		String id = "hanna@whitehouse.gov";
-		session.setAttribute("mid", id);
+//		String id = "hanna@whitehouse.gov";
+//		session.setAttribute("mid", id);
 		//-------------------------------------------
 		try {
 			String mid = (String)session.getAttribute("mid");

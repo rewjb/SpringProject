@@ -51,11 +51,11 @@ public class AttractionsDAO {//관광명소 DAO
 	}
 	
 	
-	public List<AttractionsDTO> searchSelect(String text) {
+	public List<AttractionsDTO> searchSelect(String text) {//검색을 통한 리스트
 		return session.selectList("attractions.searchSelect", text);
 	}
 	
-	public void starUpdate(AttractionsDTO dto) {
+	public void starUpdate(AttractionsDTO dto) {//댓글에 별점이 추가될때마다 별점 평균 업데이트
 		session.update("attractions.starUpdate", dto);
 	}
 	

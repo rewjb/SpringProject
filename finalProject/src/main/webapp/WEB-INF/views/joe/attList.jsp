@@ -14,18 +14,18 @@
    </style>
 <%
   ArrayList list2 = (ArrayList)request.getAttribute("list");
-   System.out.println(list2.size());
+//    System.out.println(list2.size());
    int tempPage = 0;
    if ( request.getAttribute("page") == null || request.getAttribute("page").equals("null") || Integer.valueOf((String)request.getAttribute("page")) > (list2.size()/12)+1) {
-      System.out.println(request.getAttribute("page") + "null일때");
+//       System.out.println(request.getAttribute("page") + "null일때");
       tempPage = 1;
    } else {
-      System.out.println(request.getAttribute("page") + "null아닐때");
+//       System.out.println(request.getAttribute("page") + "null아닐때");
       tempPage = Integer.valueOf((String)request.getAttribute("page"));
    }
    
    pageContext.setAttribute("tempPage", tempPage);
-   System.out.println("temp체크"+ tempPage);
+//    System.out.println("temp체크"+ tempPage);
 %>
 
 <c:set var="list" value="${list}"/>
@@ -43,7 +43,7 @@
 <c:when test="${fn:length(list) le 12}"><!-- ge   =   <= -->
    <c:forEach items="${list}" var="list">
        <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
-         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid} " ><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
+         <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}" ><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
             src="/springProject/resources/IMAGE/attractionsImg/${list.mainImg}"
             width="300px" height="250px"></a>
             <h2>★${list.star }</h2>

@@ -7,7 +7,7 @@
 <%
 session.setAttribute("mid", "temp");
 %>
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">	
 
 <!--   <!-- Bootstrap core CSS --> 
 <!--   <link href="/springProject/resources/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->

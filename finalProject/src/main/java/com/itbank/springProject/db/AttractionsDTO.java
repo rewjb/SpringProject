@@ -157,5 +157,16 @@ public class AttractionsDTO {
 	public void setStar(double star) {
 		this.star = star;
 	}
+
+
+	@Override
+	public String toString() {
+		return "AttractionsDTO [continent=" + continent + ", city=" + city + ", pid=" + pid + ", mainImg=" + mainImg
+				+ ", title=" + title + ", content=" + content + ", contentElements=" + contentElements + ", findWay="
+				+ findWay + ", longitude=" + longitude + ", latitude=" + latitude + ", category=" + category + ", star="
+				+ star + "]";
+	}
+	
+	
 	
 }//attractionDTO클래스 끝

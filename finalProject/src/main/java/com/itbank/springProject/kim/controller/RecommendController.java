@@ -91,6 +91,47 @@ public class RecommendController {
 		return "won/signup";
 	}
 	
+	
+	@RequestMapping("kim/Tag_Select_Submit")
+	public String subm(@RequestParam("tag1") String tag1, @RequestParam("tag2") String tag2, 
+			@RequestParam("tag3") String tag3, @RequestParam("id") String id, HttpSession session) {
+				
+		//세션의 전체 태그리스트 가져옴
+		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
+		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");			
+		
+		
+		
+		//사용자가 선택한 사진들의 파일명 변수에 대입
+		tag1 = tag1.substring(tag1.lastIndexOf("/")+1);
+		tag2 = tag2.substring(tag2.lastIndexOf("/")+1);
+		tag3 = tag3.substring(tag3.lastIndexOf("/")+1);
+		
+		String tags = "";
+		
+		//전체 리스트에서 사용자가 선택한 이미지의 태그를 찾아 병합
+		for (int i = 0; i < sortedList.size(); i++) {
+			String val = sortedList.get(i).getMainImg();
+			if(val.equals(tag1) || val.equals(tag2) || val.equals(tag3)){
+				tags += list.get(val) + "/";
+			}			
+		}
+		
+		if(id == null || id.equals("")) {
+			id = (String) session.getAttribute("mid");
+		}
+
+		tags = tags.substring(0, tags.length()-1);
+		System.out.println("결과 : " + tags);
+		dao1.mongoDelete(id);
+		dao1.mongoInsert(id, tags);
+		
+//		//테스트용 유저선호도 세션등록
+//		session.setAttribute("favor", tags);
+		
+		return "redirect:Tag_Select_Submit2";
+	}
+	
 	@RequestMapping("kim/Tag_Select_Submit2")
 	public String subm2(HttpSession session) {
 		
@@ -120,47 +161,11 @@ public class RecommendController {
 			sortedList = daoList;
 		}
 		
-		session.setAttribute("favor",
-				"Archaeologicalsite/Ruins/Historicsite/Tourism/Mayacivilization/Village/Grass/Tree/Vacation/House/Water/Aquarium/Sky/Fun/Leisure/Night/Sea/Vacation/World/Silhouette/City/Townsquare/Plaza/Publicspace/Town/Humansettlement/Building/Landmark/Basilica/Architecture");
-		return "redirect:recommend";
-	}
-	
-	@RequestMapping("kim/Tag_Select_Submit")
-	public String subm(@RequestParam("tag1") String tag1, @RequestParam("tag2") String tag2, 
-			@RequestParam("tag3") String tag3, @RequestParam("id") String id, HttpSession session) {
-				
-		//세션의 전체 태그리스트 가져옴
-		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
-		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");			
-		
-		
-		//사용자가 선택한 사진들의 파일명 변수에 대입
-		tag1 = tag1.substring(tag1.lastIndexOf("/")+1);
-		tag2 = tag2.substring(tag2.lastIndexOf("/")+1);
-		tag3 = tag3.substring(tag3.lastIndexOf("/")+1);
-		
-		String tags = "";
-		
-		//전체 리스트에서 사용자가 선택한 이미지의 태그를 찾아 병합
-		for (int i = 0; i < sortedList.size(); i++) {
-			String val = sortedList.get(i).getMainImg();
-			if(val.equals(tag1) || val.equals(tag2) || val.equals(tag3)){
-				tags += list.get(val) + "/";
-			}			
+		String tag = (String) session.getAttribute("favor");
+		if(tag == null) {
+			session.setAttribute("favor", 
+					"Archaeologicalsite/Ruins/Historicsite/Tourism/Mayacivilization/Village/Grass/Tree/Vacation/House/Water/Aquarium/Sky/Fun/Leisure/Night/Sea/Vacation/World/Silhouette/City/Townsquare/Plaza/Publicspace/Town/Humansettlement/Building/Landmark/Basilica/Architecture");			
 		}
-		
-		if(id == null) {
-			id = (String) session.getAttribute("mid");
-		}
-
-		tags = tags.substring(0, tags.length()-1);
-		System.out.println("결과 : " + tags);
-		id =  id.replace('.', '/');
-		dao1.mongoInsert(id, tags);
-		
-		//테스트용 유저선호도 세션등록
-		session.setAttribute("favor", tags);
-		
 		return "redirect:recommend";
 	}
 	
@@ -169,6 +174,10 @@ public class RecommendController {
 		
 		//세션에서 사용자 선호태그 불러와서 배열형태로 변환
 		String ssFavor = (String) session.getAttribute("favor");
+		if(ssFavor == null) {
+			ssFavor = "Archaeologicalsite/Ruins/Historicsite/Tourism/Mayacivilization/Village/Grass/Tree/Vacation/House/Water/Aquarium/Sky/Fun/Leisure/Night/Sea/Vacation/World/Silhouette/City/Townsquare/Plaza/Publicspace/Town/Humansettlement/Building/Landmark/Basilica/Architecture";
+			session.setAttribute("favor", ssFavor);			
+		}
 		String[] favor = ssFavor.split("/");
 		
 		//세션의 전체 태그리스트 가져옴

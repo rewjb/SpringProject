@@ -13,12 +13,9 @@
 <body>
 	<script type="text/javascript">
 	
-	window.onload = function() { 
-
 		if (window.performance.navigation.type==2) {
 			 window.location.reload();
 			}
-	}
 
 
 </script>

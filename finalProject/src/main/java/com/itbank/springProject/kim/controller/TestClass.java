@@ -17,6 +17,7 @@ public class TestClass {
 //		List<AttractionsDTO> list = dao.selectAll();
 //		mt.mongoInsert("erkltj43rt", "wqer/werewt/tr.tr");
 		mt.mongoSelectAll();
+		mt.mongoSelect("mumumu@mama.com");
 //		System.out.println(list.size());
 	}
 

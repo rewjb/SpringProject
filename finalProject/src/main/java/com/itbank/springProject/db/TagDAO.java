@@ -68,19 +68,20 @@ public class TagDAO {
     		
     			//user 테이블에 데이터삽입
     			DBObject doc = new BasicDBObject();
-    			doc.put(id, tags);
+    			doc.put("id", id);
+    			doc.put("tag", tags);
     			coll.insert(doc);
     			System.out.println("인서트 결과 = " + id + " : " + tags);
     		
     	
     }
     
-    public void mongoDelete(HashMap<String, String> list, Iterator<String> iter) {
+    public void mongoDelete(String id) {
             //컬렉션 가져오기
-            DBCollection coll = db.getCollection("place");
+            DBCollection coll = db.getCollection("member");
             
             //데이터 선택 삭제
-            coll.remove(new BasicDBObject("", "")); //강감찬 삭제
+            coll.remove(new BasicDBObject("id", id)); //강감찬 삭제
             
     }
     
@@ -95,19 +96,25 @@ public class TagDAO {
             
     }
     
-    public void mongoSelect(String key) {
+    public String mongoSelect(String id) {
             //컬렉션 가져오기
-            DBCollection coll = db.getCollection("place");
+            DBCollection coll = db.getCollection("member");
             
             //특정 조건에 맞는 데이터 출력
             DBObject o = new BasicDBObject();
-            o.put(key,"$exists: true");
+            o.put("id", id);
             //o.put(key,"{$exists: true}");
             DBCursor cursor = (DBCursor) coll.find(o);
-            
-            while(cursor.hasNext()){
-                System.out.println(cursor.next().toString());
+            String result = null;
+            if(cursor.hasNext()){
+            	String rs = cursor.next().toString();
+            	String val = rs.toString().replaceAll("\"", "").replaceAll("}", "");
+            	String val2 = val.substring(val.indexOf(",")+1).replaceAll(" ", "");
+            	String[] valRs = val2.split(":");            	
+            	result = valRs[2];
             }
+ 	  	
+      	  	return result;
             
     }
     
@@ -115,8 +122,7 @@ public class TagDAO {
     	HashMap<String, String> map = new HashMap<>();
     		//컬렉션 가져오기
     		DBCollection coll = db.getCollection("place");
-    		
-    		
+    		    		
 	            //user의 모든 데이터 가져오기
 	          DBCursor cursor = coll.find();
 	          while(cursor.hasNext()){

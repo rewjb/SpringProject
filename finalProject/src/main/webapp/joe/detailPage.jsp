@@ -191,7 +191,7 @@ $(function() {
                $("#cPid").val('<%=pid%>');
                $("#firstId").val('<%=pid%>');
                $("#star").text( "★"+ result.star);
-               alert(result.star);
+//                alert(result.star);
 //                $("#cart").val()
                if ('<%=mid%>' != 'null') {
                   $("#mid").val('<%=mid%>');                  

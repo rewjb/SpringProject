@@ -33,6 +33,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -59,12 +60,21 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 public class Mongo_ShareProjectDAO {
 
 	// private MongoTemplate mongoTemplate;
+	private MongoClient mongoClient;
+	private MongoDatabase tagDB;
+	public MongoCollection<Document> commentColl;
+	
+	
+	public Mongo_ShareProjectDAO() {
+		
+		mongoClient = new MongoClient("34.73.189.101", 27017);
+		tagDB = mongoClient.getDatabase("tag");
+		commentColl = tagDB.getCollection("shareProject");
+		
+	}
 
-	private MongoClient mongoClient = new MongoClient("34.73.189.101", 27017);
 
-	private MongoDatabase tagDB = mongoClient.getDatabase("tag");
 
-	public MongoCollection<Document> commentColl = tagDB.getCollection("shareProject");
 
 	private int spaceCount = 0;
 

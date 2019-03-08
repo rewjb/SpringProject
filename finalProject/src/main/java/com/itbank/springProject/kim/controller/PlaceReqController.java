@@ -68,6 +68,7 @@ public class PlaceReqController {
 	
 	@RequestMapping("kim/placeReq_accept")
 	public String agree(@RequestParam("no") String no, Model model, AttractionsDTO attractionsDTO) throws Exception {
+		System.out.println(attractionsDTO.toString());
 		dao2.insert(attractionsDTO);
 		dao.delete(no);
 		String img = attractionsDTO.getMainImg().substring(attractionsDTO.getMainImg().lastIndexOf("/")+1);

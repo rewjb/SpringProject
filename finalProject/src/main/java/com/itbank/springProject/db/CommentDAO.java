@@ -18,18 +18,18 @@ public class CommentDAO {
 	public void insert(CommentDTO dto) {//댓글 입력 메서드
 //		System.out.println("넘버확인 : "+dto.getBnum());
 		if (dto.getBnum() == 0) {
-			if (dto.getParents() != null) {//댓글의 부모 존재 유무
-				CommentDTO dto2 = session.selectOne("review.pselect", dto.getParents());
-				dto.setDepth(dto2.getDepth());
-				dto.setBorder(dto2.getBorder()+1);
-				session.selectOne("review.update", dto2);
-			}else{
+//			if (dto.getParents() != null) {//댓글의 부모 존재 유무
+//				CommentDTO dto2 = session.selectOne("review.pselect", dto.getParents());
+//				dto.setDepth(dto2.getDepth());
+//				dto.setBorder(dto2.getBorder()+1);
+//				session.selectOne("review.update", dto2);
+//			}else{
 //				System.out.println("상품아이디확인 : "+dto.getPid());
 				int order = session.selectOne("review.selectMax", dto.getPid());
 				
 //				System.out.println(order);
 				dto.setBorder(order);
-			}
+//			}
 			session.insert("review.insert",dto);
 		}else {
 			session.insert("review.insert",dto);

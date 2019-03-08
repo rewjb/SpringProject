@@ -46,8 +46,8 @@ public class J_CartController {
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
-		System.out.println(placeCartDTO.getPid());
-		System.out.println(placeCartDTO.getMid());
+//		System.out.println(placeCartDTO.getPid());
+//		System.out.println(placeCartDTO.getMid());
 		
 		placeCartDAO.cartInsert(placeCartDTO);
 		ArrayList<PlaceCartDTO> list = 	(ArrayList<PlaceCartDTO>)placeCartDAO.midSelect(placeCartDTO.getMid());
@@ -70,7 +70,7 @@ public class J_CartController {
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
-		System.out.println("리스트 보여줄라고 넘어왔니");
+//		System.out.println("리스트 보여줄라고 넘어왔니");
 		ArrayList<PlaceCartDTO> list = (ArrayList)placeCartDAO.selectAll();
 		ArrayList<AttractionsDTO> attList = new ArrayList<>();
 		
@@ -123,14 +123,14 @@ public class J_CartController {
 		response.setHeader("Pragma", "no-cache");
 
 
-		System.out.println(placeCartDTO.getPid());
+//		System.out.println(placeCartDTO.getPid());
 		
 		
 		placeCartDAO.delete(placeCartDTO);
 		
 		ArrayList<PlaceCartDTO> list = (ArrayList<PlaceCartDTO>)placeCartDAO.selectAll();
 		ArrayList<AttractionsDTO> attList = new ArrayList<>();
-		System.out.println("list" + list.size());
+//		System.out.println("list" + list.size());
 		
 		if (list.size() != 0) {
 			for (int i = 0; i < list.size(); i++) {
@@ -138,7 +138,7 @@ public class J_CartController {
 			}
 		}
 		model.addAttribute("list", attList);
-		System.out.println(attList.size());
+//		System.out.println(attList.size());
 		
 		return "joe/cartList";
 	}
@@ -254,7 +254,9 @@ public class J_CartController {
 	                        
 	                        
 	                        System.out.println(jo.get("메인이미지").toString());
-	                        
+	                        System.out.println();
+	                        System.out.println("-------------------------------------------------------------");
+	                        System.out.println();
 	                        
 	                     }//길찾기 값이 존재할때만 db저장 및 이미지저장
 

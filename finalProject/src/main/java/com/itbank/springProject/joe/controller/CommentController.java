@@ -36,10 +36,10 @@ public class CommentController {
 		response.setHeader("Pragma", "no-cache");
 //		System.out.println("1번");
 		AttractionsDTO dto = new AttractionsDTO();
-		System.out.println("dto 출력");
-		System.out.println(commentDTO.getMid());
-		System.out.println(commentDTO.getPid());
-		System.out.println(commentDTO.getStar());
+//		System.out.println("dto 출력");
+//		System.out.println(commentDTO.getMid());
+//		System.out.println(commentDTO.getPid());
+//		System.out.println(commentDTO.getStar());
 	
 		
 		dao.insert(commentDTO);
@@ -47,7 +47,7 @@ public class CommentController {
 		dto.setPid(commentDTO.getPid());
 		dto.setStar(dao.starAvgSelect(commentDTO.getPid()) );
 		
-		System.out.println("과연 몇나오나"+dao.starAvgSelect(commentDTO.getPid()));
+//		System.out.println("과연 몇나오나"+dao.starAvgSelect(commentDTO.getPid()));
 		
 		attractionsDAO.starUpdate(dto);
 		
@@ -64,22 +64,22 @@ public class CommentController {
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
-		System.out.println("pid" + pid);
+//		System.out.println("pid" + pid);
 		List<CommentDTO> list = dao.selectPid(pid);
 		model.addAttribute("list", list);
-
 		return "joe/comment";
 	}
 
 	@RequestMapping("joe/review2")
-	public String reviewReview(@RequestParam("input") String bnum, CommentDTO commentDTO, Model model ,HttpServletResponse response) {
+	public String reviewReview( CommentDTO commentDTO, Model model ,HttpServletResponse response) {
 		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
 
-		System.out.println("pid뭐가 넘어옴?" + commentDTO.getPid());
-		CommentDTO dto = dao.select(Integer.parseInt(bnum));
+		System.out.println(commentDTO.getBnum());
+//		System.out.println("pid뭐가 넘어옴?" + commentDTO.getPid());
+		CommentDTO dto = dao.select(commentDTO);
 
 		commentDTO.setParents(dto.getParents());
 		commentDTO.setDepth(dto.getDepth() + 1);
@@ -103,9 +103,9 @@ public class CommentController {
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0"); 
 		response.setHeader("Pragma", "no-cache");
 		
-		System.out.println("pid"+pid);
-		System.out.println("bnum"+bnum);
-		System.out.println("content"+content);
+//		System.out.println("pid"+pid);
+//		System.out.println("bnum"+bnum);
+//		System.out.println("content"+content);
 		
 		CommentDTO dto = new CommentDTO();
 //		System.out.println("번호 : " + bnum);
@@ -125,6 +125,7 @@ public class CommentController {
 
 	@RequestMapping("joe/reviewDelete")
 	public String reviewDelete(@RequestParam("bnum") String bnum, @RequestParam("parents") String parents,@RequestParam("pid") String pid,
+			@RequestParam("mid") String mid,
 			Model model ,HttpServletResponse response) {
 		response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT"); 
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -136,11 +137,12 @@ public class CommentController {
 		CommentDTO dto = new CommentDTO();
 		dto.setParents(parents);
 		dto.setBnum(Integer.parseInt(bnum));
-
-		if (dao.selectParents(parents).size() > 1) {
+		dto.setMid(mid);
+		dto.setPid(pid);
+		if (dao.selectParents(dto).size() > 1) {
 			dao.delete(dto);
 		} else {
-			dao.deleteOne(Integer.parseInt(bnum));
+			dao.deleteOne(dto);
 		}
 
 		List<CommentDTO> list = dao.selectPid(pid);

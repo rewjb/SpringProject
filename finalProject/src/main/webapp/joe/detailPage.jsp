@@ -140,7 +140,7 @@ function deleteComment(bnum,id) {//댓글 삭제 함수
    var data = $(num).serialize();//폼 아이디가 댓글번호와 같다
    
    $.ajax({
-      url : "reviewDelete?pid=" + <%=pid%>,
+      url : "reviewDelete?pid=" + '<%=pid%>'+ "&mid=" + '<%=mid%>',
       Type : "POST",
       data : data,
       success : function (result) {
@@ -191,7 +191,7 @@ $(function() {
                $("#cPid").val('<%=pid%>');
                $("#firstId").val('<%=pid%>');
                $("#star").text( "★"+ result.star);
-               alert(result.star);
+//                alert(result.star);
 //                $("#cart").val()
                if ('<%=mid%>' != 'null') {
                   $("#mid").val('<%=mid%>');                  
@@ -478,9 +478,9 @@ $(function() {
 <!-- 대댓글을 입력 할 수 있는 다이얼로그창 평소에는 display:none;상태 -->
 <div class="jumbotron mt-3" id="replyDialog" style="width: 45%; display:none; margin-left: auto; margin-right: auto;">
     <form id= "formSecond"  method="post">
-        <input type="hidden" name="pid" id = "cPid" value=""> 
+        <input type="hidden" name="pid" id = "cPid" value="<%=pid %>"> 
         <input type="hidden" name="parents"> 
-        <input type="hidden" id = "input" name = "input">
+        <input type="hidden" id = "input" name = "bnum">
         <input type="hidden" name="mid" value="<%=mid%>" ><br>
         <textarea class="form-control" name="content" id = "content2" rows="3" cols="60" maxlength="500"></textarea>
         <button class="btn btn-secondary my-2" id ="onclick" onclick="return comment()">등록</button>

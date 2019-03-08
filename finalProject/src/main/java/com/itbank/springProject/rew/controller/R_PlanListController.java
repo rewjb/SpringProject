@@ -48,16 +48,11 @@ public class R_PlanListController {
 	@RequestMapping("rew/planList")
 	public void startPlanList(HttpSession session, Model model , @RequestParam("page") int page) {
 		
-		
-		String temp = "Chinesearchitecture/Japanesearchitecture/Holyplaces/Placeofworship";
-		session.setAttribute("favor", temp);
-		//위에는 가정
-		
 		int showCount = 6;
 		//보여주고자 하는 수량
 		
-
 		String favor = (String) session.getAttribute("favor");
+		
 		List<ShareProjectDTO> favorProjectList = shareProjectDAO.selectAllShareProjectByManyId(mongoShareDAO.returnShareProjectRank(favor, mongoShareDAO.createProjectTagMap()));
 
 		List<ShareProjectDTO> allSearchTextList = mongoShareDAO.sortByDateStar();

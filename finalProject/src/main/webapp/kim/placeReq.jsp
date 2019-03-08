@@ -137,11 +137,12 @@
     <div class="form-group">
       <label for="exampleSelect1">대륙</label>
       <select class="form-control" id="continent" name="continent">
+        <option>남태평양</option>
+        <option>대한민국</option>
+        <option>동남아시아</option>
+        <option>미주</option>
         <option>아시아</option>
         <option>유럽</option>
-        <option>북아메리카</option>
-        <option>남아메리카</option>
-        <option>동남아시아</option>
       </select>
     </div>
     <div class="form-group">

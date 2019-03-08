@@ -139,6 +139,7 @@ public class RecommendController {
 		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
 		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");
 		
+		
 		if(list == null || sortedList == null) {
 			
 			//전체 태그 리스트 불러오기
@@ -155,10 +156,6 @@ public class RecommendController {
 			//불러온 리스트 세션에 세팅
 			session.setAttribute("place_map", tlist);
 			session.setAttribute("place_list", daoList);
-			
-			//다시 세팅
-			list = tlist;
-			sortedList = daoList;
 		}
 		
 		String tag = (String) session.getAttribute("favor");
@@ -174,15 +171,17 @@ public class RecommendController {
 		
 		//세션에서 사용자 선호태그 불러와서 배열형태로 변환
 		String ssFavor = (String) session.getAttribute("favor");
-		if(ssFavor == null) {
+		if(ssFavor == null || ssFavor.equals("")) {
 			ssFavor = "Archaeologicalsite/Ruins/Historicsite/Tourism/Mayacivilization/Village/Grass/Tree/Vacation/House/Water/Aquarium/Sky/Fun/Leisure/Night/Sea/Vacation/World/Silhouette/City/Townsquare/Plaza/Publicspace/Town/Humansettlement/Building/Landmark/Basilica/Architecture";
 			session.setAttribute("favor", ssFavor);			
 		}
+		
 		String[] favor = ssFavor.split("/");
 		
 		//세션의 전체 태그리스트 가져옴
 		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
 		List<AttractionsDTO> sortedList = (List<AttractionsDTO>) session.getAttribute("place_list");
+		
 		
 		//추천 결과의 인덱스를 저장할 배열 선언
 		int[] result = new int[sortedList.size()];

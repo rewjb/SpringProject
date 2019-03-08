@@ -33,8 +33,8 @@ a:hover {text-decoration: underline; color: black;}
 <div class="col-12 pt-3 margin-auto">
 	
 	
-	<ol class="breadcrumb" style="background-image: url('/springProject/resources/IMAGE/sky3.jpg')">
-	  <li class="breadcrumb-item active margin-auto h3" style="font-family: 'Noto Sans KR', sans-serif; color: white;">여행지 신청 리스트</li>
+	<ol class="breadcrumb" style="background-image: url('/springProject/resources/IMAGE/sky2.jpg')">
+	  <li class="breadcrumb-item active margin-auto h3" style="font-family: 'Jua', sans-serif; color: black;">여행지 신청 리스트</li>
 	</ol>
 	</div>
 		<hr>

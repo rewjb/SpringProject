@@ -13,34 +13,30 @@
    
    </style>
 <%
-  ArrayList list2 = (ArrayList)request.getAttribute("list");
-//    System.out.println(list2.size());
-   int tempPage = 0;
-   if ( request.getAttribute("page") == null || request.getAttribute("page").equals("null") || Integer.valueOf((String)request.getAttribute("page")) > (list2.size()/12)+1) {
-//       System.out.println(request.getAttribute("page") + "null일때");
-      tempPage = 1;
+  ArrayList attList = (ArrayList)request.getAttribute("list");//조건에 따른 리스트
+   int tempPage = 0;//페이지숫자를 담을 변수
+   if ( request.getAttribute("page") == null || request.getAttribute("page").equals("null") || Integer.valueOf((String)request.getAttribute("page")) > (attList.size()/12)+1) {
+      tempPage = 1;//페이지가 null이거나 리스트사이즈이상으로 많아질경우 1페이지로이동
    } else {
-//       System.out.println(request.getAttribute("page") + "null아닐때");
       tempPage = Integer.valueOf((String)request.getAttribute("page"));
    }
    
    pageContext.setAttribute("tempPage", tempPage);
-//    System.out.println("temp체크"+ tempPage);
 %>
 
-<c:set var="list" value="${list}"/>
+<c:set var="list" value="${list}"/><!--모델 객체로부터 받은 리스트를 jstl변수에 대입  -->
    
 <div class="row" style="margin-left: auto; margin-right: auto; ">
 <c:choose>   
-<c:when test="${fn:length(list) ne 0}">
+<c:when test="${fn:length(list) ne 0}"><!--넘어온 리스트길이가 0이랑 다르면  -->
 
 <c:choose>
 
-<c:when test="${tempPage eq 0 or tempPage eq 1}">
+<c:when test="${tempPage eq 0 or tempPage eq 1}"><!--페이지가 0이거나 1일경우  -->
 
 <c:choose>
   
-<c:when test="${fn:length(list) le 12}"><!-- ge   =   <= -->
+<c:when test="${fn:length(list) le 12}"><!-- 리스트길이가 12보다 작거나 같을경우 -->
    <c:forEach items="${list}" var="list">
        <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
          <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}" ><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
@@ -57,7 +53,6 @@
                      
                      <p style="padding: 1%;overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5;-webkit-box-orient: vertical;">${list.content}</p>
                   </td>
-<!--                   <td style="text-align: right; "></td> -->
                </tr>
             </table>
       <form id ="${list.pid}" style="display: inline-block; width:100%;">
@@ -68,7 +63,7 @@
       <!-- /.col-lg-4' -->
    </c:forEach>
 </c:when>
-<c:when test="${fn:length(list) gt 12}">
+<c:when test="${fn:length(list) gt 12}"><!--리스트길이가 12보다 클경우  -->
 
 <c:forEach begin="0" end="11" items="${list}" var="list">
       <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
@@ -101,9 +96,9 @@
 </c:when>
 </c:choose>
 </c:when>
-<c:when test="${tempPage gt 1}">
+<c:when test="${tempPage gt 1}"><!-- 페이지가 1보다 클경우 -->
    <c:choose>
-      <c:when test="${tempPage le fn:length(list)/12}">
+      <c:when test="${tempPage le fn:length(list)/12}"> <!-- 페이지가 리스트사이즈를 12로 나눈 값보다 작거나 같을경우 -->
          <c:forEach begin="${((tempPage-1)*12)}" end="${tempPage*12-1}" items="${list}" var="list">
            <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
          <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}" ><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
@@ -132,7 +127,7 @@
             <!-- /.col-lg-4' -->
          </c:forEach>
       </c:when>
-         <c:when test="${tempPage gt fn:length(list)/12  && fn:length(list)%12 gt 0 }">
+         <c:when test="${tempPage gt fn:length(list)/12  && fn:length(list)%12 gt 0 }"><!-- 페이지가 리스트길이를 12로 나누값보다 크고 리스트사이즈를 12로나눈 나머지가 0보다 클경우  -->
             <c:forEach begin="${(tempPage-1)*12 }"  items="${list}" var="list">
         <div class="col-lg-4" style="float:left; display: inline-block; width:100%;">
          <a href="/springProject/joe/detailPage.jsp?pid=${list.pid}" ><img style="width:100%; border:1px inset rgba(220, 220, 220, 0.1); border-radius:1px; margin-bottom:10%;"
@@ -168,7 +163,6 @@
 </c:choose>
 
 </div>
-
    <div>
    <ul class="pagination pagination-lg">
       <li class="page-item "><a class="page-link" id="firstA">1</a>
@@ -179,18 +173,13 @@
       </li>
    </ul>
 </div>
-
-
-
 <script type="text/javascript">
-
-   
 
    $(function() {
       var firstBtn = document.getElementById("firstA");
       var secondBtn = document.getElementById("firstB");
       var thirdBtn = document.getElementById("firstC");
-<%if(list2.size() == 0){
+<%if(attList.size() == 0){
       
    }else{%>
    
@@ -207,7 +196,7 @@
             firstBtn.setAttribute("href","attractionsLIst.jsp?page=" +'<%= (tempPage-1) %>');
          }
          
-      if (page < <%= list2.size()/12 %> + <%= list2.size()%12 %> && page <= <%= list2.size()/12 %>){
+      if (page < <%= attList.size()/12 %> + <%= attList.size()%12 %> && page <= <%= attList.size()/12 %>){
          console.log("3");
             thirdBtn.innerHTML = page+1;
             thirdBtn.setAttribute("href","attractionsLIst.jsp?page="+ '<%=(tempPage+1) %>');
@@ -217,5 +206,4 @@
          }
       <%}%>
       });
-   </script>
-   
+   </script> 

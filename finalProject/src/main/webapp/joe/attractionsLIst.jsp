@@ -5,7 +5,7 @@
 <html>
 <head>
 <%
-session.setAttribute("mid", "temp");
+// session.setAttribute("mid", "temp");
 %>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">	
 

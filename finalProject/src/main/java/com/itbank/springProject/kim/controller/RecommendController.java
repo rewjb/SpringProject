@@ -35,6 +35,29 @@ public class RecommendController {
 	@RequestMapping("kim/Tag_Select")
 	public String move(HttpSession session, Model model, HttpServletRequest req){
 		
+		//세션의 전체 태그리스트 가져옴
+		HashMap<String, String> list = (HashMap<String, String>) session.getAttribute("place_map");
+		List<AttractionsDTO> daoList = (List<AttractionsDTO>) session.getAttribute("place_list");
+		
+		//세션에 값이 없으면
+		if(list == null || daoList == null) {
+			
+			//전체 태그 리스트 불러오기
+			list = dao1.mongoSelectAll();		
+			List<String> keyList = dao1.sortByValue(list);
+			List<AttractionsDTO> allList = dao2.selectAll();
+			
+			//map을 DTO형태로 가
+			daoList = new ArrayList<>();
+			for (int i = 0; i < keyList.size(); i++) {
+				daoList.add(i, allList.get(i));
+			}	
+			
+			//불러온 리스트 세션에 세팅
+			session.setAttribute("place_map", list);
+			session.setAttribute("place_list", daoList);
+		}
+		
 		
 		System.out.println("change파라메터 : " + req.getParameter("change"));
 		
@@ -42,20 +65,6 @@ public class RecommendController {
 			model.addAttribute("change", "t");
 		}
 		
-		//전체 태그 리스트 불러오기
-		HashMap<String, String> list = dao1.mongoSelectAll();		
-		List<String> keyList = dao1.sortByValue(list);
-		List<AttractionsDTO> allList = dao2.selectAll();
-		
-		//map을 DTO형태로 가
-		List<AttractionsDTO> daoList = new ArrayList<>();
-		for (int i = 0; i < keyList.size(); i++) {
-			daoList.add(i, allList.get(i));
-		}	
-		
-		//불러온 리스트 세션에 세팅
-		session.setAttribute("place_map", list);
-		session.setAttribute("place_list", daoList);
 		
 		Random ran = new Random();
 		String[] ranImgs = new String[12];

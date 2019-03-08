@@ -166,9 +166,9 @@
     </div>
     
     <input type="hidden" id="mainImg" name="mainImg" value="123">
-    <input type="hidden" id="userId" name="userId" value="유저아이디">
+    <input type="hidden" id="userId" name="userId" value="${sessionScope.mid }">
     
-    <button type="button" class="btn btn-primary" id="submit">제출</button>
+    <button class="btn btn-primary" id="submit">제출</button>
     <a class="btn btn-sm btn-outline-secondary" href="Tag_Select">태그페이지</a>
     <a class="btn btn-sm btn-outline-secondary" href="/springProject/joe/attractionsLIst.jsp">여행지 리스트</a>
     </form>

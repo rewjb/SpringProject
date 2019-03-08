@@ -74,6 +74,11 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		var f = $("#login_feedback-inputMpw");
 		f.text('');				//비워주기
 		$("#login_mpw").val(pw_l.val());//전송폼에 값 세팅
+		
+		if(event.keyCode == 13) {
+			$("#login_loginBtn").trigger("click");
+		}
+		
 		$("#login_inputMpw").blur(function() {
 			$("#login_mid").val(id_l.val());	//태그를 벗어날 때 id전송폼에 값 세팅
 			$("#login_mpw").val(pw_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
@@ -754,8 +759,8 @@ body {
 
 						<!-- MPW 비밀번호 입력 폼 -->
 						<div class="form-group">
-							<input type="password" id="login_inputMpw" class="form-control"
-								placeholder="Password" required>
+							<input type="password" id="login_inputMpw" class="form-control" 
+							placeholder="Password" required>
 							<div id="login_feedback-inputMpw" class="feedback"></div>
 						</div>
 						
@@ -1305,7 +1310,6 @@ body {
     <c:forEach begin="1" end="3" varStatus="status"> 
     <!-- 슬라이드 -->
     <li>
-	<p class="pt-5">
     <table style="border-spacing: 5px; border-collapse: separate;"> 
     	<tr>
     		<td><img src="/springProject/resources/IMAGE/attractionsImg/${ranImgs[status.count*4-4]}" class="next"></td>

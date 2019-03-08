@@ -122,6 +122,14 @@ public class PlaceReqDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+	@Override
+	public String toString() {
+		return "PlaceReqDTO [no=" + no + ", continent=" + continent + ", city=" + city + ", title=" + title
+				+ ", address=" + address + ", content=" + content + ", contentElements=" + contentElements
+				+ ", mainImg=" + mainImg + ", time=" + time + ", userId=" + userId + "]";
+	}
+	
 	
 	
 }

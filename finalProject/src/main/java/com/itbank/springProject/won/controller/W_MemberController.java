@@ -173,13 +173,24 @@ public class W_MemberController{
 		}//end try~catch
 	}//end selectIdPw
 	
+	//로그아웃하는 컨트롤러
+	@RequestMapping("won/logout")
+	public String logout(HttpSession session){
+		//삭제할 mid확인
+		System.out.println(session.getAttribute("mid"));
+		session.removeAttribute("mid");
+		//삭제되었는지 확인
+		System.out.println(session.getAttribute("mid"));
+		return "redirect:/won/logout.jsp";
+	}
+	
 	//마이페이지에 정보수정 페이지에 필요한 개인정보 검색
 	@RequestMapping("won/selectMember")
 	public String selectMember(Model model, MemberDTO dto,
 		//코드 합치기 전에 임시로 세션에 넣어놓은 mid, 이후 삭제해야함---
 			HttpSession session){
-//		String id = "hanna@whitehouse.gov";
-//		session.setAttribute("mid", id);
+		String id = "hanna@whitehouse.gov";
+		session.setAttribute("mid", id);
 		//-------------------------------------------
 		try {
 			String mid = (String)session.getAttribute("mid");

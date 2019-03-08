@@ -49,8 +49,14 @@
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/Tag_Select">Sign up</a>
-        &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/login.jsp">Login</a>
+        &nbsp;
+		<!-- session에 mid의 존재유무에 따라 버튼을 다르게 띄워줌 -->
+		<%if(session.getAttribute("mid")==null){ %>     
+	        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/login.jsp">Login</a>
+		<%}else{ %>     
+        	<a class="btn btn-sm btn-outline-secondary" href="/springProject/won/logout">Logout</a>
+		<%} %>
+        &nbsp;
       </div>
     </div>
   </header>

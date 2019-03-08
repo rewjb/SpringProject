@@ -62,13 +62,13 @@ public class W_MemberController{
 			//성공시 업데이트 성공한 dto를 모델에 담아서 마이페이지로 보내줌 
 			model.addAttribute("memberDTO", mdto);
 			System.out.println("updateMember 성공");
-			return "won/mypage_test";
+			return "won/mypage";
 		} catch (Exception e) {
 			//정보수정 실패시 : 정보수정 하기 전 데이터를 가지고 마이페이지로 돌아감
 			e.printStackTrace();
 			model.addAttribute("memberDTO", memberDTO);
 			System.out.println("updateMember 실패");
-			return "won/mypage_test";
+			return "won/mypage";
 		}
 	}//end updateMember()
 	
@@ -212,12 +212,8 @@ public class W_MemberController{
 			System.out.println("select실패");
 			return "redirect:/main.jsp";
 		}
-		return "won/mypage_test";
+		return "won/mypage";
 	}//end selectMember();
-	
-	@RequestMapping("won/myPage")
-	public void myPage() {
-		
-	}
+
 	
 }

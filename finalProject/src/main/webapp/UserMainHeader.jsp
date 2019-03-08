@@ -42,9 +42,7 @@
         <img src="/springProject/resources/IMAGE/logo4.png" width="250px"></a>
       </div>
       <div class="col-4 d-flex justify-content-end align-items-center pr-4">
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/myPage">MyPage</a>
-        &nbsp;     
-        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/selectMember">MyPage2</a>
+        <a class="btn btn-sm btn-outline-secondary" href="/springProject/won/selectMember">mypage</a>
         &nbsp;     
         <a class="btn btn-sm btn-outline-secondary" href="/springProject/kim/placeReq_list">admin</a>
         &nbsp;     

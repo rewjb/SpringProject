@@ -7,13 +7,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
-<%ArrayList list = (ArrayList)request.getAttribute("list"); 
-// 	System.out.println("사이즈 몇이야 : "+ list.size());
+<%-- <%ArrayList list = (ArrayList)request.getAttribute("list");  --%>
+<!-- 	System.out.println("사이즈 몇이야 : "+ list.size()); -->
 
-%>
+<!-- %> -->
 
-<c:set var="list" value="${list}"/>
-<c:if test="${fn:length(list) ne 0}">
+<c:set var="list" value="${list}"/><!-- 모델 속성으로 넘어온 list를 변수에 담는다 -->
+<c:if test="${fn:length(list) ne 0}"><!-- 리스트의 길이가 0과 다르면 -->
 
 <c:forEach items="${list}" var="list">
 

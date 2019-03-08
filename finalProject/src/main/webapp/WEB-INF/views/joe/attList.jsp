@@ -165,7 +165,7 @@
 </div>
    <div>
    <ul class="pagination pagination-lg">
-      <li class="page-item "><a class="page-link" id="firstA">1</a>
+      <li class="page-item "><a class="page-link" id="firstA">1</a><!-- 페이징 할때 번호들 -->
       </li>
       <li class="page-item active"><a class="page-link"  id="firstB" >2</a>
       </li>
@@ -175,35 +175,34 @@
 </div>
 <script type="text/javascript">
 
-   $(function() {
+   $(function() {//tempPage에 넘어오는 값과 list의 길이에 따른 페이지 처리 
       var firstBtn = document.getElementById("firstA");
       var secondBtn = document.getElementById("firstB");
       var thirdBtn = document.getElementById("firstC");
-<%if(attList.size() == 0){
-      
-   }else{%>
+<%if (attList.size() == 0) {
+
+			} else {%>
    
-   page = <%= tempPage%>
+   page = <%=tempPage%>
    
-   console.log("0");
+//    console.log("0");
          secondBtn.innerHTML = page; 
          if (page==1) {
             console.log("1");
             firstBtn.innerHTML = "";
          }else{
-            console.log("2");
+//             console.log("2");
             firstBtn.innerHTML = page-1;
-            firstBtn.setAttribute("href","attractionsLIst.jsp?page=" +'<%= (tempPage-1) %>');
+            firstBtn.setAttribute("href","attractionsLIst.jsp?page=" +'<%=(tempPage - 1)%>');
          }
-         
-      if (page < <%= attList.size()/12 %> + <%= attList.size()%12 %> && page <= <%= attList.size()/12 %>){
-         console.log("3");
+      if (page < <%=attList.size() / 12%> + <%=attList.size() % 12%> && page <= <%=attList.size() / 12%>){
+//          console.log("3");
             thirdBtn.innerHTML = page+1;
-            thirdBtn.setAttribute("href","attractionsLIst.jsp?page="+ '<%=(tempPage+1) %>');
-      }else{
-         console.log("4");
-            thirdBtn.innerHTML = "";
-         }
-      <%}%>
-      });
-   </script> 
+            thirdBtn.setAttribute("href","attractionsLIst.jsp?page="+ '<%=(tempPage + 1)%>');
+		} else {
+			console.log("4");
+			thirdBtn.innerHTML = "";
+		}
+<%}%>
+	});
+</script> 

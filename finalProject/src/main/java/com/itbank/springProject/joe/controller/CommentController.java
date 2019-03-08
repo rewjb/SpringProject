@@ -19,6 +19,7 @@ import com.itbank.springProject.db.CommentDTO;
 @Controller
 public class CommentController {
 
+	//댓글 DAO 
 	@Autowired
 	@Qualifier("CommentDAO")
 	CommentDAO dao;

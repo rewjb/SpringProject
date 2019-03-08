@@ -5,10 +5,9 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
     
-  <% ArrayList list = (ArrayList)request.getAttribute("list");
-   System.out.println("리스트 사이즈 몇????"+list.size());
-  
-  %>
+<%--   <% ArrayList list = (ArrayList)request.getAttribute("list"); --%>
+<!--     System.out.println("리스트 사이즈 몇????"+list.size()); -->
+<%--   %> --%>
 <%--   
 <!--jstl안될때  -->
 <div>
@@ -37,7 +36,7 @@ CommentDTO dto;
 </form>
 <%} %>
 </div>   --%>
-<div id="replyList"> 
+<div id="replyList"> <!-- 해당 관광명소에대한 댓글 리스트를 뿌려주는곳  -->
     <c:forEach  items="${list}" var="list">
        <div class="jumbotron mt-3" id="replyItem<c:out value="${list.bnum}"/>" 
              style="border: 2px solid gray; width: 600px; height: auto; padding: 10px; margin-top: 5px; margin-left: <c:out value="${20*list.depth}"/>px; display: inline-block"> 

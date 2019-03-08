@@ -74,6 +74,11 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 		var f = $("#login_feedback-inputMpw");
 		f.text('');				//비워주기
 		$("#login_mpw").val(pw_l.val());//전송폼에 값 세팅
+		
+		if(event.keyCode == 13) {
+			$("#login_loginBtn").trigger("click");
+		}
+		
 		$("#login_inputMpw").blur(function() {
 			$("#login_mid").val(id_l.val());	//태그를 벗어날 때 id전송폼에 값 세팅
 			$("#login_mpw").val(pw_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
@@ -99,7 +104,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 			success : function(result) {
 				console.log('일반로그인'+result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
 				if(result == "0"){
-					//로그인 성공 - 세션 등록 후 메인으로 이동
+					//로그인 성공 - 메인으로 이동
 					alert(id_l.val()+'님 환영합니다.');
 					location.href="/springProject/main.jsp"
 				} else {
@@ -107,7 +112,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 					alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
 					id_l.text()="";
 					pw_l.text()="";
-				}//end innerIF
+				}//end inner_if()
 			}//end success
 		});//end ajax
 	})//end #login_loginBtn click()
@@ -344,8 +349,18 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 						type : "POST",
 						data : sendData,
 						success : function(result) {
-							$("#id").attr("value", $("#mid").val());
-							console.log(result+'--1:실패,0:성공');
+							console.log('일반회원가입'+result+':1-실패,0-성공');
+							if(result==0){
+								//회원가입 성공 - 다음 페이지로 이동
+								alert($("#mid").val()+'님 가입을 환영합니다!');
+								$("#id").attr("value", $("#mid").val());
+								$("#hdnBtn").trigger("click");
+							}else{
+								//가입 실패
+								alert("다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
+								id_l.text()="";
+								pw_l.text()="";
+							}//end inner_if()
 						}//end success
 					});//end ajax					
 				}//end if()
@@ -398,7 +413,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
     });
     
     $(".next").click(function() {
-    	<!-- 이미지 클릭할 때마다 body에 이미지 src를 담은 히든자식 생성해서 붙이기-->
+    	//<!-- 이미지 클릭할 때마다 body에 이미지 src를 담은 히든자식 생성해서 붙이기-->
     	var src = $(this).attr("src")
     	
     	if(src != null) { 
@@ -732,8 +747,8 @@ body {
           		<div>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간-------------->
 					<form id="login_hidden">
-						<input type="text" id="login_mid" name="mid" class="hidden" placeholder="mid"><br>
-						<input type="text" id="login_mpw" name="mpw" class="hidden" placeholder="mpw"><br>
+						<input type="hidden" id="login_mid" name="mid" class="hidden" placeholder="mid"><br>
+						<input type="hidden" id="login_mpw" name="mpw" class="hidden" placeholder="mpw"><br>
 					</form>
 <!------------------------- body1 : 실제 컨트롤러와 동작하는 공간 끝------------>
 				</div>
@@ -754,8 +769,8 @@ body {
 
 						<!-- MPW 비밀번호 입력 폼 -->
 						<div class="form-group">
-							<input type="password" id="login_inputMpw" class="form-control"
-								placeholder="Password" required>
+							<input type="password" id="login_inputMpw" class="form-control" 
+							placeholder="Password" required>
 							<div id="login_feedback-inputMpw" class="feedback"></div>
 						</div>
 						
@@ -817,9 +832,17 @@ body {
 							type : "POST",
 							data : sendData,
 							success : function(result) {
-								console.log(result);
-								alert($("#login_mid").val()+'님 환영합니다.');
-								location.href="/springProject/main.jsp"
+								console.log('구글로그인'+result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
+								if(result == "0"){
+									//로그인 성공 - 메인으로 이동
+									alert(id_l.val()+'님 환영합니다.');
+									location.href="/springProject/main.jsp"
+								} else {
+									//로그인 실패
+									alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
+									id_l.text()="";
+									pw_l.text()="";
+								}//end inner_if()
 							}//end success
 						});//end ajax
 
@@ -950,9 +973,17 @@ body {
 						  	type : 'POST', 
 						  	data : sendData, 
 						  	success : function(result) { 
-						  		console.log(result+'--1:실패,0:성공'); 
-								alert($('#login_mid').val()+'님 환영합니다.');
-								location.href='/springProject/main.jsp'
+		  						console.log('페북로그인'+result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
+								if(result == '0'){
+									//로그인 성공 - 메인으로 이동
+									alert(id_l.val()+'님 환영합니다.');
+									location.href='/springProject/main.jsp';
+								} else {
+									//로그인 실패
+									alert('아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx');
+									id_l.text()='';
+									pw_l.text()='';
+								}//end inner_if()
 					  		}//end success 
 					  });//end ajax
                   ">
@@ -1105,9 +1136,18 @@ body {
 							type : "POST",
 							data : sendData,
 							success : function(result) {
-								console.log(result);
-								alert($("#mid").val()+'님 가입성공!');
-								$("#hdnBtn").trigger("click");
+								console.log('구글회원가입'+result+':1-실패,0-성공');
+								if(result==0){
+									//회원가입 성공 - 다음 페이지로 이동
+									alert($("#mid").val()+'님 가입을 환영합니다!');
+									$("#id").attr("value", $("#mid").val());
+									$("#hdnBtn").trigger("click");
+								}else{
+									//가입 실패
+									alert("다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
+									id_l.text()="";
+									pw_l.text()="";
+								}//end inner_if()
 							}//end success
 						});//end ajax
 
@@ -1252,12 +1292,18 @@ body {
 						  	type : 'POST', 
 						  	data : sendData, 
 						  	success : function(result) { 
-						  		console.log(result+'--1:실패,0:성공'); 
-						  		alert($('#mid').val()+'님 가입성공!');
-						  		if(result==0){
-						  			
-						  			$('#hdnBtn').trigger('click');
-						  		}
+								console.log('페북회원가입'+result+':1-실패,0-성공');
+								if(result==0){
+									//회원가입 성공 - 다음 페이지로 이동
+									alert($('#mid').val()+'님 가입을 환영합니다!');
+									$('#id').attr('value', $('#mid').val());
+									$('#hdnBtn').trigger('click');
+								}else{
+									//가입 실패
+									alert('다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx');
+									id_l.text()='';
+									pw_l.text()='';
+								}//end inner_if()
 					  		}//end success 
 					  });//end ajax
                   ">
@@ -1305,7 +1351,6 @@ body {
     <c:forEach begin="1" end="3" varStatus="status"> 
     <!-- 슬라이드 -->
     <li>
-	<p class="pt-5">
     <table style="border-spacing: 5px; border-collapse: separate;"> 
     	<tr>
     		<td><img src="/springProject/resources/IMAGE/attractionsImg/${ranImgs[status.count*4-4]}" class="next"></td>

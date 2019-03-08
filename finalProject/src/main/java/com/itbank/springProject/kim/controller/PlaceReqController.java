@@ -36,6 +36,7 @@ public class PlaceReqController {
 
 	@RequestMapping("kim/placeReq")
 	public void add(PlaceReqDTO placeReqDTO) throws Exception{
+		System.out.println(placeReqDTO.toString());
 		dao.insert(placeReqDTO);
 	}
 	

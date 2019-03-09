@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- 	<bean id="serverAddress" class="com.mongodb.ServerAddress"> -->
+<!-- 		<constructor-arg name="host" value="34.73.189.101" /> -->
+<!-- 		<constructor-arg name="port" value="27017" /> -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean id="mongoOptions" class="com.mongodb.MongoOptions"> -->
+<!-- 	<property name="connectionsPerHost" value="10" /> -->
+<!-- 	<property name="socketKeepAlive" value="true" /> -->
+<!-- 	<property name="connectTimeout" value="3000" /> -->
+<!-- 	<property name="socketTimeout" value="3000" /> -->
+<!-- 	</bean> -->
+	
+	
+
+<!-- 	<mongo:mongo-client id="mongoClient" host="34.73.189.101" -->
+<!-- 		port="27017"> -->
+<!-- 		<mongo:client-options connect-timeout="30000" -->
+<!-- 			connections-per-host="10" max-wait-time="30000" socket-keep-alive="true" /> -->
+<!-- 	</mongo:mongo-client> -->
+
+
+
+<!-- 	<bean id="asd" -->
+<!-- 		class="org.springframework.data.mongodb.core.SimpleMongoDbFactory"> -->
+<!-- 		<constructor-arg name="databaseName" value="tag" /> -->
+<!-- 		<constructor-arg name="mongoClient" ref="mongoClient" /> -->
+<!-- 	</bean> -->
+
+
+</beans>
+
+
+

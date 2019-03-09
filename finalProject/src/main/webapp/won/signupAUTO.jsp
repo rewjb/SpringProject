@@ -1,3 +1,4 @@
+<!-- 멤버 데이터들 DB로 입력해주는 페이지, 사이트랑 직접적인 상관은 없음 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,8 +30,10 @@
 							var maddr1 = item.maddr1;		//6
 							var maddr2 = item.maddr2;		//7
 							var mtel = item.mtel;			//8
-							var agegroup = item.agegroup;	//9
-							var rdate = item.rdate;		//10
+							var age = item.agegroup;		//9
+							var age1 = Math.floor(age/10)*10
+							var agegroup = age1 + "s"
+							var rdate = item.rdate;			//10
 							$("#mid").val(mid); console.log(mid);
 							$("#mpw").val(mpw); console.log(mpw);
 							$("#mname").val(mname); console.log(mname);
@@ -43,14 +46,13 @@
 							$("#rdate").val(rdate); console.log(rdate);
 							
 							var form = $("#form").serialize();
-							alert(form)
 			               
 							$.ajax({
 								url : "insertMember",
 								type : "POST",
 								data : form,
 								success : function(result) {
-									alert(result);
+									console.log(result+"--- 0:성공 / 1:실패");
 								}//end success
 							});//end ajax
 							
@@ -65,7 +67,7 @@
 	</script>
 </head>
 <body>
-	<button>버튼</button>
+	<button>버튼</button> ☜멤버 데이터 입력<br>
 	<h3 id="h1"></h3>
 	<h3 id="h2"></h3>
 	<h3 id="h3"></h3>

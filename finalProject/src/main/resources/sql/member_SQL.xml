@@ -18,7 +18,7 @@
 	<!-- 로그인 성공시 최근 접속일 수정 -->
 	<update id="update" parameterType="MemberDTO">
 		UPDATE member SET
-		mpw = #{mpw}, mprofile = #{mprofile}, mtel = #{mtel} 
+		mpw = #{mpw}, mprofile = #{mprofile}, mtel = #{mtel}, 
 		maddr1 = #{maddr1}, maddr2 = #{maddr2}, 
 		gender = #{gender}, agegroup = #{agegroup} 
 		WHERE mid = #{mid}

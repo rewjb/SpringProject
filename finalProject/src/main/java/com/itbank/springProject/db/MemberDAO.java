@@ -25,6 +25,10 @@ public class MemberDAO{
 		session.update("member.update", dto);
 	}
 	
+	public void updateDate(MemberDTO dto){
+		session.update("member.updateDate", dto);
+	}
+	
 	public void delete(MemberDTO dto) throws Exception {
 		session.delete("member.delete", dto);
 	}

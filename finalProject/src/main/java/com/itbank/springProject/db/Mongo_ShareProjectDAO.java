@@ -19,6 +19,7 @@ import org.eclipse.jdt.internal.compiler.codegen.DoubleCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoClientFactoryBean;
 import org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -27,21 +28,19 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
-import com.itbank.springProject.rew.controller.mongoDB_delete;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoClientURI;
-import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.sun.org.apache.xalan.internal.xsltc.dom.ArrayNodeListIterator;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
@@ -61,27 +60,58 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 public class Mongo_ShareProjectDAO {
 
 	// private MongoTemplate mongoTemplate;
+	private MongoClient mongoClient;
+	private MongoDatabase tagDB;
+	public MongoCollection<Document> commentColl;
+	
+	
+	public Mongo_ShareProjectDAO() {
+		
+		mongoClient = new MongoClient("34.73.189.101", 27017);
+		tagDB = mongoClient.getDatabase("tag");
+		commentColl = tagDB.getCollection("shareProject");
+		
+	}
 
-	private MongoClient mongoClient = new MongoClient("34.73.189.101", 27017);
 
-	private MongoDatabase tagDB = mongoClient.getDatabase("tag");
 
-	public MongoCollection<Document> commentColl = tagDB.getCollection("shareProject");
 
 	private int spaceCount = 0;
 
 	// 경로의 저장을 위한 stack
 	private Stack<String> stackID = new Stack<>();
 	private String space;
-	
-	public long deleteProject(PlanDTO planDTO){
-		
-//		new Document("$and", findOptionList)
-//		
-//		commentColl.deleteOne(new Document( , ));
-//		
-		
-		return 0;
+
+	public List<ShareProjectDTO> getProjectByStar() {
+
+		Document temp = new Document("star", -1);
+
+		MongoCursor<Document> cursor = commentColl.find().sort(temp).iterator();
+
+		List<ShareProjectDTO> shareList = new ArrayList<>();
+
+		ShareProjectDTO dto = null;
+
+		while (cursor.hasNext()) {
+			temp = cursor.next();
+			dto = new ShareProjectDTO();
+			dto.setMid(temp.getString("pMid"));
+			dto.setPtitle(temp.getString("ptitle"));
+			dto.setStar(temp.getDouble("star")+"");
+
+			shareList.add(dto);
+		}
+		return shareList;
+	}
+
+	public long deleteProject(PlanDTO planDTO) {
+		List<Document> list = new ArrayList<>();
+		Document insert1 = new Document("pMid", planDTO.getMid());
+		Document insert2 = new Document("ptitle", planDTO.getPtitle());
+		list.add(insert1);
+		list.add(insert2);
+		DeleteResult result = commentColl.deleteOne(new Document("$and", list));
+		return result.getDeletedCount();
 	}
 
 	public List<ShareProjectDTO> sortByDateStar() {
@@ -89,27 +119,25 @@ public class Mongo_ShareProjectDAO {
 		Document temp = new Document("reg_date", -1);
 		temp.append("star", -1);
 
-		System.out.println(temp.toJson());
-		System.out.println(new Document("$sort", temp).toJson());
-
 		MongoCursor<Document> cursor = commentColl.find().sort(temp).iterator();
-		
+		;
+
 		List<ShareProjectDTO> shareList = new ArrayList<>();
-		
-		ShareProjectDTO dto=null;
-		
+
+		ShareProjectDTO dto = null;
+
 		while (cursor.hasNext()) {
 			temp = cursor.next();
 			dto = new ShareProjectDTO();
 			dto.setMid(temp.getString("pMid"));
 			dto.setPtitle(temp.getString("ptitle"));
-			
+			dto.setStar("" + temp.getDouble("star"));
+
 			shareList.add(dto);
 		}
-		
 		return shareList;
 	}//sortDateStar 메서드 종료
-	
+
 	public Map<String, String> createProjectTagMap() {
 		//작업
 		HashMap<String, String> map = new HashMap<>();
@@ -128,7 +156,6 @@ public class Mongo_ShareProjectDAO {
 		}
 		return map;
 	}
-	
 
 	public List<TagPoolDTO> returnShareProjectRank(String userTagText, Map<String, String> map) {
 		String userTagArray[] = userTagText.split("/");
@@ -141,11 +168,11 @@ public class Mongo_ShareProjectDAO {
 		Iterator<String> iter = key.iterator();
 		String strKey = null;
 
-		for (int i = 0; i < key.size(); i++) {
+		for (int i = 0; i < key.size() - 1; i++) {
 			strKey = iter.next();
 			temp = 0;
 			for (int j = 0; j < userTagArray.length; j++) {
-				if (map.get(strKey).contains(userTagArray[i])) {
+				if (map.get(strKey).contains(userTagArray[j])) {
 					++temp;
 				}
 			}
@@ -156,7 +183,6 @@ public class Mongo_ShareProjectDAO {
 			inputTag.setCount(i);//원래 temp 들어감
 			shareProjectList.add(inputTag);
 		}
-
 
 		for (int i = 0; i < shareProjectList.size(); i++) {
 			for (int j = i; j < shareProjectList.size(); j++) {
@@ -169,7 +195,6 @@ public class Mongo_ShareProjectDAO {
 				}
 			}
 		} // 정렬 for문! 선택정렬임
-
 
 		return shareProjectList;
 
@@ -192,11 +217,6 @@ public class Mongo_ShareProjectDAO {
 		newDocument.append("link", Arrays.asList());
 		commentColl.insertOne(newDocument);
 
-		MongoCursor<Document> result = commentColl.find().iterator();
-		while (result.hasNext()) {
-			System.out.println(result.next().toJson());
-		}
-
 	}
 
 	// ...프로젝트 공유시 몽고에 최초 1회 넣어주는 메서드
@@ -205,8 +225,6 @@ public class Mongo_ShareProjectDAO {
 	public String deleteComment(Mongo_ShareProjectDTO MongoComment, String dist) {
 
 		UpdateResult result;
-
-		// System.out.println("DAO로 넘어온 DTO 값="+MongoComment);
 
 		List<Document> findOptionList = new ArrayList<>();
 		findOptionList.add(new Document("pMid", MongoComment.getpMid()));
@@ -221,11 +239,8 @@ public class Mongo_ShareProjectDAO {
 			}
 		}
 
-		// System.out.println(path);
 		Document updateDocument = new Document();
 		updateDocument.append(path, new Document("reg_date", dist.split("&&")[1]));
-
-		// System.out.println(updateDocument.toJson());
 
 		Document temp = new Document();
 		temp.append(path, updateDocument);
@@ -245,6 +260,29 @@ public class Mongo_ShareProjectDAO {
 			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$pull", updateDocument), options);
 		}
 
+		if (MongoComment.getLevel() == 1) {
+
+			MongoCursor<Document> tempResult = commentColl.find(new Document("$and", findOptionList)).iterator();
+
+			Document tempDoc;
+			double tempStar = 0;
+			int tempStar_join = 0;
+
+			while (tempResult.hasNext()) {
+
+				tempDoc = tempResult.next();
+
+				tempStar = tempDoc.get("star", Double.class);
+				tempStar_join = tempDoc.get("star_join", Integer.class);
+			}
+
+			Document starPath = new Document("star", (double) (tempStar * tempStar_join - MongoComment.getStarValue()) / (tempStar_join - 1));
+			Document star_joinPath = new Document("star_join", tempStar_join - 1);
+
+			commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", starPath));
+			commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", star_joinPath));
+		}
+
 		String resultString = "no";
 
 		if (result.getModifiedCount() > 0) {
@@ -260,8 +298,6 @@ public class Mongo_ShareProjectDAO {
 
 		UpdateResult result;
 
-		// System.out.println("DAO로 넘어온 DTO 값="+MongoComment);
-
 		List<Document> findOptionList = new ArrayList<>();
 		findOptionList.add(new Document("pMid", MongoComment.getpMid()));
 		findOptionList.add(new Document("ptitle", MongoComment.getPtitle()));
@@ -275,16 +311,12 @@ public class Mongo_ShareProjectDAO {
 			}
 		}
 
-		// System.out.println(path);
 		Document updateDocument = new Document();
 		updateDocument.append(path, MongoComment.getContent());
-
-		// System.out.println(updateDocument.toJson());
 
 		Document temp = new Document();
 		temp.append(path, updateDocument);
 
-		// System.out.println("답글이네");
 		List<Document> optionList = new ArrayList<>();
 		optionList.add(new Document("abcd.reg_date", MongoComment.getDistinction().split("&&")[1]));
 		UpdateOptions options = new UpdateOptions().arrayFilters(optionList);
@@ -295,10 +327,34 @@ public class Mongo_ShareProjectDAO {
 			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", updateDocument), options);
 		}
 
+		//작업중
+
 		String resultString = "no";
 
 		if (result.getModifiedCount() > 0) {
 			resultString = "yes";
+		}
+
+		if (MongoComment.getLevel() == 1) {
+
+			MongoCursor<Document> tempResult = commentColl.find(new Document("$and", findOptionList)).iterator();
+
+			Document tempDoc;
+			double tempStar = 0;
+			int tempStar_join = 0;
+
+			while (tempResult.hasNext()) {
+
+				tempDoc = tempResult.next();
+
+				tempStar = tempDoc.get("star", Double.class);
+				tempStar_join = tempDoc.get("star_join", Integer.class);
+			}
+
+			Document starPath = new Document("star", (double) (tempStar * tempStar_join - MongoComment.getBeforeStar() + MongoComment.getStarValue()) 
+					                                           / (tempStar_join));
+
+			commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", starPath));
 		}
 
 		return resultString;
@@ -333,22 +389,14 @@ public class Mongo_ShareProjectDAO {
 
 		UpdateResult result;
 
-		// System.out.println(path);
-
 		if (MongoComment.getLevel() == 1) {
 
-			// System.out.println("첫댓글을 !!");
-
-			// System.out.println(new Document("$and",
 			// findOptionList).toJson());
-			// System.out.println( new Document("$push",
 			// insertDoc_path).toJson());
 
 			result = commentColl.updateOne(new Document("$and", findOptionList), new Document("$push", insertDoc_path));
 
 			MongoCursor<Document> tempResult = commentColl.find(new Document("$and", findOptionList)).iterator();
-
-			// System.out.println("여기 실행되니 ?");
 
 			Document tempDoc;
 			double tempStar = 0;
@@ -369,7 +417,6 @@ public class Mongo_ShareProjectDAO {
 			commentColl.updateOne(new Document("$and", findOptionList), new Document("$set", star_joinPath));
 
 		} else {
-			// System.out.println("답글이네");
 			List<Document> optionList = new ArrayList<>();
 			optionList.add(new Document("abcd.reg_date", MongoComment.getDistinction().split("&&")[1]));
 			UpdateOptions options = new UpdateOptions().arrayFilters(optionList);
@@ -419,27 +466,17 @@ public class Mongo_ShareProjectDAO {
 
 				tempI = list.size() - i - 1;
 
-				// System.out.println();
-
 				space = "";
 				for (int j = 0; j < spaceCount; j++) {
 					space += "\t";
 				}
 
 				stackID.push((String) list.get(tempI).get("mid") + "&&" + (String) list.get(tempI).get("reg_date"));
-				// System.out.print("구분값 = " + stackID.get(stackID.size() - 1) +
 				// "/ 레벨 = " + spaceCount);
 
-				// System.out.println();
-				// System.out.println("------------------------------------------------");
-
-				// System.out.println(space + "mid = " +
 				// list.get(tempI).get("mid"));
-				// System.out.println(space + "star = " +
 				// list.get(tempI).get("star"));
-				// System.out.println(space + "content = " +
 				// list.get(tempI).get("content"));
-				// System.out.println(space + "time = " +
 				// list.get(tempI).get("reg_date"));
 
 				list.get(tempI).append("level", spaceCount);

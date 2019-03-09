@@ -4,6 +4,10 @@
 
 <mapper namespace="review">
 
+	<select id="starAvgSelect" parameterType="String" resultType="double">
+		SELECT ROUND(AVG(star), 1) FROM RIVIEW WHERE pid = #{value}
+	</select>
+
 	<select id="Pselect" parameterType="String" resultType="ComDTO">
 		SELECT pid,depth+1 depth,border FROM RIVIEW WHERE bnum = #{parents}
 	</select> 
@@ -12,30 +16,31 @@
 		SELECT NVL(MAX(border),0)+1 FROM RIVIEW WHERE pid = #{value}
 	</select> 
 	
-	<select id="select" parameterType="Int" resultType="ComDTO">
-		SELECT * FROM RIVIEW WHERE bnum = #{value}
+	<select id="select" parameterType="ComDTO" resultType="ComDTO">
+		SELECT * FROM RIVIEW WHERE bnum = #{bnum} and pid = #{pid}
 	</select> 
 
 	<select id="borderSelect" parameterType="ComDTO" resultType="Int">
-		SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents}
+		SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents} and pid = #{pid}
 	
 	</select>
 
-	<update id="countUpdate" parameterType="Int">
-		UPDATE RIVIEW SET border = border+1  WHERE border <![CDATA[ >= ]]> #{border}
+	<update id="countUpdate" parameterType="ComDTO">
+		UPDATE RIVIEW SET border = border+1  WHERE border <![CDATA[ >= ]]> #{border} and pid = #{pid}
 	</update>
 
 	<update id="update" parameterType="ComDTO"> 
-		UPDATE RIVIEW SET border = border+1  WHERE pid = #{pid} AND border = #{border}
+		UPDATE RIVIEW SET border = border+1  WHERE pid = #{pid} AND border = #{border} 
 	</update>
 	
 	<update id="commentUpdate" parameterType="ComDTO" >
-		UPDATE RIVIEW SET content = #{content}  WHERE bnum = #{bnum}
+		UPDATE RIVIEW SET content = #{content}  WHERE bnum = #{bnum} AND pid = #{pid}
 	</update>
+	
 	<resultMap type="ComDTO" id="rs">
 		<result property="pid" column="pid" />
 		<result property="bnum" column="bnum" />
-		<result property="id" column="id" />
+		<result property="mid" column="mid" />
 		<result property="content" column="content" />
 		<result property="bdate" column="bdate" />
 		<result property="parents" column="parents" />
@@ -44,17 +49,17 @@
 		<result property="star" column="star" />
 	</resultMap>
 
-	<select id="selectAll" resultMap="rs">
-		SELECT * FROM RIVIEW ORDER BY border ASC	
-	</select>
+<!-- 	<select id="selectAll" resultMap="rs"> -->
+<!-- 		SELECT * FROM RIVIEW ORDER BY border ASC	 -->
+<!-- 	</select> -->
 	
 	<select id="selectPid" parameterType="String" resultMap="rs">
 		SELECT * FROM RIVIEW WHERE pid = #{value} ORDER BY border ASC	
 	</select>
 	
 	
-	<select id="selectParents" resultMap="rs" parameterType = "String">
-		SELECT * FROM RIVIEW WHERE parents = #{value}
+	<select id="selectParents" resultMap="rs" parameterType = "ComDTO">
+		SELECT * FROM RIVIEW WHERE parents = #{parents} and pid = #{pid}
 	</select>
 	
 	
@@ -62,7 +67,7 @@
 		<selectKey resultType="Int" keyProperty="bnum" order="BEFORE">
             SELECT NVL(MAX(bnum),0)+1 FROM RIVIEW
         </selectKey>
-        INSERT INTO RIVIEW VALUES (#{pid}, #{bnum},null,#{content},SYSDATE,
+        INSERT INTO RIVIEW VALUES (#{pid}, #{bnum},#{mid},#{content},SYSDATE,
                    <choose>
                        <when test="parents == null">#{bnum}, 0</when>
                        <otherwise>#{parents}, #{depth}</otherwise>
@@ -72,20 +77,20 @@
 
 	<insert id="insertInsert" parameterType="ComDTO">
 		 <selectKey resultType="Int" keyProperty="bnum" order="BEFORE">
-            SELECT NVL(MAX(bnum),0)+1 FROM RIVIEW
+            SELECT NVL(MAX(bnum),0)+1 FROM RIVIEW where pid = #{pid}
         </selectKey> 
         <!-- <selectKey resultType="String" keyProperty="border,parents" order="BEFORE">
             SELECT NVL(MAX(border),0)+1 FROM RIVIEW where parents = #{parents}
         </selectKey>  -->
-		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum}, null , #{content},SYSDATE,#{parents},#{depth},#{border},null)
+		INSERT INTO RIVIEW VALUES (#{pid}, #{bnum}, #{mid} , #{content},SYSDATE,#{parents},#{depth},#{border},null)
 	</insert>
 
-	<delete id="delete1" parameterType ="Int">
-		DELETE FROM RIVIEW WHERE bnum = #{value}
+	<delete id="delete1" parameterType ="ComDTO">
+		DELETE FROM RIVIEW WHERE bnum = #{bnum} and pid = #{pid}
 	</delete>
 	
 	<delete id="delete2" parameterType ="ComDTO">
-		DELETE FROM RIVIEW WHERE bnum <![CDATA[ >= ]]> #{bnum} and parents = #{parents}
+		DELETE FROM RIVIEW WHERE bnum <![CDATA[ >= ]]> #{bnum} and parents = #{parents} and pid = #{pid}
 	</delete>
 
 </mapper>

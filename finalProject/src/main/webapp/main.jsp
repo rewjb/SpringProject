@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -14,7 +14,6 @@ position: relative;
 height:90px;
 text-align: center;
 vertical-align: middle;
-
 }
 
 #div1:after {
@@ -112,8 +111,7 @@ height: 50px;
   		$(".cityListLayer").mouseleave(function() {
   			$("#cityList").css("display", "block");
   			$(".cityListLayer").css("display", "none");		  			
-  		})	
-  		
+  		})	  		
   	})
 
   </script>
@@ -374,8 +372,7 @@ height: 50px;
 			</div>
 		</div>
 	</div>
-	  
-	  
+	  	  
 	  <br>
 	  <div id="div1">
 	  <h2 style="font-family: 'Jua', sans-serif; display: inline-block; margin-top: 27px;">인기 여행지 TOP3</h2>

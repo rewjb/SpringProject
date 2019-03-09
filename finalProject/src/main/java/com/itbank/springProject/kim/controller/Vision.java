@@ -5,18 +5,22 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.itbank.springProject.db.TagDAO;
+import com.itbank.springProject.db.VisionDAO;
 
 public class Vision {
 
 	public static void main(String[] args) throws Exception {
 		VisionMethod m = new VisionMethod();
+		VisionDAO dao = new VisionDAO();
 		TagDAO mongo = new TagDAO();
 		
-		HashMap<String, String> list = m.imgTag();
+//		HashMap<String, String> list = m.imgTag();
+//		
+//		Iterator<String> iter = m.sortByValue(list).iterator();
 		
-		Iterator<String> iter = m.sortByValue(list).iterator();
-		mongo.mongoInsert(list, iter);	
-		mongo.mongoSelect("2014062317");
+		System.out.println(dao.imgTag("20140623103.jpg"));
+//		mongo.mongoInsert(list, iter);	
+//		mongo.mongoSelect("2014062317");
 		
 //		HashMap<String, String> list = mongo.mongoSelectAll();
 //		

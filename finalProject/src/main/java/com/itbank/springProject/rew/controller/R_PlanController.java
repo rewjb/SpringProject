@@ -1,5 +1,6 @@
 package com.itbank.springProject.rew.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,12 +44,14 @@ public class R_PlanController {
 	@Qualifier("ShareProjectDAO")
 	private ShareProjectDAO shareProjectDAO;
 
-	Mongo_ShareProjectDAO mongo_ShareProjectDAO = new Mongo_ShareProjectDAO();
+	@Autowired
+	@Qualifier("Mongo_ShareProjectDAO")
+	Mongo_ShareProjectDAO mongo_ShareProjectDAO;
 
 	@RequestMapping("rew/insertShareProject")
 	@ResponseBody
-	public String insertShareProject(@RequestParam("ptitle") String ptitle ,HttpSession session) {
-		
+	public String insertShareProject(@RequestParam("ptitle") String ptitle, HttpSession session) {
+
 		HashMap<String, String> map = new HashMap<>();
 		MongoClient mongoClient = new MongoClient("34.73.189.101", 27017);
 		DB db = mongoClient.getDB("tag");
@@ -59,34 +63,35 @@ public class R_PlanController {
 			String val = cursor.next().toString().replaceAll("\"", "").replaceAll("}", "");
 			String val2 = val.substring(val.indexOf(",") + 1).replaceAll(" ", "");
 			String[] valRs = val2.split(":");
-			map.put(valRs[0] + ".jpg", valRs[1]);}
-		
+			map.put(valRs[0] + ".jpg", valRs[1]);
+		}
+
 		String check = "good";
 
 		ShareProjectDTO shareProjectDTO = new ShareProjectDTO();
-		shareProjectDTO.setMid("temp");
+		shareProjectDTO.setMid((String)session.getAttribute("mid"));
 		shareProjectDTO.setPtitle(ptitle);
-		
+
 		List<PlanDTO> list = planDAO.selectAllPid(shareProjectDTO);
-		
+
 		String insertTag = "";
 		String insertTotaImg = "";
 
 		for (int i = 0; i < list.size(); i++) {
 			if (map.containsKey(list.get(i).getMainImg())) {
-						insertTotaImg += list.get(i).getMainImg()+"/";
-						insertTag += map.get(list.get(i).getMainImg());
+				insertTotaImg += list.get(i).getMainImg() + "/";
+				insertTag += map.get(list.get(i).getMainImg());
 			}
 		}
-		
+
 		shareProjectDTO.setImg(insertTotaImg);
-		
+
 		if (shareProjectDAO.insertShareProject(shareProjectDTO) != 1) {
 			// 공유 실패
 			check = "bad";
 		} else {
 			// 공유 성공
-			mongo_ShareProjectDAO.createProjectInMongo(shareProjectDTO,insertTag);
+			mongo_ShareProjectDAO.createProjectInMongo(shareProjectDTO, insertTag);
 		}
 		return check;
 	}
@@ -101,19 +106,37 @@ public class R_PlanController {
 	}
 
 	@RequestMapping("rew/TravelPlan")
-	public void cartSelectAll(Model model , HttpSession session) {
-		session.setAttribute("mid", "temp");
+	public String cartSelectAll(Model model, HttpSession session) {
+		
+		if (session.getAttribute("mid") !=null) {
+			List<ShareProjectDTO> allSearchTextList = mongo_ShareProjectDAO.getProjectByStar();
+			
+			List<ShareProjectDTO> allProjectList = new ArrayList<ShareProjectDTO>();
+			
+			for (int i = 0; i < allSearchTextList.size(); i++) {
+				allProjectList.add(shareProjectDAO.selectAllShareProjectByManyIdStar(allSearchTextList.get(i)));
+			}
+			
+			String mid = (String) session.getAttribute("mid");
+			model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
+			model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
+			model.addAttribute("projectShare_list", shareProjectDAO.selectAllShareProjectById(mid));
+			model.addAttribute("allProjectListBystar" , allProjectList);
+			
+			return "rew/TravelPlan";
+		}else {
+			
+			return "won/signup";
+		}
 		
 		
-		String mid = (String) session.getAttribute("mid");
-		model.addAttribute("project_list", placeCartDAO.selectPlanNameAll(mid));
-		model.addAttribute("cart_list", placeCartDAO.selectCartAll(mid));
-		model.addAttribute("projectShare_list", shareProjectDAO.selectAllShareProjectById(mid));
+
+		
 	}
 
 	@RequestMapping("rew/projcetDataSave")
 	@ResponseBody
-	public String projcetDataSave(@RequestBody List<PlanDTO> planList, @RequestParam("ptitle") String ptitle) {
+	public String projcetDataSave(@RequestBody List<PlanDTO> planList, @RequestParam("ptitle") String ptitle ,HttpSession session) {
 
 		String check = "good";
 
@@ -121,7 +144,7 @@ public class R_PlanController {
 
 			if (planList.size() > 0) {
 				for (int i = 0; i < planList.size(); i++) {
-					planList.get(i).setMid("temp");
+					planList.get(i).setMid((String)session.getAttribute("mid"));
 					planList.get(i).setPtitle(ptitle);
 				}
 				planDAO.deleteProjectData(planList.get(0));
@@ -139,20 +162,21 @@ public class R_PlanController {
 
 	@RequestMapping("rew/setDeleteProjcet")
 	@ResponseBody
-	public String setDeleteProjcet(@RequestParam("ptitle") String ptitle) {
-		String mid = "temp";
+	public String setDeleteProjcet(@RequestParam("ptitle") String ptitle , HttpSession session) {
+		String mid = (String)session.getAttribute("mid");
 		PlanDTO planDTO = new PlanDTO();
 		planDTO.setMid(mid);
 		planDTO.setPtitle(ptitle);
 		planDAO.deleteProjectData(planDTO);
 		shareProjectDAO.deleteOneShareProject(planDTO);
+		mongo_ShareProjectDAO.deleteProject(planDTO);
 		return "";
 	}
 
 	@RequestMapping("rew/setDeleteCart")
 	@ResponseBody
-	public String setDeleteCart(@RequestParam("pid") String pid) {
-		String mid = "temp";
+	public String setDeleteCart(@RequestParam("pid") String pid , HttpSession session) {
+		String mid = (String)session.getAttribute("mid");
 		PlaceCartDTO placeCartDTO = new PlaceCartDTO();
 		placeCartDTO.setMid(mid);
 		placeCartDTO.setPid(pid);

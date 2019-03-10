@@ -107,7 +107,7 @@ function Reply(bnum) {//댓글눌렀을때 다이얼로그 보여주는 함수
 function comment() {//대댓글 등록시 처리함수
    
    if('<%=mid%>' != 'null'){
-   if ($("#content2").val() == "") {//내용입력란이 빈칸이면
+   if ($("#contentContent").val() == "") {//내용입력란이 빈칸이면
       alert("내용을 입력해주세요")
    }else{
    //alert("여기는오나")
@@ -118,7 +118,7 @@ function comment() {//대댓글 등록시 처리함수
       Type : "POST",
       data : data,
       success : function (result) {
-         $("#content2").val("");
+         $("#contentContent").val("");
           $("#temp").after($("#replyDialog").css('display', 'none'));
           $("#temp").after($("#updateDialog").css('display', 'none'));
          if (result != null) {
@@ -153,7 +153,7 @@ function Update(bnum,id) {//댓글의 수정버튼 클릭시 다이얼로그 창
 }
 
 function updateResult() {//최종 수정 버튼 클릭시 
-   if ($("#content3").val() == "") {//내용을 입력 안했을때
+   if ($("#contentUpdate").val() == "") {//내용을 입력 안했을때
       alert("내용을 입력해주세요")
    }else{
    //alert("여기는오나")
@@ -164,7 +164,7 @@ function updateResult() {//최종 수정 버튼 클릭시
       Type : "POST",
       data : data,
       success : function (result) {
-         $("#content3").val("");   
+         $("#contentUpdate").val("");   
           $("#temp").after($("#updateDialog").css('display', 'none'));
           $("#temp").after($("#replyDialog").css('display', 'none'));
          if (result != null) {
@@ -179,13 +179,13 @@ function updateResult() {//최종 수정 버튼 클릭시
 }
 
 function updateCancel() {//수정창 취소 눌렀을때 
-   $("#content3").val("");   
+   $("#contentUpdate").val("");   
    $("#updateDialog").css('display', 'none');
    return false;
 }
 
 function commentCancel() {//대댓글창 취소 눌렀을때
-   $("#content2").val("");
+   $("#contentContent").val("");
    $("#replyDialog").css('display', 'none');
    return false;
 }
@@ -611,7 +611,7 @@ $(function() {
         <input type="hidden" name="parents"> 
         <input type="hidden" id = "input2" name = "input2">
         <input type="hidden" name="mid" value="<%=mid%>"><br>
-        <textarea class="form-control" name="content" id  = "content3" rows="3" cols="60" maxlength="500"></textarea>
+        <textarea class="form-control" name="content" id  = "contentUpdate" rows="3" cols="60" maxlength="500"></textarea>
         <button class="btn btn-secondary my-2" onclick="return updateResult()">수정</button>
         <button class="btn btn-secondary my-2" onclick="return updateCancel()">취소</button>
     </form>

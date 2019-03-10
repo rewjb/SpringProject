@@ -178,40 +178,22 @@ public class J_CartController {
 	      // System.out.println(element.size());
 
 	      for (int i = 0; i < element.size(); i++) {
-	         // System.out.println(element.get(i).select("h1").text());
 	         element2 = element.get(i).select("a");
 	         for (int j = 0; j < element2.size(); j++) {
-	            // System.out.println(element2.get(j).text());
-	            // System.out.println("http://www.tourtips.com" +
-	            // element2.get(j).attr("href"));
 	            doc2 = Jsoup.connect("http://www.tourtips.com" + element2.get(j).attr("href")).timeout(0).get();
-
 	            element3 = doc2.select("div.popular_box a.more_info");
-
-	            // System.out.println(element3.get(0).attr("href"));
-
 	            doc3 = Jsoup.connect("http://www.tourtips.com" + element3.get(0).attr("href")).timeout(0).get();
-
 	            element4 = doc3.select("div.paging a");
-	            // System.out.println(element4.size());
-
 	            temp = new String[1];
 	            for (int j2 = 0; j2 < 1; j2++) {
 	               temp[j2] = "http://www.tourtips.com" + element4.get(j2).attr("href");
 	            }
-//	            for (int j2 = 0; j2 < temp.length; j2++) {
-//	               System.out.println(temp[j2]);
-//	            }
-
 	            
 	            for (int k = 0; k < temp.length; k++) {
-//	               System.out.println(temp[0]);
 	               doc4 = Jsoup.connect(temp[k]).timeout(0).get();
 	               element5 = doc4.select("div.spot_list li");
-//	               System.out.println(element5);
 
 	               for (int y = 0; y < element5.size(); y++) {
-//	                  System.out.println("넘어오니??");
 	                     jo = (JSONObject)startJson.parse((jsonResult(element5.get(y).select("a").attr("href")
 	                           ,element5.get(y).select("div.thumb_wrap div.thumb div.in div.thumb_img img")
 	                           .attr("src"),
@@ -236,9 +218,9 @@ public class J_CartController {
 	                        dto.setCategory((String)jo.get("태그"));
 	                        
 	                     
-	                        if ( imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4])==0) {
-	                        	attractionsDAO.insert(dto);
-							}
+//	                        if ( imageSave(jo.get("메인이미지").toString(),jo.get("메인이미지").toString().split("/")[4])==0) {
+//	                        	attractionsDAO.insert(dto);
+//							}
 	                        
 	                        System.out.println(dto.getContinent());
 	                        System.out.println(dto.getCity());
@@ -251,15 +233,12 @@ public class J_CartController {
 	                        System.out.println(dto.getLatitude());
 	                        System.out.println(dto.getLongitude());
 	                        System.out.println(dto.getCategory());
-	                        
-	                        
 	                        System.out.println(jo.get("메인이미지").toString());
 	                        System.out.println();
 	                        System.out.println("-------------------------------------------------------------");
 	                        System.out.println();
 	                        
 	                     }//길찾기 값이 존재할때만 db저장 및 이미지저장
-
 	               }
 	            }
 	         }
@@ -269,14 +248,10 @@ public class J_CartController {
 	
 	 public StringBuffer jsonResult(String id,String elementsFisrt, String title, Elements content, String element, String continent,
 	         String city,String category) throws Exception {
-	      
 	      StringBuffer buffer = new StringBuffer();
-	      
 	      Document document = Jsoup.connect("http://www.tourtips.com" + element).get();
 	      Elements nameElements = document.select("div.cnt_info");
 	      Elements contentElements = document.select("div.cnt_reason");
-	      
-	      
 	      buffer.append("{\n");
 	      buffer.append("\"대륙\":" + "\"" + continent + "\",\n");
 	      buffer.append("\"도시\":" + "\"" + city + "\",\n");
@@ -306,10 +281,7 @@ public class J_CartController {
 	   }
 	
 	 private int imageSave(String source, String fileName) {
-		 
-
 		 int check = 0;
-		 
          File outputFile = new File("C:\\Users\\user\\git\\SpringProject\\finalProject\\src\\main\\webapp\\resources\\IMAGE\\attractionsImg\\"+fileName+".jpg");
          try {
         	if (outputFile.isFile()) {

@@ -190,9 +190,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_share">
 						공유</a></li>
 					</ul>
-					<form>
-						<input class="form-control" type="text" placeholder="내용을 입력">
-					</form>
 				</div>
 				</nav>
 				

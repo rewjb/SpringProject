@@ -188,13 +188,14 @@ public class Mongo_ShareProjectDAO {
 			for (int j = i; j < shareProjectList.size(); j++) {
 				if (shareProjectList.get(j).getCount() > shareProjectList.get(i).getCount()) {
 					inputTag = shareProjectList.get(j);
+					//임시태그 데이터 저장
 					shareProjectList.add(j, shareProjectList.get(i));
 					shareProjectList.remove(j + 1);
 					shareProjectList.add(i, inputTag);
 					shareProjectList.remove(i + 1);
 				}
 			}
-		} // 정렬 for문! 선택정렬임
+		} // 정렬 for문! 선택정렬
 
 		return shareProjectList;
 

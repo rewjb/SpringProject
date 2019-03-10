@@ -116,8 +116,8 @@ public class Mongo_ShareProjectDAO {
 
 	public List<ShareProjectDTO> sortByDateStar() {
 
-		Document temp = new Document("reg_date", -1);
-		temp.append("star", -1);
+		Document temp = new Document("star", -1);
+		temp.append("reg_date", 1);
 
 		MongoCursor<Document> cursor = commentColl.find().sort(temp).iterator();
 		;

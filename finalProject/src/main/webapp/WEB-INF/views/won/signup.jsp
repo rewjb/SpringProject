@@ -1230,7 +1230,7 @@ body {
 				      //    your app or not.
 				      //
 				      // These three cases are handled in the callback function.
-
+				      
 				      FB.getLoginStatus(checkLoginStatus);
 				   };
 				   
@@ -1305,6 +1305,7 @@ body {
 					  		}//end success 
 					  });//end ajax
                   ">
+                  
 <!------------------------- body4 : 페이스북으로 회원가입 관련 끝---------------------------->
                </td>
                <td></td>

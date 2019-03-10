@@ -128,7 +128,7 @@ public class J_CartController {
 		
 		placeCartDAO.delete(placeCartDTO);
 		
-		ArrayList<PlaceCartDTO> list = (ArrayList<PlaceCartDTO>)placeCartDAO.selectAll();
+		ArrayList<PlaceCartDTO> list = (ArrayList<PlaceCartDTO>)placeCartDAO.midSelect(placeCartDTO.getMid());
 		ArrayList<AttractionsDTO> attList = new ArrayList<>();
 //		System.out.println("list" + list.size());
 		

@@ -504,10 +504,10 @@ $(function() {
             <h2 style="font-family: 'Jua', sans-serif;">장바구니</h2>
          </div>
 
-         <input type="hidden" value="" name="pid" id ="pid"> 
-         <input type="hidden" value="" name="mid" id = "mid">
+         <input type="hidden" value="<%=pid %>" name="pid" id ="pid"> 
+         <input type="hidden" value="<%=mid %>" name="mid" id = "mid">
       
-      
+       
          <div class="col-md-5" style="margin-left: auto; margin-right: auto;">
          <h5 style="color: #b2b2b2; font-family: 'Noto Sans KR', sans-serif;" id="placeTag"></h5>
        <h2 id="placeTitle" style=" font-family: 'Jua', sans-serif;"></h2>

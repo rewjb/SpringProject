@@ -106,7 +106,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 				if(result == "0"){
 					//로그인 성공 - 메인으로 이동
 					alert(id_l.val()+'님 환영합니다.');
-					location.href="/springProject/main.jsp"
+					location.href="/springProject/kim/recommend"
 				} else {
 					//로그인 실패
 					alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
@@ -364,7 +364,6 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 						}//end success
 					});//end ajax					
 				}//end if()
-				$("#hdnBtn").trigger("click");
 			}
 		})//end click()
 	});
@@ -379,7 +378,6 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 	
 	//태그수정으로 왔을 시
  	if(ch_val == "t") {
-		alert(ch_val); 
 		$("#li1").remove();
 		$("#li2").remove();
 		$("#li3").remove();
@@ -438,7 +436,7 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
     });   
 //<!--------------------------------- 슬라이드 코드 end ------------------------------------------>
 	
-	<!-- 이미지에 마우스 오버 효과 -->
+	//<!-- 이미지에 마우스 오버 효과 -->
     $("img").hover( 
     		  function () { 
     		    $(this).css("opacity", 0.7); 
@@ -1325,7 +1323,6 @@ body {
     </div>
   </div>
 	</li>
-	
 	<li style="width: 1300px;" id="li3">
 		 <div class="container">
     <div class="row">

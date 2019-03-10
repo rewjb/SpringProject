@@ -18,6 +18,7 @@ import com.itbank.springProject.db.AttractionsDTO;
 import com.itbank.springProject.db.PlaceReqDAO;
 import com.itbank.springProject.db.PlaceReqDTO;
 import com.itbank.springProject.db.TagDAO;
+import com.itbank.springProject.db.VisionDAO;
 
 @Controller
 public class PlaceReqController {
@@ -33,6 +34,10 @@ public class PlaceReqController {
 	@Autowired
 	@Qualifier("TagDAO")
 	TagDAO dao3;
+	
+	@Autowired
+	@Qualifier("VisionDAO")
+	VisionDAO dao4;
 
 	@RequestMapping("kim/placeReq")
 	public void add(PlaceReqDTO placeReqDTO) throws Exception{
@@ -68,12 +73,22 @@ public class PlaceReqController {
 	
 	@RequestMapping("kim/placeReq_accept")
 	public String agree(@RequestParam("no") String no, Model model, AttractionsDTO attractionsDTO) throws Exception {
+		String img = attractionsDTO.getMainImg().substring(attractionsDTO.getMainImg().lastIndexOf("/")+1);
+		attractionsDTO.setMainImg(img);
 		dao2.insert(attractionsDTO);
 		dao.delete(no);
-		String img = attractionsDTO.getMainImg().substring(attractionsDTO.getMainImg().lastIndexOf("/")+1);
+		
+		String tags = dao4.imgTag(img);
+		System.out.println(tags);
+		dao3.mongoInsert(img, tags);
 		
 		File file = new File("C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/resources/IMAGE/placeAdd/" + img);
+		File mfile = 
+				new File("C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/resources/IMAGE/attractionsImg/" + img);
+				
+		dao4.copyFile(file, mfile);
 		file.delete();
+		
 		
 		return "redirect:placeReq_list";
 	}

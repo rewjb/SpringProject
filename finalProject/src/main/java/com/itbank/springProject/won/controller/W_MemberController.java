@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.springProject.db.MemberDAO;
 import com.itbank.springProject.db.MemberDTO;
+import com.itbank.springProject.db.TagDAO;
 
 @Controller
 public class W_MemberController{
@@ -53,6 +54,10 @@ public class W_MemberController{
 	@Qualifier("worker")
 	private W_MemberWorker worker;
 	
+	@Autowired
+	@Qualifier("TagDAO")
+	private TagDAO dao1;
+	
 	
 //------------------------insert------------------------------------
 	
@@ -61,15 +66,7 @@ public class W_MemberController{
 	@ResponseBody
 	public String insertMember(MemberDTO memberDTO){
 		memberDTO = worker.settingBasicInfo(memberDTO);
- 		System.out.print(memberDTO.getMid()+",");
- 		System.out.print(memberDTO.getMpw()+",");
- 		System.out.print(memberDTO.getMname()+",");
- 		System.out.print(memberDTO.getMprofile()+",");
- 		System.out.print(memberDTO.getMtel()+",");
- 		System.out.print(memberDTO.getMaddr1()+"-");
- 		System.out.print(memberDTO.getMaddr2()+",");
- 		System.out.print(memberDTO.getGender()+",");
- 		System.out.println(memberDTO.getRdate());
+ 		
 		try {
 			//insert성공시 insertM으로
 			memberDAO.insert(memberDTO);
@@ -228,6 +225,13 @@ public class W_MemberController{
 					mdto = worker.settingBasicInfo(mdto); // 최근접속일 세팅
 					memberDAO.updateDate(mdto); // 최근접속일 수정
 					System.out.println(session.getAttribute("mid"));
+					
+					String tag = dao1.mongoSelect(memberDTO.getMid());
+					System.out.println(tag);
+					if(tag != null) {						
+						session.setAttribute("favor", tag);
+					}
+					
 					return "0";
 				} else {
 					// 일치하지 않는 경우
@@ -251,6 +255,7 @@ public class W_MemberController{
 		// 삭제할 mid확인
 		System.out.println(session.getAttribute("mid"));
 		session.removeAttribute("mid");
+		session.removeAttribute("favor");
 		// 삭제되었는지 확인
 		System.out.println(session.getAttribute("mid"));
 		return "redirect:/won/logout.jsp";

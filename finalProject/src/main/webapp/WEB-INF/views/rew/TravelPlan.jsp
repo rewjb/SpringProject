@@ -190,9 +190,6 @@ $('#loading').css('left',document.body.clientHeight/2);
 						<li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#Project_place_share">
 						공유</a></li>
 					</ul>
-					<form>
-						<input class="form-control" type="text" placeholder="내용을 입력">
-					</form>
 				</div>
 				</nav>
 				
@@ -373,9 +370,16 @@ $('#loading').css('left',document.body.clientHeight/2);
  
 			<script type="text/javascript">
 			
+			var selectedName;	
+			
 			// 프로젝트 삭제
 			function delete_project(button) {
-				 tainer.length; i++) {
+				
+				$(button).prev().click();
+				
+				var projectList_container = $('#projectList_container').find('td[alt=Project-Content]'); 
+				
+				for(i=0; projectList_container.length; i++) {
 					if(projectList_container[i].style.outline=='blue solid 6px'){
 						selectedName = $(projectList_container[i]);
 						break;
@@ -487,6 +491,8 @@ $('#loading').css('left',document.body.clientHeight/2);
 				// 각 공정별 넘길 form
 				var ptitle = $('#Project_ptitle').text();
 				//프로젝트 이름
+				
+				alert(ptitle);
 
 				if (validity == true) {
 
@@ -830,7 +836,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 
 					$
 							.ajax({
-								url : "getProjectData?mid=temp&ptitle="
+								url : "getProjectData?mid=${sessionScope.mid}&ptitle="
 										+ $(data).text(),//요청을 보낼 url
 								dataType : "json",//반환받을 데이터 타입 선택
 								success : function(result, confirm) {

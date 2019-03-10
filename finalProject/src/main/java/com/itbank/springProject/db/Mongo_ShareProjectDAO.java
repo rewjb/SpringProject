@@ -1,6 +1,7 @@
 package com.itbank.springProject.db;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,11 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import javax.print.Doc;
+//import javax.print.Doc;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.eclipse.jdt.internal.compiler.codegen.DoubleCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -33,16 +33,16 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
+//import com.mongodb.MongoClientOptions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.sun.org.apache.xalan.internal.xsltc.dom.ArrayNodeListIterator;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+//import com.sun.org.apache.xalan.internal.xsltc.dom.ArrayNodeListIterator;
+//import com.sun.scenario.effect.impl.sw.sse.SSEBlend_COLOR_BURNPeer;
+//import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 //commentColl.deleteMany(new Document());
 //ArrayList<String> asd = new ArrayList<>();
@@ -116,8 +116,8 @@ public class Mongo_ShareProjectDAO {
 
 	public List<ShareProjectDTO> sortByDateStar() {
 
-		Document temp = new Document("reg_date", -1);
-		temp.append("star", -1);
+		Document temp = new Document("star", -1);
+		temp.append("reg_date", 1);
 
 		MongoCursor<Document> cursor = commentColl.find().sort(temp).iterator();
 		;
@@ -188,13 +188,14 @@ public class Mongo_ShareProjectDAO {
 			for (int j = i; j < shareProjectList.size(); j++) {
 				if (shareProjectList.get(j).getCount() > shareProjectList.get(i).getCount()) {
 					inputTag = shareProjectList.get(j);
+					//임시태그 데이터 저장
 					shareProjectList.add(j, shareProjectList.get(i));
 					shareProjectList.remove(j + 1);
 					shareProjectList.add(i, inputTag);
 					shareProjectList.remove(i + 1);
 				}
 			}
-		} // 정렬 for문! 선택정렬임
+		} // 정렬 for문! 선택정렬
 
 		return shareProjectList;
 

@@ -378,6 +378,8 @@ $('#loading').css('left',document.body.clientHeight/2);
 			// 프로젝트 삭제
 			function delete_project(button) {
 				
+				$(button).prev().click();
+				
 				var projectList_container = $('#projectList_container').find('td[alt=Project-Content]'); 
 				
 				for(i=0; projectList_container.length; i++) {

@@ -1,6 +1,7 @@
 package com.itbank.springProject.db;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,7 +16,6 @@ import javax.print.Doc;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.eclipse.jdt.internal.compiler.codegen.DoubleCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

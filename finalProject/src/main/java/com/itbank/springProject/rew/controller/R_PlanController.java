@@ -139,7 +139,13 @@ public class R_PlanController {
 	public String projcetDataSave(@RequestBody List<PlanDTO> planList, @RequestParam("ptitle") String ptitle ,HttpSession session) {
 
 		String check = "good";
-
+		
+		PlanDTO delPlanDTO = new PlanDTO();
+		delPlanDTO.setPtitle(ptitle);
+		delPlanDTO.setMid((String)session.getAttribute("mid"));
+		
+		planDAO.deleteProjectData(delPlanDTO);
+		
 		try {
 
 			if (planList.size() > 0) {
@@ -147,7 +153,6 @@ public class R_PlanController {
 					planList.get(i).setMid((String)session.getAttribute("mid"));
 					planList.get(i).setPtitle(ptitle);
 				}
-				planDAO.deleteProjectData(planList.get(0));
 				planDAO.insertProjectData(planList);
 			}
 

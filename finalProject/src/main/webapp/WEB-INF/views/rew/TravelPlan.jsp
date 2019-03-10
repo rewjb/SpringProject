@@ -375,7 +375,7 @@ $('#loading').css('left',document.body.clientHeight/2);
 			
 			// 프로젝트 삭제
 			function delete_project(button) {
-				 tainer.length; i++) {
+				for(i=0; projectList_container.length; i++) {
 					if(projectList_container[i].style.outline=='blue solid 6px'){
 						selectedName = $(projectList_container[i]);
 						break;

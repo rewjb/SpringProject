@@ -334,7 +334,7 @@
 	function pageChage(button) {
 		
 		var pageInCount = 10;
-
+		
 		//보여줄 댓글 수량
 
 		$.ajax({
@@ -343,6 +343,7 @@
 			async : false,
 			success : function(result) {
 				totalComment = result;
+				alert(totalComment.length);
 			},
 			error : function() {
 				alert('댓글로딩에 오류 발생!');
@@ -362,15 +363,25 @@
 		} else {
 			$('button[alt=prev]').css('visibility', 'visible');
 		}
-
-		var lastpage = Math.ceil(totalComment.length / pageInCount);
 		
-		if (lastpage == $('button[alt=now]')
-				.text() || lastpage==0) {
+		var firstCommentCount=0;
+		
+		for (var i = 0; i < totalComment.length ; i++) {
+			if (totalComment[i].level==1) {
+				++firstCommentCount;
+			}
+		}
+		
+
+		var lastpage = Math.ceil(firstCommentCount / pageInCount);
+		
+		if (lastpage  == $('button[alt=now]')
+				.text() ) {
 			$('button[alt=next]').css('visibility', 'hidden');
 		} else {
 			$('button[alt=next]').css('visibility', 'visible');
 		}
+		
 
 		var index = -1;
 

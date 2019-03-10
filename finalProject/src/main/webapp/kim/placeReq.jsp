@@ -137,11 +137,12 @@
     <div class="form-group">
       <label for="exampleSelect1">대륙</label>
       <select class="form-control" id="continent" name="continent">
+        <option>남태평양</option>
+        <option>대한민국</option>
+        <option>동남아시아</option>
+        <option>미주</option>
         <option>아시아</option>
         <option>유럽</option>
-        <option>북아메리카</option>
-        <option>남아메리카</option>
-        <option>동남아시아</option>
       </select>
     </div>
     <div class="form-group">
@@ -169,8 +170,6 @@
     <input type="hidden" id="userId" name="userId" value="${sessionScope.mid }">
     
     <button class="btn btn-primary" id="submit">제출</button>
-    <a class="btn btn-sm btn-outline-secondary" href="Tag_Select">태그페이지</a>
-    <a class="btn btn-sm btn-outline-secondary" href="/springProject/joe/attractionsLIst.jsp">여행지 리스트</a>
     </form>
     <p class="pb-1">
   </fieldset>

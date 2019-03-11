@@ -220,7 +220,14 @@ public class W_MemberController{
 				if (mdto.getMpw() == memberDTO.getMpw() || mdto.getMpw().equals(memberDTO.getMpw())) {
 					// 일치하는 경우 - 세션에 아이디를 넣어줌!
 					System.out.println("controller - 로그인 성공 : " + memberDTO.getMid());
-					session.setAttribute("mid", memberDTO.getMid());
+					String mid = memberDTO.getMid();
+					if(memberDTO.getMpw().equals("FBEXLOGIN")){
+						if(memberDTO.getMid().equals("@"))
+						//페이스북은 이름+@facebook.com으로 아이디 사용해줌.
+						//DB에는 페이스북 id로 입력되어 있음
+						mid = memberDTO.getMname()+"@facebook.com";
+					}
+					session.setAttribute("mid", mid);
 					// 최근 접속일자 수정해줌
 					mdto = worker.settingBasicInfo(mdto); // 최근접속일 세팅
 					memberDAO.updateDate(mdto); // 최근접속일 수정
@@ -233,7 +240,7 @@ public class W_MemberController{
 					}
 					
 					System.out.println("0 : 로그인 처리 성공");
-					return "0#"+memberDTO.getMid();
+					return "0#"+mid;
 				} else {
 					// 일치하지 않는 경우
 					System.out.println("2 : 비밀번호가 일치하지 않습니다");

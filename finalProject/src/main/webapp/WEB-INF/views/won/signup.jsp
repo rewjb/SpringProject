@@ -83,7 +83,14 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 			$("#login_mid").val(id_l.val());	//태그를 벗어날 때 id전송폼에 값 세팅
 			$("#login_mpw").val(pw_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
 		})
+		
+		if (key.keyCode == 13) {
+			$("#login_mid").val(id_l.val());	//enter를 눌렀을 때 id전송폼에 값 세팅
+			$("#login_mpw").val(pw_l.val());	//enter를 눌렀을 때 전송폼에 값 세팅
+		}
+
 	});//end keyup()
+	
 		 
 	//login버튼 눌렀을때 동작하는 함수
 	$("#login_loginBtn").click(function() {

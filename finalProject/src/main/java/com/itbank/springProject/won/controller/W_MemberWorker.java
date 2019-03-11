@@ -18,8 +18,9 @@ public class W_MemberWorker {
 	public W_MemberWorker() {
 	}//constructor
 	
-	
+	//가입시 필수항목을 제외한 나머지 항목은 기본값으로 세팅해주는 메서드
 	public MemberDTO settingBasicInfo(MemberDTO dto){
+		settingName(dto);			//외부로그인의 이름은 구분자 넣어줌
 		if(dto.getMtel()==null){
 			dto.setMtel(" ");		//연락처 기본값 세팅
 		} 
@@ -39,4 +40,30 @@ public class W_MemberWorker {
 		dto.setRdate(f_time);	//최근 활동한 날자 세팅
 		return dto;
 	}//end settingBasicInfo():MemberDTO
+	
+	//가입시 구글 / 페이스북 계정의 이름에 구분자 넣어주는 메서드
+	public void settingName(MemberDTO dto){
+		String name="";
+		if(dto.getMpw().equals("FBEXLOGIN")){
+			name = dto.getMname()+"_F";
+		}else if(dto.getMpw().equals("GGEXLOGIN")){
+			name = dto.getMname()+"_G";
+		}
+		dto.setMname(name);
+	}
+	
+	//페이스북 아이디 형식 확인해서 세션에는 문자 형태로 넣어주는 메서드
+	public int checkFBMid(String mid){
+		for(int i=0;i<mid.length();i++){
+			char c = mid.charAt(i);
+			if(c == '@'){
+				//facebook아이디가 이메일 형식인 경우
+				return 0;
+			}
+		}
+		//facebook아이디가 이메일 형식이 아닌경우
+		return 1;
+	}//end checkFBMid()
+	
+	
 }//end class

@@ -84,13 +84,13 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 			$("#login_mpw").val(pw_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
 		})
 		
-		if (key.keyCode == 13) {
-			$("#login_mid").val(id_l.val());	//enter를 눌렀을 때 id전송폼에 값 세팅
-			$("#login_mpw").val(pw_l.val());	//enter를 눌렀을 때 전송폼에 값 세팅
-		}
 
 	});//end keyup()
 	
+	if (window.event.keyCode == 13) {
+		$("#login_mid").val(id_l.val());	//enter를 눌렀을 때 id전송폼에 값 세팅
+		$("#login_mpw").val(pw_l.val());	//enter를 눌렀을 때 전송폼에 값 세팅
+	}
 		 
 	//login버튼 눌렀을때 동작하는 함수
 	$("#login_loginBtn").click(function() {
@@ -113,8 +113,8 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 				if(result == "-1"||result =='1'||result=='2'){
 					//로그인 실패
 					alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-					$('#login_inputMid').text()="";
-					$('#login_inputMpw').text()="";
+					$('#login_inputMid').val("");
+					$('#login_inputMpw').val("");
 				} else {
 					var rsMid = result.split('#')[1];	
 					//로그인 성공 - 메인으로 이동
@@ -315,6 +315,16 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 					});//end ajax
 				}//end if()
 			}//end if
+			
+			$("#inputMpw").blur(function() {
+				$("#login_mid").val(id_l.val());	//태그를 벗어날 때 id전송폼에 값 세팅
+				$("#login_mpw").val(pw_l.val());	//태그를 벗어날 때 전송폼에 값 세팅
+			})
+			
+			if (key.keyCode == 13) {
+				$("#login_mid").val(id_l.val());	//enter를 눌렀을 때 id전송폼에 값 세팅
+				$("#login_mpw").val(pw_l.val());	//enter를 눌렀을 때 전송폼에 값 세팅
+			}
 		});//end keyup()
 
 		
@@ -366,8 +376,8 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 							}else{
 								//가입 실패
 								alert("다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-								id.text()="";
-								pw.text()="";
+								id.val("");
+								pw.val("");
 							}//end inner_if()
 						}//end success
 					});//end ajax					
@@ -842,8 +852,8 @@ body {
 								if(result == "-1"||result =='1'||result=='2'){
 									//로그인 실패
 									alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-									$('#login_inputMid').text()="";
-									$('#login_inputMpw').text()="";
+									$('#login_inputMid').val("");
+									$('#login_inputMpw').val("");
 								} else {
 									var rsMid = result.split('#')[1];	
 									//로그인 성공 - 메인으로 이동
@@ -973,8 +983,8 @@ body {
 								if(result == '-1'||result =='1'||result=='2'){
 									//로그인 실패
 									alert('아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx');
-									$('#login_inputMid').text()='';
-									$('#login_inputMpw').text()='';
+									$('#login_inputMid').val('');
+									$('#login_inputMpw').val('');
 								} else {
 									var rsMid = result.split('#')[1];	
 									//로그인 성공 - 메인으로 이동
@@ -1142,8 +1152,8 @@ body {
 								}else{
 									//가입 실패
 									alert("다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-									$('#inputMid').text()="";
-									$('#inputMpw').text()="";
+									$('#inputMid').val("");
+									$('#inputMpw').val("");
 								}//end inner_if()
 							}//end success
 						});//end ajax
@@ -1286,8 +1296,8 @@ body {
 								}else{
 									//가입 실패
 									alert('다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx');
-									$('#inputMid').text()='';
-									$('#inputMpw').text()='';
+									$('#inputMid').val('');
+									$('#inputMpw').val('');
 								}//end inner_if()
 					  		}//end success 
 					  });//end ajax

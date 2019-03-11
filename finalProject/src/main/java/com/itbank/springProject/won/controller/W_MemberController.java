@@ -65,6 +65,7 @@ public class W_MemberController{
 	@RequestMapping("won/insertMember")
 	@ResponseBody
 	public String insertMember(MemberDTO memberDTO){
+		
 		memberDTO = worker.settingBasicInfo(memberDTO);
  		
 		try {
@@ -222,10 +223,11 @@ public class W_MemberController{
 					System.out.println("controller - 로그인 성공 : " + memberDTO.getMid());
 					String mid = memberDTO.getMid();
 					if(memberDTO.getMpw().equals("FBEXLOGIN")){
-						if(memberDTO.getMid().equals("@"))
-						//페이스북은 이름+@facebook.com으로 아이디 사용해줌.
-						//DB에는 페이스북 id로 입력되어 있음
-						mid = memberDTO.getMname()+"@facebook.com";
+						int rs = worker.checkFBMid(mid);
+						if(rs==1){
+							//facebook id가 이메일 형식이 아닌경우 이름+이메일형식으로 만들어줌
+							mid = memberDTO.getMname()+"@facebook.com";
+						}
 					}
 					session.setAttribute("mid", mid);
 					// 최근 접속일자 수정해줌

@@ -224,7 +224,7 @@ function deleteCart(event) {//장바구니란에 삭제버튼 클릭시
                     url : "cartDelete?pid="+deleteBtn.value + "&mid=" + '<%=mid%>',
                     Type : "POST",
                     success : function(result) {
-                       if (deleteBtn.value == <%= pid%>) {
+                       if (deleteBtn.value == '<%= pid%>') {
                        $("#cart").attr("class","btn btn-secondary my-2");
                      }
                        $("#cartTable").empty();
@@ -358,7 +358,7 @@ $(function() {
                       Type : "POST",
                       success : function(result) {
                          for (var i = 0; i < result.length; i++) {
-                     if (result[i].pid==<%=pid %>) {//현재페이지의 pid가 장바구니에도 있을경우
+                     if (result[i].pid=='<%=pid %>') {//현재페이지의 pid가 장바구니에도 있을경우
                         $("#cart").attr("class", "btn btn-primary my-2");
                      }else{
                           $("#cart").attr("class", "btn btn-secondary my-2");

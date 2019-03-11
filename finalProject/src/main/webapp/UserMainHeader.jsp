@@ -89,7 +89,6 @@
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
       <a class="dropdown-item" href="/springProject/kim/placeReq.jsp">명소 신청</a>
-      <a class="dropdown-item" href="#">Dropdown link</a>
     </div>
   </div>
   
@@ -99,8 +98,6 @@
          고객센터
     </button>  
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"  style="width: 100%">
-      <a class="dropdown-item" href="#">Dropdown link</a>
-      <a class="dropdown-item" href="#">Dropdown link</a>
     </div>
   </div>
 </div>

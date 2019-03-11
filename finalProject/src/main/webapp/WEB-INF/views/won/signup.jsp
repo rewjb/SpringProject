@@ -103,15 +103,16 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 			data : sendData,
 			success : function(result) {
 				console.log('일반로그인'+result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
-				if(result == "0"){
-					//로그인 성공 - 메인으로 이동
-					alert(id_l.val()+'님 환영합니다.');
-					location.href="/springProject/kim/recommend"
-				} else {
+				if(result == "-1"||result =='1'||result=='2'){
 					//로그인 실패
 					alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
 					id_l.text()="";
 					pw_l.text()="";
+				} else {
+					var rsMid = result.split('#')[1];	
+					//로그인 성공 - 메인으로 이동
+					alert(rsMid +'님 환영합니다.');
+					location.href="/springProject/main.jsp"
 				}//end inner_if()
 			}//end success
 		});//end ajax
@@ -790,7 +791,7 @@ body {
 				<script type="text/javascript">
 				var googleUser = {};
 
-				var startAppGG = function() {
+				var startAppGGLogin = function() {
 					gapi.load('auth2',function() {
 						// Retrieve the singleton for the GoogleAuth library and set up the client.
 						auth2 = gapi.auth2
@@ -800,11 +801,11 @@ body {
 							// Request scopes in addition to 'profile' and 'email'
 							//scope: 'additional_scope'
 							});
-						attachSignin(document.getElementById('login_customBtn'));
+						attachLogin(document.getElementById('login_customBtn'));
 					});//end gapi.load()
-				};//end startApp
+				};//end startAppGGLogin
 
-				function attachSignin(element) {
+				function attachLogin(element) {
 					console.log(element.id);
 					auth2.attachClickHandler(element, {}, function(googleUser) {
 						console.log("GOOGLE");
@@ -831,15 +832,16 @@ body {
 							data : sendData,
 							success : function(result) {
 								console.log('구글로그인'+result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
-								if(result == "0"){
-									//로그인 성공 - 메인으로 이동
-									alert(id_l.val()+'님 환영합니다.');
-									location.href="/springProject/main.jsp"
-								} else {
+								if(result == "-1"||result =='1'||result=='2'){
 									//로그인 실패
 									alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
 									id_l.text()="";
 									pw_l.text()="";
+								} else {
+									var rsMid = result.split('#')[1];	
+									//로그인 성공 - 메인으로 이동
+									alert(rsMid +'님 환영합니다.');
+									location.href="/springProject/main.jsp"
 								}//end inner_if()
 							}//end success
 						});//end ajax
@@ -861,7 +863,7 @@ body {
 						<span class="icon"></span> <span class="buttonText"> Google로 로그인</span>
 					</div>
 					<script>
-				       startAppGG();
+				       startAppGGLogin();
 				    </script>
 				</div>
 <!------------------------- body3 : 구글로 로그인 관련 끝 ---------------------------->

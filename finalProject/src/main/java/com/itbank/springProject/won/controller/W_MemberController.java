@@ -212,14 +212,14 @@ public class W_MemberController{
 			// 로그인 실패시
 			if (mdto == null) {
 				// 아이디가 존재하지 않는경우
-				System.out.println("아이디가 존재하지 않습니다.");
+				System.out.println("1 : 아이디가 존재하지 않습니다.");
 				return "1";
 			} else {
 				// 아이디가 존재하는 경우
 				// 입력받은 비밀번호와 아이디로 검색한 비밀번호가 일치하는지 확인
 				if (mdto.getMpw() == memberDTO.getMpw() || mdto.getMpw().equals(memberDTO.getMpw())) {
 					// 일치하는 경우 - 세션에 아이디를 넣어줌!
-					System.out.println("controller : 로그인 성공" + memberDTO.getMid());
+					System.out.println("controller - 로그인 성공 : " + memberDTO.getMid());
 					session.setAttribute("mid", memberDTO.getMid());
 					// 최근 접속일자 수정해줌
 					mdto = worker.settingBasicInfo(mdto); // 최근접속일 세팅
@@ -232,17 +232,18 @@ public class W_MemberController{
 						session.setAttribute("favor", tag);
 					}
 					
-					return "0";
+					System.out.println("0 : 로그인 처리 성공");
+					return "0#"+memberDTO.getMid();
 				} else {
 					// 일치하지 않는 경우
-					System.out.println("비밀번호가 일치하지 않습니다");
+					System.out.println("2 : 비밀번호가 일치하지 않습니다");
 					return "2";
 				}
 			}
 		} catch (Exception e) {
 			// 실패시 로그인 페이지로 돌아감
 			e.printStackTrace();
-			System.out.println("select실패");
+			System.out.println("-1 : select실패");
 			return "-1";
 		} // end try~catch
 	}// end selectIdPw

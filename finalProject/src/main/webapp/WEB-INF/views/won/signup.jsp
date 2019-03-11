@@ -106,8 +106,8 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 				if(result == "-1"||result =='1'||result=='2'){
 					//로그인 실패
 					alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-					id_l.text()="";
-					pw_l.text()="";
+					$('#login_inputMid').text()="";
+					$('#login_inputMpw').text()="";
 				} else {
 					var rsMid = result.split('#')[1];	
 					//로그인 성공 - 메인으로 이동
@@ -359,8 +359,8 @@ $(function($) { // HTML 문서를 모두 읽으면 포함한 코드를 실행
 							}else{
 								//가입 실패
 								alert("다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-								id_l.text()="";
-								pw_l.text()="";
+								id.text()="";
+								pw.text()="";
 							}//end inner_if()
 						}//end success
 					});//end ajax					
@@ -835,8 +835,8 @@ body {
 								if(result == "-1"||result =='1'||result=='2'){
 									//로그인 실패
 									alert("아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-									id_l.text()="";
-									pw_l.text()="";
+									$('#login_inputMid').text()="";
+									$('#login_inputMpw').text()="";
 								} else {
 									var rsMid = result.split('#')[1];	
 									//로그인 성공 - 메인으로 이동
@@ -882,9 +882,9 @@ body {
 							console.log("FACEBOOK");
 				            //mid(이메일)받아오기
 				            console.log(resp.id);
-				            document.getElementById('login_mid').value = resp.id;
+				            document.getElementById('mid').value = resp.id;
 				            //mpw세팅 : FaceBook EXternal LOGIN
-				            document.getElementById('login_mpw').value = "FBEXLOGIN"
+				            document.getElementById('mpw').value = "FBEXLOGIN"
 				         });
 				      } else {
 				         //로그인 안되어 있을때
@@ -929,17 +929,6 @@ body {
 				      fjs.parentNode.insertBefore(js, fjs);
 				   }(document, 'script', 'facebook-jssdk'));
 				   
-				   //페이스북의 SDK를 가져오기
-				   // Load the SDK asynchronously 
-				   (function(d, s, id) {
-				      var js, fjs = d.getElementsByTagName(s)[0];
-				      if (d.getElementById(id))
-				         return;
-				      js = d.createElement(s);
-				      js.id = id;
-				      js.src = "https://connect.facebook.net/en_US/sdk.js";
-				      fjs.parentNode.insertBefore(js, fjs);
-				   }(document, 'script', 'facebook-jssdk'));
 				   
 				</script>
 				<!-- 페이스북으로 로그인 버튼 -->
@@ -958,7 +947,7 @@ body {
                         console.log('oh!');                        
                      }//end if
                      
-                     var form = $('#login_hidden');
+                     var form = $('#hidden');
  					
 					 // 자바스크립트 객체를 배열에 담아줌
 					  var formSerial = $(form).serializeArray(); 
@@ -974,15 +963,16 @@ body {
 						  	data : sendData, 
 						  	success : function(result) { 
 		  						console.log('페북로그인'+result+' (-1 : db관련 실패 / 0 : 성공 / 1 : 아이디가 없음 / 2 : 비밀번호가 없음)');
-								if(result == '0'){
-									//로그인 성공 - 메인으로 이동
-									alert(id_l.val()+'님 환영합니다.');
-									location.href='/springProject/main.jsp';
-								} else {
+								if(result == '-1'||result =='1'||result=='2'){
 									//로그인 실패
 									alert('아이디, 비밀번호를 확인해주세요.문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx');
-									id_l.text()='';
-									pw_l.text()='';
+									$('#login_inputMid').text()='';
+									$('#login_inputMpw').text()='';
+								} else {
+									var rsMid = result.split('#')[1];	
+									//로그인 성공 - 메인으로 이동
+									alert(rsMid +'님 환영합니다.');
+									location.href='/springProject/main.jsp'
 								}//end inner_if()
 					  		}//end success 
 					  });//end ajax
@@ -1145,8 +1135,8 @@ body {
 								}else{
 									//가입 실패
 									alert("다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx");
-									id_l.text()="";
-									pw_l.text()="";
+									$('#inputMid').text()="";
+									$('#inputMpw').text()="";
 								}//end inner_if()
 							}//end success
 						});//end ajax
@@ -1184,7 +1174,7 @@ body {
 				<script type="text/javascript">
 				   var check = 0;
 				   //로그인 상태 체크
-				   var checkLoginStatus = function(response) {
+				   var checkSignupStatus = function(response) {
 				      console.log(response);
 				      /* statusChangeCallback(response); */
 				      if (response.status === 'connected') {
@@ -1233,20 +1223,8 @@ body {
 				      //
 				      // These three cases are handled in the callback function.
 				      
-				      FB.getLoginStatus(checkLoginStatus);
+				      FB.getLoginStatus(checkSignupStatus);
 				   };
-				   
-				   //페이스북의 SDK를 가져오기
-				   // Load the SDK asynchronously 
-				   (function(d, s, id) {
-				      var js, fjs = d.getElementsByTagName(s)[0];
-				      if (d.getElementById(id))
-				         return;
-				      js = d.createElement(s);
-				      js.id = id;
-				      js.src = "https://connect.facebook.net/en_US/sdk.js";
-				      fjs.parentNode.insertBefore(js, fjs);
-				   }(document, 'script', 'facebook-jssdk'));
 				   
 				   //페이스북의 SDK를 가져오기
 				   // Load the SDK asynchronously 
@@ -1270,7 +1248,7 @@ body {
                         console.log('no!');
                         FB.login(function(res){
                            console.log('login =>',res);
-                           checkLoginStatus(res);
+                           checkSignupStatus(res);
                         });
                      }else{
                         //now login
@@ -1301,8 +1279,8 @@ body {
 								}else{
 									//가입 실패
 									alert('다시 시도해주세요. 문제가 계속되면 관리자에게 문의해주세요.xx-xxxx-xxxx');
-									id_l.text()='';
-									pw_l.text()='';
+									$('#inputMid').text()='';
+									$('#inputMpw').text()='';
 								}//end inner_if()
 					  		}//end success 
 					  });//end ajax

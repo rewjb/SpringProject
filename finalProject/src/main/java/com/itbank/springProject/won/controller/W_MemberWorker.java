@@ -64,6 +64,5 @@ public class W_MemberWorker {
 		//facebook아이디가 이메일 형식이 아닌경우
 		return 1;
 	}//end checkFBMid()
-	
-	
+		
 }//end class

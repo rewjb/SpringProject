@@ -180,10 +180,26 @@ public class W_MemberController{
 	@RequestMapping("won/selectMember")
 	public String selectMember(Model model, MemberDTO dto,
 			HttpSession session){
+		MemberDTO mdto = null;
 		try {
+			//세션에서 mid 가져와서 dto에 세팅
 			String mid = (String)session.getAttribute("mid");
-			dto.setMid(mid);
-			MemberDTO mdto = memberDAO.select(dto);
+			System.out.println("mid에 있는 값 : "+mid);
+			String s = mid.split("@")[1];
+			System.out.println("@ : "+s);
+			//페이스북 아이디를 이용해서 만든 임시 아이디일경우
+			if(s.equals("facebook.com")){
+				//세션의 mid중 @이전 값만 떼서 name에 넣어주기
+				String name = mid.split("@")[0];
+				//name값으로 dto에 세팅후 검색
+				dto.setMname(name);
+				mdto = memberDAO.selectName(dto);
+			}else{
+				//id값을 dto에 세팅후 검색
+				dto.setMid(mid);
+				mdto = memberDAO.select(dto);
+			}
+			//mdto의 값 확인 후 모델에 dto 넣어주기
 			System.out.println(mdto.getMid());
 			System.out.println(mdto.getMpw());
 			System.out.println(mdto.getMname());

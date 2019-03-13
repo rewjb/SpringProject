@@ -40,77 +40,33 @@ import com.google.protobuf.ByteString;
 @Repository("VisionDAO")
 public class VisionDAO {
 	
-//	public static void main(String[] args) throws Exception {
-//		
-//		TranslationExample tx = new TranslationExample();
-//		QuickstartSample tx2 = new QuickstartSample();
-//		
-//		File file = new File("D:\\img\\sample");
-//		String[] imgs = file.list();
-//		
-//		HashMap<String, Integer> tagsRank = new HashMap<>();
-//		
-//		for(int i = 0; i < imgs.length; i++){
-//			
-//			System.out.println(i + "번째 사진 판독 중..");
-//			String tags = "";
-//			String img = "D:\\img\\sample\\" + imgs[i];
-//			ArrayList<String> list = detectLabels(img);
-//			
-//			for(int j = 0; j < list.size(); j++){
-//				if(j == 0) {
-//					tags += list.get(j);
-//				}else{					
-//					tags += "/" + list.get(j);
-//				}
-//			}
-//			String[] tagsList = tx2.translate(tags).split("/");
-//			//System.out.println(Arrays.toString(tagsList));
-//			System.out.println(tx2.translate(detectLandmarks(img)) + " : " + tx2.translate(tags));
-////			System.out.println(detectLandmarks(img) + " : " + tx.autoDetectTranslate(tags, "ko"));
-//			
-////			for (int j = 0; j < tagsList.length; j++) {
-////				tagsList[j] = tagsList[j].trim();
-////				if(tagsRank.get(tagsList[j]) == null){					
-////					tagsRank.put(tagsList[j], 1);
-////				}else{					
-////					tagsRank.put(tagsList[j], tagsRank.get(tagsList[j]) + 1);
-////				}
-////			}			
-//		}
-	
 	public String name() {
 		String path = this.getClass().getResource("").getPath();
 		System.out.println(path);
 		return path;
 	}
 		
-		public String imgTag(String imgName) throws Exception {
-			
-			String path = "C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/";
-			String file = path + "resources/IMAGE/placeAdd/" + imgName;
-			
-				
-			System.out.println("판독 중..");
-			String tags = "";
-//			String img = "resources/IMAGE/attractionsImg/" + imgs[i];
-			ArrayList<String> list = detectLabels(file);
-			
-			for(int j = 0; j < list.size(); j++){
-				if(j == 0) {
-					tags += list.get(j);
-				}else{					
-					tags += "/" + list.get(j);
-				}
+	public String imgTag(String imgName) throws Exception {
+		
+		String path = "C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/";
+		String file = path + "resources/IMAGE/placeAdd/" + imgName;
+		
+		System.out.println("판독 중..");
+		String tags = "";
+		ArrayList<String> list = detectLabels(file);
+		
+		for(int j = 0; j < list.size(); j++){
+			if(j == 0) {
+				tags += list.get(j);
+			}else{					
+				tags += "/" + list.get(j);
 			}
-//				String[] tagsList = tx2.translate(tags).split("/");
-//				System.out.println(tx2.translate(detectLandmarks(img)) + " : " + tx2.translate(tags));
-//			tagList.put(imgs[i].substring(0, imgs[i].indexOf(".")), tags);	
-			return tags;			
+		}
+		return tags;			
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List sortByValue(final Map map) {
+	public static List<?> sortByValue(final Map map) {
 
         List<String> list = new ArrayList<>();
         list.addAll(map.keySet());
@@ -304,7 +260,6 @@ public class VisionDAO {
 	            		}
 	            	}	                
 	            }	            
-	            //System.out.println(list.toString());
 	        }
 	    }
 	    return list;

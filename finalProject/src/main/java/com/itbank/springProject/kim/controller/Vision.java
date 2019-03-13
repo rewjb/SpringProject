@@ -14,11 +14,11 @@ public class Vision {
 		VisionDAO dao = new VisionDAO();
 		TagDAO mongo = new TagDAO();
 		
-//		HashMap<String, String> list = m.imgTag();
+		HashMap<String, String> list = m.imgTag();
 //		
 //		Iterator<String> iter = m.sortByValue(list).iterator();
 		
-		System.out.println(dao.imgTag("20140623103.jpg"));
+//		System.out.println(dao.imgTag("20140623103.jpg"));
 //		mongo.mongoInsert(list, iter);	
 //		mongo.mongoSelect("2014062317");
 		

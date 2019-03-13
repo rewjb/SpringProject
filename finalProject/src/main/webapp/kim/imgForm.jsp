@@ -4,17 +4,15 @@
 <%
 	 request.setCharacterEncoding("UTF-8");
 	 String realFolder = "";
-	 String filename1 = "";
 	 int maxSize = 1024*1024*5;
 	 String encType = "UTF-8";
-	 String savefile = "/resources/IMAGE/placeAdd";
 	 
 	 realFolder = "C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/resources/IMAGE/placeAdd";
-	 
 	 String filename = "";
 	 
 	 try{
-		  MultipartRequest multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+		  MultipartRequest multi = new MultipartRequest(request, realFolder, maxSize, encType, 
+				  new DefaultFileRenamePolicy());
 		
 		  Enumeration<?> files = multi.getFileNames();
 

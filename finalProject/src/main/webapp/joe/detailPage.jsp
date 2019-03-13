@@ -119,6 +119,7 @@ function comment() {//대댓글 등록시 처리함수
       data : data,
       success : function (result) {
          $("#contentContent").val("");
+         $("#contentUpdate").val(""); 
           $("#temp").after($("#replyDialog").css('display', 'none'));
           $("#temp").after($("#updateDialog").css('display', 'none'));
          if (result != null) {
@@ -165,6 +166,7 @@ function updateResult() {//최종 수정 버튼 클릭시
       data : data,
       success : function (result) {
          $("#contentUpdate").val("");   
+         $("#contentContent").val("");
           $("#temp").after($("#updateDialog").css('display', 'none'));
           $("#temp").after($("#replyDialog").css('display', 'none'));
          if (result != null) {

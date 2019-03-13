@@ -39,6 +39,7 @@ pageEncoding="UTF-8"%>
 	border: 0;
 	border: 1px solid #777;
 }
+
 </style>
 
 <script type="text/javascript" src="/springProject/resources/JS/jquery.min.js"></script>

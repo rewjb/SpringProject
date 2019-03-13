@@ -35,45 +35,6 @@ import com.google.protobuf.ByteString;
 
 public class VisionMethod {
 	
-//	public static void main(String[] args) throws Exception {
-//		
-//		TranslationExample tx = new TranslationExample();
-//		QuickstartSample tx2 = new QuickstartSample();
-//		
-//		File file = new File("D:\\img\\sample");
-//		String[] imgs = file.list();
-//		
-//		HashMap<String, Integer> tagsRank = new HashMap<>();
-//		
-//		for(int i = 0; i < imgs.length; i++){
-//			
-//			System.out.println(i + "번째 사진 판독 중..");
-//			String tags = "";
-//			String img = "D:\\img\\sample\\" + imgs[i];
-//			ArrayList<String> list = detectLabels(img);
-//			
-//			for(int j = 0; j < list.size(); j++){
-//				if(j == 0) {
-//					tags += list.get(j);
-//				}else{					
-//					tags += "/" + list.get(j);
-//				}
-//			}
-//			String[] tagsList = tx2.translate(tags).split("/");
-//			//System.out.println(Arrays.toString(tagsList));
-//			System.out.println(tx2.translate(detectLandmarks(img)) + " : " + tx2.translate(tags));
-////			System.out.println(detectLandmarks(img) + " : " + tx.autoDetectTranslate(tags, "ko"));
-//			
-////			for (int j = 0; j < tagsList.length; j++) {
-////				tagsList[j] = tagsList[j].trim();
-////				if(tagsRank.get(tagsList[j]) == null){					
-////					tagsRank.put(tagsList[j], 1);
-////				}else{					
-////					tagsRank.put(tagsList[j], tagsRank.get(tagsList[j]) + 1);
-////				}
-////			}			
-//		}
-	
 	public String name() {
 		String path = this.getClass().getResource("").getPath();
 		System.out.println(path);
@@ -85,10 +46,7 @@ public class VisionMethod {
 			String path = "C:/Users/user/git/SpringProject2/finalProject/src/main/webapp/";
 			File file = new File(path + "resources/IMAGE/attractionsImg");
 			String[] imgs = file.list();
-			
-//			HashMap<String, Integer> tagsRank = new HashMap<>();			
-//			ArrayList<TagDTO> tagList = new ArrayList<>();
-			
+						
 			HashMap<String, String> tagList = new HashMap<>();
 			
 			for(int i = 0; i < imgs.length; i++){
@@ -105,33 +63,11 @@ public class VisionMethod {
 						tags += "/" + list.get(j);
 					}
 				}
-//				String[] tagsList = tx2.translate(tags).split("/");
-//				System.out.println(tx2.translate(detectLandmarks(img)) + " : " + tx2.translate(tags));
+				System.out.println(tags);
 				tagList.put(imgs[i].substring(0, imgs[i].indexOf(".")), tags);
 				
-//				for (int j = 0; j < tagsList.length; j++) {
-//					tagsList[j] = tagsList[j].trim();
-//					if(tagsRank.get(tagsList[j]) == null){					
-//						tagsRank.put(tagsList[j], 1);
-//					}else{					
-//						tagsRank.put(tagsList[j], tagsRank.get(tagsList[j]) + 1);
-//					}
-//				}			
 			}
-			return tagList;
-		
-		//Set<String> set = tagsRank.keySet();
-//		Iterator<String> iter = sortByValue(tagsRank).iterator();
-//		
-//		ArrayList<String> rank = new ArrayList<>();
-//		int count = 1;
-//		while(iter.hasNext()){
-//			String key = iter.next();
-//			rank.add(key + ":" + tagsRank.get(key));
-//			System.out.println(count + ") " + key + ":" + tagsRank.get(key));
-//			count++;
-//		}
-			
+			return tagList;			
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -329,7 +265,6 @@ public class VisionMethod {
 	            		}
 	            	}	                
 	            }	            
-	            //System.out.println(list.toString());
 	        }
 	    }
 	    return list;

@@ -733,7 +733,7 @@ body {
 	font-size: 16px;
 	font-family: 'Roboto', sans-serif;
 	text-align: right;
-	padding-right: 50px;
+	padding-right: 85px;
 }
 
 #login_authBtn:hover {
@@ -742,7 +742,7 @@ body {
 
 #login_authBth {
 	display: inline-block;
-
+}
 </style> 
 </head>
 <body>
@@ -950,7 +950,7 @@ body {
 				</script>
 				<!-- 페이스북으로 로그인 버튼 -->
 				<div style="height: 5px;"></div> 
-				<input type="button" id="login_authBtn" value="Facebook Login"
+				<input type="button" id="login_authBtn" value="페이스북 로그인"
 				 onclick="
                      if(this.value === 'Facebook 으로 로그인하기'){
                         //now logout
@@ -1208,7 +1208,7 @@ body {
 				            console.log(resp.name);
 				            document.getElementById('mname').value = resp.name;
 				            //mprofile받아오기
-				            var profile = 'https://graph.facebook.com/'+ resp.id +'/picture?width=250&height=250>'
+				            var profile = 'https://graph.facebook.com/'+ resp.id +'/picture?width=250&height=250'
 				            console.log(profile);
 				            document.getElementById('mprofile').value = profile;
 				         });

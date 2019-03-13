@@ -36,7 +36,7 @@
 		
 		//식을 간단하게 하기 위해 변수에 담아주기
 		var pw = $('#inputMpw');
-		var cf = $('#cf'); //비밀번호 확인
+		var cf = $('#cf');	//비밀번호 확인
 		var tel = $('#mtel');
 		var g = $("#gender");
 		var gs = $("#genderSelector");	//gender select태그
@@ -354,7 +354,7 @@
 							<!-- 컨트롤러와 동작하는 hidden #mpw가 있고 사용자에게 보이는부분(#inputMpw,#cf)이 따로 존재함 -->
 							<label for="password"><span class="text-muted">	PASSWORD </span></label> 
 							<div class="form-group" style="width:100%;">
-								<input type="text" id="inputMpw" class="form-control" required>
+								<input type="password" id="inputMpw" class="form-control" value="" required>
 								<div id="feedback-mpw" class="feedback"></div>
 								<input type="hidden" id="mpw" name="mpw" value="" class="hidden">
 							</div>
@@ -363,7 +363,7 @@
 							<!-- column4. mpw conform부분   -->
 							<label for="password"><span class="text-muted">	CONFIRM </span></label>
 							<div class="form-group" style="width:100%;">
-								<input type="text" id="cf" class="form-control" required>
+								<input type="password" id="cf" class="form-control" value="" required>
 								<div id="feedback-cf" class="feedback"></div>
 							</div>
 						</td>
